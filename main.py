@@ -3,7 +3,7 @@ import utility
 import math
 
 #L = 160cm
-#17cm h, 19cm base (2*a)
+#17cm h, 9.5 cm
 
 def main():
     standing_man = altalena.Altalena(2.7, 0.001, 0.0) #lunghezza filo, phi, vel angolare
