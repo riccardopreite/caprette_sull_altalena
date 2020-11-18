@@ -1,13 +1,15 @@
 import math
 
 class SwingMotion:
-    gravity = dissipativeForce = initialPerturbationDegree = initialAngluarSpeed = maxOscillationDegree = massBody = heightBody = massSwing = ropeLength = 0
+    gravity = dissipativeForce = initialPerturbationDegree = perturbationDegree = initialAngluarSpeed = angluarSpeed = maxOscillationDegree = massBody = heightBody = massSwing = ropeLength = 0.
     listRotationVar = listCoordinate = []
-    def __init__(self, gravity, dissipativeForce, initialPerturbationDegree, initialAngluarSpeed, maxOscillationDegree, massBody, heightBody, massSwing, ropeLength):
+    def __init__(self, gravity, dissipativeForce, perturbationDegree, angluarSpeed, maxOscillationDegree, massBody, heightBody, massSwing, ropeLength):
         self.gravity = gravity
         self.dissipativeForce = dissipativeForce
-        self.initialPerturbationDegree = initialPerturbationDegree
-        self.initialAngluarSpeed = initialAngluarSpeed
+        self.initialPerturbationDegree = perturbationDegree
+        self.initialAngluarSpeed = angluarSpeed
+        self.perturbationDegree = perturbationDegree
+        self.angluarSpeed = angluarSpeed
         self.maxOscillationDegree = maxOscillationDegree
         self.massBody = massBody
         self.heightBody = heightBody
