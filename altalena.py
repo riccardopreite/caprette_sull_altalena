@@ -17,13 +17,11 @@ class Altalena:
         self.c = c_
         self.theta = theta_
 
-        self.M = self.m1 + self.m2 + self.m3
-        self.N = self.m3 * self.c - self.m2 * self.b
-        
         self.I1 = self.M * self.length**2
         self.I2 = self.m2 * self.b**2 + self.m3 * self.c**2
-
-
+        self.M = self.m1 + self.m2 + self.m3
+        self.N = self.m3 * self.c - self.m2 * self.b
+    
 
     def set_phi(self, phi_):
         self.phi = phi_
@@ -65,9 +63,9 @@ class Altalena:
     def get_w(self):
         return self.w
     
-    def phi_dot(self, w_):
-        self.w = w_
-        return self.w
+    def phi_dot(self, w):
+        self.w = w
+        return w
     
     def w_standing(self, phi):
         self.w_dot = -(g / self.length) * math.sin(phi)
