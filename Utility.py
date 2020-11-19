@@ -141,15 +141,21 @@ class Utility:
 
 
     def plot_(self):
+        #usare 
+        font = {'family': 'serif',
+        'color':  'black',
+        'weight': 'normal',
+        'size': 16,
+        }
 
         plt.style.use('ggplot')
 
         plt.figure("standing")
         ax1 = plt.subplot(2, 1, 1)
         #plt.grid(color='gray', linestyle='solid')
-        ax1.set_xlabel(r'$phi (rad)$', fontsize=12)
-        ax1.set_ylabel(r'$w (rad/s)$', fontsize=12, labelpad = 25, rotation=0)
-        plt.scatter(self.standing[1], self.standing[2], s=10, c='r', marker='o')
+        ax1.set_xlabel(r'$phi (rad)$', fontsize=12) #fontdict = font
+        ax1.set_ylabel(r'$w (rad/s)$', fontsize=12, labelpad = 25, rotation=0)#fontdict = font
+        plt.scatter(self.standing[1], self.standing[2], s=10, c='r', marker='o')#s più piccolo, se no fa punti giganti. io avevo messo s=2
 
         ax1 = plt.subplot(2, 1, 2)
         #plt.grid(color='gray', linestyle='solid')
@@ -176,20 +182,21 @@ class Utility:
         plt.show()
     def plot_Standing(self):
 
+
         plt.style.use('ggplot')
 
         plt.figure("standing")
         ax1 = plt.subplot(2, 1, 1)
         #plt.grid(color='gray', linestyle='solid')
-        ax1.set_xlabel(r'$phi (rad)$', fontsize=12)
-        ax1.set_ylabel(r'$w (rad/s)$', fontsize=12, labelpad = 25, rotation=0)
-        plt.scatter(self.standing[INDEX_PHI], self.standing[INDEX_W], s=10, c='r', marker='o')
+        ax1.set_xlabel(r'$phi (rad)$', fontsize=12) #fontdict = font
+        ax1.set_ylabel(r'$w (rad/s)$', fontsize=12, labelpad = 25, rotation=0) #fontdict = font
+        plt.scatter(self.standing[INDEX_PHI], self.standing[INDEX_W], s=10, c='r', marker='o') #s più piccolo, se no fa punti giganti. io avevo messo s=2
 
         ax1 = plt.subplot(2, 1, 2)
         #plt.grid(color='gray', linestyle='solid')
-        ax1.set_xlabel(r'$time (s)$', fontsize=12)
-        ax1.set_ylabel(r'$phi (rad)$', fontsize=12,labelpad = 25, rotation=0)
-        plt.scatter(self.standing[INDEX_TIME], self.standing[INDEX_PHI], s=10, c='r', marker='o')
+        ax1.set_xlabel(r'$time (s)$', fontsize=12)#fontdict = font
+        ax1.set_ylabel(r'$phi (rad)$', fontsize=12,labelpad = 25, rotation=0)#fontdict = font
+        plt.scatter(self.standing[INDEX_TIME], self.standing[INDEX_PHI], s=10, c='r', marker='o')#s più piccolo, se no fa punti giganti. io avevo messo s=2
         plt.show()
 
     def plot_Seated(self):
