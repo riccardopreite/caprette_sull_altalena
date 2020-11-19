@@ -152,6 +152,7 @@ class Utility:
 
         plt.figure("standing")
         ax1 = plt.subplot(2, 1, 1)
+        #MANCA TITOLO
         #plt.grid(color='gray', linestyle='solid')
         ax1.set_xlabel(r'$phi (rad)$', fontsize=12) #fontdict = font
         ax1.set_ylabel(r'$w (rad/s)$', fontsize=12, labelpad = 25, rotation=0)#fontdict = font
@@ -166,6 +167,7 @@ class Utility:
 
         plt.figure("seated")
         ax1 = plt.subplot(2, 1, 1)
+        #MANCA TITOLO
         #plt.grid(color='gray', linestyle='solid')
         ax1.set_xlabel(r'$phi (rad)$', fontsize=12)
         ax1.set_ylabel(r'$w (rad/s)$', fontsize=12, labelpad = 25, rotation=0)
