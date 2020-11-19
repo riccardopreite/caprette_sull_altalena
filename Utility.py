@@ -32,25 +32,35 @@ class Utility:
         self.standing[0].append(t) #aggiungo i primi termini alla lista
         self.standing[1].append(phi)
         self.standing[2].append(w)
+        #QUI MANCA IL PRIMO FOUT2.WRITE
+        #NON STAMPIAMO I PRIMI NUMERI
+
 
         while t <= steps:
+            #IL T += DELTA T LO METTEREI QUI, COSÌ AVANZA SUBITO NEL TEMPO E MI CALCOLA IL PRIMO PUNTO. SE NO MI CALCOLEREBBE IL PUNTO AL TEMPO 0.0
+            #POSSIAMO SETTARE T += DELTA T PRIMA DEL CICLO WHILE E LASCIARE TUTTO COSÌ
             phi = phi + w * self.deltaTime * 0.5
             s2 = swing.angularAccelerationStanding(phi)
             w +=  self.deltaTime * s2
             phi += self.deltaTime * w * 0.5
-            fout1.write("\n" + str(t) + "\t" + str(phi) + "\t" + str(w))
+            fout1.write("\n" + str(t) + "\t" + str(phi) + "\t" + str(w))   #str.format('{0:.8f}', t) MI SCRIVE t con 8 CIFRE SIGNIFICATIVE DOPO
+            #DECISAMENTE PIÙ BELLO E LEGGIBILE. POSSIAMO METTERNE ANCHE 10,12,14 BASTA CHE TUTTI ABBIANO LA STESSA CIFRA
             # self.standing.append((t,phi,w))
             self.standing[0].append(t) #riaggiorno le liste
             self.standing[1].append(phi)
             self.standing[2].append(w)
 
             if (phi >= 0 and self.standing[INDEX_PHI][counter-1] < 0) or (phi <= 0 and self.standing[INDEX_PHI][counter-1] > 0):
-                w = (lsquat/lstand)**2 * self.standing[INDEX_W][counter-1]
+                w = (lsquat/lstand)**2 * self.standing[INDEX_W][counter-1] 
+                #QUI VA SETTATA LA LUNGHEZZA NUOVA CON CUI SI INTEGRA. CIOÈ SE INTEGRAVO CON LSQUAT POI DEVO INTEGRARE CON LSTAND
+                #IN SELF.STANDING SI USA SEMPRE LSQUAT
                 #print("salto")
 
 
             if (w >= 0 and self.standing[INDEX_W][counter-1] < 0) or (w <= 0 and self.standing[INDEX_W][counter-1] > 0):
-                w = (lstand/lsquat)**2 * self.standing[INDEX_W][counter-1]
+                w = (lstand/lsquat)**2 * self.standing[INDEX_W][counter-1] #  QUESTO NON CI VA. MI ERO SBAGLIATO IO
+                #QUI VA SETTATA LA LUNGHEZZA NUOVA CON CUI SI INTEGRA. CIOÈ SE INTEGRAVO CON LSQUAT POI DEVO INTEGRARE CON LSTAND
+                #IN SELF.STANDING SI USA SEMPRE LSQUAT
                 #print("torno indietro")
 
             t += self.deltaTime
@@ -78,6 +88,8 @@ class Utility:
 
         fout2 = open("seated.txt", "w")
         fout2.write("Time(s)\tPhi(rad)\tAngular velocity (rad/s)")
+        #QUI MANCA IL PRIMO FOUT2.WRITE
+        #NON STAMPIAMO I PRIMI NUMERI
 
         self.seated[0].append(t) #aggiungo i primi termini alla lista
         self.seated[1].append(phi)
