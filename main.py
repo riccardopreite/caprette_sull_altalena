@@ -29,7 +29,7 @@ def main():
     initialAngluarSpeed = 0.0
     swingMotion2 = SwingMotion.SwingMotion(gravity,dissipativeForce,initialPerturbationDegree,initialAngluarSpeed,maxOscillationDegree,massBody,heightBody,massSwing,ropeLength)
 
-    seatedSwing = SeatedSwing.SeatedSwing(swingMotion2,0)
+    seatedSwing = SeatedSwing.SeatedSwing(swingMotion2,0) #perchè non utilizzare il costruttore della classe madre invece che passargli un oggetto madre?
     standingSwing.swingStanding("symplectic",20)
     seatedSwing.swingSeated("symplectic",30)
 
