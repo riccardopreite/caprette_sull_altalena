@@ -1,11 +1,40 @@
+import Environment 
+import StandingSwing 
 import math
+import matplotlib.pylab as plt
+
+'''
+FLAVIO 
+0 = time
+1 = phi
+2 = w
+
+'''
 
 class DrawSwing:
-    sleepTime = 0
     def __init__(self, sleepTime):
         self.sleepTime = sleepTime
 
-    def plotRotationGraph(self,listRotationVar):
-        pass
-    def plotSwing(self,listCoordinate):
-        pass
+    '''
+    Given a genericSwing obj, plots its phi, w and t
+    @genericSwing (generic swing obj) 
+    @return = null, plots variables
+    '''
+    # TODO FIX MAKE IT GENERIC, SWITCH ON OBJ TYPE
+    def plotGraph(self, genericSwing):
+        plt.style.use('ggplot')
+
+        plt.figure("standing")
+        ax1 = plt.subplot(2, 1, 1)
+        ax1.set_xlabel(r'$phi (rad)$', fontsize=12)
+        ax1.set_ylabel(r'$w (rad/s)$', fontsize=12, labelpad = 25, rotation=0)
+        plt.scatter(genericSwing.listRotation_phi, genericSwing.listRotation_w, s=10, c='r', marker='o')
+
+        ax1 = plt.subplot(2, 1, 2)
+        ax1.set_xlabel(r'$time (s)$', fontsize=12)
+        ax1.set_ylabel(r'$phi (rad)$', fontsize=12,labelpad = 25, rotation=0)
+        plt.scatter(genericSwing.listRotation_t, genericSwing.listRotation_phi, s=10, c='r', marker='o')
+
+        print("graph")
+        plt.show()
+

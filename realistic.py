@@ -2,9 +2,10 @@
 import Environment
 import math
 
-class SeatedSwing(Environment.Environment):
+class RealisticSwing(Environment.Environment):
     def __init__(self, environment):
         self.environment = environment
+        
         self.bodySegment = 0.5
 
         # TODO change names <=====================
@@ -20,9 +21,7 @@ class SeatedSwing(Environment.Environment):
     @return (int) = the new angularAcceleration value
     '''
     def get_angularAcceleration(self, phi):
-        self.angularAcceleration = -((self.environment.gravity * self.environment.ropeLength) / (self.environment.ropeLength**2 + self.bodySegment**2)) * math.sin(phi)
-        return self.angularAcceleration
-
+        pass
 
     '''
     Calculate Swing motion and set local list of rotation variables
@@ -30,8 +29,4 @@ class SeatedSwing(Environment.Environment):
     @steps (int) = indicates the nummber of simulation step (tf FLAVIO)
     '''
     def calculateSwingMotion(self,integrationMethode,steps):
-        
-        if integrationMethode == "symplectic":
-            self.environment.utils.symplectic_seated(self,steps)
-
-    
+      pass

@@ -1,240 +1,170 @@
 import math
-import matplotlib.pylab as plt
 
-INDEX_TIME = 0
-INDEX_PHI = 1
-INDEX_W = 2
 class Utility:
-    time = deltaTime = 0
-    seated = [[], [], []]
-    standing = [[], [], []]
-    realistic = [[], [], []]
-    def __init__(self):
+
+     def __init__(self):
+        # starting simulation time
+        self.time = 0
+
+        # time increment
         self.deltaTime = 0.001
 
 
-    def symplectic_standing(self,swing,steps):
+# ======================= SYMPLECTIC METHODS =======================================
+     '''
+     Given a standingSwing obj and the simulation steps, sets interal obj lists
+     with calculated values
+     @standingSwing (StandingSwing)
+     @steps (int) = number of simulations steps
+     @return = null, set internal standingSwing variables
+     '''
+     def symplectic_standing(self,standingSwing, steps):
+        # Aux =====================================================================
+        # prev_angularAcceleration = s2
+        prev_angularAcceleration = 0. 
+        stepCounter = 1
+        foutStanding = open("standing.txt", "w")
+        foutStanding.write("Time(s)\tPhi(rad)\tAngular velocity (rad/s)")
+
+        # variable setpup ==========================================================
+        # starting time
         t = 0.0
-        #tempo finale dato alla funzione
-        #phi = swing.swingMotion.get_phi(); #phi iniziale
-        phi = swing.swingMotion.initialPerturbationDegree #phi iniziale
-        w = swing.swingMotion.initialAngluarSpeed #w iniziale
-        s2 = 0. #per il simplettico
-        counter = 1
+        # starting angle
+        phi = standingSwing.environment.initialPerturbationDegree 
+        # staring angularSpeed
+        w = standingSwing.environment.initialAngluarSpeed 
+        # barycenter standing and squat
+        lstand = standingSwing.barycenterStanding
+        lsquat = standingSwing.barycenterSquat
 
-        lstand = swing.barycenterStanding
-        lsquat = swing.barycenterSquat #serve per fare i salti
+        # intial conditions
+        standingSwing.listRotation_t.append(t)
+        standingSwing.listRotation_phi.append(phi)
+        standingSwing.listRotation_w.append(w)
+        foutStanding.write("\n" + str.format('{0:.8f}', t) + "\t" + str.format('{0:.8f}' , phi) + "\t" + str.format('{0:.8f}' , w))
 
-        fout1 = open("standing.txt", "w")
-        fout1.write("Time(s)\tPhi(rad)\tAngular velocity (rad/s)")
-
-        # self.standing.append((t,phi,w))
-        self.standing[0].append(t) #aggiungo i primi termini alla lista
-        self.standing[1].append(phi)
-        self.standing[2].append(w)
-        #QUI MANCA IL PRIMO FOUT2.WRITE
-        #NON STAMPIAMO I PRIMI NUMERI
-
-
+        # updating cycle ============================================================
         while t <= steps:
-            #IL T += DELTA T LO METTEREI QUI, COSÌ AVANZA SUBITO NEL TEMPO E MI CALCOLA IL PRIMO PUNTO. SE NO MI CALCOLEREBBE IL PUNTO AL TEMPO 0.0
-            #POSSIAMO SETTARE T += DELTA T PRIMA DEL CICLO WHILE E LASCIARE TUTTO COSÌ
-            phi = phi + w * self.deltaTime * 0.5
-            s2 = swing.angularAccelerationStanding(phi)
-            w +=  self.deltaTime * s2
-            phi += self.deltaTime * w * 0.5
-            fout1.write("\n" + str(t) + "\t" + str(phi) + "\t" + str(w))   #str.format('{0:.8f}', t) MI SCRIVE t con 8 CIFRE SIGNIFICATIVE DOPO
-            #DECISAMENTE PIÙ BELLO E LEGGIBILE. POSSIAMO METTERNE ANCHE 10,12,14 BASTA CHE TUTTI ABBIANO LA STESSA CIFRA
-            # self.standing.append((t,phi,w))
-            self.standing[0].append(t) #riaggiorno le liste
-            self.standing[1].append(phi)
-            self.standing[2].append(w)
-
-            if (phi >= 0 and self.standing[INDEX_PHI][counter-1] < 0) or (phi <= 0 and self.standing[INDEX_PHI][counter-1] > 0):
-                w = (lsquat/lstand)**2 * self.standing[INDEX_W][counter-1] 
-                #QUI VA SETTATA LA LUNGHEZZA NUOVA CON CUI SI INTEGRA. CIOÈ SE INTEGRAVO CON LSQUAT POI DEVO INTEGRARE CON LSTAND
-                #IN SELF.STANDING SI USA SEMPRE LSQUAT
-                #print("salto")
-
-
-            if (w >= 0 and self.standing[INDEX_W][counter-1] < 0) or (w <= 0 and self.standing[INDEX_W][counter-1] > 0):
-                w = (lstand/lsquat)**2 * self.standing[INDEX_W][counter-1] #  QUESTO NON CI VA. MI ERO SBAGLIATO IO
-                #QUI VA SETTATA LA LUNGHEZZA NUOVA CON CUI SI INTEGRA. CIOÈ SE INTEGRAVO CON LSQUAT POI DEVO INTEGRARE CON LSTAND
-                #IN SELF.STANDING SI USA SEMPRE LSQUAT
-                #print("torno indietro")
-
+            # variables update
             t += self.deltaTime
-            counter += 1
-
-        fout1.close()
-        swing.swingMotion.angularSpeed = w
-        swing.swingMotion.perturbationDegree = phi
-        print("in piedi, tempo (s), phi (rad), w (rad/s): " + str(steps) + " " + str(swing.swingMotion.perturbationDegree) + " " + str(swing.swingMotion.angularSpeed))
-
-    def symplectic_seated(self,swing,steps):
-        t = 0.0
-        #tempo finale dato alla funzione
-        phi = swing.swingMotion.initialPerturbationDegree #phi iniziale
-        w = swing.swingMotion.initialAngluarSpeed #w iniziale
-
-        a = swing.bodySegment
-        l = swing.swingMotion.ropeLength
-        omega = a**2 / (a**2 + l**2) #degreeBodyRotation
-        delta_phi = omega * math.pi / 2 #incremento angolo
-
-        s2 = 0. #per simplettico
-
-        counter = 1 #per le liste
-
-        fout2 = open("seated.txt", "w")
-        fout2.write("Time(s)\tPhi(rad)\tAngular velocity (rad/s)")
-        #QUI MANCA IL PRIMO FOUT2.WRITE
-        #NON STAMPIAMO I PRIMI NUMERI
-
-        self.seated[0].append(t) #aggiungo i primi termini alla lista
-        self.seated[1].append(phi)
-        self.seated[2].append(w)
-
-        while t <= steps:
             phi = phi + w * self.deltaTime * 0.5
-            s2 = swing.w_seated(phi)
-            w +=  self.deltaTime * s2
+            prev_angularAcceleration = standingSwing.get_angularAcceleration(phi)
+            w +=  self.deltaTime * prev_angularAcceleration
             phi += self.deltaTime * w * 0.5
-            fout2.write("\n" + str(t) + "\t" + str(phi) + "\t" + str(w))
 
-            self.seated[0].append(t) #aggiungo altri punti alla lista
-            self.seated[1].append(phi)
-            self.seated[2].append(w)
+            # update list and file
+            standingSwing.listRotation_t.append(t)
+            standingSwing.listRotation_phi.append(phi)
+            standingSwing.listRotation_w.append(w)
+            foutStanding.write("\n" + str(t) + "\t" + str(phi) + "\t" + str(w))   
 
-            #se prima la velocità è negativa e poi diventa positiva (cioè sta tornando indietro) allora
-            #diminuisci l angolo che significa che in valore assoluto aumenta
+            # invert swing directions 2 cases:
+            # 1. pass vertical angle (descending or ascending)
+            startAscendingPhase = (phi >= 0 and standingSwing.listRotation_phi[stepCounter-1] < 0)
+            startDescendingPhase = (phi <= 0 and standingSwing.listRotation_phi[stepCounter-1] > 0)
+            if startAscendingPhase or startDescendingPhase:
+                w = (lsquat/lstand)**2 * standingSwing.listRotation_w[stepCounter-1] 
+                # change body position 
+                standingSwing.currentBarycenter = lstand
 
-            if (w >= 0 and self.seated[2][counter-1] < 0):
+
+            # 2. reach max speed or reach min speed
+            reachTop = (w >= 0) and (standingSwing.listRotation_w[stepCounter-1] < 0)
+            reachBottom = (w <= 0) and (standingSwing.listRotation_w[stepCounter-1] > 0)
+            if reachTop or reachBottom:
+                w = (lstand/lsquat)**2 * standingSwing.listRotation_w[stepCounter-1] 
+                # change body position 
+                standingSwing.currentBarycenter = lsquat
+
+            stepCounter += 1
+
+
+        foutStanding.close()
+
+        # final values
+        standingSwing.environment.angularSpeed = w
+        standingSwing.environment.perturbationDegree = phi
+
+        print("Standing, time (s), phi (rad), w (rad/s): " + 
+        str(steps) + " " + str(standingSwing.environment.perturbationDegree) + " " + 
+        str(standingSwing.environment.angularSpeed))
+
+     
+     '''
+     Given a seatedSwing obj and the simulation steps, sets interal obj lists
+     with calculated values
+     @seatedSwing (seatedSwing)
+     @steps (int) = number of simulations steps
+     @return = null, set internal seatedSwing variables
+     '''
+     # TODO HARD-CODED VALUES ????????????????????????????????????????????
+     # OMEGA ?????????????
+     def symplectic_seated(self,seatedSwing,steps):
+        # Aux ==================================================================
+        prev_angularAcceleration = 0. 
+        stepCounter = 1
+        foutSeated = open("seated.txt", "w")
+        foutSeated.write("Time(s)\tPhi(rad)\tAngular velocity (rad/s)")
+
+        # variable setpup =======================================================
+        # starting time
+        t = 0.0
+        # starting angle
+        phi = seatedSwing.environment.initialPerturbationDegree 
+        # staring angularSpeed
+        w = seatedSwing.environment.initialAngluarSpeed 
+        # a is equal to half of the height
+        a = seatedSwing.bodySegment
+        l = seatedSwing.environment.ropeLength
+        # degree of Rotation Body 
+        omega = a**2 / (a**2 + l**2) 
+        # angular increasing 
+        delta_phi = omega * math.pi / 2
+
+        # intial conditions
+        seatedSwing.listRotation_t.append(t)
+        seatedSwing.listRotation_phi.append(phi)
+        seatedSwing.listRotation_w.append(w)
+        foutSeated.write("\n" + str.format('{0:.8f}', t) + "\t" + str.format('{0:.8f}' , phi) + "\t" + str.format('{0:.8f}' , w))
+
+        # updating cycle ========================================================
+        while t <= steps:
+            t += self.deltaTime
+            phi = phi + w * self.deltaTime * 0.5
+            prev_angularAcceleration = seatedSwing.get_angularAcceleration(phi)
+            w +=  self.deltaTime * prev_angularAcceleration
+            phi += self.deltaTime * w * 0.5
+
+            seatedSwing.listRotation_t.append(t)
+            seatedSwing.listRotation_phi.append(phi)
+            seatedSwing.listRotation_w.append(w)
+            foutSeated.write("\n" + str(t) + "\t" + str(phi) + "\t" + str(w))
+
+
+            # invert swing motion, 2 cases:
+            # 1. backwards motion - increase in absolute value the angle
+            backwards = (w >= 0 and seatedSwing.listRotation_w[stepCounter-1] < 0)
+            if backwards:
                 phi -= delta_phi
-                #print("primo salto", phi, seated[1][counter-1])
 
             #se prima la velocità è positiva e poi diventa negativa (cioè sta andando avanti) allora
             #aumenta l'angolo
-
-            if (w <= 0 and self.seated[2][counter-1] > 0):
+            # 2. forward motion - decrease in absolute value the angle
+            forward = (w <= 0 and seatedSwing.listRotation_w[stepCounter-1] > 0)
+            if forward:
                 phi += delta_phi
-                #print("secondo salto", phi, seated[1][counter-1])
 
-            t += self.deltaTime
-            counter += 1
+            stepCounter += 1
 
+        # final values
+        seatedSwing.environment.angularSpeed = w
+        seatedSwing.environment.perturbationDegree = phi
 
-        fout2.close()
-        swing.swingMotion.angularSpeed = w
-        swing.swingMotion.perturbationDegree = phi
-        print("seduto, tempo (s), phi (rad), w (rad/s): " + str(steps) + " " + str(swing.swingMotion.perturbationDegree) + " " + str(swing.swingMotion.angularSpeed))
+        foutSeated.close()
+        print("seduto, tempo (s), phi (rad), w (rad/s): " + 
+        str(steps) + " " + str(seatedSwing.environment.perturbationDegree) + " " +
+        str(seatedSwing.environment.angularSpeed))
 
-        pass
-    def symplectic_realistic(self,swing):
-        pass
-    def rungeKuta_4_standing(self,swing):
-        pass
-    def rungeKuta_4_seated(self,swing):
-        pass
-    def rungeKuta_4_realistic(self,swing):
-        pass
+    
 
-
-    def plot_(self):
-        #usare 
-        font = {'family': 'serif',
-        'color':  'black',
-        'weight': 'normal',
-        'size': 16,
-        }
-
-        plt.style.use('ggplot')
-
-        plt.figure("standing")
-        ax1 = plt.subplot(2, 1, 1)
-        #MANCA TITOLO
-        #plt.grid(color='gray', linestyle='solid')
-        ax1.set_xlabel(r'$phi (rad)$', fontsize=12) #fontdict = font
-        ax1.set_ylabel(r'$w (rad/s)$', fontsize=12, labelpad = 25, rotation=0)#fontdict = font
-        plt.scatter(self.standing[1], self.standing[2], s=10, c='r', marker='o')#s più piccolo, se no fa punti giganti. io avevo messo s=2
-
-        ax1 = plt.subplot(2, 1, 2)
-        #plt.grid(color='gray', linestyle='solid')
-        ax1.set_xlabel(r'$time (s)$', fontsize=12)
-        ax1.set_ylabel(r'$phi (rad)$', fontsize=12,labelpad = 25, rotation=0)
-        plt.scatter(self.standing[0], self.standing[1], s=10, c='r', marker='o')
-
-
-        plt.figure("seated")
-        ax1 = plt.subplot(2, 1, 1)
-        #MANCA TITOLO
-        #plt.grid(color='gray', linestyle='solid')
-        ax1.set_xlabel(r'$phi (rad)$', fontsize=12)
-        ax1.set_ylabel(r'$w (rad/s)$', fontsize=12, labelpad = 25, rotation=0)
-        plt.scatter(self.seated[1], self.seated[2], s=10, c='r', marker='o')
-
-        ax1 = plt.subplot(2, 1, 2)
-        #plt.grid(color='gray', linestyle='solid')
-        ax1.set_xlabel(r'$time (s)$', fontsize=12)
-        ax1.set_ylabel(r'$phi (rad)$', fontsize=12,labelpad = 25, rotation=0)
-        plt.scatter(self.seated[0], self.seated[1], s=10, c='r', marker='o')
-
-        #print(plt.style.available)
-
-        plt.show()
-    def plot_Standing(self):
-
-
-        plt.style.use('ggplot')
-
-        plt.figure("standing")
-        ax1 = plt.subplot(2, 1, 1)
-        #plt.grid(color='gray', linestyle='solid')
-        ax1.set_xlabel(r'$phi (rad)$', fontsize=12) #fontdict = font
-        ax1.set_ylabel(r'$w (rad/s)$', fontsize=12, labelpad = 25, rotation=0) #fontdict = font
-        plt.scatter(self.standing[INDEX_PHI], self.standing[INDEX_W], s=10, c='r', marker='o') #s più piccolo, se no fa punti giganti. io avevo messo s=2
-
-        ax1 = plt.subplot(2, 1, 2)
-        #plt.grid(color='gray', linestyle='solid')
-        ax1.set_xlabel(r'$time (s)$', fontsize=12)#fontdict = font
-        ax1.set_ylabel(r'$phi (rad)$', fontsize=12,labelpad = 25, rotation=0)#fontdict = font
-        plt.scatter(self.standing[INDEX_TIME], self.standing[INDEX_PHI], s=10, c='r', marker='o')#s più piccolo, se no fa punti giganti. io avevo messo s=2
-        plt.show()
-
-    def plot_Seated(self):
-
-        plt.figure("seated")
-        ax1 = plt.subplot(2, 1, 1)
-        #plt.grid(color='gray', linestyle='solid')
-        ax1.set_xlabel(r'$phi (rad)$', fontsize=12)
-        ax1.set_ylabel(r'$w (rad/s)$', fontsize=12, labelpad = 25, rotation=0)
-        plt.scatter(self.seated[INDEX_PHI], self.seated[INDEX_W], s=10, c='r', marker='o')
-
-        ax1 = plt.subplot(2, 1, 2)
-        #plt.grid(color='gray', linestyle='solid')
-        ax1.set_xlabel(r'$time (s)$', fontsize=12)
-        ax1.set_ylabel(r'$phi (rad)$', fontsize=12,labelpad = 25, rotation=0)
-        plt.scatter(self.seated[INDEX_TIME], self.seated[INDEX_PHI], s=10, c='r', marker='o')
-
-        print(plt.style.available)
-
-        plt.show()
-
-    def plotrealistic(self):
-
-        plt.style.use('ggplot')
-
-        plt.figure("realistic")
-        ax1 = plt.subplot(2, 1, 1)
-        #plt.grid(color='gray', linestyle='solid')
-        ax1.set_xlabel(r'$phi (rad)$', fontsize=12)
-        ax1.set_ylabel(r'$w (rad/s)$', fontsize=12, labelpad = 25, rotation=0)
-        plt.scatter(self.realistic[1], self.realistic[2], s=10, c='r', marker='o')
-
-        ax1 = plt.subplot(2, 1, 2)
-        #plt.grid(color='gray', linestyle='solid')
-        ax1.set_xlabel(r'$time (s)$', fontsize=12)
-        ax1.set_ylabel(r'$phi (rad)$', fontsize=12,labelpad = 25, rotation=0)
-        plt.scatter(self.realistic[0], self.realistic[1], s=10, c='r', marker='o')
-
-        plt.show()
+# ======================= RUNGEKUTA 4 METHODS =======================================
