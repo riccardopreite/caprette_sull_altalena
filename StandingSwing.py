@@ -26,5 +26,5 @@ class StandingSwing(SwingMotion.SwingMotion):
             # utils.plot_Standing()
 
     def angularAccelerationStanding(self, phi):
-        self.angularAcceleration = -(self.swingMotion.gravity / self.barycenterSquat) * math.sin(phi)
+        self.angularAcceleration = -(self.swingMotion.gravity / self.barycenterSquat) * math.sin(phi) #bisogna che ogni metà giro ci sia un cambio. cioè fino a metà sto piegato e allora va bene squat, poi mi alzo e allora dovrei avere stand, poi mi riabbasso e torno squat ecc ecc..
         return self.angularAcceleration
