@@ -139,7 +139,7 @@ def symplectic_realistic(realistic_children, tf):
     I2 = realistic_children.get_I2()
 
     delta_phi = I2 / (I1+I2) * (math.pi / 2) #incremento angolo
-    delta_phi = 0.08
+    #delta_phi = 0.08
     delta = (I2 - N**2) / (I1 - I2 + 2*N**2)
 
     print(delta_phi)

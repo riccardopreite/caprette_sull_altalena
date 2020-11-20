@@ -2,7 +2,7 @@ import math
 import madre
 
 class Expert_Children(madre.Swing):
-    def __init__(self, phi_, w_, length_, m1_, m2_, m3_, b_, c_, theta_):
+    def __init__(self, phi_, w_, length_, m1_, m2_, m3_, b_, c_, theta_, theta0_):
         super(Expert_Children, self).__init__(phi_, w_, length_)
 
         self.m1 = m1_
@@ -11,6 +11,7 @@ class Expert_Children(madre.Swing):
         self.b = b_
         self.c = c_
         self.theta = theta_
+        self.theta0 = theta0_
 
         self.M = self.m1 + self.m2 + self.m3
         self.N = self.m3 * self.c - self.m2 * self.b
@@ -47,7 +48,7 @@ class Expert_Children(madre.Swing):
         TAN_THETA_DEN = self.M*self.length - self.N*math.cos(self.theta)
         THETA = math.atan(TAN_THETA_NUM / TAN_THETA_DEN)
         w0_square = self.g * ((self.M*self.length*math.cos(THETA)) - self.N*math.cos(THETA + self.theta)) / (self.I1 + self.I2 - 2*self.N*self.length*math.cos(self.theta))
-        print(w0_square)
+        #print(w0_square)
         self.w_dot = -w0_square * math.sin(phi)
         return self.w_dot
 

@@ -131,31 +131,32 @@ def symplectic_realistic(realistic_children, tf):
     phi = realistic_children.get_phi() #phi iniziale
     w = realistic_children.get_w() #w iniziale
 
-    M = realistic_children.get_totalmass()
     l = realistic_children.get_length()
     N = realistic_children.get_N()
 
     I1 = realistic_children.get_I1()
     I2 = realistic_children.get_I2()
 
-    theta = realistic_children.get_theta()
+    theta = realistic_children.theta
+    theta0 = realistic_children.theta0
+
+    #print(theta, theta0)
+
+    diff_theta = theta - theta0
+
     NUM = I1 - I2
     DEN = ((I1 + I2)**2 - 4*N**(2)*l**(2))**(1/2)
 
     NUM_TAN = I1 + I2 + 2*N*l
     DEN_TAN = I1 + I2 - 2*N*l
     ARG_TAN = (NUM_TAN / DEN_TAN)**(1/2) * math.tan(theta/2)
+    ARG_TAN0 = (NUM_TAN / DEN_TAN)**(1/2) * math.tan(theta0/2)
 
-    delta_phi = abs(-theta/2 + (NUM/DEN)*math.atan(ARG_TAN))
+    DIFF_TAN = (NUM/DEN)*(math.atan(ARG_TAN) - math.atan(ARG_TAN0))
+    
+    delta_phi = abs(-diff_theta/2 + DIFF_TAN)
 
-    TAN_THETA_NUM = N*math.sin(theta)
-    TAN_THETA_DEN = M*l - N*math.cos(theta)
-    THETA = math.atan(TAN_THETA_NUM / TAN_THETA_DEN)
-    #print(THETA)
-
-    SALTO_Y = (I1+I2) / (I1+I2-2*l*N)
-    SALTO_INVERSO = 1 / SALTO_Y
-    #print(SALTO_Y)
+    SALTO_Y = (I1+I2-2*l*N*math.cos(theta)) / (I1+I2-2*l*N*math.cos(theta0))
     s2 = 0. #per simplettico
 
     counter = 1 #per le liste
@@ -171,68 +172,35 @@ def symplectic_realistic(realistic_children, tf):
 
     while t <= tf:
         t += dt
-        if(w <= 0):
-            if(phi >= 0):
-                phi = phi + w * dt * 0.5
-                s2 = realistic_children.w_realistic1(phi)
-                w +=  dt * s2
-                phi += dt * w * 0.5
-                if (realistic[1][counter-2] < 0):
-                    w = SALTO_Y * w
-                    #print("salto1")
+        if(w <= 0 and phi >= 0):
+            realistic_children.set_theta(theta)
+        elif(w <= 0 and phi <= 0):
+            realistic_children.set_theta(theta0)
+        elif(w >= 0 and phi <= 0):
+            realistic_children.set_theta(theta)
+        else: 
+            realistic_children.set_theta(theta0)
 
-            else:
-                phi = phi + w * dt * 0.5
-                s2 = realistic_children.w_realistic1(phi)
-                w +=  dt * s2
-                phi += dt * w * 0.5
-                if (realistic[1][counter-2] > 0):
-                    w = SALTO_Y * w
-                    #print("salto2")
+        phi = phi + w * dt * 0.5
+        s2 = realistic_children.w_realistic1(phi)
+        w +=  dt * s2
+        phi += dt * w * 0.5
 
+        fout3.write("\n" + str.format('{0:.8f}', t) + "\t" + str.format('{0:.8f}' , phi) + "\t" + str.format('{0:.8f}' , w))
 
-            if(realistic[2][counter-2] > 0):
-                phi -= delta_phi
-                w = SALTO_INVERSO * w
-                #print("salto inverso1")
+        realistic[0].append(t) #aggiungo altri punti alla lista
+        realistic[1].append(phi)
+        realistic[2].append(w)
 
+        if(phi >= 0 and realistic[1][counter-1] < 0):
+            w = SALTO_Y * w
+        elif(phi <= 0 and realistic[1][counter-1] > 0):
+            w = SALTO_Y * w
 
-          
-            fout3.write("\n" + str.format('{0:.8f}', t) + "\t" + str.format('{0:.8f}' , phi) + "\t" + str.format('{0:.8f}' , w))
-
-            realistic[0].append(t) #aggiungo altri punti alla lista
-            realistic[1].append(phi)
-            realistic[2].append(w)
-
-        else:
-            if(phi >= 0):
-                phi = phi + w * dt * 0.5
-                s2 = realistic_children.w_realistic2(phi)
-                w +=  dt * s2
-                phi += dt * w * 0.5
-                if (realistic[1][counter-2] < 0):
-                    w = SALTO_Y * w
-                
-            else:
-                phi = phi + w * dt * 0.5
-                s2 = realistic_children.w_realistic2(phi)
-                w +=  dt * s2
-                phi += dt * w * 0.5
-                if (realistic[1][counter-2] > 0):
-                    w = SALTO_Y * w
-
-            if(realistic[2][counter-2] < 0):
-                phi -= delta_phi
-                #print("salto inverso")
-                w = SALTO_INVERSO * w
-
-
-            fout3.write("\n" + str.format('{0:.8f}', t) + "\t" + str.format('{0:.8f}' , phi) + "\t" + str.format('{0:.8f}' , w))
-
-            realistic[0].append(t) #aggiungo altri punti alla lista
-            realistic[1].append(phi)
-            realistic[2].append(w)
-
+        if(w <= 0 and realistic[2][counter-1] > 0):
+            phi -= delta_phi
+        elif(w >= 0 and realistic[2][counter-1] < 0):
+            phi -= delta_phi
 
         counter += 1
 

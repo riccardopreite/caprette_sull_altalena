@@ -15,7 +15,7 @@ def main():
     utility.symplectic_seated(swing, 20)
 
 
-    realistico = pro.Expert_Children(0.3, 0.0, 2.5, 0.0, 1.0, 1.0, 0.4, 0.6, 1.0)  
+    realistico = pro.Expert_Children(0.3, 0.0, 2.5, 0.0, 1.0, 1.0, 0.4, 0.6, 1.5, 0.1)  
     utility.symplectic_realistic(realistico, 20)  
 
     #utility.rk4(realistico, 20)
