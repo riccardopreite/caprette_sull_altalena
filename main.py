@@ -14,24 +14,24 @@ def main():
     - calculate swing motion and save inside subtype: SwingSubtype.calculateSwing()
     - plot subtype: DrawPlot(swingSubtype)   
     '''
-    print("MAIN")
     # get data from interface
     # TODO multiple interfaces for simulations of multiple swings
     gravity = 9.81
     dissipativeForce = 0.
-    initialPerturbationDegree = 0.01
+    initialSwingDegree = 0.01
     initialAngluarSpeed = 0.0
     maxOscillationDegree = 0.
     massBody = 10.
     heightBody = 1.
     massSwing = 3.
     ropeLength = 2.7
+    # TODO chech environment values
 
     # declare generic enviroment configuration =================================================
     environment = Environment.Environment(
     gravity,
     dissipativeForce,
-    initialPerturbationDegree,
+    initialSwingDegree,
     initialAngluarSpeed,
     maxOscillationDegree,
     massBody,
@@ -62,6 +62,6 @@ def main():
 
 
 
-
+    
 if __name__ == "__main__":
     main()

@@ -2,7 +2,7 @@ import Environment
 import math
 import Utility
 
-class StandingSwing(Environment.Environment):
+class StandingSwing():
     def __init__(self, environment):
         self.environment = environment
 
@@ -16,11 +16,13 @@ class StandingSwing(Environment.Environment):
         self.listRotation_phi = []
         self.listRotation_w = []
 
+        self.coordinates = []
+
 
     '''
     Auxiliry, Calculate standing and squat barycenter from enviroment.bodyHeight and set local vars
     @self = from self.enviroment get bodyHeight
-    @return = null
+    @return = couple of baricenter squat and stand
     '''
     # TODO calculate barycenter based on height
     def getBarycenter(self, enviroment):
