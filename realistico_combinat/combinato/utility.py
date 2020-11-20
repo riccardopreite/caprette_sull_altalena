@@ -135,17 +135,27 @@ def symplectic_realistic(realistic_children, tf):
     l = realistic_children.get_length()
     N = realistic_children.get_N()
 
-    I1 = M*l**2
+    I1 = realistic_children.get_I1()
     I2 = realistic_children.get_I2()
 
-    delta_phi = I2 / (I1+I2) * (math.pi / 2) #incremento angolo
-    delta_phi = 0.08
-    delta = (I2 - N**2) / (I1 - I2 + 2*N**2)
+    theta = realistic_children.get_theta()
+    NUM = I1 - I2
+    DEN = ((I1 + I2)**2 - 4*N**(2)*l**(2))**(1/2)
 
-    print(delta_phi)
-    print(delta)
-    print(delta_phi - delta)
+    NUM_TAN = I1 + I2 + 2*N*l
+    DEN_TAN = I1 + I2 - 2*N*l
+    ARG_TAN = (NUM_TAN / DEN_TAN)**(1/2) * math.tan(theta/2)
 
+    delta_phi = abs(-theta/2 + (NUM/DEN)*math.atan(ARG_TAN))
+
+    TAN_THETA_NUM = N*math.sin(theta)
+    TAN_THETA_DEN = M*l - N*math.cos(theta)
+    THETA = math.atan(TAN_THETA_NUM / TAN_THETA_DEN)
+    #print(THETA)
+
+    SALTO_Y = (I1+I2) / (I1+I2-2*l*N)
+    SALTO_INVERSO = 1 / SALTO_Y
+    #print(SALTO_Y)
     s2 = 0. #per simplettico
 
     counter = 1 #per le liste
@@ -161,33 +171,68 @@ def symplectic_realistic(realistic_children, tf):
 
     while t <= tf:
         t += dt
-        phi = phi + w * dt * 0.5
-        s2 = realistic_children.w_realistic(phi)
-        w +=  dt * s2
-        phi += dt * w * 0.5
-        fout3.write("\n" + str.format('{0:.8f}', t) + "\t" + str.format('{0:.8f}' , phi) + "\t" + str.format('{0:.8f}' , w))
+        if(w <= 0):
+            if(phi >= 0):
+                phi = phi + w * dt * 0.5
+                s2 = realistic_children.w_realistic1(phi)
+                w +=  dt * s2
+                phi += dt * w * 0.5
+                if (realistic[1][counter-2] < 0):
+                    w = SALTO_Y * w
+                    #print("salto1")
 
-        realistic[0].append(t) #aggiungo altri punti alla lista
-        realistic[1].append(phi)
-        realistic[2].append(w)
+            else:
+                phi = phi + w * dt * 0.5
+                s2 = realistic_children.w_realistic1(phi)
+                w +=  dt * s2
+                phi += dt * w * 0.5
+                if (realistic[1][counter-2] > 0):
+                    w = SALTO_Y * w
+                    #print("salto2")
 
-        #se prima la velocità è negativa e poi diventa positiva (cioè sta andando indietro) allora 
-        #diminuisci l'angolo che significa che in valore assoluto aumenta
 
-        if (w >= 0 and realistic[2][counter-1] < 0):
-            phi -= delta_phi
-            realistic_children.set_theta(0.)
-            realistic_children.set_length(l-N)
-            #print("primo salto", phi, seated[1][counter-1])
+            if(realistic[2][counter-2] > 0):
+                phi -= delta_phi
+                w = SALTO_INVERSO * w
+                #print("salto inverso1")
 
-        #se prima la velocità è positiva e poi diventa negativa (cioè sta andando avanti) allora 
-        #aumenta l'angolo
 
-        if (w <= 0 and realistic[2][counter-1] > 0):
-            phi += delta_phi
-            realistic_children.set_theta(math.pi/2)
-            realistic_children.set_length(l)
-            #print("secondo salto", phi, seated[1][counter-1])
+          
+            fout3.write("\n" + str.format('{0:.8f}', t) + "\t" + str.format('{0:.8f}' , phi) + "\t" + str.format('{0:.8f}' , w))
+
+            realistic[0].append(t) #aggiungo altri punti alla lista
+            realistic[1].append(phi)
+            realistic[2].append(w)
+
+        else:
+            if(phi >= 0):
+                phi = phi + w * dt * 0.5
+                s2 = realistic_children.w_realistic2(phi)
+                w +=  dt * s2
+                phi += dt * w * 0.5
+                if (realistic[1][counter-2] < 0):
+                    w = SALTO_Y * w
+                
+            else:
+                phi = phi + w * dt * 0.5
+                s2 = realistic_children.w_realistic2(phi)
+                w +=  dt * s2
+                phi += dt * w * 0.5
+                if (realistic[1][counter-2] > 0):
+                    w = SALTO_Y * w
+
+            if(realistic[2][counter-2] < 0):
+                phi -= delta_phi
+                #print("salto inverso")
+                w = SALTO_INVERSO * w
+
+
+            fout3.write("\n" + str.format('{0:.8f}', t) + "\t" + str.format('{0:.8f}' , phi) + "\t" + str.format('{0:.8f}' , w))
+
+            realistic[0].append(t) #aggiungo altri punti alla lista
+            realistic[1].append(phi)
+            realistic[2].append(w)
+
 
         counter += 1
 
@@ -245,4 +290,101 @@ def plot_():
     #print(plt.style.available)
 
     plt.show()
+
+
+def rk4(realistic_children, tf):
+    c_14 = 1. / 6.
+    c_23 = 2. / 6.
+    t = 0.0
+    phi = realistic_children.get_phi()
+    w = realistic_children.get_w()
+    k1 = k2 = k3 = k4 = l1 = l2 = l3 = l4 = 0 
+
+    l = realistic_children.get_length()
+    N = realistic_children.get_N()
+
+    I1 = realistic_children.get_I1()
+    I2 = realistic_children.get_I2()
+
+    theta = realistic_children.get_theta()
+    NUM = I1 - I2
+    DEN = ((I1 + I2)**2 - 4*N**(2)*l**(2))**(1/2)
+
+    NUM_TAN = I1 + I2 + 2*N*l
+    DEN_TAN = I1 + I2 - 2*N*l
+    ARG_TAN = (NUM_TAN / DEN_TAN)**(1/2) * math.tan(theta/2)
+
+    delta_phi = abs(-theta/2 + (NUM/DEN)*math.atan(ARG_TAN))
+
+    counter = 1
+
+    realistic[0].append(t) #aggiungo i primi termini alla lista
+    realistic[1].append(phi)
+    realistic[2].append(w)
+
+    #print(k1, k2, l1, l2, w, phi)
+    fout = open("pendolum.txt", "w")
+    fout.write("Time(s) \t Phi(rad) \t Angular velocity (rad/s)")
+    fout.write("\n" + str.format('{0:.8f}', t) + "\t" + str.format('{0:.8f}' , phi) + "\t" + str.format('{0:.8f}' , w))
+
+
+    while t <= tf:
+        t += dt
+        if(w <= 0):
+            if(realistic[2][counter-2] > 0):
+                #print(phi)
+                phi += delta_phi
+                #print(phi, counter)
+            k1 = dt * realistic_children.phi_dot(w) #0
+            l1 = dt * realistic_children.w_realistic1(phi) #-g/l phi *dt
+            #print(str(phi + 0.5 * k1))
+            k2 = dt * realistic_children.phi_dot(w + 0.5 * l1)
+            l2 = dt * realistic_children.w_realistic1(phi + 0.5 * k1)
+            k3 = dt * realistic_children.phi_dot(w + 0.5 * l2)
+            l3 = dt * realistic_children.w_realistic1(phi + 0.5 * k2)
+            k4 = dt * realistic_children.phi_dot(w + l3) #l3
+            l4 = dt * realistic_children.w_realistic1(phi + k3)
+
+            #valutazioni di w e phi
+            phi += c_14 * (k1 + k4) + c_23 * (k3 + k2)
+            w += c_14 * (l1 + l4) + c_23 * (l3 + l2)
+
+            realistic[0].append(t) #aggiungo i primi termini alla lista
+            realistic[1].append(phi)
+            realistic[2].append(w)
+
+        else:
+            if(realistic[2][counter-2] > 0):
+                #print(phi)
+                phi -= delta_phi
+                #print(phi, counter)
+            k1 = dt * realistic_children.phi_dot(w) #0
+            l1 = dt * realistic_children.w_realistic2(phi) #-g/l phi *dt
+            #print(str(phi + 0.5 * k1))
+            k2 = dt * realistic_children.phi_dot(w + 0.5 * l1)
+            l2 = dt * realistic_children.w_realistic2(phi + 0.5 * k1)
+            k3 = dt * realistic_children.phi_dot(w + 0.5 * l2)
+            l3 = dt * realistic_children.w_realistic2(phi + 0.5 * k2)
+            k4 = dt * realistic_children.phi_dot(w + l3) #l3
+            l4 = dt * realistic_children.w_realistic2(phi + k3)
+
+            #valutazioni di w e phi
+            phi += c_14 * (k1 + k4) + c_23 * (k3 + k2)
+            w += c_14 * (l1 + l4) + c_23 * (l3 + l2)
+
+            realistic[0].append(t) #aggiungo i primi termini alla lista
+            realistic[1].append(phi)
+            realistic[2].append(w)
+
+        fout.write("\n" + str.format('{0:.8f}', t) + "\t" + str.format('{0:.8f}' , phi) + "\t" + str.format('{0:.8f}' , w))
+        counter += 1
+        
+    realistic_children.set_phi_w(phi, w)
+    #print(a.w, a.phi)
+
+    
+    fout.close()
+    #print(phi, w)
+    print("Il punto si trova ora a", tf, realistic_children.get_phi(), realistic_children.get_w())
+
 
