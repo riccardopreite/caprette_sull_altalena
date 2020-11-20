@@ -12,6 +12,11 @@ standing = [[], [], []]  #tempo, phi, vel angolare
 seated = [[], [], []]
 realistic = [[], [], []]
 
+# liste per RK4
+standing_rk4 =[[],[],[]]
+seated_rk4 = [[],[],[]]
+realistic_rk4 =[[],[],[]]
+
 #incrementoelf.m1 = m1_
       
 dt = 0.001
@@ -201,6 +206,132 @@ def symplectic_realistic(realistic_children, tf):
     print("realistico, tempo (s), phi (rad), w (rad/s): " + str(tf) + " " + str(realistic_children.get_phi()) + " " + str(realistic_children.get_w()))
     #print(tf, seated_children.get_phi(), seated_children.get_w())
 
+#Runge Kutta 4 - standing e seated 
+
+def rk4_standing(standing_children, tf):
+
+    t = 0. # tempo iniziale
+    phi = standing_children.get_phi()    # angolo iniziale
+    w   = standing_children.get_w()     # velocità angolare iniziale
+    lstand = standing_children.get_length_stand()
+    lsquat = standing_children.get_length()
+    counter = 1
+    # apertura file adibito a contenere i valori delle liste 
+    outF1 = open("RK4_standing.txt", "w")
+    outF1.write("Time(s) \t Phi(rad) \t Angular velocity (rad/s)")
+    outF1.write("\n" + str.format('{0:.8f}', t) + "\t" + str.format('{0:.8f}' , phi) + "\t" + str.format('{0:.8f}' , w))
+
+    standing_rk4[0].append(t)
+    standing_rk4[1].append(phi)
+    standing_rk4[2].append(w)
+
+    # pesi dei termini di RK4 (i pedici indicano i termini che pesano: _14 indica che moltiplica il primo e il quarto
+    c_14 = 1/6
+    c_23 = 2/6
+
+    while t<=tf:
+        t+= dt
+
+        k1 = dt*standing_children.phi_dot(w)        
+        l1 = dt*standing_children.w_standing(phi)   # w_seated(phi)
+
+        k2 = dt*standing_children.phi_dot(w + 0.5*k1)
+        l2 = dt*standing_children.w_standing(phi + 0.5*l1)  # w_seated(phi)
+
+        k3 = dt*standing_children.phi_dot(w + 0.5*k2)
+        l3 = dt*standing_children.w_standing(phi + 0.5*l2)  # w_seated(phi)
+
+        k4 = dt*standing_children.phi_dot(w + k3)
+        l4 = dt*standing_children.w_standing(phi + l3)  # w_seated(phi)
+
+        # integrazione 
+        phi += c_14 * (k1 + k4) + c_23 * (k2 + k3)
+        w += c_14 * (l1 + l4) + c_23 * (l2 + l3)
+
+        # scrittura su file 
+        outF1.write("\n" + str.format('{0:.8f}', t) + "\t" + str.format('{0:.8f}' , phi) + "\t" + str.format('{0:.8f}' , w))
+
+        standing_rk4[0].append(t)
+        standing_rk4[1].append(phi)
+        standing_rk4[2].append(w)
+
+        #casisistiche dei salti        
+        if (phi >= 0 and standing_rk4[1][counter-1] < 0) or (phi <= 0 and standing_rk4[1][counter-1] > 0):
+            w = (lsquat/lstand)**2 * w
+            standing_children.set_length(lstand)
+        if (w >= 0 and standing_rk4[2][counter-1] < 0) or (w <= 0 and standing_rk4[2][counter-1] > 0):
+            w = (lstand/lsquat)**2 * w
+            standing_children.set_length(lsquat)
+        counter += 1
+
+    outF1.close()
+    standing_children.set_phi_w(phi,w)
+    print("\nRK4-STANDING:\n")
+    print("tempo (s), phi (rad), w (rad/s): " + str(tf) + " " + str(standing_children.get_phi()) + " " + str(standing_children.get_w())+ "\n")
+
+def rk4_seated(seated_children, tf):
+    t = 0.0
+    
+    phi = seated_children.get_phi() 
+    w = seated_children.get_w() 
+
+    a = seated_children.get_a()
+    l = seated_children.get_length()
+    omega = a**2 / (a**2 + l**2)
+    delta_phi = omega * math.pi / 2 
+    print(delta_phi)
+    
+    counter = 1 
+
+    c_14 = 1/6
+    c_23 = 2/6
+
+    outF2 = open("RK4_seated.txt", "w")
+    outF2.write("Time(s) \t Phi(rad) \t Angular velocity (rad/s)")
+    outF2.write("\n" + str.format('{0:.8f}', t) + "\t" + str.format('{0:.8f}' , phi) + "\t" + str.format('{0:.8f}' , w))
+
+    seated_rk4[0].append(t) 
+    seated_rk4[1].append(phi)
+    seated_rk4[2].append(w)
+
+    while t <= tf:
+        t += dt
+
+        k1 = dt*seated_children.phi_dot(w)        
+        l1 = dt*seated_children.w_seated(phi)   # w_seated(phi)
+
+        k2 = dt*seated_children.phi_dot(w + 0.5*k1)
+        l2 = dt*seated_children.w_seated(phi + 0.5*l1)  # w_seated(phi)
+
+        k3 = dt*seated_children.phi_dot(w + 0.5*k2)
+        l3 = dt*seated_children.w_seated(phi + 0.5*l2)  # w_seated(phi)
+
+        k4 = dt*seated_children.phi_dot(w + k3)
+        l4 = dt*seated_children.w_seated(phi+l3)  # w_seated(phi)
+
+        # integrazione 
+        phi += c_14 * (k1 + k4) + c_23 * (k2 + k3)
+        w += c_14 * (l1 + l4) + c_23 * (l2 + l3)
+
+        # scrittura su file 
+        outF2.write("\n" + str.format('{0:.8f}', t) + "\t" + str.format('{0:.8f}' , phi) + "\t" + str.format('{0:.8f}' , w))
+
+        seated_rk4[0].append(t) 
+        seated_rk4[1].append(phi)
+        seated_rk4[2].append(w)
+
+        # casistiche
+        if (w >= 0 and seated_rk4[2][counter-1] < 0):
+            phi -= delta_phi
+            
+        if (w <= 0 and seated_rk4[2][counter-1] > 0):
+            phi += delta_phi
+            
+        counter += 1
+    outF2.close()
+    seated_children.set_phi_w(phi, w)
+    print("\nRK4 SEATED:\n")
+    print("tempo (s), phi (rad), w (rad/s): " + str(tf) + " " + str(seated_children.get_phi()) + " " + str(seated_children.get_w()) + "\n")
 
 def plot_():
 
