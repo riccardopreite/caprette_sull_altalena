@@ -3,7 +3,7 @@ import Environment
 import math
 
 class SeatedSwing(Environment.Environment):
-    def __init__(self, environment):
+    def __init__(self, environment = None):
         self.environment = environment
         self.bodySegment = (environment.heightBody)/2
 
@@ -35,8 +35,6 @@ class SeatedSwing(Environment.Environment):
     @steps (int) = indicates the nummber of simulation step (tf FLAVIO)
     '''
     def calculateSwingMotion(self,integrationMethode,steps):
-        
+
         if integrationMethode == "symplectic":
             self.environment.utils.symplectic_seated(self,steps)
-
-    

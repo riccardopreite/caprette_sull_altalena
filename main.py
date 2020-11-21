@@ -5,17 +5,18 @@ import SeatedSwing
 import Utility
 import DrawSwing
 import math
+import matplotlib.pylab as plt
+import matplotlib.animation as ani
 
 def main():
-    ''' 
+    '''
     - get data from interface -> {data_enviroment}
     - declare generic SwingMotion: SwingMotion(data_enviroment)
     - declare specifiv subtype: SwingSubtype(SwingMotion)
     - calculate swing motion and save inside subtype: SwingSubtype.calculateSwing()
-    - plot subtype: DrawPlot(swingSubtype)   
+    - plot subtype: DrawPlot(swingSubtype)
     '''
     # get data from interface
-    # TODO multiple interfaces for simulations of multiple swings
     gravity = 9.81
     dissipativeForce = 0.
     initialSwingDegree = 0.01
@@ -38,11 +39,12 @@ def main():
     heightBody,
     massSwing,
     ropeLength)
-
-    # declare specific subtype ==================================================================
     standingSwing = StandingSwing.StandingSwing(environment)
     seatedSwing = SeatedSwing.SeatedSwing(environment)
+    # TODO multiple interfaces for simulations of multiple swings
 
+
+    # declare specific subtype ==================================================================
 
     # calculate swing motion and update local variables =========================================
     no_simulationSteps = 20
@@ -51,17 +53,17 @@ def main():
     no_simulationSteps = 30
     seatedSwing.calculateSwingMotion('symplectic', no_simulationSteps)
 
-  
+
+
+
+
 
     # plots rotations variables =================================================================
     sleep_time = 0
-    drawSwing = DrawSwing.DrawSwing(sleep_time) 
+    drawSwing = DrawSwing.DrawSwing(sleep_time)
 
-    drawSwing.plotGraph(standingSwing)
-    drawSwing.plotGraph(seatedSwing)
-
+    drawSwing.animateGraph(standingSwing)
 
 
-    
 if __name__ == "__main__":
     main()

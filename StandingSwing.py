@@ -3,7 +3,7 @@ import math
 import Utility
 
 class StandingSwing():
-    def __init__(self, environment):
+    def __init__(self, environment = None):
         self.environment = environment
 
         # TODO baricenter should be indipendet from ropeLength <==========
@@ -31,8 +31,8 @@ class StandingSwing():
         lsquat = enviroment.ropeLength
         lstand = lsquat - difference_StandingSquat
 
-        return (lsquat, lstand) 
-        
+        return (lsquat, lstand)
+
 
 
     '''
@@ -42,7 +42,7 @@ class StandingSwing():
     '''
     # TODO change name <===============================
     def get_angularAcceleration(self,phi):
-        self.angularAcceleration = -(self.environment.gravity / self.currentBarycenter) * math.sin(phi) 
+        self.angularAcceleration = -(self.environment.gravity / self.currentBarycenter) * math.sin(phi)
         return self.angularAcceleration
 
 
@@ -55,5 +55,3 @@ class StandingSwing():
 
         if integrationMethod == "symplectic":
             self.environment.utils.symplectic_standing(self,steps)
-
-    
