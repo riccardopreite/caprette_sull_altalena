@@ -49,7 +49,6 @@ class DrawSwing:
 
     def setupFig(self,fig,ax1,pt,pt2,tempListT,tempListW,tempListPHI):
 
-        fig = plt.figure("standing")
         ax1 = plt.subplot(2, 1, 1)
         ax1.set_xlabel(r'$phi (rad)$', fontsize=12)
         ax1.set_ylabel(r'$w (rad/s)$', fontsize=12, labelpad = 25, rotation=0)
@@ -59,31 +58,35 @@ class DrawSwing:
         ax1 = plt.subplot(2, 1, 2)
         ax1.set_xlabel(r'$time (s)$', fontsize=12)
         ax1.set_ylabel(r'$phi (rad)$', fontsize=12,labelpad = 25, rotation=0)
-        plt.xlim(0,20*1.1)
+        plt.xlim(min(tempListT)*1.1,max(tempListT)*1.1)
         plt.ylim(min(tempListPHI)*1.1,max(tempListPHI)*1.1)
 
         pt2, = ax1.plot([],[],'ko', markersize=2, c='r', marker='o')
 
 
-    def animateGraph(self,standingSwing):
+    def animateGraph(self,swing):
+        if(isinstance(swing, StandingSwing.StandingSwing)):
+            name = "standing"
+        elif(isinstance(swing,SeatedSwing.SeatedSwing)):
+            name = "seated"
+
+        fig = plt.figure(name)
         tempListT = []
         tempListW = []
         tempListPHI = []
-        self.makeRange(int(len(standingSwing.listRotation_t)/1000),standingSwing.listRotation_t,tempListT)
-        self.makeRange(int(len(standingSwing.listRotation_w)/1000),standingSwing.listRotation_w,tempListW)
-        self.makeRange(int(len(standingSwing.listRotation_phi)/1000),standingSwing.listRotation_phi,tempListPHI)
+        self.makeRange(int(len(swing.listRotation_t)/1000),swing.listRotation_t,tempListT)
+        self.makeRange(int(len(swing.listRotation_w)/1000),swing.listRotation_w,tempListW)
+        self.makeRange(int(len(swing.listRotation_phi)/1000),swing.listRotation_phi,tempListPHI)
         plt.style.use('ggplot')
-
-        fig = plt.figure("standing")
 
         ax1 = plt.subplot(2, 1, 1)
 
-        pt, = ax1.plot([],[],'ko', markersize=2, c='r', marker='o')
+        pt, = ax1.plot([],[],'-', markersize=3, c='r', marker='o',linewidth=1)
 
         ax1 = plt.subplot(2, 1, 2)
 
-        pt2, = ax1.plot([],[],'ko', markersize=2, c='r', marker='o')
-        self.setupFig(fig,ax1,pt,pt2,tempListT,tempListW,tempListPHI)
+        pt2, = ax1.plot([],[],'-', markersize=3, c='r', marker='o',linewidth=1)
+        self.setupFig(fig,ax1,pt,pt2,swing.listRotation_t,swing.listRotation_w,swing.listRotation_phi)
         def init ():
             pt.set_data([], [])
             return pt,
@@ -98,7 +101,7 @@ class DrawSwing:
         def animateTemp(t):
             pt2.set_data (tempListT[:t], tempListPHI[:t])
             return pt,
-            
+
         animator = ani.FuncAnimation(fig, animate, init_func=init, interval=1)
         animator2 = ani.FuncAnimation(fig, animateTemp, init_func=initTemp, interval=1)
         plt.show()

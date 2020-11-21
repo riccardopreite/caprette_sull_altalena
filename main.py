@@ -50,7 +50,7 @@ def main():
     no_simulationSteps = 20
     standingSwing.calculateSwingMotion("symplectic", no_simulationSteps)
 
-    no_simulationSteps = 30
+    no_simulationSteps = 20
     seatedSwing.calculateSwingMotion('symplectic', no_simulationSteps)
 
 
@@ -63,6 +63,7 @@ def main():
     drawSwing = DrawSwing.DrawSwing(sleep_time)
 
     drawSwing.animateGraph(standingSwing)
+    drawSwing.animateGraph(seatedSwing)
 
 
 if __name__ == "__main__":
