@@ -3,7 +3,7 @@ import math
 import Utility
 
 class StandingSwing():
-    def __init__(self, environment = None):
+    def __init__(self, environment):
         self.environment = environment
 
         # TODO baricenter should be indipendet from ropeLength <==========
@@ -17,6 +17,7 @@ class StandingSwing():
         self.listRotation_w = []
 
         self.coordinates = []
+        self.coordinates_swing = []
 
 
     '''
@@ -28,8 +29,12 @@ class StandingSwing():
     def getBarycenter(self, enviroment):
         difference_StandingSquat = 0.4
 
-        lsquat = enviroment.ropeLength
-        lstand = lsquat - difference_StandingSquat
+        #MODIFICA: DETERMINAZIONE DEL CENTRO DI MASSA DEL BAMBINO A PARTIRE DA ALTEZZA E LUNGHEZZA CORDA
+        # CENTRO DI MASSA QUANDO BIMBO IN PIEDI = LUNGH. CORDA - ALTEZZA/2
+        # QUANDO SI ACCOVACCIA OVVIAMENTE LA DISTANZA TRA CENTRO DI MASSA BAMBINO E FULCRO CORDA AUMENTA
+        # DI UNA DIFFERENCE_STANDINQSQUAT
+        lstand = enviroment.ropeLength - enviroment.heightBody / 2
+        lsquat = lstand + difference_StandingSquat
 
         return (lsquat, lstand)
 
@@ -55,3 +60,5 @@ class StandingSwing():
 
         if integrationMethod == "symplectic":
             self.environment.utils.symplectic_standing(self,steps)
+
+    

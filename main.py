@@ -61,7 +61,13 @@ def main():
     # plots rotations variables =================================================================
     sleep_time = 0
     drawSwing = DrawSwing.DrawSwing(sleep_time)
-
+    # print("STANDING SWING COORDINATES")
+    # print(standingSwing.coordinates_swing)
+    #
+    #
+    # print("SEATED SWING COORDINATES")
+    # print(seatedSwing.coordinates_swing)
+    # drawSwing.plotGraph(standingSwing)
     drawSwing.animateGraph(standingSwing)
     drawSwing.animateGraph(seatedSwing)
 

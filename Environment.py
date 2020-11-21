@@ -5,8 +5,8 @@ import Utility
 Generic Enviroment configuration
 '''
 class Environment:
-    def __init__(self, gravity = 0, dissipativeForce = 0, swingDegree = 0, 
-    angluarSpeed = 0, maxOscillationDegree = 0, massBody = 0, heightBody = 0, massSwing = 0, ropeLength = 0):
+    def __init__(self, gravity, dissipativeForce, swingDegree,
+    angluarSpeed, maxOscillationDegree, massBody, heightBody, massSwing, ropeLength):
         # basic setup
         self.gravity = gravity
         self.dissipativeForce = dissipativeForce

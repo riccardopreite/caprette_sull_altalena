@@ -21,7 +21,7 @@ class Utility:
      def symplectic_standing(self,standingSwing, steps):
         # Aux =====================================================================
         # prev_angularAcceleration = s2
-        prev_angularAcceleration = 0. 
+        prev_angularAcceleration = 0.
         stepCounter = 1
         foutStanding = open("standing.txt", "w")
         foutStanding.write("Time(s)\tPhi(rad)\tAngular velocity (rad/s)")
@@ -30,9 +30,9 @@ class Utility:
         # starting time
         t = 0.0
         # starting angle
-        phi = standingSwing.environment.initialSwingDegree 
+        phi = standingSwing.environment.initialSwingDegree
         # staring angularSpeed
-        w = standingSwing.environment.initialAngluarSpeed 
+        w = standingSwing.environment.initialAngluarSpeed
         # barycenter standing and squat
         lstand = standingSwing.barycenterStanding
         lsquat = standingSwing.barycenterSquat
@@ -42,10 +42,20 @@ class Utility:
         standingSwing.listRotation_phi.append(phi)
         standingSwing.listRotation_w.append(w)
 
-        x = standingSwing.environment.ropeLength*math.sin(phi)
-        y = -(standingSwing.environment.ropeLength*math.cos(phi))
-        coord = (x,y)
+        #MODIFICHE COORDINATE
+
+        #COORD BODY
+        x = standingSwing.currentBarycenter * math.sin(phi)
+        y = -standingSwing.currentBarycenter * math.cos(phi)
+        coord = (x, y)
+
+        #COORD SWING
+        x1 = standingSwing.environment.ropeLength*math.sin(phi)
+        y1 = -(standingSwing.environment.ropeLength*math.cos(phi))
+        coord1 = (x1,y1)
+
         standingSwing.coordinates.append(coord)
+        standingSwing.coordinates_swing.append(coord1)
 
         foutStanding.write("\n" + str.format('{0:.8f}', t) + "\t" + str.format('{0:.8f}' , phi) + "\t" + str.format('{0:.8f}' , w))
 
@@ -64,10 +74,19 @@ class Utility:
             standingSwing.listRotation_phi.append(phi)
             standingSwing.listRotation_w.append(w)
 
-            x = standingSwing.environment.ropeLength*math.sin(phi)
-            y = -(standingSwing.environment.ropeLength*math.cos(phi))
-            coord = (x,y)
+            #MODIFICHE COORDINATE BODY
+
+            x = standingSwing.currentBarycenter * math.sin(phi)
+            y = -standingSwing.currentBarycenter * math.cos(phi)
+            coord = (x, y)
             standingSwing.coordinates.append(coord)
+
+            # MODIFICHE COORDINATE SWING
+
+            x1 = standingSwing.environment.ropeLength*math.sin(phi)
+            y1 = -(standingSwing.environment.ropeLength*math.cos(phi))
+            coord1 = (x1,y1)
+            standingSwing.coordinates_swing.append(coord)
 
             foutStanding.write("\n" + str.format('{0:.8f}', t) + "\t" + str.format('{0:.8f}' , phi) + "\t" + str.format('{0:.8f}' , w))
 
@@ -76,8 +95,8 @@ class Utility:
             startAscendingPhase = (phi >= 0 and standingSwing.listRotation_phi[stepCounter-1] < 0)
             startDescendingPhase = (phi <= 0 and standingSwing.listRotation_phi[stepCounter-1] > 0)
             if startAscendingPhase or startDescendingPhase:
-                w = (lsquat/lstand)**2 * standingSwing.listRotation_w[stepCounter-1] 
-                # change body position 
+                w = (lsquat/lstand)**2 * standingSwing.listRotation_w[stepCounter-1]
+                # change body position
                 standingSwing.currentBarycenter = lstand
 
 
@@ -85,7 +104,7 @@ class Utility:
             reachTop = (w >= 0) and (standingSwing.listRotation_w[stepCounter-1] < 0)
             reachBottom = (w <= 0) and (standingSwing.listRotation_w[stepCounter-1] > 0)
             if reachTop or reachBottom:
-                # change body position 
+                # change body position
                 standingSwing.currentBarycenter = lsquat
 
             stepCounter += 1
@@ -97,11 +116,11 @@ class Utility:
         standingSwing.environment.angularSpeed = w
         standingSwing.environment.swingDegree = phi
 
-        print("Standing, time (s), phi (rad), w (rad/s): " + 
-        str(steps) + " " + str(standingSwing.environment.swingDegree) + " " + 
+        print("Standing, time (s), phi (rad), w (rad/s): " +
+        str(steps) + " " + str(standingSwing.environment.swingDegree) + " " +
         str(standingSwing.environment.angularSpeed))
 
-     
+
      '''
      Given a seatedSwing obj and the simulation steps, sets interal obj lists
      with calculated values
@@ -111,7 +130,7 @@ class Utility:
      '''
      def symplectic_seated(self,seatedSwing,steps):
         # Aux ==================================================================
-        prev_angularAcceleration = 0. 
+        prev_angularAcceleration = 0.
         stepCounter = 1
         foutSeated = open("seated.txt", "w")
         foutSeated.write("Time(s)\tPhi(rad)\tAngular velocity (rad/s)")
@@ -121,13 +140,15 @@ class Utility:
         # starting time
         t = 0.0
         # starting angle
-        phi = seatedSwing.environment.initialSwingDegree 
+        phi = seatedSwing.environment.initialSwingDegree
         # staring angularSpeed
-        w = seatedSwing.environment.initialAngluarSpeed 
+        w = seatedSwing.environment.initialAngluarSpeed
         # a is equal to half of the height
         a = seatedSwing.bodySegment
         l = seatedSwing.environment.ropeLength
-        # angular increasing 
+        #MODIFICHE: starting body rotation angle
+        theta = seatedSwing.degreeBodyRotation
+        # angular increasing
         delta_phi = (a**2 / (a**2 + l**2)) * seatedSwing.degreeBodyRotation
 
         # intial conditions
@@ -137,6 +158,27 @@ class Utility:
 
         # TODO coordinates seated <=============================
         # x,y
+        #MODIFICHE COORDINATE SEATED:
+
+        #UPPER BODY
+        x1 = seatedSwing.environment.ropeLength*math.sin(phi) - seatedSwing.bodySegment*math.sin(phi + seatedSwing.degreeBodyRotation)
+        y1 = -(seatedSwing.environment.ropeLength*math.cos(phi)) + seatedSwing.bodySegment*math.cos(phi + seatedSwing.degreeBodyRotation)
+
+        #LOWER BODY
+        x2 = seatedSwing.environment.ropeLength*math.sin(phi) + seatedSwing.bodySegment*math.sin(phi + seatedSwing.degreeBodyRotation)
+        y2 = -(seatedSwing.environment.ropeLength*math.cos(phi)) - seatedSwing.bodySegment*math.cos(phi + seatedSwing.degreeBodyRotation)
+
+        #SWING
+        x3 = seatedSwing.environment.ropeLength*math.sin(phi)
+        y3 = -(seatedSwing.environment.ropeLength*math.cos(phi))
+        coord_up = (x1, y1)
+        coord_down = (x2, y2)
+        coord_swing = (x3, y3)
+
+        seatedSwing.coordinates_upperBody.append(coord_up)
+        seatedSwing.coordinates_lowerBody.append(coord_down)
+        seatedSwing.coordinates_swing.append(coord_swing)
+
 
         foutSeated.write("\n" + str.format('{0:.8f}', t) + "\t" + str.format('{0:.8f}' , phi) + "\t" + str.format('{0:.8f}' , w))
 
@@ -156,10 +198,41 @@ class Utility:
 
              # TODO coordinates seated <=============================
              # x,y
+            #MODIFICHE COORDINATE SEATED:
+
+            #  SE VA AVANTI SETTARE L'ANGOLO DI ROTAZIONE AD UN CERTO THETA (vel angolare negativa)
+            # THETA VALE PI GRECO MEZZI IN QUESTO CASO MA PENSO SIA PIÙ BELLO LASCIARLO COSÌ
+            if(w <= 0):
+                seatedSwing.degreeBodyRotation = theta
+            else:
+                seatedSwing.degreeBodyRotation = 0.
+            # SE VA INIDETRO SETTARE L'ANGOLO A ZERO (VEL ANGOLARE POSITIVA)
+
+            #CALCOLO COORD SEATED
+
+            #UPPER BODY
+            x1 = seatedSwing.environment.ropeLength*math.sin(phi) - seatedSwing.bodySegment*math.sin(phi + seatedSwing.degreeBodyRotation)
+            y1 = -(seatedSwing.environment.ropeLength*math.cos(phi)) + seatedSwing.bodySegment*math.cos(phi + seatedSwing.degreeBodyRotation)
+
+            #LOWER BODY
+            x2 = seatedSwing.environment.ropeLength*math.sin(phi) + seatedSwing.bodySegment*math.sin(phi + seatedSwing.degreeBodyRotation)
+            y2 = -(seatedSwing.environment.ropeLength*math.cos(phi)) - seatedSwing.bodySegment*math.cos(phi + seatedSwing.degreeBodyRotation)
+
+            #SWING
+            x3 = seatedSwing.environment.ropeLength*math.sin(phi)
+            y3 = -(seatedSwing.environment.ropeLength*math.cos(phi))
+
+            coord_up = (x1, y1)
+            coord_down = (x2, y2)
+            coord_swing = (x3, y3)
+
+            seatedSwing.coordinates_upperBody.append(coord_up)
+            seatedSwing.coordinates_lowerBody.append(coord_down)
+            seatedSwing.coordinates_swing.append(coord_swing)
+
+
 
             foutSeated.write("\n" + str.format('{0:.8f}', t) + "\t" + str.format('{0:.8f}' , phi) + "\t" + str.format('{0:.8f}' , w))
-
-
 
 
             # invert swing motion, 2 cases:
@@ -173,7 +246,7 @@ class Utility:
             # 2. forward motion - decrease in absolute value the angle
             forward = (w <= 0 and seatedSwing.listRotation_w[stepCounter-1] > 0)
             if forward:
-                # lean forward 
+                # lean forward
                 seatedSwing.degreeBodyRotation = math.pi/2
                 phi += delta_phi
 
@@ -184,10 +257,10 @@ class Utility:
         seatedSwing.environment.swingDegree = phi
 
         foutSeated.close()
-        print("seduto, tempo (s), phi (rad), w (rad/s): " + 
+        print("seduto, tempo (s), phi (rad), w (rad/s): " +
         str(steps) + " " + str(seatedSwing.environment.swingDegree) + " " +
         str(seatedSwing.environment.angularSpeed))
 
-    
 
-# ======================= RUNGEKUTA 4 METHODS =======================================
+
+# ======================= RUNGEKUTTA 4 METHODS  =======================================

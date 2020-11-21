@@ -3,7 +3,7 @@ import Environment
 import math
 
 class SeatedSwing(Environment.Environment):
-    def __init__(self, environment = None):
+    def __init__(self, environment):
         self.environment = environment
         self.bodySegment = (environment.heightBody)/2
 
@@ -16,7 +16,12 @@ class SeatedSwing(Environment.Environment):
         self.listRotation_phi = []
         self.listRotation_w = []
 
-        self.coordinates = []
+        #MODIFICHE COORDINATE SEATED.
+        #PER SEATED ABBIAMO DUE PUNTI DA DISEGNARE: HO FATTO 3 LISTE DI COORDIANTE, PARTE ALTA BASSA E ALTALENA
+
+        self.coordinates_upperBody = []
+        self.coordinates_lowerBody = []
+        self.coordinates_swing = []
 
 
     '''
@@ -38,3 +43,5 @@ class SeatedSwing(Environment.Environment):
 
         if integrationMethode == "symplectic":
             self.environment.utils.symplectic_seated(self,steps)
+
+    
