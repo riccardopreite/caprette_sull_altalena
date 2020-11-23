@@ -177,12 +177,12 @@ def symplectic_realistic(realistic_children, tf):
         t += dt
 
         if(w <= 0):
-            realistic_children.set_theta(theta)
-        else: 
             realistic_children.set_theta(theta0)
+        else: 
+            realistic_children.set_theta(theta)
 
         phi = phi + w * dt * 0.5
-        s2 = realistic_children.w_realistic1(phi)
+        s2 = realistic_children.w_realistic(phi)
         w +=  dt * s2
         phi += dt * w * 0.5
 
