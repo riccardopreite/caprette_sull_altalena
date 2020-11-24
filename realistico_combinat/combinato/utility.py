@@ -133,6 +133,8 @@ def symplectic_realistic(realistic_children, tf):
 
     l = realistic_children.get_length()
     N = realistic_children.get_N()
+    b = realistic_children.b
+    c = realistic_children.c
 
     I1 = realistic_children.get_I1()
     I2 = realistic_children.get_I2()
@@ -161,6 +163,25 @@ def symplectic_realistic(realistic_children, tf):
 
     counter = 1 #per le liste
 
+    #UPPER BODY
+    x1 = l*math.sin(phi) - b*math.sin(phi + realistic_children.theta)
+    y1 = -l*math.cos(phi) + b*math.cos(phi + realistic_children.theta)
+
+    #LOWER BODY
+    x2 = l*math.sin(phi) + c*math.sin(phi + realistic_children.theta)
+    y2 = -l*math.cos(phi) - c*math.cos(phi + realistic_children.theta)
+
+    #SWING
+    x3 = l*math.sin(phi)
+    y3 = -l*math.cos(phi)
+    coord_up = (x1, y1)
+    coord_down = (x2, y2)
+    coord_swing = (x3, y3)
+
+    realistic_children.coordinates_upperBody.append(coord_up)
+    realistic_children.coordinates_lowerBody.append(coord_down)
+    realistic_children.coordinates_swing.append(coord_swing)
+
     fout3 = open("realistic.txt", "w")
     fout3.write("Time(s) \t Phi(rad) \t Angular velocity (rad/s)")
     fout3.write("\n" + str.format('{0:.8f}', t) + "\t" + str.format('{0:.8f}' , phi) + "\t" + str.format('{0:.8f}' , w))
@@ -186,12 +207,6 @@ def symplectic_realistic(realistic_children, tf):
         w +=  dt * s2
         phi += dt * w * 0.5
 
-        fout3.write("\n" + str.format('{0:.8f}', t) + "\t" + str.format('{0:.8f}' , phi) + "\t" + str.format('{0:.8f}' , w))
-
-        realistic[0].append(t) #aggiungo altri punti alla lista
-        realistic[1].append(phi)
-        realistic[2].append(w)
-
         if(phi >= 0 and realistic[1][counter-1] < 0):
             w = SALTO_Y * w
         elif(phi <= 0 and realistic[1][counter-1] > 0):
@@ -201,6 +216,31 @@ def symplectic_realistic(realistic_children, tf):
             phi -= delta_phi
         elif(w >= 0 and realistic[2][counter-1] < 0):
             phi -= delta_phi
+
+        #UPPER BODY
+        x1 = l*math.sin(phi) - b*math.sin(phi + realistic_children.theta)
+        y1 = -l*math.cos(phi) + b*math.cos(phi + realistic_children.theta)
+
+        #LOWER BODY
+        x2 = l*math.sin(phi) + c*math.sin(phi + realistic_children.theta)
+        y2 = -l*math.cos(phi) - c*math.cos(phi + realistic_children.theta)
+
+        #SWING
+        x3 = l*math.sin(phi)
+        y3 = -l*math.cos(phi)
+        coord_up = (x1, y1)
+        coord_down = (x2, y2)
+        coord_swing = (x3, y3)
+
+        realistic_children.coordinates_upperBody.append(coord_up)
+        realistic_children.coordinates_lowerBody.append(coord_down)
+        realistic_children.coordinates_swing.append(coord_swing)
+
+        realistic[0].append(t) #aggiungo altri punti alla lista
+        realistic[1].append(phi)
+        realistic[2].append(w)
+
+        fout3.write("\n" + str.format('{0:.8f}', t) + "\t" + str.format('{0:.8f}' , phi) + "\t" + str.format('{0:.8f}' , w))
 
         counter += 1
 

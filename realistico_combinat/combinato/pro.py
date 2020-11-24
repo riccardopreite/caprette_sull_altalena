@@ -14,10 +14,15 @@ class Expert_Children(madre.Swing):
         self.theta0 = theta0_
 
         self.M = self.m1 + self.m2 + self.m3
-        self.N = self.m3 * self.c - self.m2 * self.b
+        self.N = self.m2 * self.b - self.m3 * self.c
 
         self.I1 = self.M * self.length**2
         self.I2 = self.m2 * self.b**2 + self.m3 * self.c**2
+
+        self.coordinates_upperBody = []
+        self.coordinates_lowerBody = []
+        self.coordinates_swing = []
+
 
 
     def set_theta(self, theta_):
@@ -41,7 +46,7 @@ class Expert_Children(madre.Swing):
     def get_I2(self):
         return self.I2
 
-
+    """
     def w_realistic1(self, phi):
         #print(w0_square)
         TAN_THETA_NUM = self.N*math.sin(self.theta)
@@ -57,6 +62,7 @@ class Expert_Children(madre.Swing):
         #print(w0_square)
         self.w_dot = -w0_square * math.sin(phi)
         return self.w_dot
+    """
         
     def w_realistic(self, phi):
         numeratore = (-self.M * self.length * self.g * math.sin(phi) + self.N * self.g * math.sin(self.theta + phi))
