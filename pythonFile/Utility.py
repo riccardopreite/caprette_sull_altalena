@@ -23,11 +23,11 @@ class Utility:
         # prev_angularAcceleration = s2
         prev_angularAcceleration = 0.
         stepCounter = 1
-        foutStanding = open("standing.txt", "w")
+        foutStanding = open("../resultSwing/standing/standing.txt", "w")
         foutStanding.write("Time(s)\tPhi(rad)\tAngular velocity (rad/s)")
-        foutStandingSwingCoord = open("standingswingcoord.txt", "w")
+        foutStandingSwingCoord = open("../resultSwing/standing/standingswingcoord.txt", "w")
         foutStanding.write("x     \ty     \t")
-        foutStandingBodyCoord = open("standingbodycoord.txt", "w")
+        foutStandingBodyCoord = open("../resultSwing/standing/standingbodycoord.txt", "w")
         foutStanding.write("x     \ty     \t")
 
         # variable setpup ==========================================================
@@ -139,9 +139,12 @@ class Utility:
         # Aux ==================================================================
         prev_angularAcceleration = 0.
         stepCounter = 1
-        foutSeated = open("seated.txt", "w")
+        foutSeated = open("../resultSwing/seated/seated.txt", "w")
         foutSeated.write("Time(s)\tPhi(rad)\tAngular velocity (rad/s)")
-
+        foutStandingSwingCoord = open("../resultSwing/seated/standingswingcoord.txt", "w")
+        foutStanding.write("x     \ty     \t")
+        foutStandingBodyCoord = open("../resultSwing/seated/standingbodycoord.txt", "w")
+        foutStanding.write("x     \ty     \t")
 
         # variable setpup =======================================================
         # starting time
@@ -188,7 +191,8 @@ class Utility:
 
 
         foutSeated.write("\n" + str.format('{0:.8f}', t) + "\t" + str.format('{0:.8f}' , phi) + "\t" + str.format('{0:.8f}' , w))
-
+        foutSeatedSwingCoord.write("\n" + str.format('{0:.8f}', x) + "\t" + str.format('{0:.8f}' , y))
+        foutSeatedBodyCoord.write("\n" + str.format('{0:.8f}', x1) + "\t" + str.format('{0:.8f}' , y1))
 
         # updating cycle ========================================================
         while t <= steps:
@@ -240,7 +244,8 @@ class Utility:
 
 
             foutSeated.write("\n" + str.format('{0:.8f}', t) + "\t" + str.format('{0:.8f}' , phi) + "\t" + str.format('{0:.8f}' , w))
-
+            foutSeatedSwingCoord.write("\n" + str.format('{0:.8f}', x) + "\t" + str.format('{0:.8f}' , y))
+            foutSeatedBodyCoord.write("\n" + str.format('{0:.8f}', x1) + "\t" + str.format('{0:.8f}' , y1))
 
             # invert swing motion, 2 cases:
             # 1. backwards motion - increase in absolute value the angle

@@ -16,6 +16,25 @@ var x1Rope2Start = 450, x2Rope2Start = 440, y1Rope2Start = 290, y2Rope2Start = 3
 $( document ).ready(function() {
   console.log( "ready!" );
   var c = document.getElementById("myCanvas");
+  $.ajax({
+    type: "POST",
+    url: "http://localhost:8000/loadInitData",
+    data: {"data":"data2"},
+    dataType: "json",
+    crossDomain : true,
+    username: 'user',
+    password: 'pass', 
+    xhrFields: {
+        withCredentials: true
+    }
+  })
+  .done(function( data ) {
+        console.log("done");
+  })
+  .fail( function(xhr, textStatus, errorThrown) {
+        console.log(xhr.responseText);
+        console.log(textStatus);
+  });
   ctx = c.getContext("2d");
   ctx.beginPath();
 
