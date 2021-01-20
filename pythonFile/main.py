@@ -23,9 +23,9 @@ def main():
     initialAngluarSpeed = 0.0
     maxOscillationDegree = 0.
     massBody = 10.
-    heightBody = 1.
+    heightBody = 100.
     massSwing = 3.
-    ropeLength = 2.7
+    ropeLength = 270
     # TODO chech environment values
 
     # declare generic enviroment configuration =================================================

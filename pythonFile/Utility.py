@@ -25,6 +25,10 @@ class Utility:
         stepCounter = 1
         foutStanding = open("standing.txt", "w")
         foutStanding.write("Time(s)\tPhi(rad)\tAngular velocity (rad/s)")
+        foutStandingSwingCoord = open("standingswingcoord.txt", "w")
+        foutStanding.write("x     \ty     \t")
+        foutStandingBodyCoord = open("standingbodycoord.txt", "w")
+        foutStanding.write("x     \ty     \t")
 
         # variable setpup ==========================================================
         # starting time
@@ -58,6 +62,8 @@ class Utility:
         standingSwing.coordinates_swing.append(coord1)
 
         foutStanding.write("\n" + str.format('{0:.8f}', t) + "\t" + str.format('{0:.8f}' , phi) + "\t" + str.format('{0:.8f}' , w))
+        foutStandingSwingCoord.write("\n" + str.format('{0:.8f}', x) + "\t" + str.format('{0:.8f}' , y))
+        foutStandingBodyCoord.write("\n" + str.format('{0:.8f}', x1) + "\t" + str.format('{0:.8f}' , y1))
 
 
         # updating cycle ============================================================
@@ -89,7 +95,8 @@ class Utility:
             standingSwing.coordinates_swing.append(coord)
 
             foutStanding.write("\n" + str.format('{0:.8f}', t) + "\t" + str.format('{0:.8f}' , phi) + "\t" + str.format('{0:.8f}' , w))
-
+            foutStandingSwingCoord.write("\n" + str.format('{0:.8f}', x) + "\t" + str.format('{0:.8f}' , y))
+            foutStandingBodyCoord.write("\n" + str.format('{0:.8f}', x1) + "\t" + str.format('{0:.8f}' , y1))
             # invert swing directions 2 cases:
             # 1. pass vertical angle (descending or ascending)
             startAscendingPhase = (phi >= 0 and standingSwing.listRotation_phi[stepCounter-1] < 0)

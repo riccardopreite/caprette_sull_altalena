@@ -27,7 +27,7 @@ class StandingSwing():
     '''
     # TODO calculate barycenter based on height
     def getBarycenter(self, enviroment):
-        difference_StandingSquat = 0.4
+        difference_StandingSquat = 40
 
         #MODIFICA: DETERMINAZIONE DEL CENTRO DI MASSA DEL BAMBINO A PARTIRE DA ALTEZZA E LUNGHEZZA CORDA
         # CENTRO DI MASSA QUANDO BIMBO IN PIEDI = LUNGH. CORDA - ALTEZZA/2
@@ -60,5 +60,3 @@ class StandingSwing():
 
         if integrationMethod == "symplectic":
             self.environment.utils.symplectic_standing(self,steps)
-
-    
