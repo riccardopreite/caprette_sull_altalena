@@ -1,21 +1,28 @@
 import math
 import matplotlib.pylab as plt
+from Frame import Frame 
+
 realistic = [[], [], []]
 combinato = [[], [], []]
-class Utility:
 
+
+
+
+class Utility:
      def __init__(self):
         # starting simulation time
         self.time = 0
-
         # time increment
         self.deltaTime = 0.001
+
+        self.STAND = "stand"
+        self.SQUAT = "squat"
+        self.SEAT = "seat"
+        self.LEANBACK = "leanBack"
 
 
 # ======================= SYMPLECTIC METHODS =======================================
 
-
-    #====================STANDIND===================================================
      '''
      Given a standingSwing obj and the simulation steps, sets interal obj lists
      with calculated values
@@ -32,85 +39,80 @@ class Utility:
         foutStanding.write("Time(s)\tPhi(rad)\tAngular velocity (rad/s)")
 
         # variable setpup ==========================================================
-        # starting time
         t = 0.0
-        # starting angle
         phi = standingSwing.environment.initialSwingDegree
-        # staring angularSpeed
+        prev_phi = prev_w = 0
         w = standingSwing.environment.initialAngluarSpeed
-        # barycenter standing and squat
         lstand = standingSwing.barycenterStanding
         lsquat = standingSwing.barycenterSquat
-
-        # intial conditions
-        standingSwing.listRotation_t.append(t)
-        standingSwing.listRotation_phi.append(phi)
-        standingSwing.listRotation_w.append(w)
+        bodyPosition = self.STAND
 
         #MODIFICHE COORDINATE
-
         #COORD BODY
         x = standingSwing.currentBarycenter * math.sin(phi)
         y = -standingSwing.currentBarycenter * math.cos(phi)
-        coord = (x, y)
+        bodyCM = (x, y)
 
         #COORD SWING
         x1 = standingSwing.environment.ropeLength*math.sin(phi)
         y1 = -(standingSwing.environment.ropeLength*math.cos(phi))
-        coord1 = (x1,y1)
+        swingCM = (x1,y1)
 
-        standingSwing.coordinates.append(coord)
-        standingSwing.coordinates_swing.append(coord1)
+        frame = Frame(t, phi, w, bodyCM, bodyPosition, swingCM)
+        standingSwing.frame_list.append(frame)
+        standingSwing.bodyCM_list.append(bodyCM)
 
         foutStanding.write("\n" + str.format('{0:.8f}', t) + "\t" + str.format('{0:.8f}' , phi) + "\t" + str.format('{0:.8f}' , w))
-
 
         # updating cycle ============================================================
         while t <= steps:
             # variables update
+            prev_phi = phi
+            prev_w = w
+            prev_angularAcceleration = standingSwing.get_angularAcceleration(phi)
+
+
             t += self.deltaTime
             phi = phi + w * self.deltaTime * 0.5
-            prev_angularAcceleration = standingSwing.get_angularAcceleration(phi)
             w +=  self.deltaTime * prev_angularAcceleration
             phi += self.deltaTime * w * 0.5
 
-            # update list and file
-            standingSwing.listRotation_t.append(t)
-            standingSwing.listRotation_phi.append(phi)
-            standingSwing.listRotation_w.append(w)
-
             #MODIFICHE COORDINATE BODY
-
             x = standingSwing.currentBarycenter * math.sin(phi)
             y = -standingSwing.currentBarycenter * math.cos(phi)
-            coord = (x, y)
-            standingSwing.coordinates.append(coord)
+            bodyCM = (x, y)
 
             # MODIFICHE COORDINATE SWING
-
             x1 = standingSwing.environment.ropeLength*math.sin(phi)
             y1 = -(standingSwing.environment.ropeLength*math.cos(phi))
-            coord1 = (x1,y1)
-            standingSwing.coordinates_swing.append(coord)
+            swingCM = (x1,y1)
 
             foutStanding.write("\n" + str.format('{0:.8f}', t) + "\t" + str.format('{0:.8f}' , phi) + "\t" + str.format('{0:.8f}' , w))
 
             # invert swing directions 2 cases:
             # 1. pass vertical angle (descending or ascending)
-            startAscendingPhase = (phi >= 0 and standingSwing.listRotation_phi[stepCounter-1] < 0)
-            startDescendingPhase = (phi <= 0 and standingSwing.listRotation_phi[stepCounter-1] > 0)
+            startAscendingPhase = (phi >= 0 and prev_phi < 0)
+            startDescendingPhase = (phi <= 0 and prev_phi > 0)
+
             if startAscendingPhase or startDescendingPhase:
-                w = (lsquat/lstand)**2 * standingSwing.listRotation_w[stepCounter-1]
+                w = (lsquat/lstand)**2 * prev_w
                 # change body position
                 standingSwing.currentBarycenter = lstand
+                bodyPosition = self.STAND 
 
 
             # 2. reach max speed or reach min speed
-            reachTop = (w >= 0) and (standingSwing.listRotation_w[stepCounter-1] < 0)
-            reachBottom = (w <= 0) and (standingSwing.listRotation_w[stepCounter-1] > 0)
+            reachTop = (w >= 0) and (prev_w < 0)
+            reachBottom = (w <= 0) and (prev_w > 0)
             if reachTop or reachBottom:
                 # change body position
                 standingSwing.currentBarycenter = lsquat
+                bodyPosition = self.SQUAT
+
+
+            frame = Frame(t, phi, w, bodyCM, bodyPosition, swingCM)
+            standingSwing.frame_list.append(frame)
+            standingSwing.bodyCM_list.append(bodyCM)
 
             stepCounter += 1
 
@@ -133,7 +135,6 @@ class Utility:
      @steps (int) = number of simulations steps
      @return = null, set internal seatedSwing variables
      '''
-    #====================SEATED===================================================
      def symplectic_seated(self,seatedSwing,steps):
         # Aux ==================================================================
         prev_angularAcceleration = 0.
@@ -145,45 +146,37 @@ class Utility:
         # variable setpup =======================================================
         # starting time
         t = 0.0
-        # starting angle
         phi = seatedSwing.environment.initialSwingDegree
-        # staring angularSpeed
         w = seatedSwing.environment.initialAngluarSpeed
-        # a is equal to half of the height
+        prev_w = 0
         a = seatedSwing.bodySegment
         l = seatedSwing.environment.ropeLength
+        bodyPosition = self.LEANBACK
+     
+
         #MODIFICHE: starting body rotation angle
         theta = seatedSwing.degreeBodyRotation
         # angular increasing
         delta_phi = (a**2 / (a**2 + l**2)) * seatedSwing.degreeBodyRotation
 
-        # intial conditions
-        seatedSwing.listRotation_t.append(t)
-        seatedSwing.listRotation_phi.append(phi)
-        seatedSwing.listRotation_w.append(w)
-
-        # TODO coordinates seated <=============================
-        # x,y
         #MODIFICHE COORDINATE SEATED:
-
         #UPPER BODY
         x1 = seatedSwing.environment.ropeLength*math.sin(phi) - seatedSwing.bodySegment*math.sin(phi + seatedSwing.degreeBodyRotation)
         y1 = -(seatedSwing.environment.ropeLength*math.cos(phi)) + seatedSwing.bodySegment*math.cos(phi + seatedSwing.degreeBodyRotation)
-
         #LOWER BODY
         x2 = seatedSwing.environment.ropeLength*math.sin(phi) + seatedSwing.bodySegment*math.sin(phi + seatedSwing.degreeBodyRotation)
         y2 = -(seatedSwing.environment.ropeLength*math.cos(phi)) - seatedSwing.bodySegment*math.cos(phi + seatedSwing.degreeBodyRotation)
-
+       
         #SWING
         x3 = seatedSwing.environment.ropeLength*math.sin(phi)
         y3 = -(seatedSwing.environment.ropeLength*math.cos(phi))
-        coord_up = (x1, y1)
-        coord_down = (x2, y2)
-        coord_swing = (x3, y3)
+        swingCM = (x3, y3)
+        bodyCM = swingCM
 
-        seatedSwing.coordinates_upperBody.append(coord_up)
-        seatedSwing.coordinates_lowerBody.append(coord_down)
-        seatedSwing.coordinates_swing.append(coord_swing)
+ 
+        frame = Frame(t, phi, w, bodyCM, bodyPosition, swingCM)
+        seatedSwing.frame_list.append(frame)
+        seatedSwing.bodyCM_list.append(bodyCM)
 
 
         foutSeated.write("\n" + str.format('{0:.8f}', t) + "\t" + str.format('{0:.8f}' , phi) + "\t" + str.format('{0:.8f}' , w))
@@ -191,6 +184,7 @@ class Utility:
 
         # updating cycle ========================================================
         while t <= steps:
+            prev_w = w 
 
             t += self.deltaTime
             phi = phi + w * self.deltaTime * 0.5
@@ -198,13 +192,6 @@ class Utility:
             w +=  self.deltaTime * prev_angularAcceleration
             phi += self.deltaTime * w * 0.5
 
-            seatedSwing.listRotation_t.append(t)
-            seatedSwing.listRotation_phi.append(phi)
-            seatedSwing.listRotation_w.append(w)
-
-             # TODO coordinates seated <=============================
-             # x,y
-            #MODIFICHE COORDINATE SEATED:
 
             #  SE VA AVANTI SETTARE L'ANGOLO DI ROTAZIONE AD UN CERTO THETA (vel angolare negativa)
             # THETA VALE PI GRECO MEZZI IN QUESTO CASO MA PENSO SIA PIÙ BELLO LASCIARLO COSÌ
@@ -215,46 +202,43 @@ class Utility:
             # SE VA INIDETRO SETTARE L'ANGOLO A ZERO (VEL ANGOLARE POSITIVA)
 
             #CALCOLO COORD SEATED
-
             #UPPER BODY
             x1 = seatedSwing.environment.ropeLength*math.sin(phi) - seatedSwing.bodySegment*math.sin(phi + seatedSwing.degreeBodyRotation)
             y1 = -(seatedSwing.environment.ropeLength*math.cos(phi)) + seatedSwing.bodySegment*math.cos(phi + seatedSwing.degreeBodyRotation)
-
             #LOWER BODY
             x2 = seatedSwing.environment.ropeLength*math.sin(phi) + seatedSwing.bodySegment*math.sin(phi + seatedSwing.degreeBodyRotation)
             y2 = -(seatedSwing.environment.ropeLength*math.cos(phi)) - seatedSwing.bodySegment*math.cos(phi + seatedSwing.degreeBodyRotation)
+            #BODY CM
+            # bodyCM = ((x1+x2)/2, (y1+y2)/2)
 
             #SWING
             x3 = seatedSwing.environment.ropeLength*math.sin(phi)
             y3 = -(seatedSwing.environment.ropeLength*math.cos(phi))
-
-            coord_up = (x1, y1)
-            coord_down = (x2, y2)
-            coord_swing = (x3, y3)
-
-            seatedSwing.coordinates_upperBody.append(coord_up)
-            seatedSwing.coordinates_lowerBody.append(coord_down)
-            seatedSwing.coordinates_swing.append(coord_swing)
-
-
-
+            swingCM = (x3, y3)
+            bodyCM = swingCM
+           
             foutSeated.write("\n" + str.format('{0:.8f}', t) + "\t" + str.format('{0:.8f}' , phi) + "\t" + str.format('{0:.8f}' , w))
-
 
             # invert swing motion, 2 cases:
             # 1. backwards motion - increase in absolute value the angle
-            backwards = (w >= 0 and seatedSwing.listRotation_w[stepCounter-1] < 0)
+            backwards = (w >= 0 and prev_w < 0)
             if backwards:
                 # lean back
                 seatedSwing.degreeBodyRotation = 0
                 phi -= delta_phi
+                bodyPosition = self.LEANBACK
 
             # 2. forward motion - decrease in absolute value the angle
-            forward = (w <= 0 and seatedSwing.listRotation_w[stepCounter-1] > 0)
+            forward = (w <= 0 and prev_w > 0)
             if forward:
                 # lean forward
                 seatedSwing.degreeBodyRotation = math.pi/2
                 phi += delta_phi
+                bodyPosition = self.SEAT
+
+            frame = Frame(t, phi, w, bodyCM, bodyPosition, swingCM)
+            seatedSwing.frame_list.append(frame)
+            seatedSwing.bodyCM_list.append(bodyCM)
 
             stepCounter += 1
 
@@ -267,15 +251,13 @@ class Utility:
         str(steps) + " " + str(seatedSwing.environment.swingDegree) + " " +
         str(seatedSwing.environment.angularSpeed))
 
-    #====================REALISTIC===================================================
      def symplectic_realistic(self,realistic_children, steps):
          t = 0.0
-         #phi iniziale
          phi = realistic_children.environment.initialSwingDegree
-         #w iniziale
          w = realistic_children.environment.initialAngluarSpeed
-         # a is equal to half of the height
+         prev_w = 0
          l = realistic_children.environment.ropeLength
+         bodyPosition = self.LEANBACK
 
          N = realistic_children.N # QUANTITÀ CHIAMATA N PER SEMPLICITÀ
          b = realistic_children.bodyHeightUpper # lunghezze del corpo (b & c)
@@ -308,32 +290,28 @@ class Utility:
          #UPPER BODY
          x1 = l*math.sin(phi) - b*math.sin(phi + realistic_children.theta)
          y1 = -l*math.cos(phi) + b*math.cos(phi + realistic_children.theta)
-
          #LOWER BODY
          x2 = l*math.sin(phi) + c*math.sin(phi + realistic_children.theta)
          y2 = -l*math.cos(phi) - c*math.cos(phi + realistic_children.theta)
+         # BodyCM
+         bodyCM = ((x1+x2)/2,(y1+y2)/2)
 
          #SWING
          x3 = l*math.sin(phi)
          y3 = -l*math.cos(phi)
-         coord_up = (x1, y1)
-         coord_down = (x2, y2)
-         coord_swing = (x3, y3)
+         swingCM = (x3, y3)
 
-         realistic_children.coordinates_upperBody.append(coord_up)
-         realistic_children.coordinates_lowerBody.append(coord_down)
-         realistic_children.coordinates_swing.append(coord_swing)
+         frame = Frame(t,w,phi,bodyCM,bodyPosition,swingCM)
+         realistic_children.frame_list.append(frame)
+         realistic_children.bodyCM_list.append(bodyCM)
 
          fout3 = open("realistic.txt", "w")
          fout3.write("Time(s) \t Phi(rad) \t Angular velocity (rad/s)")
          fout3.write("\n" + str.format('{0:.8f}', t) + "\t" + str.format('{0:.8f}' , phi) + "\t" + str.format('{0:.8f}' , w))
 
-         realistic[0].append(t) #aggiungo i primi termini alla lista
-         realistic[1].append(phi)
-         realistic[2].append(w)
-
          while t <= steps:
              t += self.deltaTime
+             prev_w = w
 
              #SETTO L'ANGOLO: SE W > 0 BAMBINO VA AVANTI (ANGOLO THETA CIRCA 90 GRADI)
              if(w >= 0):
@@ -348,39 +326,34 @@ class Utility:
 
 
              #SALTO SU ASSE X:
-             if(w <= 0 and realistic[2][counter-1] > 0):
+             if(w <= 0 and prev_w > 0):
                  phi += delta_phi
-
-             elif(w >= 0 and realistic[2][counter-1] < 0):
+                 bodyPosition = self.SEAT
+             elif(w >= 0 and prev_w < 0):
                  phi -= delta_phi
+                 bodyPosition = self.LEANBACK
+
 
              #COORDINATE:
-
              #UPPER BODY
              x1 = l*math.sin(phi) - b*math.sin(phi + realistic_children.theta)
              y1 = -l*math.cos(phi) + b*math.cos(phi + realistic_children.theta)
-
              #LOWER BODY
              x2 = l*math.sin(phi) + c*math.sin(phi + realistic_children.theta)
              y2 = -l*math.cos(phi) - c*math.cos(phi + realistic_children.theta)
+             # Body CM
+             bodyCM = ((x1+x2)/2,(y1+y2)/2)
 
              #SWING
              x3 = l*math.sin(phi)
              y3 = -l*math.cos(phi)
-             coord_up = (x1, y1)
-             coord_down = (x2, y2)
-             coord_swing = (x3, y3)
+             swingCM = (x3, y3)
 
-             realistic_children.coordinates_upperBody.append(coord_up)
-             realistic_children.coordinates_lowerBody.append(coord_down)
-             realistic_children.coordinates_swing.append(coord_swing)
-
-             realistic[0].append(t) #aggiungo altri punti alla lista
-             realistic[1].append(phi)
-             realistic[2].append(w)
+             frame = Frame(t,phi,w,bodyCM,bodyPosition,swingCM)
+             realistic_children.frame_list.append(frame)
+             realistic_children.bodyCM_list.append(bodyCM)
 
              fout3.write("\n" + str.format('{0:.8f}', t) + "\t" + str.format('{0:.8f}' , phi) + "\t" + str.format('{0:.8f}' , w))
-
 
              counter += 1
 
@@ -392,14 +365,14 @@ class Utility:
          #print(tf, seated_children.get_phi(), seated_children.get_w())
 
         #====================COMBINED===================================================
+     
      def symplectic_combined(self,realistic_children, steps):
          t = 0.0
-         #phi iniziale
          phi = realistic_children.environment.initialSwingDegree
-         #w iniziale
+         prev_phi = prev_w = 0
          w = realistic_children.environment.initialAngluarSpeed
-          # a is equal to half of the height
          l = realistic_children.environment.ropeLength
+         bodyPosition = self.LEANBACK
 
          N = realistic_children.N # QUANTITÀ CHIAMATA N PER SEMPLICITÀ
          b = realistic_children.bodyHeightUpper # lunghezze del corpo (b & c)
@@ -437,21 +410,20 @@ class Utility:
          #UPPER BODY
          x1 = l*math.sin(phi) - b*math.sin(phi + realistic_children.theta)
          y1 = -l*math.cos(phi) + b*math.cos(phi + realistic_children.theta)
-
          #LOWER BODY
          x2 = l*math.sin(phi) + c*math.sin(phi + realistic_children.theta)
          y2 = -l*math.cos(phi) - c*math.cos(phi + realistic_children.theta)
+         # BODY CM
+         bodyCM = ((x1+x2)/2,(y1+y2)/2)
 
          #SWING
          x3 = l*math.sin(phi)
          y3 = -l*math.cos(phi)
-         coord_up = (x1, y1)
-         coord_down = (x2, y2)
-         coord_swing = (x3, y3)
+         swingCM = (x3, y3)
 
-         realistic_children.coordinates_upperBody.append(coord_up)
-         realistic_children.coordinates_lowerBody.append(coord_down)
-         realistic_children.coordinates_swing.append(coord_swing)
+        #  realistic_children.coordinates_upperBody.append(coord_up)
+        #  realistic_children.coordinates_lowerBody.append(coord_down)
+        
 
          fout3 = open("combined.txt", "w")
          fout3.write("Time(s) \t Phi(rad) \t Angular velocity (rad/s)")
@@ -461,8 +433,17 @@ class Utility:
          combinato[1].append(phi)
          combinato[2].append(w)
 
+         frame = Frame(t,phi,w,bodyCM,bodyPosition,swingCM)
+         realistic_children.frame_list.append(frame)
+         realistic_children.bodyCM_list.append(bodyCM)
+         
+
          while t <= steps:
              t += self.deltaTime
+             prev_phi = phi
+             prev_w = w
+
+
              #SETTO L'ANGOLO DI THETA PER PRIMA COSA:
              if(w >= 0 and phi <= 0): # BAMBINO VA IN AVANTI: PRIMO QUARTO
                  realistic_children.theta = theta0
@@ -479,41 +460,43 @@ class Utility:
              phi += self.deltaTime * w * 0.5
 
              # SALTO SU ASSE Y:
-             if(phi >= 0 and combinato[1][counter-1] < 0):
+             if(phi >= 0 and prev_phi < 0):
                  w = SALTO_Y * w
-             elif(phi <= 0 and combinato[1][counter-1] > 0):
+                 bodyPosition = self.SEAT
+             elif(phi <= 0 and prev_phi > 0):
                  w = SALTO_Y * w
+                 bodyPosition = self.SEAT
 
              # SALTO SU ASSE X:
-             if(w <= 0 and combinato[2][counter-1] > 0):
+             if(w <= 0 and prev_w > 0):
                  phi -= delta_phi
-             elif(w >= 0 and combinato[2][counter-1] < 0):
+                 bodyPosition = self.LEANBACK
+             elif(w >= 0 and prev_w < 0):
                  phi -= delta_phi
+                 bodyPosition = self.LEANBACK
+
 
              #COORDINATE:
-
              #UPPER BODY
              x1 = l*math.sin(phi) - b*math.sin(phi + realistic_children.theta)
              y1 = -l*math.cos(phi) + b*math.cos(phi + realistic_children.theta)
-
              #LOWER BODY
              x2 = l*math.sin(phi) + c*math.sin(phi + realistic_children.theta)
              y2 = -l*math.cos(phi) - c*math.cos(phi + realistic_children.theta)
+             # BODY CM
+             bodyCM = ((x1+x2)/2,(y1+y2)/2)
 
              #SWING
              x3 = l*math.sin(phi)
              y3 = -l*math.cos(phi)
-             coord_up = (x1, y1)
-             coord_down = (x2, y2)
-             coord_swing = (x3, y3)
+            #  coord_up = (x1, y1)
+            #  coord_down = (x2, y2)
+             swingCM = (x3, y3)
 
-             realistic_children.coordinates_upperBody.append(coord_up)
-             realistic_children.coordinates_lowerBody.append(coord_down)
-             realistic_children.coordinates_swing.append(coord_swing)
 
-             combinato[0].append(t) #aggiungo altri punti alla lista
-             combinato[1].append(phi)
-             combinato[2].append(w)
+             frame = Frame(t,phi,w,bodyCM,bodyPosition,swingCM)
+             realistic_children.frame_list.append(frame)
+             realistic_children.bodyCM_list.append(bodyCM)
 
              fout3.write("\n" + str.format('{0:.8f}', t) + "\t" + str.format('{0:.8f}' , phi) + "\t" + str.format('{0:.8f}' , w))
 
@@ -534,6 +517,7 @@ class Utility:
          t = 0.0
          phi = realistic_children.get_phi()
          w = realistic_children.get_w()
+         bodyPosition = self.LEANBACK
          k1 = k2 = k3 = k4 = l1 = l2 = l3 = l4 = 0
 
          l = realistic_children.get_length()
@@ -543,7 +527,7 @@ class Utility:
          I2 = realistic_children.get_I2()
 
          theta = realistic_children.get_theta()
-         NUM = I1 - I2
+         NUM  = I1 - I2
          DEN = ((I1 + I2)**2 - 4*N**(2)*l**(2))**(1/2)
 
          NUM_TAN = I1 + I2 + 2*N*l

@@ -10,18 +10,14 @@ class SeatedSwing(Environment.Environment):
         # degreeBodyRotation = theta
         self.degreeBodyRotation = math.pi/2
 
-        # TODO change names <=====================
-        # indicates rotations variables
-        self.listRotation_t = []
-        self.listRotation_phi = []
-        self.listRotation_w = []
-
         #MODIFICHE COORDINATE SEATED.
         #PER SEATED ABBIAMO DUE PUNTI DA DISEGNARE: HO FATTO 3 LISTE DI COORDIANTE, PARTE ALTA BASSA E ALTALENA
+        # self.coordinates_upperBody = []
+        # self.coordinates_lowerBody = []
+        # self.coordinates_swing = []
 
-        self.coordinates_upperBody = []
-        self.coordinates_lowerBody = []
-        self.coordinates_swing = []
+        self.frame_list = []
+        self.bodyCM_list = []
 
 
     '''

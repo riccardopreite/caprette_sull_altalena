@@ -11,14 +11,8 @@ class StandingSwing():
         # current body position
         self.currentBarycenter = self.barycenterSquat
 
-        #  rotations variables
-        self.listRotation_t = []
-        self.listRotation_phi = []
-        self.listRotation_w = []
-
-        self.coordinates = []
-        self.coordinates_swing = []
-
+        self.frame_list = []
+        self.bodyCM_list = []
 
     '''
     Auxiliry, Calculate standing and squat barycenter from enviroment.bodyHeight and set local vars
