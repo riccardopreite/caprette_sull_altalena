@@ -1,30 +1,64 @@
+import Environment
 import math
-import SwingMotion
 import Utility
 
-class StandingSwing(SwingMotion.SwingMotion):
-    #angularAcceleration sarebbe w_dot
-    barycenterSquat = barycenterStanding = angularAcceleration = 0.
-    swingMotion = None
-    def __init__(self,swingMotion):
-        #istanzia oggetto initialPerturbationDegree
-        # SwingMotion.SwingMotion(self)
-        self.swingMotion = swingMotion
-        self.barycenterSquat = self.swingMotion.ropeLength#e' giusto che il baricentro in squat sia uguale alla lunghezza della corda?
-        self.barycenterStanding = self.swingMotion.ropeLength - 0.4 # la differenza fra il baricentro in piedi e in squat era di 0.4
+class StandingSwing():
+    def __init__(self, environment):
+        self.environment = environment
 
-    def getBarycenter(self):
-        #calculate from height from parent and create barycenter in sqaut position and standind position
-        #self.barycenterSquat = parent.height
-        #self.barycenterStanding = 0
-        pass
+        # TODO baricenter should be indipendet from ropeLength <==========
+        (self.barycenterSquat, self.barycenterStanding) = self.getBarycenter(self.environment)
+        # current body position
+        self.currentBarycenter = self.barycenterSquat
 
-    def swingStanding(self,integrationMethode,steps):
-        utils = Utility.Utility()
-        if integrationMethode == "symplectic":
-            utils.symplectic_standing(self,steps)
-            # utils.plot_Standing()
+        #  rotations variables
+        self.listRotation_t = []
+        self.listRotation_phi = []
+        self.listRotation_w = []
 
-    def angularAccelerationStanding(self, phi):
-        self.angularAcceleration = -(self.swingMotion.gravity / self.barycenterSquat) * math.sin(phi) #bisogna che ogni metà giro ci sia un cambio. cioè fino a metà sto piegato e allora va bene squat, poi mi alzo e allora dovrei avere stand, poi mi riabbasso e torno squat ecc ecc..
+        self.coordinates = []
+        self.coordinates_swing = []
+
+
+    '''
+    Auxiliry, Calculate standing and squat barycenter from enviroment.bodyHeight and set local vars
+    @self = from self.enviroment get bodyHeight
+    @return = couple of baricenter squat and stand
+    '''
+    # TODO calculate barycenter based on height
+    def getBarycenter(self, enviroment):
+        difference_StandingSquat = 0.4
+
+        #MODIFICA: DETERMINAZIONE DEL CENTRO DI MASSA DEL BAMBINO A PARTIRE DA ALTEZZA E LUNGHEZZA CORDA
+        # CENTRO DI MASSA QUANDO BIMBO IN PIEDI = LUNGH. CORDA - ALTEZZA/2
+        # QUANDO SI ACCOVACCIA OVVIAMENTE LA DISTANZA TRA CENTRO DI MASSA BAMBINO E FULCRO CORDA AUMENTA
+        # DI UNA DIFFERENCE_STANDINQSQUAT
+        lstand = enviroment.ropeLength - enviroment.heightBody / 2
+        lsquat = lstand + difference_StandingSquat
+
+        return (lsquat, lstand)
+
+
+
+    '''
+    Auxiliry, express the change in angular speed given the phi angle
+    @phi (int) = indicates the angle where the swingMotion is performed
+    @return (int) = the new angularAcceleration value
+    '''
+    # TODO change name <===============================
+    def get_angularAcceleration(self,phi):
+        self.angularAcceleration = -(self.environment.gravity / self.currentBarycenter) * math.sin(phi)
         return self.angularAcceleration
+
+
+    '''
+    Calculate Swing motion and set local list of rotation variables
+    @integrationMethod (string) = ['symplectic','rk4']
+    @steps (int) = indicates the nummber of simulation step (tf FLAVIO)
+    '''
+    def calculateSwingMotion(self,integrationMethod,steps):
+
+        if integrationMethod == "symplectic":
+            self.environment.utils.symplectic_standing(self,steps)
+
+    
