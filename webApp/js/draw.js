@@ -16,25 +16,7 @@ var x1Rope2Start = 450, x2Rope2Start = 440, y1Rope2Start = 290, y2Rope2Start = 3
 $( document ).ready(function() {
   console.log( "ready!" );
   var c = document.getElementById("myCanvas");
-  $.ajax({
-    type: "POST",
-    url: "http://localhost:8000/loadInitData",
-    data: {"data":"data2"},
-    dataType: "json",
-    crossDomain : true,
-    username: 'user',
-    password: 'pass', 
-    xhrFields: {
-        withCredentials: true
-    }
-  })
-  .done(function( data ) {
-        console.log("done");
-  })
-  .fail( function(xhr, textStatus, errorThrown) {
-        console.log(xhr.responseText);
-        console.log(textStatus);
-  });
+
   ctx = c.getContext("2d");
   ctx.beginPath();
 
@@ -47,6 +29,33 @@ $( document ).ready(function() {
 
 
 });
+function uploadData(){
+  var gravity = document.getElementById("gravity").value;
+  var ropeLength = document.getElementById("ropeLength").value;
+  var babyHeight = document.getElementById("babyHeight").value;
+  var babyWeigth = document.getElementById("babyWeigth").value;
+  var swingType = {};
+  var index = 0;
+
+  while(index < 4){
+
+    let check = document.getElementById("checkboxType"+index);
+    if(check.checked) $.extend(swingType, check.value);
+    index++;
+
+  }
+  var formData = new FormData();
+  console.log(gravity);
+  formData.append("gravity", gravity);
+  formData.append("ropeLength", ropeLength);
+  formData.append("babyHeight", babyHeight);
+  formData.append("babyWeigth", babyWeigth);
+  formData.append("swingType", swingType);
+  console.log(formData);
+  var request = new XMLHttpRequest();
+  request.open("POST", "http://localhost:8000/handle_form");
+  request.send(formData);
+}
 function drawAgain(){
   degrees+=1
   height-=1

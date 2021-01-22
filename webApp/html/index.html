@@ -1,0 +1,56 @@
+<html>
+  <head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="js/draw.js"></script>
+  </head>
+  <body>
+    <div style="width:65%;height:200px; padding-left:5%;float:left;">
+
+    <!-- <form action="http://localhost:8000/handle_form" method="post" role="form"> -->
+      <div class="form-group" style="float:left; width:40%;">
+        <label for="gravity">Forza di gravita'</label>
+        <input name="gravity" type="numer" class="form-control" id="gravity" aria-describedby="gravity" placeholder="Enter gravity">
+        <small id="gravityHelp" class="form-text text-muted">Forza che imprime la gravita in m/s**2</small>
+        <label for="ropeLength">Lunghezza corda</label>
+        <input name="ropeLength" type="numer" class="form-control" id="ropeLength" aria-describedby="ropeLength" placeholder="Enter rope length">
+        <small id="ropeLengthHelp" class="form-text text-muted">Lunghezza corda in metri</small>
+
+      </div>
+      <div class="form-group" style="float:right; width:40%; padding-right:1em;">
+        <label for="babyHeight">Altezza bambino</label>
+        <input name="babyHeight" type="numer" class="form-control" id="babyHeight" aria-describedby="babyHeight" placeholder="Enter child Height">
+        <small id="babyHeightHelp" class="form-text text-muted">Altezza del bambino in metri</small>
+        <label for="babyWeigth">Peso bambino</label>
+        <input name="babyWeigth" type="numer" class="form-control" id="babyWeigth" aria-describedby="babyWeigth" placeholder="Enter child Weigth">
+        <small id="babyWeigthHelp" class="form-text text-muted">Peso del bambino in kg</small>
+      </div>
+    </div>
+    <div style="width:35%;height:200px; padding-right:5%; float:left; padding-top:2em;">
+
+      <!-- <form action="http://localhost:8000/handle_form" method="post" role="form"> -->
+
+      <div class="btn-group dropright">
+        <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Dropright
+        </button>
+        <ul class="dropdown-menu">
+          <li style="padding-left:0.5em;"><input type="checkbox" id="checkboxType0"/><label style="padding-left:0.5em;">Standing</label></li>
+          <li style="padding-left:0.5em;"><input type="checkbox" id="checkboxType1"/><label style="padding-left:0.5em;">Seated</label></li>
+          <li style="padding-left:0.5em;"><input type="checkbox" id="checkboxType2"/><label style="padding-left:0.5em;">Realistic</label></li>
+          <li style="padding-left:0.5em;"><input type="checkbox" id="checkboxType3"/><label style="padding-left:0.5em;">Combined</label></li>
+        </ul>
+      </div>
+      <div style="padding-top:3.5em;padding-left:85%;">
+        <button type="submit" class="btn btn-primary" onclick="uploadData()">Submit</button>
+      </div>
+    </div>
+    <div style="text-align:center">
+      <canvas id="myCanvas" width="800" height="600" style="border: 1px solid black;"></canvas>
+    </div>
+    <button onclick="drawAgain()">CLICK ME</button>
+  </body>
+</html>
