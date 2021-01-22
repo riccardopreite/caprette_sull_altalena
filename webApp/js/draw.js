@@ -37,14 +37,16 @@ function uploadData(){
   var swingType = {};
   var index = 0;
 
+  var formData = new FormData();
   while(index < 4){
 
     let check = document.getElementById("checkboxType"+index);
-    if(check.checked) $.extend(swingType, check.value);
+    let label = document.getElementById("labelType"+index);
+    if(check.checked) formData.append(label.innerHTML, 1)
+    else formData.append(label.innerHTML, 0)
     index++;
 
   }
-  var formData = new FormData();
   console.log(gravity);
   formData.append("gravity", gravity);
   formData.append("ropeLength", ropeLength);

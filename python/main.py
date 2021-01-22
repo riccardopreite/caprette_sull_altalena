@@ -48,7 +48,7 @@ def main():
     ropeLength)
     standingSwing = StandingSwing.StandingSwing(environment)
     seatedSwing = SeatedSwing.SeatedSwing(environment)
-    realisticSwing = RealisticSwing.RealisticSwing(environment, swingMass, massUpper, massLower, bodyHeightUpper, bodyHeightLower, theta, theta0)
+    realisticSwing = RealisticSwing.RealisticSwing(environment, massSwing, massUpper, massLower, bodyHeightUpper, bodyHeightLower, theta, theta0)
     # TODO multiple interfaces for simulations of multiple swings
 
 

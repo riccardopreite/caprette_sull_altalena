@@ -1,8 +1,7 @@
-import Environment
 import math
-import Utility
+from . import Environment
 
-class StandingSwing():
+class StandingSwing(Environment.Environment):
     def __init__(self, environment):
         self.environment = environment
 
@@ -54,5 +53,3 @@ class StandingSwing():
 
         if integrationMethod == "symplectic":
             self.environment.utils.symplectic_standing(self,steps)
-
-    

@@ -1,6 +1,8 @@
 import math
 import matplotlib.pylab as plt
-from Frame import Frame
+from . import Frame
+import pathlib
+root = str(pathlib.Path().absolute())
 
 realistic = [[], [], []]
 combinato = [[], [], []]
@@ -35,7 +37,7 @@ class Utility:
         # prev_angularAcceleration = s2
         prev_angularAcceleration = 0.
         stepCounter = 1
-        foutStanding = open("result/standing.txt", "w")
+        foutStanding = open(root + "/python/result/standing.txt", "w")
         foutStanding.write("Time(s)\tPhi(rad)\tAngular velocity (rad/s)")
 
         # variable setpup ==========================================================
@@ -58,7 +60,7 @@ class Utility:
         y1 = -(standingSwing.environment.ropeLength*math.cos(phi))
         swingCM = (x1,y1)
 
-        frame = Frame(t, phi, w, bodyCM, bodyPosition, swingCM)
+        frame = Frame.Frame(t, phi, w, bodyCM, bodyPosition, swingCM)
         standingSwing.frame_list.append(frame)
         standingSwing.bodyCM_list.append(bodyCM)
 
@@ -110,7 +112,7 @@ class Utility:
                 bodyPosition = self.SQUAT
 
 
-            frame = Frame(t, phi, w, bodyCM, bodyPosition, swingCM)
+            frame = Frame.Frame(t, phi, w, bodyCM, bodyPosition, swingCM)
             standingSwing.frame_list.append(frame)
             standingSwing.bodyCM_list.append(bodyCM)
 
@@ -139,7 +141,7 @@ class Utility:
         # Aux ==================================================================
         prev_angularAcceleration = 0.
         stepCounter = 1
-        foutSeated = seated.txt", "w")
+        foutSeated = open(root + "/python/result/seated.txt", "w")
         foutSeated.write("Time(s)\tPhi(rad)\tAngular velocity (rad/s)")
 
 
@@ -174,7 +176,7 @@ class Utility:
         bodyCM = swingCM
 
 
-        frame = Frame(t, phi, w, bodyCM, bodyPosition, swingCM)
+        frame = Frame.Frame(t, phi, w, bodyCM, bodyPosition, swingCM)
         seatedSwing.frame_list.append(frame)
         seatedSwing.bodyCM_list.append(bodyCM)
 
@@ -236,7 +238,7 @@ class Utility:
                 phi += delta_phi
                 bodyPosition = self.SEAT
 
-            frame = Frame(t, phi, w, bodyCM, bodyPosition, swingCM)
+            frame = Frame.Frame(t, phi, w, bodyCM, bodyPosition, swingCM)
             seatedSwing.frame_list.append(frame)
             seatedSwing.bodyCM_list.append(bodyCM)
 
@@ -301,11 +303,11 @@ class Utility:
          y3 = -l*math.cos(phi)
          swingCM = (x3, y3)
 
-         frame = Frame(t,w,phi,bodyCM,bodyPosition,swingCM)
+         frame = Frame.Frame(t,w,phi,bodyCM,bodyPosition,swingCM)
          realistic_children.frame_list.append(frame)
          realistic_children.bodyCM_list.append(bodyCM)
 
-         fout3 = realistic.txt", "w")
+         fout3 = open(root + "/python/result/realistic.txt", "w")
          fout3.write("Time(s) \t Phi(rad) \t Angular velocity (rad/s)")
          fout3.write("\n" + str.format('{0:.8f}', t) + "\t" + str.format('{0:.8f}' , phi) + "\t" + str.format('{0:.8f}' , w))
 
@@ -349,7 +351,7 @@ class Utility:
              y3 = -l*math.cos(phi)
              swingCM = (x3, y3)
 
-             frame = Frame(t,phi,w,bodyCM,bodyPosition,swingCM)
+             frame = Frame.Frame(t,phi,w,bodyCM,bodyPosition,swingCM)
              realistic_children.frame_list.append(frame)
              realistic_children.bodyCM_list.append(bodyCM)
 
@@ -425,7 +427,7 @@ class Utility:
         #  realistic_children.coordinates_lowerBody.append(coord_down)
 
 
-         fout3 = combined.txt", "w")
+         fout3 = open(root + "/python/result/combined.txt", "w")
          fout3.write("Time(s) \t Phi(rad) \t Angular velocity (rad/s)")
          fout3.write("\n" + str.format('{0:.8f}', t) + "\t" + str.format('{0:.8f}' , phi) + "\t" + str.format('{0:.8f}' , w))
 
@@ -433,7 +435,7 @@ class Utility:
          combinato[1].append(phi)
          combinato[2].append(w)
 
-         frame = Frame(t,phi,w,bodyCM,bodyPosition,swingCM)
+         frame = Frame.Frame(t,phi,w,bodyCM,bodyPosition,swingCM)
          realistic_children.frame_list.append(frame)
          realistic_children.bodyCM_list.append(bodyCM)
 
@@ -494,7 +496,7 @@ class Utility:
              swingCM = (x3, y3)
 
 
-             frame = Frame(t,phi,w,bodyCM,bodyPosition,swingCM)
+             frame = Frame.Frame(t,phi,w,bodyCM,bodyPosition,swingCM)
              realistic_children.frame_list.append(frame)
              realistic_children.bodyCM_list.append(bodyCM)
 
@@ -543,7 +545,7 @@ class Utility:
          realistic[2].append(w)
 
          #print(k1, k2, l1, l2, w, phi)
-         fout = pendolum.txt", "w")
+         fout = open(root + "/python/result/pendolum.txt", "w")
          fout.write("Time(s) \t Phi(rad) \t Angular velocity (rad/s)")
          fout.write("\n" + str.format('{0:.8f}', t) + "\t" + str.format('{0:.8f}' , phi) + "\t" + str.format('{0:.8f}' , w))
 

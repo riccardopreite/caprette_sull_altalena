@@ -1,6 +1,5 @@
-
-import Environment
 import math
+from . import Environment
 
 class SeatedSwing(Environment.Environment):
     def __init__(self, environment):
@@ -39,5 +38,3 @@ class SeatedSwing(Environment.Environment):
 
         if integrationMethode == "symplectic":
             self.environment.utils.symplectic_seated(self,steps)
-
-    

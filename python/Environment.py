@@ -1,5 +1,5 @@
 import math
-import Utility
+from . import Utility
 
 '''
 Generic Enviroment configuration

@@ -1,8 +1,7 @@
 import math
-import SwingMotion
-import Utility
+from . import Environment
 
-class RealisticSwing(SwingMotion.SwingMotion):
+class RealisticSwing(Environment.Environment):
     I2 = N = totalMass =I1 = swingMass = bodyHeightUpper = bodyHeightLower = massUpper = massLower = degreeBodyRotation = 0.
     swingMotion = None
     def __init__(self, environment, swingMass, massUpper, massLower,bodyHeightUpper,bodyHeightLower, theta, theta0):
