@@ -8,7 +8,7 @@ realistic = [[], [], []]
 combinato = [[], [], []]
 
 
-
+#DO FRAME CHANGE FOR ALL METHODE 
 
 class Utility:
      def __init__(self):
@@ -53,14 +53,18 @@ class Utility:
         #COORD BODY
         x = standingSwing.currentBarycenter * math.sin(phi)
         y = -standingSwing.currentBarycenter * math.cos(phi)
-        bodyCM = (x, y)
+        # bodyCM = (x, y)
+        bodyCM = {"x":x,"y":y}
 
         #COORD SWING
         x1 = standingSwing.environment.ropeLength*math.sin(phi)
         y1 = -(standingSwing.environment.ropeLength*math.cos(phi))
-        swingCM = (x1,y1)
+        # swingCM = (x1,y1)
+        swingCM = {"x":x1,"y":y1}
 
-        frame = Frame.Frame(t, phi, w, bodyCM, bodyPosition, swingCM)
+        # frame = Frame.Frame(t, phi, w, bodyCM, bodyPosition, swingCM)
+        frame = {"t":t, "phi":phi, "w":w, "bodyCM":bodyCM, "bodyPosition":bodyPosition, "swingCM":swingCM}
+
         standingSwing.frame_list.append(frame)
         standingSwing.bodyCM_list.append(bodyCM)
 
@@ -82,12 +86,14 @@ class Utility:
             #MODIFICHE COORDINATE BODY
             x = standingSwing.currentBarycenter * math.sin(phi)
             y = -standingSwing.currentBarycenter * math.cos(phi)
-            bodyCM = (x, y)
+            # bodyCM = (x, y)
+            bodyCM = {"x":x,"y":y}
 
             # MODIFICHE COORDINATE SWING
             x1 = standingSwing.environment.ropeLength*math.sin(phi)
             y1 = -(standingSwing.environment.ropeLength*math.cos(phi))
-            swingCM = (x1,y1)
+            # swingCM = (x1,y1)
+            swingCM = {"x":x1,"y":y1}
 
             foutStanding.write("\n" + str.format('{0:.8f}', t) + "\t" + str.format('{0:.8f}' , phi) + "\t" + str.format('{0:.8f}' , w))
 
@@ -111,8 +117,8 @@ class Utility:
                 standingSwing.currentBarycenter = lsquat
                 bodyPosition = self.SQUAT
 
-
-            frame = Frame.Frame(t, phi, w, bodyCM, bodyPosition, swingCM)
+            # frame = Frame.Frame(t, phi, w, bodyCM, bodyPosition, swingCM)
+            frame = {"t":t, "phi":phi, "w":w, "bodyCM":bodyCM, "bodyPosition":bodyPosition, "swingCM":swingCM}
             standingSwing.frame_list.append(frame)
             standingSwing.bodyCM_list.append(bodyCM)
 

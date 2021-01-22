@@ -58,13 +58,15 @@ def handle_form():
      theta, theta0
     )
 
-    ret = []
+    ret = {}
     # ret = json.loads({''})
     no_simulationSteps = 20
     if standing == True:
         standingSwing.calculateSwingMotion("symplectic", no_simulationSteps)
-        ret.append(standingSwing.frame_list)
-        ret.append(standingSwing.bodyCM_list)
+        ret["standing"] = {
+        "frame_list":standingSwing.frame_list,
+        "bodyCM_list":standingSwing.bodyCM_list
+        }
     if seated == True :
         seatedSwing.calculateSwingMotion('symplectic', no_simulationSteps)
         ret.append(seatedSwing.frame_list)

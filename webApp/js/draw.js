@@ -55,6 +55,13 @@ function uploadData(){
   formData.append("swingType", swingType);
   console.log(formData);
   var request = new XMLHttpRequest();
+  request.onreadystatechange = function() {
+    if (request.readyState == XMLHttpRequest.DONE) {
+      //transform to json
+      console.log(transform to json);
+        console.log(request.responseText);
+    }
+  }
   request.open("POST", "http://localhost:8000/handle_form");
   request.send(formData);
 }
