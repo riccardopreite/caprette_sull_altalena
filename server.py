@@ -34,10 +34,10 @@ def handle_form():
     heightBody = float(form["babyHeight"])
     massBody = float(form["babyWeigth"])/10
     ropeLength = float(form["ropeLength"])
-    standing = bool(int(form["Standing"]))
-    seated = bool(int(form["Seated"]))
-    realistic = bool(int(form["Realistic"]))
-    combined = bool(int(form["Combined"]))
+    standing = bool(int(form["standing"]))
+    seated = bool(int(form["seated"]))
+    realistic = bool(int(form["realistic"]))
+    combined = bool(int(form["combined"]))
 
     massUpper = massBody/2
     massLower = massBody/2
@@ -63,24 +63,31 @@ def handle_form():
     no_simulationSteps = 20
     if standing == True:
         standingSwing.calculateSwingMotion("symplectic", no_simulationSteps)
-        ret["standing"] = {
-        "frame_list":standingSwing.frame_list,
-        "bodyCM_list":standingSwing.bodyCM_list
-        }
+        ret["standing"] = []
+        ret["standing"].append(standingSwing.frame_list)
+        ret["standing"].append(standingSwing.bodyCM_list)
+
     if seated == True :
         seatedSwing.calculateSwingMotion('symplectic', no_simulationSteps)
-        ret.append(seatedSwing.frame_list)
-        ret.append(seatedSwing.bodyCM_list)
+        ret["seated"] = []
+        ret["seated"].append(standingSwing.frame_list)
+        ret["seated"].append(standingSwing.bodyCM_list)
     if realistic == True:
         realisticSwing.calculateSwingMotion("realistic", no_simulationSteps)
-        ret.append(realisticSwing.frame_list)
-        ret.append(realisticSwing.bodyCM_list)
+        ret["realistic"] = []
+        ret["realistic"].append(standingSwing.frame_list)
+        ret["realistic"].append(standingSwing.bodyCM_list)
     if combined == True:
         realisticSwing.calculateSwingMotion('combined', no_simulationSteps)
-        ret.append(realisticSwing.frame_list)
-        ret.append(realisticSwing.bodyCM_list)
-    print(ret)
-    return make_response(json.dumps(ret))
+        ret["combined"] = []
+        ret["combined"].append(standingSwing.frame_list)
+        ret["combined"].append(standingSwing.bodyCM_list)
+    response = app.response_class(
+        response=json.dumps(ret),
+        status=200,
+        mimetype='application/json'
+    )
+    return response
 
 @app.route('/')
 def index():

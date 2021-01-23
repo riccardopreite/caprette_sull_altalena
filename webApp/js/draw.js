@@ -34,6 +34,12 @@ function uploadData(){
   var ropeLength = document.getElementById("ropeLength").value;
   var babyHeight = document.getElementById("babyHeight").value;
   var babyWeigth = document.getElementById("babyWeigth").value;
+  //Default value
+  if(gravity = "") gravity = 9.81
+  if(ropeLength = "") ropeLength = 2.7
+  if(babyHeight = "") babyHeight = 1
+  if(babyWeigth = "") babyWeigth = 20
+
   var swingType = {};
   var index = 0;
 
@@ -42,28 +48,39 @@ function uploadData(){
 
     let check = document.getElementById("checkboxType"+index);
     let label = document.getElementById("labelType"+index);
-    if(check.checked) formData.append(label.innerHTML, 1)
-    else formData.append(label.innerHTML, 0)
+    if(check.checked) formData.append(label.innerHTML.toLowerCase(), 1)
+    else formData.append(label.innerHTML.toLowerCase(), 0)
     index++;
 
   }
-  console.log(gravity);
+  if(Object.keys(swingType).length == 0){
+    alert("Inserisci almeno un tipo di movimento!")
+    return;
+  }
   formData.append("gravity", gravity);
   formData.append("ropeLength", ropeLength);
   formData.append("babyHeight", babyHeight);
   formData.append("babyWeigth", babyWeigth);
   formData.append("swingType", swingType);
-  console.log(formData);
-  var request = new XMLHttpRequest();
-  request.onreadystatechange = function() {
-    if (request.readyState == XMLHttpRequest.DONE) {
-      //transform to json
-      console.log(transform to json);
-        console.log(request.responseText);
+
+  $.ajax({
+    url: "http://localhost:8000/handle_form",
+    processData: false,
+    contentType: false,
+    data: formData,
+    type: "POST",
+    success: function(result){
+      var index = 0;
+      while(index < 4){
+        let check = document.getElementById("checkboxType"+index);
+        let label = document.getElementById("labelType"+index);
+        if(check.checked) console.log(result[label.innerHTML.toLowerCase()]);
+        console.log("fine giro");
+        index++;
+      }
+      console.log(result);
     }
-  }
-  request.open("POST", "http://localhost:8000/handle_form");
-  request.send(formData);
+  });
 }
 function drawAgain(){
   degrees+=1
