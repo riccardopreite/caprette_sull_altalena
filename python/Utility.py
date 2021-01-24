@@ -1,6 +1,5 @@
 import math
 import matplotlib.pylab as plt
-from . import Frame
 import pathlib
 root = str(pathlib.Path().absolute())
 

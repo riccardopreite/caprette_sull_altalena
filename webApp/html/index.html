@@ -5,7 +5,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
-    <script type="text/javascript" src="js/draw.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/3.0.0/socket.io.js"></script>
+    <script type="text/javascript" src="js/initData.js"></script>
+    <script type="text/javascript" src="js/ws.js"></script>
   </head>
   <body>
     <div style="width:65%;height:200px; padding-left:5%;float:left;">
@@ -48,9 +50,9 @@
         <button type="submit" class="btn btn-primary" onclick="uploadData()">Submit</button>
       </div>
     </div>
-    <div style="text-align:center">
+    <!-- <div style="text-align:center">
       <canvas id="myCanvas" width="800" height="600" style="border: 1px solid black;"></canvas>
     </div>
-    <button onclick="drawAgain()">CLICK ME</button>
+    <button onclick="drawAgain()">CLICK ME</button> -->
   </body>
 </html>
