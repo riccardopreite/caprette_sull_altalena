@@ -26,13 +26,21 @@ function drawBodyCM(canvas, passed){
       swingCM = dict[istant]["swingCM"]
       let xb = bodyCM["x"], yb = bodyCM["y"]
       let xs = swingCM["x"], ys = swingCM["y"]
-      xb = xb * 10
+      console.log(xb);
+      xb = Math.cos(((dict[istant]["phi"]*180) / Math.PI)+90)*135
+      console.log(xb);
+      yb = Math.sin(((dict[istant]["phi"]*180) / Math.PI)+90)*135
+      xs = Math.cos(((dict[istant]["phi"]*180) / Math.PI)+90)*135
+      ys = Math.sin(((dict[istant]["phi"]*180) / Math.PI)+90)*135
+      // if(xb > 0) xb = xb + 400
+      // else xb = xb - 400
+      // if(xs > 0) xs = xs + 400
+      // else xs = xs - 400
       // yb = yb * 10
-      xs = xs * 10
       // ys = ys * 10
 
       canvas.save()
-      canvas.arc(xb, yb, 5, 0, 2 * Math.PI);
+      canvas.arc(xb, yb, 1, 0, 2 * Math.PI);
       canvas.stroke();
       canvas.restore()
 
@@ -40,15 +48,15 @@ function drawBodyCM(canvas, passed){
       canvas.save()
 
       canvas.translate(0,150)
-      canvas.arc(xs, ys, 5, 0, 2 * Math.PI);
+      canvas.arc(xs, ys, 1, 0, 2 * Math.PI);
       canvas.stroke();
       canvas.restore()
-      console.log("swing");
-      console.log(xs);
-      console.log(ys);
-      console.log("bodyCM");
-      console.log(xb);
-      console.log(yb);
+      // console.log("swing");
+      // console.log(xs);
+      // console.log(ys);
+      // console.log("bodyCM");
+      // console.log(xb);
+      // console.log(yb);
     }
     istant = istant + upper
   }, 10);
