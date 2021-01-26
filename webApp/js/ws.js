@@ -8,6 +8,9 @@ socket.on('connect', function() {
 socket.on('standing', function(msg, cb) {
   console.log('standing');
   standing = msg
+  var c = document.getElementById("myCanvas");
+  ctx = c.getContext("2d");
+  drawStanding(ctx)
   if (cb) cb();
   /********
   if(firstMethode == 'standing') drawFirst

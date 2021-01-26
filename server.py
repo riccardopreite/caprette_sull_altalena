@@ -125,7 +125,7 @@ def test(message):
 
 
 async def calculateSwing(first,second,third,fourth,firstString,secondString,thirdString,fourthString,firstStringMethode,secondStringMethode,thirdStringMethode,fourthStringMethode,ret):
-    no_simulationSteps = 20
+    no_simulationSteps = 50
     socket.on('connect')
     first.calculateSwingMotion(firstStringMethode, no_simulationSteps)
     ret[firstString] = []
