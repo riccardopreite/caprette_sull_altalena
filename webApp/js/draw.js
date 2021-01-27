@@ -58,7 +58,7 @@ function uploadData(){
   request.onreadystatechange = function() {
     if (request.readyState == XMLHttpRequest.DONE) {
       //transform to json
-      console.log(transform to json);
+      console.log("transform to json");
         console.log(request.responseText);
     }
   }
