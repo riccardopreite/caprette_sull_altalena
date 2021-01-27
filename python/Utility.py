@@ -42,6 +42,8 @@ class Utility:
         # variable setpup ==========================================================
         t = 0.0
         phi = standingSwing.environment.initialSwingDegree
+        print("OHHHHHHHHHHHHHHHHH")
+        print(phi)
         prev_phi = prev_w = 0
         w = standingSwing.environment.initialAngluarSpeed
         lstand = standingSwing.barycenterStanding

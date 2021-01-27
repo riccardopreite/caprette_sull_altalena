@@ -14,7 +14,7 @@ from python import StandingSwing,Environment,SeatedSwing,RealisticSwing,Utility
 
 #Init Var (To move to a class?)
 dissipativeForce = 0.
-initialSwingDegree = 0.01
+initialSwingDegree = -0.50
 initialAngluarSpeed = 0.0
 maxOscillationDegree = 0.
 massSwing = 3.
