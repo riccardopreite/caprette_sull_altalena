@@ -1,6 +1,5 @@
 import math
 import matplotlib.pylab as plt
-from . import Frame
 import pathlib
 root = str(pathlib.Path().absolute())
 
@@ -8,7 +7,7 @@ realistic = [[], [], []]
 combinato = [[], [], []]
 
 
-#DO FRAME CHANGE FOR ALL METHODE 
+#DO FRAME CHANGE FOR ALL METHODE
 
 class Utility:
      def __init__(self):
@@ -43,6 +42,8 @@ class Utility:
         # variable setpup ==========================================================
         t = 0.0
         phi = standingSwing.environment.initialSwingDegree
+        print("OHHHHHHHHHHHHHHHHH")
+        print(phi)
         prev_phi = prev_w = 0
         w = standingSwing.environment.initialAngluarSpeed
         lstand = standingSwing.barycenterStanding
@@ -53,16 +54,13 @@ class Utility:
         #COORD BODY
         x = standingSwing.currentBarycenter * math.sin(phi)
         y = -standingSwing.currentBarycenter * math.cos(phi)
-        # bodyCM = (x, y)
         bodyCM = {"x":x,"y":y}
 
         #COORD SWING
         x1 = standingSwing.environment.ropeLength*math.sin(phi)
         y1 = -(standingSwing.environment.ropeLength*math.cos(phi))
-        # swingCM = (x1,y1)
         swingCM = {"x":x1,"y":y1}
 
-        # frame = Frame.Frame(t, phi, w, bodyCM, bodyPosition, swingCM)
         frame = {"t":t, "phi":phi, "w":w, "bodyCM":bodyCM, "bodyPosition":bodyPosition, "swingCM":swingCM}
 
         standingSwing.frame_list.append(frame)
@@ -86,13 +84,11 @@ class Utility:
             #MODIFICHE COORDINATE BODY
             x = standingSwing.currentBarycenter * math.sin(phi)
             y = -standingSwing.currentBarycenter * math.cos(phi)
-            # bodyCM = (x, y)
             bodyCM = {"x":x,"y":y}
 
             # MODIFICHE COORDINATE SWING
             x1 = standingSwing.environment.ropeLength*math.sin(phi)
             y1 = -(standingSwing.environment.ropeLength*math.cos(phi))
-            # swingCM = (x1,y1)
             swingCM = {"x":x1,"y":y1}
 
             foutStanding.write("\n" + str.format('{0:.8f}', t) + "\t" + str.format('{0:.8f}' , phi) + "\t" + str.format('{0:.8f}' , w))
@@ -117,7 +113,6 @@ class Utility:
                 standingSwing.currentBarycenter = lsquat
                 bodyPosition = self.SQUAT
 
-            # frame = Frame.Frame(t, phi, w, bodyCM, bodyPosition, swingCM)
             frame = {"t":t, "phi":phi, "w":w, "bodyCM":bodyCM, "bodyPosition":bodyPosition, "swingCM":swingCM}
             standingSwing.frame_list.append(frame)
             standingSwing.bodyCM_list.append(bodyCM)
@@ -126,7 +121,6 @@ class Utility:
 
 
         foutStanding.close()
-
         # final values
         standingSwing.environment.angularSpeed = w
         standingSwing.environment.swingDegree = phi
@@ -178,11 +172,11 @@ class Utility:
         #SWING
         x3 = seatedSwing.environment.ropeLength*math.sin(phi)
         y3 = -(seatedSwing.environment.ropeLength*math.cos(phi))
-        swingCM = (x3, y3)
+        swingCM = {"x":x3,"y":y3}
         bodyCM = swingCM
 
+        frame = {"t":t, "phi":phi, "w":w, "bodyCM":bodyCM, "bodyPosition":bodyPosition, "swingCM":swingCM}
 
-        frame = Frame.Frame(t, phi, w, bodyCM, bodyPosition, swingCM)
         seatedSwing.frame_list.append(frame)
         seatedSwing.bodyCM_list.append(bodyCM)
 
@@ -217,12 +211,11 @@ class Utility:
             x2 = seatedSwing.environment.ropeLength*math.sin(phi) + seatedSwing.bodySegment*math.sin(phi + seatedSwing.degreeBodyRotation)
             y2 = -(seatedSwing.environment.ropeLength*math.cos(phi)) - seatedSwing.bodySegment*math.cos(phi + seatedSwing.degreeBodyRotation)
             #BODY CM
-            # bodyCM = ((x1+x2)/2, (y1+y2)/2)
 
             #SWING
             x3 = seatedSwing.environment.ropeLength*math.sin(phi)
             y3 = -(seatedSwing.environment.ropeLength*math.cos(phi))
-            swingCM = (x3, y3)
+            swingCM = {"x":x3,"y":y3}
             bodyCM = swingCM
 
             foutSeated.write("\n" + str.format('{0:.8f}', t) + "\t" + str.format('{0:.8f}' , phi) + "\t" + str.format('{0:.8f}' , w))
@@ -243,8 +236,7 @@ class Utility:
                 seatedSwing.degreeBodyRotation = math.pi/2
                 phi += delta_phi
                 bodyPosition = self.SEAT
-
-            frame = Frame.Frame(t, phi, w, bodyCM, bodyPosition, swingCM)
+            frame = {"t":t, "phi":phi, "w":w, "bodyCM":bodyCM, "bodyPosition":bodyPosition, "swingCM":swingCM}
             seatedSwing.frame_list.append(frame)
             seatedSwing.bodyCM_list.append(bodyCM)
 
@@ -255,6 +247,7 @@ class Utility:
         seatedSwing.environment.swingDegree = phi
 
         foutSeated.close()
+
         print("seduto, tempo (s), phi (rad), w (rad/s): " +
         str(steps) + " " + str(seatedSwing.environment.swingDegree) + " " +
         str(seatedSwing.environment.angularSpeed))
@@ -302,14 +295,16 @@ class Utility:
          x2 = l*math.sin(phi) + c*math.sin(phi + realistic_children.theta)
          y2 = -l*math.cos(phi) - c*math.cos(phi + realistic_children.theta)
          # BodyCM
-         bodyCM = ((x1+x2)/2,(y1+y2)/2)
+         bx = (x1+x2)/2
+         by = (y1+y2)/2
+         bodyCM = {"x":bx,"y":by}
 
          #SWING
          x3 = l*math.sin(phi)
          y3 = -l*math.cos(phi)
-         swingCM = (x3, y3)
+         swingCM = {"x":x3,"y":y3}
 
-         frame = Frame.Frame(t,w,phi,bodyCM,bodyPosition,swingCM)
+         frame = {"t":t, "phi":phi, "w":w, "bodyCM":bodyCM, "bodyPosition":bodyPosition, "swingCM":swingCM}
          realistic_children.frame_list.append(frame)
          realistic_children.bodyCM_list.append(bodyCM)
 
@@ -350,14 +345,15 @@ class Utility:
              x2 = l*math.sin(phi) + c*math.sin(phi + realistic_children.theta)
              y2 = -l*math.cos(phi) - c*math.cos(phi + realistic_children.theta)
              # Body CM
-             bodyCM = ((x1+x2)/2,(y1+y2)/2)
+             bx = (x1+x2)/2
+             by = (y1+y2)/2
+             bodyCM = {"x":bx,"y":by}
 
              #SWING
              x3 = l*math.sin(phi)
              y3 = -l*math.cos(phi)
-             swingCM = (x3, y3)
-
-             frame = Frame.Frame(t,phi,w,bodyCM,bodyPosition,swingCM)
+             swingCM = {"x":x3,"y":y3}
+             frame = {"t":t, "phi":phi, "w":w, "bodyCM":bodyCM, "bodyPosition":bodyPosition, "swingCM":swingCM}
              realistic_children.frame_list.append(frame)
              realistic_children.bodyCM_list.append(bodyCM)
 
@@ -422,12 +418,14 @@ class Utility:
          x2 = l*math.sin(phi) + c*math.sin(phi + realistic_children.theta)
          y2 = -l*math.cos(phi) - c*math.cos(phi + realistic_children.theta)
          # BODY CM
-         bodyCM = ((x1+x2)/2,(y1+y2)/2)
+         bx = (x1+x2)/2
+         by = (y1+y2)/2
+         bodyCM = {"x":bx,"y":by}
 
          #SWING
          x3 = l*math.sin(phi)
          y3 = -l*math.cos(phi)
-         swingCM = (x3, y3)
+         swingCM = {"x":x3,"y":y3}
 
         #  realistic_children.coordinates_upperBody.append(coord_up)
         #  realistic_children.coordinates_lowerBody.append(coord_down)
@@ -441,7 +439,7 @@ class Utility:
          combinato[1].append(phi)
          combinato[2].append(w)
 
-         frame = Frame.Frame(t,phi,w,bodyCM,bodyPosition,swingCM)
+         frame = {"t":t, "phi":phi, "w":w, "bodyCM":bodyCM, "bodyPosition":bodyPosition, "swingCM":swingCM}
          realistic_children.frame_list.append(frame)
          realistic_children.bodyCM_list.append(bodyCM)
 
@@ -492,17 +490,19 @@ class Utility:
              x2 = l*math.sin(phi) + c*math.sin(phi + realistic_children.theta)
              y2 = -l*math.cos(phi) - c*math.cos(phi + realistic_children.theta)
              # BODY CM
-             bodyCM = ((x1+x2)/2,(y1+y2)/2)
+             bx = (x1+x2)/2
+             by = (y1+y2)/2
+             bodyCM = {"x":bx,"y":by}
 
              #SWING
              x3 = l*math.sin(phi)
              y3 = -l*math.cos(phi)
             #  coord_up = (x1, y1)
             #  coord_down = (x2, y2)
-             swingCM = (x3, y3)
+             swingCM = {"x":x3,"y":y3}
 
 
-             frame = Frame.Frame(t,phi,w,bodyCM,bodyPosition,swingCM)
+             frame = {"t":t, "phi":phi, "w":w, "bodyCM":bodyCM, "bodyPosition":bodyPosition, "swingCM":swingCM}
              realistic_children.frame_list.append(frame)
              realistic_children.bodyCM_list.append(bodyCM)
 
