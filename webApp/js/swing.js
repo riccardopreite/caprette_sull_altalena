@@ -1,7 +1,7 @@
 class Swing {
     constructor(ctx){
         this.ctx = ctx
-        this.SWING_WIDTH = 100
+        this.SWING_WIDTH = 70
         this.SWING_HEIGHT = 20
         
         this.cmX = canvas.width/2
