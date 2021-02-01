@@ -23,16 +23,16 @@ var body1 = new Body(ctx, bodyHeight)
 
 rope1.show()
 swing1.show()
-centerMass1.show()
+// centerMass1.show()
 body1.show()
 
 // update() cycle
 // for f in frameList {
 //   clear()
 //
-//   Rope.show(f)
-//   CenterMass.show(f)
-//   Swing.show(f)
-//   bodyHeight.show(f)
+//   Rope.update(f)
+//   CenterMass.update(f)
+//   Swing.update(f)
+//   Body.update(f)
 //   Animate() }
 
