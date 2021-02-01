@@ -2,28 +2,28 @@ class Body {
     constructor(ctx, height) {
         this.ctx = ctx
 
-        this.phi = 0
         this.height = height
-        this.position = "squat"
 
-        this.cmX = canvas.width / 2
-        this.cmY = canvas.height / 4
-        this.swingX = canvas.width / 2
-        this.swingY = canvas.height / 2
+        this.phi = 0
+        this.w = 0        
+        this.position = "seat"
+
+        this.swingX = canvas.width/2
+        this.swingY = canvas.height/2
     }
 
 
     /*
+    Draw the body based on its position.
+    The only point useed to calculate the coordinates is (swingX,swingY) - the cm of the swing,
+    becuase is the only fixed point, unlike the cm of the body that varies with body's height.
+    (SwingX,SwingY) is previously rotated so that the body has the correct inclination.
+
     the body with specified height is compesed by 3 segments:
         - head-half = height/2
         - half-knee = height/4
         - knee-feet = height/4
     The proportion of the body scales accordingly with its height.
-
-    The only point useed to calculate the coordinates is (swingX,swingY) - the cm of the swing,
-    becuase is the only fixed point, unlike the cm of the body that varies with body's height.
-
-    All rotations of phi are performed on (swingX,swingY).   
     */
     show() {
         var headRadius = 25
@@ -99,27 +99,24 @@ class Body {
             }
         }
 
-        // TODO use this.phi to rotate the points ==============================================
-
         // head
         this.ctx.beginPath();
         this.ctx.arc(headX, headY, headRadius, 0, 2 * Math.PI);
         this.ctx.strokeStyle = "blue"
         this.ctx.stroke();
-
-        // upper
+        // head-half
         this.ctx.moveTo(headX, headY);
         this.ctx.lineTo(halfX, halfY);
         this.ctx.stroke();
-
+        // half-knee
         this.ctx.moveTo(halfX, halfY);
         this.ctx.lineTo(kneeX, kneeY);
         this.ctx.stroke();
-
+        // knee-feet
         this.ctx.moveTo(kneeX, kneeY);
         this.ctx.lineTo(feetX, feetY);
         this.ctx.stroke();
-
+        // hands
         if(this.position == "leanback"){
             this.ctx.moveTo(handX, handY);
             this.ctx.lineTo(this.swingX, this.swingY-handsDistance);
@@ -127,9 +124,8 @@ class Body {
         }
     }
 
-    update(frame) {
-        this.cmX = frame.cmX["x"]
-        this.cmY = frame.cmY["y"]
+    update(frame) {    
+        this.w = frame["phi"]
         this.phi = frame["phi"]
         this.position = frame["bodyPosition"]
     }
