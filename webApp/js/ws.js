@@ -18,7 +18,8 @@ socket.on('standing', function(msg, cb) {
 });
 socket.on('seated', function(msg, cb) {
   console.log('seated');
-  seated = msg
+  seated_frameList = msg
+  initList(seated_frameList)
   if (cb)  cb();
   /********
   if(firstMethode == 'seated') drawFirst

@@ -20,9 +20,7 @@ class Rope {
     }
 
     update(frame){
-      console.log(this.endX);
         this.endX = frame["swingCM"]["x"]
         this.endY = frame["swingCM"]["y"]// + canvas.height/2
-        console.log(this.endX);
     }
 }

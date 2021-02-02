@@ -19,7 +19,7 @@ class Utility:
         self.STAND = "stand"
         self.SQUAT = "squat"
         self.SEAT = "seat"
-        self.LEANBACK = "leanBack"
+        self.LEANBACK = "leanback"
 
 
 # ======================= SYMPLECTIC METHODS =======================================

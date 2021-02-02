@@ -33,11 +33,12 @@ body1.show()
 var framec = 0
 function draw(){
   // for(f in standing_frameList){
+  if(framec >seated_frameList.length) return
       ctx.clearRect(0,0,canvas.width,canvas.height)
-      rope1.update(standing_frameList[framec])
-      centerMass1.update(standing_frameList[framec])
-      swing1.update(standing_frameList[framec])
-      body1.update(standing_frameList[framec])
+      rope1.update(seated_frameList[framec])
+      centerMass1.update(seated_frameList[framec])
+      swing1.update(seated_frameList[framec])
+      body1.update(seated_frameList[framec])
 
       rope1.show()
       centerMass1.show()
