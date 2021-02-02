@@ -13,7 +13,8 @@ var bodyHeight = 160
 var standing_frameList,
     seated_frameList,
     realistic_frameList,
-    combined_frameList
+    combined_frameList,
+    toDraw;
 
 // init varible obj for both environment
 var rope1 = new Rope(ctx)
@@ -30,62 +31,26 @@ rope1.show()
 swing1.show()
 centerMass1.show()
 body1.show()
+
 var framec = 0
 function draw(){
   // for(f in standing_frameList){
-  if(framec >seated_frameList.length) return
-      ctx.clearRect(0,0,canvas.width,canvas.height)
-      rope1.update(seated_frameList[framec])
-      centerMass1.update(seated_frameList[framec])
-      swing1.update(seated_frameList[framec])
-      body1.update(seated_frameList[framec])
+  if(framec > toDraw.length) return
+  else{
+    ctx.clearRect(0,0,canvas.width,canvas.height)
+    rope1.update(toDraw[framec])
+    centerMass1.update(toDraw[framec])
+    swing1.update(toDraw[framec])
+    body1.update(toDraw[framec])
+    rope1.show()
+    centerMass1.show()
+    swing1.show()
+    body1.show()
 
-      rope1.show()
-      centerMass1.show()
-      swing1.show()
-      body1.show()
-
-      ctx.setTransform(1,0,0,1,0,0)
-      framec+= 20;
-      requestAnimationFrame(draw)
+    ctx.setTransform(1,0,0,1,0,0)
+    framec+= 20;
+    requestAnimationFrame(draw)
+    }
       // Animate()
   // }
 }
-
-
-// function draw() {
-//     clearRect(0,0,canvas.width,canvas.height)
-//     counterFrame = 0
-//
-//     Rope1.update(dict1[counterFrame])
-//     CenterMass1.update(dict1[counterFrame])
-//     Swing1.update(dict1[counterFrame])
-//     Body1.update(dict1[counterFrame])
-//     // same for obj2
-//
-//     Rope1.show()
-//     CenterMass1.show()
-//     Swing1.show()
-//     Body1.show()
-//     // same for obj2
-//
-//     ctx1.setTransform(1,0,0,1,0,0)
-//     ctx2.setTransform(1,0,0,1,0,0)
-//
-//     counterFrame++
-//
-//     requestAnimationFrame(draw)
-// }
-
-
-
-// update() cycle
-// for f in frameList {
-//   clear()
-//
-//   Rope.update(f)
-//   CenterMass.update(f)
-//   Swing.update(f)
-//   Body.update(f)
-//   Animate()
-//}

@@ -19,7 +19,7 @@ socket.on('standing', function(msg, cb) {
 socket.on('seated', function(msg, cb) {
   console.log('seated');
   seated_frameList = msg
-  initList(seated_frameList)
+  // initList(seated_frameList)
   if (cb)  cb();
   /********
   if(firstMethode == 'seated') drawFirst
@@ -28,6 +28,8 @@ socket.on('seated', function(msg, cb) {
 });
 socket.on('realistic', function(msg, cb) {
   console.log('realistic');
+  realistic_frameList = msg
+  // initList(realistic_frameList)
   realistic = msg
   if (cb) cb();
   /********
@@ -37,6 +39,8 @@ socket.on('realistic', function(msg, cb) {
 });
 socket.on('combined', function(msg, cb) {
   console.log('combined');
+  combined_frameList = msg
+  // initList(combined_frameList)
   combined = msg
   if (cb) cb();
   /********
@@ -49,7 +53,7 @@ function initList(list){
   for(f in list){
     list[f]["swingCM"]["x"] += canvas.width/2
     list[f]["cm"]["x"] += canvas.width/2
-    list[f]["swingCM"]["y"] = Math.abs(list[f]["swingCM"]["y"])//+ canvas.height/2// * (-1)
+    list[f]["swingCM"]["y"] = Math.abs(list[f]["swingCM"]["y"])+ canvas.height/2// * (-1)
     list[f]["cm"]["y"] = Math.abs(list[f]["cm"]["y"])// * (-1)
     if(list[f]["upperCM"] != {}){
       list[f]["upperCM"]["x"] += canvas.width/2
@@ -59,6 +63,6 @@ function initList(list){
     }
   }
   console.log(list);
+  toDraw = list
   draw()
-
 }
