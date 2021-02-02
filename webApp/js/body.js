@@ -5,7 +5,7 @@ class Body {
         this.height = height
 
         this.phi = 0
-        this.w = 0        
+        this.w = 0
         this.position = "seat"
 
         this.swingX = canvas.width/2
@@ -26,6 +26,7 @@ class Body {
     The proportion of the body scales accordingly with its height.
     */
     show() {
+      ctx.save()
         var headRadius = 25
         // distance pelvis-rope
         var halfDIstanceStand = 10
@@ -97,6 +98,7 @@ class Body {
                 handX = (headX + halfX)/2
                 handY = this.swingY
             }
+            ctx.restore()
         }
 
         // head
@@ -124,8 +126,8 @@ class Body {
         }
     }
 
-    update(frame) {    
-        this.w = frame["phi"]
+    update(frame) {
+        this.w = frame["w"]
         this.phi = frame["phi"]
         this.position = frame["bodyPosition"]
     }

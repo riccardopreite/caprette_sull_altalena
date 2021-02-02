@@ -1,6 +1,6 @@
 //Canvas misure: width="800" height="600"
 var ropeLengthDef = 2.7, // 2.7 metri default = metà del canvas| MAX?
-bodyHeight = 1.0,   // 1.0 metri default
+bodyHeightDef = 1.0,   // 1.0 metri default
 bodyMass = 20,      // 20.0kg default
 gravityDef = 9.8;      // 9.8 m/s^2 default
 
@@ -27,7 +27,7 @@ function uploadData(){
   //Default value
   if(gravity =="") gravity = gravityDef
   if(ropeLength == "") ropeLength = ropeLengthDef
-  if(babyHeight == "") babyHeight = bodyHeight
+  if(babyHeight == "") babyHeight = bodyHeightDef
   if(babyWeigth == "") babyWeigth = bodyMass
 
   var index = 0;

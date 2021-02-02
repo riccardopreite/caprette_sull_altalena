@@ -3,7 +3,7 @@ class Swing {
         this.ctx = ctx
         this.SWING_WIDTH = 70
         this.SWING_HEIGHT = 20
-        
+
         this.swingX = canvas.width/2
         this.swingY = canvas.height/2
         this.phi = 0.349066 //20 rad
@@ -19,13 +19,15 @@ class Swing {
         this.ctx.translate(this.swingX, this.swingY)
         this.ctx.rotate(-this.phi)
         this.ctx.translate(-this.swingX, -this.swingY)
-        
+
         this.ctx.fillRect(startX, startY, this.SWING_WIDTH, this.SWING_HEIGHT)
     }
 
     update(frame){
-        this.swingX = frame.swingCm["x"]
-        this.swingY = frame.swingCm["y"]
+      ctx.save()
+        this.swingX = frame["swingCM"]["x"]
+        this.swingY = frame["swingCM"]["y"] //+ canvas.height/2
         this.phi = frame["phi"]
+        ctx.restore()
     }
 }

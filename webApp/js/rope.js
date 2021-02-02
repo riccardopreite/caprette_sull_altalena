@@ -7,18 +7,22 @@ class Rope {
     }
 
     show(){
+      ctx.save()
         console.log("show")
 
         this.ctx.beginPath();
         this.ctx.moveTo(this.startX, this.startY);
-        // TODO rope length  
+        // TODO rope length
         this.ctx.lineTo(this.endX, this.endY);
         this.ctx.strokeStyle = "#FF0000";
         this.ctx.stroke();
+        ctx.restore()
     }
 
     update(frame){
-        this.endX = frame.swingCM["x"]
-        this.endY = frame.swingCM["y"]
+      console.log(this.endX);
+        this.endX = frame["swingCM"]["x"]
+        this.endY = frame["swingCM"]["y"]// + canvas.height/2
+        console.log(this.endX);
     }
 }
