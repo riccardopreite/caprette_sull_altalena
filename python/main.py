@@ -33,7 +33,7 @@ def main():
     bodyHeightLower = 0.4
     theta = 1.50
     theta0 = 0.1
-    # TODO chech environment values
+    # TODO check environment values
 
     # declare generic enviroment configuration =================================================
     environment = Environment.Environment(

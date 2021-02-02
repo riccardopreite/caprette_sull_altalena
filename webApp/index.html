@@ -6,10 +6,6 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/3.0.0/socket.io.js"></script>
-    <script type="text/javascript" src="js/initData.js"></script>
-    <script type="text/javascript" src="js/ws.js"></script>
-    <script type="text/javascript" src="js/draw.js"></script>
-    <script type="text/javascript" src="js/standing.js"></script>
   </head>
   <body>
     <div style="width:65%;height:200px; padding-left:5%;float:left;">
@@ -57,5 +53,29 @@
     </div>
     <button onclick="slowDownDraw()">+lento</button>
     <button onclick="speedUpDraw()">+veloce</button>
+
+    <!-- JS INCLUSIONS -->
+    <!-- handle server req and res -->
+    <script type="text/javascript" src="js/initData.js"></script>
+    <script type="text/javascript" src="js/ws.js"></script>
+
+    <!-- draw utils -->
+    <script type="text/javascript" src="js/drawUtils.js"></script>
+
+    <script type="text/javascript" src="js/rope.js"></script>
+    <script type="text/javascript" src="js/swing.js"></script> 
+    <script type="text/javascript" src="js/centerMass.js"></script>
+    <script type="text/javascript" src="js/body.js"></script>
+
+
+
+    <script type="text/javascript" src="js/draw.js"></script>
+
+    
+
+
+
+
+
   </body>
 </html>

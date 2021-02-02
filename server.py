@@ -9,7 +9,6 @@ from time import strftime
 from flask import Flask, render_template, flash, request, session, copy_current_request_context,Response,jsonify,make_response
 from flask_socketio import SocketIO, emit, disconnect
 from threading import Lock
-from wtforms import Form, TextField, TextAreaField, validators, StringField, SubmitField
 from python import StandingSwing,Environment,SeatedSwing,RealisticSwing,Utility
 
 #Init Var (To move to a class?)
@@ -153,7 +152,7 @@ async def calculateSwing(first,second,third,fourth,firstString,secondString,thir
 
 @app.route('/')
 def index():
-    content = get_file('webApp/html/index.html')
+    content = get_file('webApp/index.html')
     return Response(content, mimetype="text/html")
 
 
