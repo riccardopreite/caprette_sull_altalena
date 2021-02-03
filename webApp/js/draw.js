@@ -10,11 +10,11 @@ var showLower = false
 var bodyHeight = 160
 
 // init frame list for both environment
-var standing_frameList,
-    seated_frameList,
-    realistic_frameList,
-    combined_frameList,
-    toDraw;
+var standing_frameList = [],
+    seated_frameList = [],
+    realistic_frameList = [],
+    combined_frameList = [],
+    toDraw = [];
 
 // init varible obj for both environment
 var rope1 = new Rope(ctx)
@@ -39,12 +39,12 @@ function draw(){
   else{
     ctx.clearRect(0,0,canvas.width,canvas.height)
     rope1.update(toDraw[framec])
-    centerMass1.update(toDraw[framec])
     swing1.update(toDraw[framec])
+    centerMass1.update(toDraw[framec])
     body1.update(toDraw[framec])
     rope1.show()
-    centerMass1.show()
     swing1.show()
+    centerMass1.show()
     body1.show()
 
     ctx.setTransform(1,0,0,1,0,0)

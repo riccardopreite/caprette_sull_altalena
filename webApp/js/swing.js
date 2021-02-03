@@ -24,10 +24,10 @@ class Swing {
     }
 
     update(frame){
-      ctx.save()
-        this.swingX = frame["swingCM"]["x"]
-        this.swingY = frame["swingCM"]["y"] //+ canvas.height/2
-        this.phi = frame["phi"]
-        ctx.restore()
+      // ctx.save()
+        this.swingX = frame.swingCM["x"]
+        this.swingY = frame.swingCM["y"] //+ canvas.height/2
+        this.phi = frame.phi
+        // ctx.restore()
     }
 }

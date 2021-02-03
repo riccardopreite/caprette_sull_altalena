@@ -26,7 +26,7 @@ class Body {
     The proportion of the body scales accordingly with its height.
     */
     show() {
-      ctx.save()
+      // ctx.save()
         var headRadius = 25
         // distance pelvis-rope
         var halfDIstanceStand = 10
@@ -98,7 +98,6 @@ class Body {
                 handX = (headX + halfX)/2
                 handY = this.swingY
             }
-            ctx.restore()
         }
 
         // head
@@ -124,13 +123,14 @@ class Body {
             this.ctx.lineTo(this.swingX, this.swingY-handsDistance);
             this.ctx.stroke();
         }
+        // ctx.restore()
     }
 
     update(frame) {
-        this.w = frame["w"]
-        this.phi = frame["phi"]
-        this.position = frame["bodyPosition"]
-        this.swingY = frame["swingCM"]["x"]
-        this.swingX = frame["swingCM"]["y"]
+        this.w = frame.w
+        this.phi = frame.phi
+        this.position = frame.bodyPosition
+        this.swingY = frame.swingCM["x"]
+        this.swingX = frame.swingCM["y"]
     }
 }

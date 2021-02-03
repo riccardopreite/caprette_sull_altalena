@@ -7,7 +7,7 @@ class Rope {
     }
 
     show(){
-      ctx.save()
+      // ctx.save()
         console.log("show")
 
         this.ctx.beginPath();
@@ -16,11 +16,11 @@ class Rope {
         this.ctx.lineTo(this.endX, this.endY);
         this.ctx.strokeStyle = "#FF0000";
         this.ctx.stroke();
-        ctx.restore()
+        // ctx.restore()
     }
 
     update(frame){
-        this.endX = frame["swingCM"]["x"]
-        this.endY = frame["swingCM"]["y"]// + canvas.height/2
+        this.endX = frame.swingCM["x"]
+        this.endY = frame.swingCM["y"]// + canvas.height/2
     }
 }

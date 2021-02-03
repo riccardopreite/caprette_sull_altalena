@@ -31,7 +31,7 @@ class CenterMass {
 
     show(){
         // TODO handle color shades
-        ctx.save()
+        // ctx.save()
         this.cm_list.forEach(cm => {
             // console.log(cm)
             ctx.beginPath();
@@ -62,25 +62,25 @@ class CenterMass {
                 ctx.fill()
             })
         }
-        ctx.restore()
+        // ctx.restore()
     }
 
     update(frame){
-        var x = frame["cm"]["x"]
-        var y = frame["cm"]["y"]
+        var x = frame.cm["x"]
+        var y = frame.cm["y"]
         var p = new Point(x,y)
         this.cm_list[this.cm_list.length % this.MAX_NUMBER_POINTS] = p
 
         if(this.showUpper){
-            var ux = frame["upperCM"]["x"]
-            var uy = frame["upperCM"]["y"]
+            var ux = frame.upperCM["x"]
+            var uy = frame.upperCM["y"]
             var p = new Point(ux,uy)
             this.upper_list[this.upper_list.length % this.MAX_NUMBER_POINTS] = p
         }
 
         if(this.showLower){
-            var lx = frame["lowerCM"]["x"]
-            var ly = frame["lowerCM"]["y"]
+            var lx = frame.lowerCM["x"]
+            var ly = frame.lowerCM["y"]
             var p = new Point(lx,ly)
             this.lower_list[this.lower_list.length % this.MAX_NUMBER_POINTS] = p
         }
