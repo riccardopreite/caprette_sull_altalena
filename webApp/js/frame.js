@@ -32,8 +32,8 @@ class Frame {
         if(this.upperCM != {}){
           this.upperCM["x"] = this.upperCM["x"] * 100
           this.lowerCM["x"] = this.lowerCM["x"] * 100
-          // this.upperCM["y"] = this.upperCM["y"] * 100// * (-1)
-          // this.lowerCM["y"] = this.lowerCM["y"] * 100// * (-1)
+          this.upperCM["y"] = this.upperCM["y"] * 100// * (-1)
+          this.lowerCM["y"] = this.lowerCM["y"] * 100// * (-1)
         }
     }
 }

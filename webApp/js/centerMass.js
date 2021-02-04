@@ -31,7 +31,7 @@ class CenterMass {
 
     show(){
         // TODO handle color shades
-        // ctx.save()
+        ctx.save()
         this.cm_list.forEach(cm => {
             // console.log(cm)
             ctx.beginPath();
@@ -62,7 +62,7 @@ class CenterMass {
                 ctx.fill()
             })
         }
-        // ctx.restore()
+        ctx.restore()
     }
 
     update(frame){

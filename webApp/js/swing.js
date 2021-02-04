@@ -13,6 +13,7 @@ class Swing {
     (startX,startY) is the upper-left corner of the swing
      */
     show(){
+      ctx.save()
         var startX = this.swingX - this.SWING_WIDTH/2
         var startY = this.swingY
 
@@ -21,13 +22,12 @@ class Swing {
         this.ctx.translate(-this.swingX, -this.swingY)
 
         this.ctx.fillRect(startX, startY, this.SWING_WIDTH, this.SWING_HEIGHT)
+        ctx.restore()
     }
 
     update(frame){
-      // ctx.save()
         this.swingX = frame.swingCM["x"]
         this.swingY = frame.swingCM["y"] //+ canvas.height/2
         this.phi = frame.phi
-        // ctx.restore()
     }
 }
