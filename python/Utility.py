@@ -311,8 +311,8 @@ class Utility:
          swingCM = {"x":x3,"y":y3}
 
          frame = {"t":t, "phi":phi, "w":w, "cm":bodyCM, "bodyPosition":bodyPosition, "swingCM":swingCM,"lowerCM":lowerCM,"upperCM":upperCM}
-         realistic_children.frame_list.append(frame)
-         realistic_children.bodyCM_list.append(bodyCM)
+         realistic_children.frame_listRealistic.append(frame)
+         realistic_children.bodyCM_listRealistic.append(bodyCM)
 
          fout3 = open(root + "/python/result/realistic.txt", "w")
          fout3.write("Time(s) \t Phi(rad) \t Angular velocity (rad/s)")
@@ -362,8 +362,8 @@ class Utility:
              y3 = -l*math.cos(phi)
              swingCM = {"x":x3,"y":y3}
              frame = {"t":t, "phi":phi, "w":w, "cm":bodyCM, "bodyPosition":bodyPosition, "swingCM":swingCM,"lowerCM":lowerCM,"upperCM":upperCM}
-             realistic_children.frame_list.append(frame)
-             realistic_children.bodyCM_list.append(bodyCM)
+             realistic_children.frame_listRealistic.append(frame)
+             realistic_children.bodyCM_listRealistic.append(bodyCM)
 
              fout3.write("\n" + str.format('{0:.8f}', t) + "\t" + str.format('{0:.8f}' , phi) + "\t" + str.format('{0:.8f}' , w))
 
@@ -450,8 +450,8 @@ class Utility:
          combinato[2].append(w)
 
          frame = {"t":t, "phi":phi, "w":w, "cm":bodyCM, "bodyPosition":bodyPosition, "swingCM":swingCM,"lowerCM":lowerCM,"upperCM":upperCM}
-         realistic_children.frame_list.append(frame)
-         realistic_children.bodyCM_list.append(bodyCM)
+         realistic_children.frame_listCombined.append(frame)
+         realistic_children.bodyCM_listCombined.append(bodyCM)
 
 
          while t <= steps:
@@ -515,8 +515,8 @@ class Utility:
 
 
              frame = {"t":t, "phi":phi, "w":w, "cm":bodyCM, "bodyPosition":bodyPosition, "swingCM":swingCM,"lowerCM":lowerCM,"upperCM":upperCM}
-             realistic_children.frame_list.append(frame)
-             realistic_children.bodyCM_list.append(bodyCM)
+             realistic_children.frame_listCombined.append(frame)
+             realistic_children.bodyCM_listCombined.append(bodyCM)
 
              fout3.write("\n" + str.format('{0:.8f}', t) + "\t" + str.format('{0:.8f}' , phi) + "\t" + str.format('{0:.8f}' , w))
 
