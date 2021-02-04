@@ -39,5 +39,5 @@ function toCanvasFrame(list,frameArray){
     frameArray[ind].traslateList()
     ind++;
   }
-  console.log(frameArray);
+  console.log(list);
 }

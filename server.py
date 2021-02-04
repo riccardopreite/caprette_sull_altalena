@@ -27,6 +27,8 @@ bodyHeightLower = 0
 async_mode = None
 environment = None
 standingSwing = None
+seatedSwing = None
+combinedSwing = None
 realisticSwing = None
 app = Flask(__name__,static_url_path='', static_folder='webApp')
 app.config['SECRET_KEY'] = 'SjdnUends821Jsdlkvxh391ksdODnejdDw'
@@ -66,6 +68,12 @@ def test(message):
     standingSwing = StandingSwing.StandingSwing(environment)
     seatedSwing = SeatedSwing.SeatedSwing(environment)
 
+    combinedSwing = RealisticSwing.RealisticSwing(environment, massSwing,
+     massUpper, massLower,
+     bodyHeightUpper, bodyHeightLower,
+     theta, theta0
+    )
+
     realisticSwing = RealisticSwing.RealisticSwing(environment, massSwing,
      massUpper, massLower,
      bodyHeightUpper, bodyHeightLower,
@@ -75,56 +83,56 @@ def test(message):
     if(swingTypeFirst == "standing"):
 
         if(swingTypeSecond == "seated"):
-            asyncio.run(calculateSwing(standingSwing,seatedSwing,realisticSwing,realisticSwing,"standing","seated","realistic","combined","symplectic","symplectic","realistic","combined",ret))
+            asyncio.run(calculateSwing(standingSwing,seatedSwing,realisticSwing,combinedSwing,"standing","seated","realistic","combined","symplectic","symplectic","realistic","combined",ret))
 
         elif(swingTypeSecond == "realistic"):
-            asyncio.run(calculateSwing(standingSwing,realisticSwing,seatedSwing,realisticSwing,"standing","realistic","seated","combined","symplectic","realistic","symplectic","combined",ret))
+            asyncio.run(calculateSwing(standingSwing,realisticSwing,seatedSwing,combinedSwing,"standing","realistic","seated","combined","symplectic","realistic","symplectic","combined",ret))
 
         elif(swingTypeSecond == "combined"):
-            asyncio.run(calculateSwing(standingSwing,realisticSwing,seatedSwing,realisticSwing,"standing","combined","seated","realistic","symplectic","combined","symplectic","realistic",ret))
+            asyncio.run(calculateSwing(standingSwing,combinedSwing,seatedSwing,realisticSwing,"standing","combined","seated","realistic","symplectic","combined","symplectic","realistic",ret))
         else:
-            asyncio.run(calculateSwing(standingSwing,seatedSwing,realisticSwing,realisticSwing,"standing","seated","realistic","combined","symplectic","symplectic","realistic","combined",ret))
+            asyncio.run(calculateSwing(standingSwing,seatedSwing,realisticSwing,combinedSwing,"standing","seated","realistic","combined","symplectic","symplectic","realistic","combined",ret))
 
     elif(swingTypeFirst == "seated"):
         if(swingTypeSecond == "standing"):
-            asyncio.run(calculateSwing(seatedSwing,standingSwing,realisticSwing,realisticSwing,"seated","standing","realistic","combined","symplectic","symplectic","realistic","combined",ret))
+            asyncio.run(calculateSwing(seatedSwing,standingSwing,realisticSwing,combinedSwing,"seated","standing","realistic","combined","symplectic","symplectic","realistic","combined",ret))
 
         elif(swingTypeSecond == "realistic"):
-            asyncio.run(calculateSwing(seatedSwing,realisticSwing,standingSwing,realisticSwing,"seated","realistic","standing","combined","symplectic","realistic","symplectic","combined",ret))
+            asyncio.run(calculateSwing(seatedSwing,realisticSwing,standingSwing,combinedSwing,"seated","realistic","standing","combined","symplectic","realistic","symplectic","combined",ret))
 
         elif(swingTypeSecond == "combined"):
-            asyncio.run(calculateSwing(seatedSwing,realisticSwing,standingSwing,realisticSwing,"seated","combined","standing","realistic","symplectic","combined","symplectic","realistic",ret))
+            asyncio.run(calculateSwing(seatedSwing,combinedSwing,standingSwing,realisticSwing,"seated","combined","standing","realistic","symplectic","combined","symplectic","realistic",ret))
 
         else:
-            asyncio.run(calculateSwing(seatedSwing,standingSwing,realisticSwing,realisticSwing,"seated","standing","realistic","combined","symplectic","symplectic","realistic","combined",ret))
+            asyncio.run(calculateSwing(seatedSwing,standingSwing,realisticSwing,combinedSwing,"seated","standing","realistic","combined","symplectic","symplectic","realistic","combined",ret))
 
 
     elif(swingTypeFirst == "realistic"):
         if(swingTypeSecond == "standing"):
-            asyncio.run(calculateSwing(realisticSwing,standingSwing,seatedSwing,realisticSwing,"realistic","standing","seated","combined","realistic","symplectic","combined","symplectic",ret))
+            asyncio.run(calculateSwing(realisticSwing,standingSwing,seatedSwing,combinedSwing,"realistic","standing","seated","combined","realistic","symplectic","combined","symplectic",ret))
 
         elif(swingTypeSecond == "seated"):
-            asyncio.run(calculateSwing(realisticSwing,seatedSwing,standingSwing,realisticSwing,"realistic","seated","standing","combined","realistic","symplectic","combined","symplectic",ret))
+            asyncio.run(calculateSwing(realisticSwing,seatedSwing,standingSwing,combinedSwing,"realistic","seated","standing","combined","realistic","symplectic","combined","symplectic",ret))
 
         elif(swingTypeSecond == "combined"):
-            asyncio.run(calculateSwing(realisticSwing,realisticSwing,standingSwing,seatedSwing,"realistic","combined","standing","seated","realistic","combined","symplectic","symplectic",ret))
+            asyncio.run(calculateSwing(realisticSwing,combinedSwing,standingSwing,seatedSwing,"realistic","combined","standing","seated","realistic","combined","symplectic","symplectic",ret))
         else:
-            asyncio.run(calculateSwing(realisticSwing,standingSwing,seatedSwing,realisticSwing,"realistic","standing","seated","combined","realistic","symplectic","combined","symplectic",ret))
+            asyncio.run(calculateSwing(realisticSwing,standingSwing,seatedSwing,combinedSwing,"realistic","standing","seated","combined","realistic","symplectic","combined","symplectic",ret))
 
     elif(swingTypeFirst == "combined"):
         if(swingTypeSecond == "standing"):
-            asyncio.run(calculateSwing(realisticSwing,standingSwing,seatedSwing,realisticSwing,"combined","standing","seated","realistic","combined","symplectic","realistic","symplectic",ret))
+            asyncio.run(calculateSwing(combinedSwing,standingSwing,seatedSwing,realisticSwing,"combined","standing","seated","realistic","combined","symplectic","realistic","symplectic",ret))
         elif(swingTypeSecond == "realistic"):
-            asyncio.run(calculateSwing(realisticSwing,realisticSwing,standingSwing,seatedSwing,"combined","realistic","standing","seated","combined","realistic","symplectic","symplectic",ret))
+            asyncio.run(calculateSwing(combinedSwing,realisticSwing,standingSwing,seatedSwing,"combined","realistic","standing","seated","combined","realistic","symplectic","symplectic",ret))
         elif(swingTypeSecond == "seated"):
-            asyncio.run(calculateSwing(realisticSwing,seatedSwing,standingSwing,realisticSwing,"combined","seated","standing","realistic","combined","symplectic","realistic","symplectic",ret))
+            asyncio.run(calculateSwing(combinedSwing,seatedSwing,standingSwing,realisticSwing,"combined","seated","standing","realistic","combined","symplectic","realistic","symplectic",ret))
         else:
-            asyncio.run(calculateSwing(realisticSwing,standingSwing,seatedSwing,realisticSwing,"combined","standing","seated","realistic","combined","symplectic","realistic","symplectic",ret))
+            asyncio.run(calculateSwing(combinedSwing,standingSwing,seatedSwing,realisticSwing,"combined","standing","seated","realistic","combined","symplectic","realistic","symplectic",ret))
 
 
 
 async def calculateSwing(first,second,third,fourth,firstString,secondString,thirdString,fourthString,firstStringMethode,secondStringMethode,thirdStringMethode,fourthStringMethode,ret):
-    no_simulationSteps = 20
+    no_simulationSteps = 30
     socket.on('connect')
     first.calculateSwingMotion(firstStringMethode, no_simulationSteps)
     emit(firstString, first.frame_list);
