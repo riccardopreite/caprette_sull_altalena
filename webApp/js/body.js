@@ -130,7 +130,7 @@ class Body {
         this.w = frame.w
         this.phi = frame.phi
         this.position = frame.bodyPosition
-        this.swingY = frame.swingCM["x"]
-        this.swingX = frame.swingCM["y"]
+        this.swingY = frame.swingCM["y"]
+        this.swingX = frame.swingCM["x"]
     }
 }

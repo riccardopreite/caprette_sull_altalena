@@ -39,7 +39,7 @@ socket.on('realistic', function(msg, cb) {
 socket.on('combined', function(msg, cb) {
   console.log('combined');
   toCanvasFrame(msg,combined_frameList)
-  toDraw = combined_frameList
+  toDraw = standing_frameList
   draw()
   // draw(   )
   if (cb) cb();
