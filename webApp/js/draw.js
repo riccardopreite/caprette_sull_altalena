@@ -4,8 +4,8 @@ var ctx = canvas.getContext('2d');
 
 // get visualization option
 // var showUpper = Document.getElementById("checkbox_shoeUpper").value()
-var showUpper = true
-var showLower = true
+var showUpper = false
+var showLower = false
 
 var bodyHeight = 160
 
@@ -40,19 +40,8 @@ function draw(){
   if(toDraw1 != undefined && toDraw2 != undefined){
 
     // for(f in standing_frameList){
-    if(frameCounter > toDraw1.length) {
-      console.log("drawC");
-      console.log(drawC);
-      console.log("cmC");
-      console.log(cmC);
-      console.log("upC");
-      console.log(upC);
-      console.log("loC");
-      console.log(loC);
-      return
-    }
-    else{
-      drawC++
+    if(frameCounter > toDraw1.length) return
+    else {
       var currentFrame1 = toDraw1[frameCounter]
 
       ctx.clearRect(0,0,canvas.width,canvas.height)

@@ -20,6 +20,18 @@ socket.on('seated', function(msg, cb) {
   console.log('seated');
   seated_frameList = msg
   selectMethods("seated", seated_frameList)
+  seated_frameList = toCanvasCoordinates(msg)
+
+  toDraw1 = seated_frameList
+  draw()
+
+
+  // draw()
+  if (cb)  cb();
+  /********
+  if(firstMethode == 'seated') drawFirst
+  else if(secondMethode == 'seated') drawSecond
+  ********/
 });
 
 socket.on('realistic', function(msg, cb) {
@@ -33,3 +45,4 @@ socket.on('combined', function(msg, cb) {
   combined_frameList = msg
   selectMethods("combined", combined_frameList)
 });
+  

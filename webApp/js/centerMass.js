@@ -1,9 +1,14 @@
+const COLOR_NUMBER = 50
+var colorBlue = "#21D4FD"
+var colorPurple = "#B721FF"
+var colors = generateColor(colorBlue, colorPurple, COLOR_NUMBER)
+
 class CenterMass {
     constructor(ctx, showUpper, showLower){
         this.ctx = ctx
-        this.RADIUS = 5
-
-        this.MAX_NUMBER_POINTS = 150
+        this.RADIUS = 2.5
+        
+        this.MAX_NUMBER_POINTS = 120
         this.counter = 0
         this.cm_list = []
         this.upper_list = []
@@ -13,36 +18,36 @@ class CenterMass {
     }
 
     show(){
-        // TODO handle color shades
+        var POINT_OFFSET = 2
+     
         this.cm_list.forEach(cm => {
-            // console.log(cm)
-            ctx.beginPath();
-            //if counter > 200 diminuisci radius || diminuisci frequenza disegno punti
-            ctx.arc(cm.x, cm.y, this.RADIUS, 0, 2 * Math.PI);
-            // ctx.fillStyle = colors[this.cm_list.indexOf(cm)]
-            ctx.fillStyle = "blue"
-            ctx.fill()
+            if(this.cm_list.indexOf(cm) % POINT_OFFSET == 0){
+                this.ctx.beginPath();
+                this.ctx.arc(cm.x, cm.y, this.RADIUS, 0, 2 * Math.PI);
+                this.ctx.fillStyle = "#"+ colors[this.cm_list.indexOf(cm) % COLOR_NUMBER]
+                this.ctx.fill()
+            }
         })
 
         if(this.showUpper){
             this.upper_list.forEach(cm => {
                 // console.log(cm)
-                ctx.beginPath();
-                ctx.arc(cm.x, cm.y, this.RADIUS, 0, 2 * Math.PI);
+                this.ctx.beginPath();
+                this.ctx.arc(cm.x, cm.y, this.RADIUS, 0, 2 * Math.PI);
                 // ctx.fillStyle = colors[this.cm_list.indexOf(cm)]
-                ctx.fillStyle = "green"
-                ctx.fill()
+                this.ctx.fillStyle = "green"
+                this.ctx.fill()
             })
         }
 
         if(this.showLower){
             this.lower_list.forEach(cm => {
                 // console.log(cm)
-                ctx.beginPath();
-                ctx.arc(cm.x, cm.y, this.RADIUS, 0, 2 * Math.PI);
+                this.ctx.beginPath();
+                this.ctx.arc(cm.x, cm.y, this.RADIUS, 0, 2 * Math.PI);
                 // ctx.fillStyle = colors[this.cm_list.indexOf(cm)]
-                ctx.fillStyle = "orange"
-                ctx.fill()
+                this.ctx.fillStyle = "orange"
+                this.ctx.fill()
             })
         }
     }
