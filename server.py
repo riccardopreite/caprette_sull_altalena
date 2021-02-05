@@ -27,6 +27,8 @@ bodyHeightLower = 0
 async_mode = None
 environment = None
 standingSwing = None
+seatedSwing = None
+realisticSwing = None
 realisticSwing = None
 app = Flask(__name__,static_url_path='', static_folder='webApp')
 app.config['SECRET_KEY'] = 'SjdnUends821Jsdlkvxh391ksdODnejdDw'
@@ -71,6 +73,7 @@ def test(message):
      bodyHeightUpper, bodyHeightLower,
      theta, theta0
     )
+
     ret = {}
     if(swingTypeFirst == "standing"):
 
@@ -124,31 +127,46 @@ def test(message):
 
 
 async def calculateSwing(first,second,third,fourth,firstString,secondString,thirdString,fourthString,firstStringMethode,secondStringMethode,thirdStringMethode,fourthStringMethode,ret):
-    no_simulationSteps = 20
+    no_simulationSteps = 30
     socket.on('connect')
     first.calculateSwingMotion(firstStringMethode, no_simulationSteps)
-    ret[firstString] = []
-    ret[firstString].append(first.frame_list)
-    ret[firstString].append(first.bodyCM_list)
-    emit(firstString, ret[firstString]);
+
+    if firstString == 'realistic':
+        emit(firstString, first.frame_listRealistic);
+    elif firstString == 'combined':
+        emit(firstString, first.frame_listCombined);
+    else:
+        emit(firstString, first.frame_list);
+
 
     second.calculateSwingMotion(secondStringMethode, no_simulationSteps)
-    ret[secondString] = []
-    ret[secondString].append(second.frame_list)
-    ret[secondString].append(second.bodyCM_list)
-    emit(secondString, ret[secondString]);
+
+    if secondString == 'realistic':
+        emit(secondString, second.frame_listRealistic);
+    elif secondString == 'combined':
+        emit(secondString, second.frame_listCombined);
+    else:
+        emit(secondString, second.frame_list);
+
 
     third.calculateSwingMotion(thirdStringMethode, no_simulationSteps)
-    ret[thirdString] = []
-    ret[thirdString].append(third.frame_list)
-    ret[thirdString].append(third.bodyCM_list)
-    emit(thirdString, ret[thirdString]);
+
+    if thirdString == 'realistic':
+        emit(thirdString, third.frame_listRealistic);
+    elif thirdString == 'combined':
+        emit(thirdString, third.frame_listCombined);
+    else:
+        emit(thirdString, third.frame_list);
+
 
     fourth.calculateSwingMotion(fourthStringMethode, no_simulationSteps)
-    ret[fourthString] = []
-    ret[fourthString].append(fourth.frame_list)
-    ret[fourthString].append(fourth.bodyCM_list)
-    emit(fourthString, ret[fourthString]);
+
+    if fourthString == 'realistic':
+        emit(fourthString, fourth.frame_listRealistic);
+    elif fourthString == 'combined':
+        emit(fourthString, fourth.frame_listCombined);
+    else:
+        emit(fourthString, fourth.frame_list);
 
 @app.route('/')
 def index():

@@ -5,7 +5,7 @@ class Body {
         this.height = height
 
         this.phi = 0
-        this.w = 0        
+        this.w = 0
         this.position = "seat"
 
         this.swingX = canvas.width/2
@@ -124,9 +124,11 @@ class Body {
         }
     }
 
-    update(frame) {    
-        this.w = frame["phi"]
-        this.phi = frame["phi"]
-        this.position = frame["bodyPosition"]
+    update(frame) {
+        this.w = frame.w
+        this.phi = frame.phi
+        this.position = frame.bodyPosition
+        this.swingY = frame.swingCM["y"]
+        this.swingX = frame.swingCM["x"]
     }
 }

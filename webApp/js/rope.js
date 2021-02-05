@@ -11,7 +11,7 @@ class Rope {
 
         this.ctx.beginPath();
         this.ctx.moveTo(this.startX, this.startY);
-        // TODO rope length  
+        // TODO rope length
         this.ctx.lineTo(this.endX, this.endY);
         this.ctx.strokeStyle = "#FF0000";
         this.ctx.stroke();
@@ -19,6 +19,6 @@ class Rope {
 
     update(frame){
         this.endX = frame.swingCM["x"]
-        this.endY = frame.swingCM["y"]
+        this.endY = frame.swingCM["y"]// + canvas.height/2
     }
 }

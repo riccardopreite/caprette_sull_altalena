@@ -19,7 +19,7 @@ class Utility:
         self.STAND = "stand"
         self.SQUAT = "squat"
         self.SEAT = "seat"
-        self.LEANBACK = "leanBack"
+        self.LEANBACK = "leanback"
 
 
 # ======================= SYMPLECTIC METHODS =======================================
@@ -61,7 +61,7 @@ class Utility:
         y1 = -(standingSwing.environment.ropeLength*math.cos(phi))
         swingCM = {"x":x1,"y":y1}
 
-        frame = {"t":t, "phi":phi, "w":w, "bodyCM":bodyCM, "bodyPosition":bodyPosition, "swingCM":swingCM}
+        frame = {"t":t, "phi":phi, "w":w, "cm":bodyCM, "bodyPosition":bodyPosition, "swingCM":swingCM,"lowerCM":{},"upperCM":{}}
 
         standingSwing.frame_list.append(frame)
         standingSwing.bodyCM_list.append(bodyCM)
@@ -113,7 +113,7 @@ class Utility:
                 standingSwing.currentBarycenter = lsquat
                 bodyPosition = self.SQUAT
 
-            frame = {"t":t, "phi":phi, "w":w, "bodyCM":bodyCM, "bodyPosition":bodyPosition, "swingCM":swingCM}
+            frame = {"t":t, "phi":phi, "w":w, "cm":bodyCM, "bodyPosition":bodyPosition, "swingCM":swingCM,"lowerCM":{},"upperCM":{}}
             standingSwing.frame_list.append(frame)
             standingSwing.bodyCM_list.append(bodyCM)
 
@@ -165,9 +165,11 @@ class Utility:
         #UPPER BODY
         x1 = seatedSwing.environment.ropeLength*math.sin(phi) - seatedSwing.bodySegment*math.sin(phi + seatedSwing.degreeBodyRotation)
         y1 = -(seatedSwing.environment.ropeLength*math.cos(phi)) + seatedSwing.bodySegment*math.cos(phi + seatedSwing.degreeBodyRotation)
+        upperCM = {"x":x1,"y":y1}
         #LOWER BODY
         x2 = seatedSwing.environment.ropeLength*math.sin(phi) + seatedSwing.bodySegment*math.sin(phi + seatedSwing.degreeBodyRotation)
         y2 = -(seatedSwing.environment.ropeLength*math.cos(phi)) - seatedSwing.bodySegment*math.cos(phi + seatedSwing.degreeBodyRotation)
+        lowerCM = {"x":x2,"y":y2}
 
         #SWING
         x3 = seatedSwing.environment.ropeLength*math.sin(phi)
@@ -175,7 +177,7 @@ class Utility:
         swingCM = {"x":x3,"y":y3}
         bodyCM = swingCM
 
-        frame = {"t":t, "phi":phi, "w":w, "bodyCM":bodyCM, "bodyPosition":bodyPosition, "swingCM":swingCM}
+        frame = {"t":t, "phi":phi, "w":w, "cm":bodyCM, "bodyPosition":bodyPosition, "swingCM":swingCM,"lowerCM":lowerCM,"upperCM":upperCM}
 
         seatedSwing.frame_list.append(frame)
         seatedSwing.bodyCM_list.append(bodyCM)
@@ -207,9 +209,11 @@ class Utility:
             #UPPER BODY
             x1 = seatedSwing.environment.ropeLength*math.sin(phi) - seatedSwing.bodySegment*math.sin(phi + seatedSwing.degreeBodyRotation)
             y1 = -(seatedSwing.environment.ropeLength*math.cos(phi)) + seatedSwing.bodySegment*math.cos(phi + seatedSwing.degreeBodyRotation)
+            upperCM = {"x":x1,"y":y1}
             #LOWER BODY
             x2 = seatedSwing.environment.ropeLength*math.sin(phi) + seatedSwing.bodySegment*math.sin(phi + seatedSwing.degreeBodyRotation)
             y2 = -(seatedSwing.environment.ropeLength*math.cos(phi)) - seatedSwing.bodySegment*math.cos(phi + seatedSwing.degreeBodyRotation)
+            lowerCM = {"x":x2,"y":y2}
             #BODY CM
 
             #SWING
@@ -236,7 +240,7 @@ class Utility:
                 seatedSwing.degreeBodyRotation = math.pi/2
                 phi += delta_phi
                 bodyPosition = self.SEAT
-            frame = {"t":t, "phi":phi, "w":w, "bodyCM":bodyCM, "bodyPosition":bodyPosition, "swingCM":swingCM}
+            frame = {"t":t, "phi":phi, "w":w, "cm":bodyCM, "bodyPosition":bodyPosition, "swingCM":swingCM,"lowerCM":lowerCM,"upperCM":upperCM}
             seatedSwing.frame_list.append(frame)
             seatedSwing.bodyCM_list.append(bodyCM)
 
@@ -291,9 +295,11 @@ class Utility:
          #UPPER BODY
          x1 = l*math.sin(phi) - b*math.sin(phi + realistic_children.theta)
          y1 = -l*math.cos(phi) + b*math.cos(phi + realistic_children.theta)
+         upperCM = {"x":x1,"y":y1}
          #LOWER BODY
          x2 = l*math.sin(phi) + c*math.sin(phi + realistic_children.theta)
          y2 = -l*math.cos(phi) - c*math.cos(phi + realistic_children.theta)
+         lowerCM = {"x":x2,"y":y2}
          # BodyCM
          bx = (x1+x2)/2
          by = (y1+y2)/2
@@ -304,9 +310,9 @@ class Utility:
          y3 = -l*math.cos(phi)
          swingCM = {"x":x3,"y":y3}
 
-         frame = {"t":t, "phi":phi, "w":w, "bodyCM":bodyCM, "bodyPosition":bodyPosition, "swingCM":swingCM}
-         realistic_children.frame_list.append(frame)
-         realistic_children.bodyCM_list.append(bodyCM)
+         frame = {"t":t, "phi":phi, "w":w, "cm":bodyCM, "bodyPosition":bodyPosition, "swingCM":swingCM,"lowerCM":lowerCM,"upperCM":upperCM}
+         realistic_children.frame_listRealistic.append(frame)
+         realistic_children.bodyCM_listRealistic.append(bodyCM)
 
          fout3 = open(root + "/python/result/realistic.txt", "w")
          fout3.write("Time(s) \t Phi(rad) \t Angular velocity (rad/s)")
@@ -341,9 +347,11 @@ class Utility:
              #UPPER BODY
              x1 = l*math.sin(phi) - b*math.sin(phi + realistic_children.theta)
              y1 = -l*math.cos(phi) + b*math.cos(phi + realistic_children.theta)
+             upperCM = {"x":x1,"y":y1}
              #LOWER BODY
              x2 = l*math.sin(phi) + c*math.sin(phi + realistic_children.theta)
              y2 = -l*math.cos(phi) - c*math.cos(phi + realistic_children.theta)
+             lowerCM = {"x":x2,"y":y2}
              # Body CM
              bx = (x1+x2)/2
              by = (y1+y2)/2
@@ -353,9 +361,9 @@ class Utility:
              x3 = l*math.sin(phi)
              y3 = -l*math.cos(phi)
              swingCM = {"x":x3,"y":y3}
-             frame = {"t":t, "phi":phi, "w":w, "bodyCM":bodyCM, "bodyPosition":bodyPosition, "swingCM":swingCM}
-             realistic_children.frame_list.append(frame)
-             realistic_children.bodyCM_list.append(bodyCM)
+             frame = {"t":t, "phi":phi, "w":w, "cm":bodyCM, "bodyPosition":bodyPosition, "swingCM":swingCM,"lowerCM":lowerCM,"upperCM":upperCM}
+             realistic_children.frame_listRealistic.append(frame)
+             realistic_children.bodyCM_listRealistic.append(bodyCM)
 
              fout3.write("\n" + str.format('{0:.8f}', t) + "\t" + str.format('{0:.8f}' , phi) + "\t" + str.format('{0:.8f}' , w))
 
@@ -414,9 +422,11 @@ class Utility:
          #UPPER BODY
          x1 = l*math.sin(phi) - b*math.sin(phi + realistic_children.theta)
          y1 = -l*math.cos(phi) + b*math.cos(phi + realistic_children.theta)
+         upperCM = {"x":x1,"y":y1}
          #LOWER BODY
          x2 = l*math.sin(phi) + c*math.sin(phi + realistic_children.theta)
          y2 = -l*math.cos(phi) - c*math.cos(phi + realistic_children.theta)
+         lowerCM = {"x":x2,"y":y2}
          # BODY CM
          bx = (x1+x2)/2
          by = (y1+y2)/2
@@ -439,9 +449,9 @@ class Utility:
          combinato[1].append(phi)
          combinato[2].append(w)
 
-         frame = {"t":t, "phi":phi, "w":w, "bodyCM":bodyCM, "bodyPosition":bodyPosition, "swingCM":swingCM}
-         realistic_children.frame_list.append(frame)
-         realistic_children.bodyCM_list.append(bodyCM)
+         frame = {"t":t, "phi":phi, "w":w, "cm":bodyCM, "bodyPosition":bodyPosition, "swingCM":swingCM,"lowerCM":lowerCM,"upperCM":upperCM}
+         realistic_children.frame_listCombined.append(frame)
+         realistic_children.bodyCM_listCombined.append(bodyCM)
 
 
          while t <= steps:
@@ -486,9 +496,11 @@ class Utility:
              #UPPER BODY
              x1 = l*math.sin(phi) - b*math.sin(phi + realistic_children.theta)
              y1 = -l*math.cos(phi) + b*math.cos(phi + realistic_children.theta)
+             upperCM = {"x":x1,"y":y1}
              #LOWER BODY
              x2 = l*math.sin(phi) + c*math.sin(phi + realistic_children.theta)
              y2 = -l*math.cos(phi) - c*math.cos(phi + realistic_children.theta)
+             lowerCM = {"x":x2,"y":y2}
              # BODY CM
              bx = (x1+x2)/2
              by = (y1+y2)/2
@@ -502,9 +514,9 @@ class Utility:
              swingCM = {"x":x3,"y":y3}
 
 
-             frame = {"t":t, "phi":phi, "w":w, "bodyCM":bodyCM, "bodyPosition":bodyPosition, "swingCM":swingCM}
-             realistic_children.frame_list.append(frame)
-             realistic_children.bodyCM_list.append(bodyCM)
+             frame = {"t":t, "phi":phi, "w":w, "cm":bodyCM, "bodyPosition":bodyPosition, "swingCM":swingCM,"lowerCM":lowerCM,"upperCM":upperCM}
+             realistic_children.frame_listCombined.append(frame)
+             realistic_children.bodyCM_listCombined.append(bodyCM)
 
              fout3.write("\n" + str.format('{0:.8f}', t) + "\t" + str.format('{0:.8f}' , phi) + "\t" + str.format('{0:.8f}' , w))
 

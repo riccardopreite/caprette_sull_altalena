@@ -7,8 +7,10 @@ socket.on('connect', function() {
 
 socket.on('standing', function(msg, cb) {
   console.log('standing');
-  standing_frameList = msg
+  standing_frameList = toCanvasCoordinates(msg)
 
+//
+  // draw()
   if (cb) cb();
   /********
   if(firstMethode == 'standing') drawFirst
@@ -17,7 +19,9 @@ socket.on('standing', function(msg, cb) {
 });
 socket.on('seated', function(msg, cb) {
   console.log('seated');
-  seated = msg
+  seated_frameList = toCanvasCoordinates(msg)
+
+  // draw()
   if (cb)  cb();
   /********
   if(firstMethode == 'seated') drawFirst
@@ -26,7 +30,9 @@ socket.on('seated', function(msg, cb) {
 });
 socket.on('realistic', function(msg, cb) {
   console.log('realistic');
-  realistic = msg
+  realistic_frameList = toCanvasCoordinates(msg)
+
+  // draw  ()
   if (cb) cb();
   /********
   if(firstMethode == 'realistic') drawFirst
@@ -35,10 +41,29 @@ socket.on('realistic', function(msg, cb) {
 });
 socket.on('combined', function(msg, cb) {
   console.log('combined');
-  combined = msg
+  combined_frameList = toCanvasCoordinates(msg)
+
+  toDraw = combined_frameList
+  draw()
+
+  // draw()
   if (cb) cb();
   /********
-  if(firstMethode == 'combined') drawFirst
+  if(firstMethode == 'combined') drawFirst =======================================> toDraw1 = combined_frameList
   else if(secondMethode == 'combined') drawSecond
   ********/
+
+  /**
+   * PSEUDO CODE
+   * 
+   * selectMethods("combined", msg)
+   * draw()
+   * 
+   */
 });
+
+
+function selectMethods(resType ,res){
+  if(firstMethode == resType) toDraw1 = toCanvasCoordinates(res)
+  else if(secondMethode == resType) toDraw2 = toCanvasCoordinates(res)
+}

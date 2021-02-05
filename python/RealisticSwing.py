@@ -27,8 +27,10 @@ class RealisticSwing(Environment.Environment):
         self.I2 = self.massUpper * self.bodyHeightUpper**2 + self.massLower * self.bodyHeightLower**2 # mom d'inerzia I2
 
 
-        self.frame_list = []
-        self.bodyCM_list = []
+        self.frame_listRealistic = []
+        self.frame_listCombined = []
+        self.bodyCM_listRealistic = []
+        self.bodyCM_listCombined = []
 
     def calculateSwingMotion(self,integrationMethode,steps):
         if integrationMethode == "realistic":
