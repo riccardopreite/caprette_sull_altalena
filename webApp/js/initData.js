@@ -35,10 +35,9 @@ function uploadData(){
     let check = document.getElementById("checkboxType"+index);
     let label = document.getElementById("labelType"+index);
     if(check.checked){
-      firstMethode = label.innerHTML.toLowerCase()
       if(firstMethode == "") firstMethode = label.innerHTML.toLowerCase()
-      if(secondMethode != "") break;
       else secondMethode = label.innerHTML.toLowerCase()
+      if(secondMethode != "") break;
     }
     index++;
   }

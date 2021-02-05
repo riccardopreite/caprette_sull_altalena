@@ -7,7 +7,6 @@ class Rope {
     }
 
     show(){
-        console.log("show")
 
         this.ctx.beginPath();
         this.ctx.moveTo(this.startX, this.startY);

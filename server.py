@@ -138,7 +138,6 @@ async def calculateSwing(first,second,third,fourth,firstString,secondString,thir
     else:
         emit(firstString, first.frame_list);
 
-
     second.calculateSwingMotion(secondStringMethode, no_simulationSteps)
 
     if secondString == 'realistic':
@@ -148,6 +147,7 @@ async def calculateSwing(first,second,third,fourth,firstString,secondString,thir
     else:
         emit(secondString, second.frame_list);
 
+    emit("firstsCalculated",firstString)
 
     third.calculateSwingMotion(thirdStringMethode, no_simulationSteps)
 

@@ -4,8 +4,8 @@ var ctx = canvas.getContext('2d');
 
 // get visualization option
 // var showUpper = Document.getElementById("checkbox_shoeUpper").value()
-var showUpper = false
-var showLower = false
+var showUpper = true
+var showLower = true
 
 var bodyHeight = 160
 
@@ -15,8 +15,8 @@ var standing_frameList = [],
     realistic_frameList = [],
     combined_frameList = [],
 
-    toDraw1 = undefined
-
+    toDraw1 = undefined,
+    toDraw2 = undefined;
 // init varible obj for both environment
 var rope1 = new Rope(ctx)
 var swing1 = new Swing(ctx)
@@ -34,33 +34,43 @@ centerMass1.show()
 body1.show()
 
 var frameCounter = 0
+const FRAME_OFFSET = 20
 function draw(){
-  if(toDraw1 != undefined){
-  // if(toDraw1 != undefined && toDraw2 != undefined){
+  // if(toDraw1 != undefined){
+  if(toDraw1 != undefined && toDraw2 != undefined){
 
-    const FRAME_OFFSET = 20
     // for(f in standing_frameList){
-    if(frameCounter > toDraw1.length) return
+    if(frameCounter > toDraw1.length) {
+      console.log("drawC");
+      console.log(drawC);
+      console.log("cmC");
+      console.log(cmC);
+      console.log("upC");
+      console.log(upC);
+      console.log("loC");
+      console.log(loC);
+      return
+    }
     else{
+      drawC++
       var currentFrame1 = toDraw1[frameCounter]
-  
+
       ctx.clearRect(0,0,canvas.width,canvas.height)
-  
+
       rope1.update(currentFrame1)
       centerMass1.update(currentFrame1)
       swing1.update(currentFrame1)
       body1.update(currentFrame1)
-  
+
       rope1.show()
       centerMass1.show()
       swing1.show()
       body1.show()
-  
+
       ctx.setTransform(1,0,0,1,0,0)
-  
+
       frameCounter += FRAME_OFFSET;
       requestAnimationFrame(draw)
-      }
-  } 
+    }
+  }
 }
-

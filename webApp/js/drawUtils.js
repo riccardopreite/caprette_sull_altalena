@@ -25,13 +25,13 @@ class Frame {
      */
     traslateFrame() {
         this.cm["x"] += canvas.width / 2
-        this.cm["y"] = Math.abs(this.cm["y"]) 
+        this.cm["y"] = Math.abs(this.cm["y"])
 
         this.swingCM["x"] += canvas.width / 2
-        this.swingCM["y"] = Math.abs(this.swingCM["y"]) 
+        this.swingCM["y"] = Math.abs(this.swingCM["y"])
         if (this.upperCM != {}) {
             this.upperCM["x"] += canvas.width / 2
-            this.upperCM["y"] = Math.abs(this.upperCM["y"]) 
+            this.upperCM["y"] = Math.abs(this.upperCM["y"])
 
             this.lowerCM["x"] += canvas.width / 2
             this.lowerCM["y"] = Math.abs(this.lowerCM["y"])
@@ -41,28 +41,29 @@ class Frame {
      * Scale any coordinates by a factor
      */
     scaleFrame(scaleFactor) {
-        this.cm["y"] = this.cm["y"] * scaleFactor 
+        this.cm["y"] = this.cm["y"] * scaleFactor
         this.cm["x"] = this.cm["x"] * scaleFactor
 
         this.swingCM["x"] = this.swingCM["x"] * scaleFactor
-        this.swingCM["y"] = this.swingCM["y"] * scaleFactor 
+        this.swingCM["y"] = this.swingCM["y"] * scaleFactor
         if (this.upperCM != {}) {
             this.upperCM["x"] = this.upperCM["x"] * scaleFactor
-            this.upperCM["y"] = this.upperCM["y"] * scaleFactor 
+            this.upperCM["y"] = this.upperCM["y"] * scaleFactor
 
             this.lowerCM["x"] = this.lowerCM["x"] * scaleFactor
-            this.lowerCM["y"] = this.lowerCM["y"] * scaleFactor 
+            this.lowerCM["y"] = this.lowerCM["y"] * scaleFactor
         }
     }
 }
 
 /**
- * 
+ *
  * @param {dict} coordinatesList: original coordinates list
- * @returns {Frame[]} frameArray: array of frame with scaled and translated 
- * coordiantes 
+ * @returns {Frame[]} frameArray: array of frame with scaled and translated
+ * coordiantes
  */
 function toCanvasCoordinates(coordinatesList) {
+    // TODO Proporzione dati input con dimensione canvas Scaling100:Canvas300=ScalingX:InputY o limite e pace
     const SCALE_FACTOR = 100
 
     frameArray = []
@@ -82,6 +83,11 @@ function toCanvasCoordinates(coordinatesList) {
 
         frameArray.push(tmpFrame)
     }
-    
+
     return frameArray
+}
+
+function selectMethods(resType ,res){
+  if(firstMethode == resType) toDraw1 = toCanvasCoordinates(res)
+  else if(secondMethode == resType) toDraw2 = toCanvasCoordinates(res)
 }
