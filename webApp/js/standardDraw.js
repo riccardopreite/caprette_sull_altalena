@@ -1,4 +1,5 @@
 // get canvas variable
+// TODO change names to canvas1...
 var canvas1 = document.getElementById('firstCanvas');
 var canvas2 = document.getElementById('secondCanvas');
 var ctx1 = canvas1.getContext('2d');
