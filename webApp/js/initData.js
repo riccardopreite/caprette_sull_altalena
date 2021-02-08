@@ -44,18 +44,31 @@ function uploadData(){
 
   var index = 0;
   while(index < 4){
-    let check = document.getElementById("checkboxType"+index);
+    let check = document.getElementById("radioType"+index);
     let label = document.getElementById("labelType"+index);
     if(check.checked){
       if(firstMethode == "") firstMethode = label.innerHTML.toLowerCase()
-      else secondMethode = label.innerHTML.toLowerCase()
-      if(secondMethode != "") break;
+      else break;
     }
     index++;
   }
-  if(firstMethode == "") alert("Scegli almeno un metodo da visualizzare") //set standing as default?
-  console.log("INITDATA");
-  console.log(realistic);
+  index = 0;
+  while(index < 4){
+    let check = document.getElementById("radioTypesecond"+index);
+    let label = document.getElementById("labelTypeSecond"+index);
+    if(check.checked){
+      if(secondMethode == "") secondMethode = label.innerHTML.toLowerCase()
+      else break;
+    }
+    index++;
+  }
+  if(firstMethode == "") {
+    alert("Scegli almeno un metodo da visualizzare") //set standing as default?
+    return;
+  }
+  onOffPauseButton(true)
+  onOffPlayButton(true)
+
   socket.emit('test', {data:{"gravity": gravity,
     "ropeLength": ropeLength,
     "babyHeight": babyHeight,

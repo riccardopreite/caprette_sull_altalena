@@ -7,6 +7,8 @@ socket.on('connect', function() {
 
 socket.on('firstsCalculated', function(msg, cb) {
   console.log('firstsCalculated');
+  onOffPauseButton(false)
+  onOffPlayButton(true)
   draw()
 });
 
@@ -20,16 +22,6 @@ socket.on('seated', function(msg, cb) {
   console.log('seated');
   seated_frameList = msg
   selectMethods("seated", seated_frameList)
-
-  draw()
-
-
-  // draw()
-  if (cb)  cb();
-  /********
-  if(firstMethode == 'seated') drawFirst
-  else if(secondMethode == 'seated') drawSecond
-  ********/
 });
 
 socket.on('realistic', function(msg, cb) {

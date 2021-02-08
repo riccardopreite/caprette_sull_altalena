@@ -102,15 +102,15 @@ function hex (c) {
     i = Math.round (Math.min (Math.max (0, i), 255));
     return s.charAt ((i - i % 16) / 16) + s.charAt (i % 16);
   }
-  
+
   /* Convert an RGB triplet to a hex string */
   function convertToHex (rgb) {
     return hex(rgb[0]) + hex(rgb[1]) + hex(rgb[2]);
   }
-  
+
   /* Remove '#' in color hex string */
   function trim (s) { return (s.charAt(0) == '#') ? s.substring(1, 7) : s }
-  
+
   /* Convert a hex string to an RGB triplet */
   function convertToRGB (hex) {
     var color = [];
@@ -119,37 +119,69 @@ function hex (c) {
     color[2] = parseInt ((trim(hex)).substring (4, 6), 16);
     return color;
   }
-  
+
   function generateColor(colorStart,colorEnd,colorCount){
-  
+
       // The beginning of your gradient
-      var start = convertToRGB (colorStart);    
-  
+      var start = convertToRGB (colorStart);
+
       // The end of your gradient
-      var end   = convertToRGB (colorEnd);    
-  
+      var end   = convertToRGB (colorEnd);
+
       // The number of colors to compute
       var len = colorCount;
-  
+
       //Alpha blending amount
       var alpha = 0.0;
-  
+
       var saida = [];
-      
+
       for (i = 0; i < len; i++) {
           var c = [];
           alpha += (1.0/len);
-          
+
           c[0] = start[0] * alpha + (1 - alpha) * end[0];
           c[1] = start[1] * alpha + (1 - alpha) * end[1];
           c[2] = start[2] * alpha + (1 - alpha) * end[2];
-  
+
           saida.push(convertToHex (c));
-          
+
       }
-      
+
       return saida;
-      
+
   }
-  
- 
+
+ function onOffPlayButton(bool){
+   document.getElementById("firstPlayButton").disabled = bool
+   document.getElementById("secondPlayButton").disabled = bool
+ }
+ function onOffPauseButton(bool){
+   document.getElementById("firstPauseButton").disabled = bool
+   document.getElementById("secondPauseButton").disabled = bool
+ }
+
+ function checkPause(button){
+   return document.getElementById(button).disabled;
+ }
+
+
+ function firstPlayPressed(){
+   document.getElementById("firstPlayButton").disabled = true
+   document.getElementById("firstPauseButton").disabled = false
+ }
+ function firstPausePressed(){
+   document.getElementById("firstPlayButton").disabled = false
+   document.getElementById("firstPauseButton").disabled = true
+ }
+
+ function secondPlayPressed(){
+   document.getElementById("secondPlayButton").disabled = true
+   document.getElementById("secondPauseButton").disabled = false
+ }
+ function secondPausePressed(){
+   document.getElementById("secondPlayButton").disabled = false
+   document.getElementById("secondPauseButton").disabled = true
+
+
+ }
