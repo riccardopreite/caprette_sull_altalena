@@ -1,6 +1,13 @@
 var namespace = '/test';
 var socket = io(namespace);
 
+function selectMethods(resType ,res){
+  if(firstMethode == resType) toDraw1 = toCanvasCoordinates(res)
+  else if(secondMethode == resType) toDraw2 = toCanvasCoordinates(res)
+}
+// ==================================================================================================
+// SOCKET HANDLING
+
 socket.on('connect', function() {
   socket.emit('my_event', {data: 'connected to the SocketServer...'});
 });
