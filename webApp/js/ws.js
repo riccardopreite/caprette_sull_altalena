@@ -20,9 +20,7 @@ socket.on('seated', function(msg, cb) {
   console.log('seated');
   seated_frameList = msg
   selectMethods("seated", seated_frameList)
-  seated_frameList = toCanvasCoordinates(msg)
 
-  toDraw1 = seated_frameList
   draw()
 
 
@@ -45,4 +43,3 @@ socket.on('combined', function(msg, cb) {
   combined_frameList = msg
   selectMethods("combined", combined_frameList)
 });
-  

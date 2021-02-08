@@ -1,5 +1,5 @@
 class Body {
-    constructor(ctx, height) {
+    constructor(ctx, height,canvas) {
         this.ctx = ctx
 
         this.height = height

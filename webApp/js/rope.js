@@ -1,5 +1,5 @@
 class Rope {
-    constructor(ctx){
+    constructor(ctx,canvas){
         this.ctx = ctx
         this.startX = this.endX = canvas.width/2
         this.startY = 0

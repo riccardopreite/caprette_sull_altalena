@@ -1,5 +1,5 @@
 class Swing {
-    constructor(ctx){
+    constructor(ctx,canvas){
         this.ctx = ctx
         this.SWING_WIDTH = 60
         this.SWING_HEIGHT = 15
