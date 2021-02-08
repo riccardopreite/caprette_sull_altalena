@@ -20,10 +20,10 @@ $( document ).ready(function() {
   $("#secondEnvDiv").height(parseInt(h/2))
   $("#secondEnvDiv").width(w)
 
-  ctx.canvas.height = $("#firstEnvDiv").height()
-  ctx.canvas.width = $("#firstEnvDiv").width()*80/100
-  secondCtx.canvas.height = $("#secondEnvDiv").height()
-  secondCtx.canvas.width = $("#secondEnvDiv").width()*80/100
+  ctx1.canvas.height = $("#firstEnvDiv").height()
+  ctx1.canvas.width = $("#firstEnvDiv").width()*80/100
+  ctx2.canvas.height = $("#secondEnvDiv").height()
+  ctx2.canvas.width = $("#secondEnvDiv").width()*80/100
 
 
 });
@@ -43,6 +43,7 @@ function uploadData(){
   if(babyWeigth == "") babyWeigth = bodyMass
 
   var index = 0;
+  // what is 4????? ========================================
   while(index < 4){
     let check = document.getElementById("checkboxType"+index);
     let label = document.getElementById("labelType"+index);

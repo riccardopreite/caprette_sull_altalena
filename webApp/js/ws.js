@@ -2,8 +2,9 @@ var namespace = '/test';
 var socket = io(namespace);
 
 function selectMethods(resType ,res){
-  if(firstMethode == resType) toDraw1 = toCanvasCoordinates(res)
-  else if(secondMethode == resType) toDraw2 = toCanvasCoordinates(res)
+  // pass ctx1 or ctx2 accordingly to method number (first or second)
+  if(firstMethode == resType) toDraw1 = toCanvasCoordinates(res, ctx1)
+  else if(secondMethode == resType) toDraw2 = toCanvasCoordinates(res, ctx2)
 }
 // ==================================================================================================
 // SOCKET HANDLING

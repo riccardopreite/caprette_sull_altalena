@@ -1,5 +1,5 @@
 class Body {
-    constructor(ctx, height,canvas) {
+    constructor(ctx, height) {
         this.ctx = ctx
 
         this.height = height
@@ -8,8 +8,8 @@ class Body {
         this.w = 0
         this.position = "seat"
 
-        this.swingX = canvas.width/2
-        this.swingY = canvas.height/2
+        this.swingX = this.ctx.canvas.width/2
+        this.swingY = this.ctx.canvas.height/2
     }
 
 

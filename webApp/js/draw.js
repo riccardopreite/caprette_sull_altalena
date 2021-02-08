@@ -21,15 +21,15 @@ var standing_frameList = [],
     toDraw2 = undefined;
 
 // init varible obj for both environment //======================== perche' passi il canvas?? basta il cxt => ctx.canvas.clientHeight
-var rope1 = new Rope(ctx1,canvas1)
-var swing1 = new Swing(ctx1,canvas1)
+var rope1 = new Rope(ctx1)
+var swing1 = new Swing(ctx1)
 var centerMass1 = new CenterMass(ctx1, showLower, showLower)
-var body1 = new Body(ctx1, bodyHeight,canvas1)
+var body1 = new Body(ctx1, bodyHeight)
 
-var rope2 = new Rope(ctx2,canvas2)
-var swing2 = new Swing(ctx2,canvas2)
+var rope2 = new Rope(ctx2)
+var swing2 = new Swing(ctx2)
 var centerMass2 = new CenterMass(ctx2, showLower, showLower)
-var body2 = new Body(ctx2, bodyHeight,canvas2)
+var body2 = new Body(ctx2, bodyHeight)
 
 
 /*
@@ -59,7 +59,7 @@ function draw(){
       // clear
       ctx1.clearRect(0,0,canvas1.width,canvas1.height)
       ctx2.clearRect(0,0,canvas2.width,canvas2.height)
-
+   
       // update
       rope1.update(currentFrame1)
       centerMass1.update(currentFrame1)

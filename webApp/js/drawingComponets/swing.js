@@ -1,11 +1,11 @@
 class Swing {
-    constructor(ctx,canvas){
+    constructor(ctx){
         this.ctx = ctx
         this.SWING_WIDTH = 60
         this.SWING_HEIGHT = 15
 
-        this.swingX = canvas.width/2
-        this.swingY = canvas.height/2
+        this.swingX = this.ctx.canvas.width/2
+        this.swingY = this.ctx.canvas.height/2
         this.phi = 0.349066 //20 rad
     }
 

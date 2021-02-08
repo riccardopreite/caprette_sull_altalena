@@ -1,5 +1,7 @@
 class Frame {
-    constructor(t, phi, w, bodyPosition, cm, swingCM, upperCM, lowerCM) {
+    constructor(ctx, t, phi, w, bodyPosition, cm, swingCM, upperCM, lowerCM) {
+        this.ctx = ctx
+
         this.t = t
         this.phi = phi
         this.w = w
@@ -17,16 +19,16 @@ class Frame {
      * y -> |y| (invert the y axis to match canvas)
      */
     traslateFrame() {
-        this.cm["x"] += canvas.width / 2
+        this.cm["x"] += this.ctx.canvas.width / 2
         this.cm["y"] = Math.abs(this.cm["y"])
 
-        this.swingCM["x"] += canvas.width / 2
+        this.swingCM["x"] += this.ctx.canvas.width / 2
         this.swingCM["y"] = Math.abs(this.swingCM["y"])
         if (this.upperCM != {}) {
-            this.upperCM["x"] += canvas.width / 2
+            this.upperCM["x"] += this.ctx.canvas.width / 2
             this.upperCM["y"] = Math.abs(this.upperCM["y"])
 
-            this.lowerCM["x"] += canvas.width / 2
+            this.lowerCM["x"] += this.ctx.canvas.width / 2
             this.lowerCM["y"] = Math.abs(this.lowerCM["y"])
         }
     }
@@ -55,13 +57,14 @@ class Frame {
  * @returns {Frame[]} frameArray: array of frame with scaled and translated
  * coordiantes
  */
-function toCanvasCoordinates(coordinatesList) {
+function toCanvasCoordinates(coordinatesList, ctx) {
     // TODO Proporzione dati input con dimensione canvas Scaling100:Canvas300=ScalingX:InputY o limite e pace
     const SCALE_FACTOR = 100
 
     frameArray = []
     for (i in coordinatesList) {
         var tmpFrame = new Frame(
+            ctx,
             coordinatesList[i]["t"],
             coordinatesList[i]["phi"],
             coordinatesList[i]["w"],
