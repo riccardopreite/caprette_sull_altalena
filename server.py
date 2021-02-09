@@ -49,19 +49,6 @@ thread = None
 thread_lock = Lock()
 
 
-def initBodyObj():
-    i = 0
-    while i < 2:
-        bodyObj[i] = {}
-        bodyObj[i]["enviroment"] = None
-        bodyObj[i]["standingSwing"] = None
-        bodyObj[i]["seatedSwing"] = None
-        bodyObj[i]["realisticSwing"] = None
-        i = i + 1
-
-def root_dir():  # pragma: no cover
-    return os.path.abspath(os.path.dirname(__file__))
-
 
 @socket.on('my_event', namespace='/test')
 def test_message(message):
@@ -76,11 +63,8 @@ def handleRequest(message):
     form2 = message["data2"]
     runFirstsType(form1)
     runFirstsType(form2)
-    print("CIAONNNNNNNNNNNNNNNNNNNNNNNNNNNN")
     switchForm(form1,form1["isSecond"],form1["swingTypeFirst"])
-    print("CIAONNNNNNNNNNNNNNNNNNNNNNNNNNNN")
     switchForm(form2,form2["isSecond"],form2["swingTypeFirst"])
-    print("CIAONNNNNNNNNNNNNNNNNNNNNNNNNNNN")
 
 def runFirstsType(form):
     print("FORM")
@@ -109,6 +93,7 @@ def runFirstsType(form):
      bodyHeightUpper, bodyHeightLower,
      theta, theta0
     )
+
     if(isSecond):
         standingString = "standingSecond"
         seatedString = "seatedSecond"
@@ -119,6 +104,7 @@ def runFirstsType(form):
         seatedString = "seated"
         realisticString = "realistic"
         combinedString = "combined"
+
     if(swingTypeFirst == "standing"):
         bodyObj[isSecond]["standingSwing"].calculateSwingMotion("symplectic", no_simulationSteps)
         emit(standingString, bodyObj[isSecond]["standingSwing"].frame_list);
@@ -146,7 +132,7 @@ def switchForm(form,isSecond,swingTypeFirst):
         seatedString = "seated"
         realisticString = "realistic"
         combinedString = "combined"
-        
+
     if(swingTypeFirst == "standing"):
         asyncio.run(calculateSwing(bodyObj[isSecond]["seatedSwing"],bodyObj[isSecond]["realisticSwing"],bodyObj[isSecond]["realisticSwing"],seatedString,realisticString,combinedString,"symplectic","realistic","combined",isSecond))
     elif(swingTypeFirst == "seated"):
@@ -156,37 +142,11 @@ def switchForm(form,isSecond,swingTypeFirst):
     elif(swingTypeFirst == "combined"):
         asyncio.run(calculateSwing(bodyObj[isSecond]["standingSwing"],bodyObj[isSecond]["seatedSwing"],bodyObj[isSecond]["realisticSwing"],standingString,seatedString,realisticString,"symplectic","symplectic","realistic",isSecond))
 
-
 async def calculateSwing(second,third,fourth,secondString,thirdString,fourthString,secondStringMethode,thirdStringMethode,fourthStringMethode,isSecond):
     socket.on('connect')
-
-    second.calculateSwingMotion(secondStringMethode, no_simulationSteps)
-
-    if secondString == 'realistic' or secondString == 'realisticSecond':
-        emit(secondString, second.frame_listRealistic);
-    elif secondString == 'combined' or secondString == 'combinedSecond':
-        emit(secondString, second.frame_listCombined);
-    else:
-        emit(secondString, second.frame_list);
-
-    third.calculateSwingMotion(thirdStringMethode, no_simulationSteps)
-
-    if thirdString == 'realistic' or thirdString == 'realisticSecond':
-        emit(thirdString, third.frame_listRealistic);
-    elif thirdString == 'combined' or thirdString == 'combinedSecond':
-        emit(thirdString, third.frame_listCombined);
-    else:
-        emit(thirdString, third.frame_list);
-
-
-    fourth.calculateSwingMotion(fourthStringMethode, no_simulationSteps)
-
-    if fourthString == 'realistic' or fourthString == 'realisticSecond':
-        emit(fourthString, fourth.frame_listRealistic);
-    elif fourthString == 'combined' or fourthString == 'combinedSecond':
-        emit(fourthString, fourth.frame_listCombined);
-    else:
-        emit(fourthString, fourth.frame_list);
+    callSwingMotion(second,secondString,secondStringMethode,no_simulationSteps)
+    callSwingMotion(third,thirdString,thirdStringMethode,no_simulationSteps)
+    callSwingMotion(fourth,fourthString,fourthStringMethode,no_simulationSteps)
 
 @app.route('/')
 def index():
@@ -217,6 +177,29 @@ def disconnect_request():
          callback=can_disconnect)
 
 
+def callSwingMotion(object,objectString,objectStringMethode,no_simulationSteps):
+    object.calculateSwingMotion(objectStringMethode, no_simulationSteps)
+
+    if objectString == 'realistic' or objectString == 'realisticSecond':
+        emit(objectString, object.frame_listRealistic);
+    elif objectString == 'combined' or objectString == 'combinedSecond':
+        emit(objectString, object.frame_listCombined);
+    else:
+        emit(objectString, object.frame_list);
+
+
+def initBodyObj():
+    i = 0
+    while i < 2:
+        bodyObj[i] = {}
+        bodyObj[i]["enviroment"] = None
+        bodyObj[i]["standingSwing"] = None
+        bodyObj[i]["seatedSwing"] = None
+        bodyObj[i]["realisticSwing"] = None
+        i = i + 1
+
+def root_dir():  # pragma: no cover
+    return os.path.abspath(os.path.dirname(__file__))
 
 if __name__ == '__main__':
     socket.run(app,port=8000,host='0.0.0.0', debug=True)

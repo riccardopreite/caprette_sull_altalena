@@ -11,13 +11,3 @@ function prepareCanvas(){
   ctx2.canvas.height = $("#secondEnvDiv").height()
   ctx2.canvas.width = $("#secondEnvDiv").width()*80/100
 }
-
-function prepareDropDown(){
-  let i = 0
-  while(i < 4){
-    console.log(i);
-    $("#radioType"+i).on("change", firstChange);
-    $("#radioTypesecond"+i).on("change", secondChange);
-    i++
-  }
-}

@@ -22,21 +22,19 @@ function switchList(methode,index){
 }
 
 function first(text){
-  console.log(text);
   firstChange = true
   firstMethode = text
 }
 
 function second(text){
-  console.log(text);
   secondChange = true
   secondMethode = text
 }
 
 
 function selectFirstMethods(resType ,res){
-  if(firstMethode == resType) toDraw1 = toCanvasCoordinates(res,ctx1)
+  if(firstMethode == resType) toDraw1 = canvasList[0][firstMethode+"_frameList"]
 }
 function selectSecondMethods(resType ,res){
-  if(secondMethode == resType) toDraw2 = toCanvasCoordinates(res,ctx2)
+  if(secondMethode == resType) toDraw2 = canvasList[1][secondMethode+"_frameList"]
 }

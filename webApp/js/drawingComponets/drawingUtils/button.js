@@ -19,9 +19,9 @@
    if(firstChange){
      secondChange = false
      ctx1.clearRect(0,0,canvas1.width,canvas1.height)
-     let msg = switchList(firstMethode,0)
-     toDraw1 = toCanvasCoordinates(msg,ctx1)
+     toDraw1 = switchList(firstMethode,0)
      frameCounterFirst = 0
+
    }
  }
  function firstPausePressed(){
@@ -33,8 +33,7 @@
    if(secondChange){
      secondChange = false
      ctx2.clearRect(0,0,canvas2.width,canvas2.height)
-     let msg = switchList(secondMethode,1)
-     toDraw2 = toCanvasCoordinates(msg,ctx2)
+     toDraw2 = switchList(secondMethode,1)
      frameCounterSecond = 0
    }
    document.getElementById("secondPlayButton").disabled = true

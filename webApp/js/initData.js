@@ -14,7 +14,6 @@ var firstMethode = "", secondMethode = "";
 $( document ).ready(function() {
   console.log( "ready!" );
   prepareCanvas()
-  prepareDropDown()
 
 });
 function uploadData(){
