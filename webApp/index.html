@@ -161,23 +161,95 @@
   </div>
 
 
-     <!-- <button onclick="draw()">draw</button>
-    <button onclick="speedUpDraw()">+veloce</button>  -->
+  <div id="thirdEnvDiv" style="width: 1520px; height: 396px;">
 
-    <!-- JS INCLUSIONS -->
-    <!-- handle server req and res -->
-    <script type="text/javascript" src="js/initData.js"></script>
-    <script type="text/javascript" src="js/ws.js"></script>
+    <div style="width:19%;height:100%;float:left;border: 1px solid black; margin-top:1em;margin-left:0.5em;">
 
-    <!-- draw utils -->
-    <script type="text/javascript" src="js/drawUtils.js"></script>
+      <div style="width:100%; padding:1%;">
 
-    <script type="text/javascript" src="js/rope.js"></script>
-    <script type="text/javascript" src="js/swing.js"></script>
-    <script type="text/javascript" src="js/centerMass.js"></script>
-    <script type="text/javascript" src="js/body.js"></script>
+        <div class="form-group" style="float:left; width:40%;">
+          <div style="float:none;">
+            <label for="thirdgravity">Forza di gravita'</label>
+            <input name="thirdgravity" type="numer" class="form-control" id="thirdgravity" aria-describedby="gravity" placeholder="gravity">
+            <small id="gravityHelp" class="form-text text-muted">Forza che imprime la gravita in m/s**2</small>
+          </div>
+          <div style="float:none;">
+            <label for="thirdropeLength">Lunghezza corda</label>
+            <input name="thirdropeLength" type="numer" class="form-control" id="thirdropeLength" aria-describedby="ropeLength" placeholder="rope length">
+            <small id="ropeLengthHelp" class="form-text text-muted">Lunghezza corda in metri</small>
+          </div>
+          <div class="btn-group dropright" style="margin-top: 1em;" style="float:none; ">
+            <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Dropright
+            </button>
+            <ul class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 37px, 0px); top: 0px; left: 0px; will-change: transform;">
+              <li style="padding-left:0.5em;"><input type="checkbox" id="checkboxTypethird0"><label id="labelType0" style="padding-left:0.5em;">Standing</label></li>
+              <li style="padding-left:0.5em;"><input type="checkbox" id="checkboxTypethird1"><label id="labelType1" style="padding-left:0.5em;">Seated</label></li>
+              <li style="padding-left:0.5em;"><input type="checkbox" id="checkboxTypethird2" checked=""><label id="labelType2" style="padding-left:0.5em;">Realistic</label></li>
+              <li style="padding-left:0.5em;"><input type="checkbox" id="checkboxTypethird3" checked=""><label id="labelType3" style="padding-left:0.5em;">Combined</label></li>
+            </ul>
+          </div>
 
-    <script type="text/javascript" src="js/draw.js"></script>
+        </div>
+
+        <div class="form-group" style="float:right; width:40%; padding-right:1em;">
+
+          <div style="float:none;">
+            <label for="thirdbabyHeight">Altezza bambino</label>
+            <input name="thirdbabyHeight" type="numer" class="form-control" id="thirdbabyHeight" aria-describedby="babyHeight" placeholder="Height">
+            <small id="thirdbabyHeightHelp" class="form-text text-muted">Altezza del bambino in metri</small>
+          </div>
+          <div style="float:none;">
+            <label for="thirdbabyWeigth">Peso bambino</label>
+            <input name="thirdbabyWeigth" type="numer" class="form-control" id="thirdbabyWeigth" aria-describedby="babyWeigth" placeholder="Weigth">
+            <small id="thirdbabyWeigthHelp" class="form-text text-muted">Peso del bambino in kg</small>
+          </div>
+          <div style="">
+            <button type="submit" class="btn btn-primary" onclick="">Start Training</button>
+          </div>
+        </div>
+    </div>
+
+    </div>
+
+
+    <div id="canvasThirdDiv" style="width:80%;height:100%; float:right; margin-top: 1em; border: 1px solid black;">
+      <!-- <div style="float:right; width:100%;height:100%;"> -->
+
+        <canvas id="thirdCanvas" width="1158" height="396" style="float:right;   "></canvas>
+      <!-- </div> -->
+    </div>
+  </div>
+
+
+       <!-- <button onclick="draw()">draw</button>
+      <button onclick="speedUpDraw()">+veloce</button>  -->
+
+      <!-- JS INCLUSIONS -->
+      <!-- handle server req and res -->
+      <script type="text/javascript" src="js/initData.js"></script>
+      <script type="text/javascript" src="js/ws.js"></script>
+
+      <!-- draw utils and components -->
+      <script type="text/javascript" src="js/drawingComponets/drawingUtils/colors.js"></script>
+      <script type="text/javascript" src="js/drawingComponets/drawingUtils/frame.js"></script>
+      <script type="text/javascript" src="js/drawingComponets/drawingUtils/point.js"></script>
+      <script type="text/javascript" src="js/drawingComponets/drawingUtils/button.js"></script>
+
+      <script type="text/javascript" src="js/drawingComponets/rope.js"></script>
+      <script type="text/javascript" src="js/drawingComponets/swing.js"></script>
+      <script type="text/javascript" src="js/drawingComponets/centerMass.js"></script>
+      <script type="text/javascript" src="js/drawingComponets/body.js"></script>
+
+      <!-- genetic stuff -->
+      <!-- tensor flow -->
+      <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@2.0.0/dist/tf.min.js"></script>
+      <script type="text/javascript" src="js/genetic/nn.js"></script>
+      <script type="text/javascript" src="js/genetic/matrix.js"></script>
+      <script type="text/javascript" src="js/genetic/ga.js"></script>
+
+      <script type="text/javascript" src="js/standardDraw.js"></script>
+      <script type="text/javascript" src="js/geneticDraw.js"></script>
 
 
 
@@ -188,4 +260,4 @@
 
 
 
-</body></html>
+  </body></html>

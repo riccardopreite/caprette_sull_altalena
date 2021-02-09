@@ -35,3 +35,10 @@ socket.on('combined', function(msg, cb) {
   combined_frameList = msg
   selectMethods("combined", combined_frameList)
 });
+
+
+
+function selectMethods(resType ,res){
+  if(firstMethode == resType) toDraw1 = toCanvasCoordinates(res,ctx1)
+  else if(secondMethode == resType) toDraw2 = toCanvasCoordinates(res,ctx2)
+}
