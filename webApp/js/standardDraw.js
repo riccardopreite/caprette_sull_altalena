@@ -14,12 +14,19 @@ var bodyHeight = 160
 var firstInterval = undefined,
     secondInterval = undefined
 // init frame list for both environment
-var standing_frameList = [],
-    seated_frameList = [],
-    realistic_frameList = [],
-    combined_frameList = [],
+var canvasList = []
+canvasList[0] = {};
+canvasList[1] = {};
+canvasList[0]["standing_frameList"]= [];
+canvasList[0]["seated_frameList"]= [];
+canvasList[0]["realistic_frameList"]= [];
+canvasList[0]["combined_frameList"]= [];
+canvasList[1]["standing_frameList"]= [];
+canvasList[1]["seated_frameList"]= [];
+canvasList[1]["realistic_frameList"]= [];
+canvasList[1]["combined_frameList"]= [];
 
-    toDraw1 = undefined,
+var toDraw1 = undefined,
     toDraw2 = undefined;
 // init varible obj for both environment
 var rope1 = new Rope(ctx1)
@@ -46,7 +53,7 @@ swing2.show()
 centerMass2.show()
 body2.show()
 
-var frameCounterFirst = 0, frameCounterSecond = 0;
+var frameCounterFirst = 0, frameCounterSecond = 0, firstChange = false, secondChange = false;
 const FRAME_OFFSET = 20
 function draw(){
   if(firstInterval != undefined) clearInterval(firstInterval)

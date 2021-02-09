@@ -73,10 +73,10 @@
               Swing type
             </button>
             <ul class="dropdown-menu" x-placement="right-start" style="position: absolute; transform: translate3d(109px, 0px, 0px); top: 0px; left: 0px; will-change: transform;">
-              <li style="padding-left:0.5em;"><input type="radio" id="radioType0" name="firstCanvasRadio" checked=""><h6 id="labelType0" style="padding-left:0.5em;">Standing</h6></li>
-              <li style="padding-left:0.5em;"><input type="radio" id="radioType1" name="firstCanvasRadio"><h6 id="labelType1" style="padding-left:0.5em;">Seated</h6></li>
-              <li style="padding-left:0.5em;"><input type="radio" id="radioType2" name="firstCanvasRadio"><h6 id="labelType2" style="padding-left:0.5em;">Realistic</h6></li>
-              <li style="padding-left:0.5em;"><input type="radio" id="radioType3" name="firstCanvasRadio"><h6 id="labelType3" style="padding-left:0.5em;">Combined</h6></li>
+              <li style="padding-left:0.5em;"><input type="radio" id="radioType0" name="firstCanvasRadio" checked="" onclick="first('standing')"><h6 id="labelType0" style="padding-left:0.5em;">Standing</h6></li>
+              <li style="padding-left:0.5em;"><input type="radio" id="radioType1" name="firstCanvasRadio" onclick="first('seated')"><h6 id="labelType1" style="padding-left:0.5em;">Seated</h6></li>
+              <li style="padding-left:0.5em;"><input type="radio" id="radioType2" name="firstCanvasRadio" onclick="first('realistic')"><h6 id="labelType2" style="padding-left:0.5em;">Realistic</h6></li>
+              <li style="padding-left:0.5em;"><input type="radio" id="radioType3" name="firstCanvasRadio" onclick="first('combined')"><h6 id="labelType3" style="padding-left:0.5em;">Combined</h6></li>
             </ul>
           </div>
         </div>
@@ -141,10 +141,10 @@
           Swing type
         </button>
         <ul class="dropdown-menu" x-placement="right-start" style="position: absolute; transform: translate3d(109px, 0px, 0px); top: 0px; left: 0px; will-change: transform;">
-          <li style="padding-left:0.5em;"><input type="radio" id="radioTypesecond0" name="secondCanvasRadio"><h6 id="labelTypeSecond0" style="padding-left:0.5em;">Standing</h6></li>
-          <li style="padding-left:0.5em;"><input type="radio" id="radioTypesecond1" name="secondCanvasRadio"><h6 id="labelTypeSecond1" style="padding-left:0.5em;">Seated</h6></li>
-          <li style="padding-left:0.5em;"><input type="radio" id="radioTypesecond2" name="secondCanvasRadio"><h6 id="labelTypeSecond2" style="padding-left:0.5em;">Realistic</h6></li>
-          <li style="padding-left:0.5em;"><input type="radio" id="radioTypesecond3" name="secondCanvasRadio" checked=""><h6 id="labelTypeSecond3" style="padding-left:0.5em;">Combined</h6></li>
+          <li style="padding-left:0.5em;"><input type="radio" id="radioTypesecond0" name="secondCanvasRadio" onclick="second('standing')"><h6 id="labelTypeSecond0" style="padding-left:0.5em;">Standing</h6></li>
+          <li style="padding-left:0.5em;"><input type="radio" id="radioTypesecond1" name="secondCanvasRadio" onclick="second('seated')"><h6 id="labelTypeSecond1" style="padding-left:0.5em;">Seated</h6></li>
+          <li style="padding-left:0.5em;"><input type="radio" id="radioTypesecond2" name="secondCanvasRadio" onclick="second('realistic')"><h6 id="labelTypeSecond2" style="padding-left:0.5em;">Realistic</h6></li>
+          <li style="padding-left:0.5em;"><input type="radio" id="radioTypesecond3" name="secondCanvasRadio" checked="" onclick="second('combined')"><h6 id="labelTypeSecond3" style="padding-left:0.5em;">Combined</h6></li>
         </ul>
       </div>
     </div>
@@ -227,6 +227,7 @@
 
       <!-- JS INCLUSIONS -->
       <!-- handle server req and res -->
+      <script type="text/javascript" src="js/drawingComponets/drawingUtils/initDocument.js"></script>
       <script type="text/javascript" src="js/initData.js"></script>
       <script type="text/javascript" src="js/ws.js"></script>
 
@@ -235,6 +236,7 @@
       <script type="text/javascript" src="js/drawingComponets/drawingUtils/frame.js"></script>
       <script type="text/javascript" src="js/drawingComponets/drawingUtils/point.js"></script>
       <script type="text/javascript" src="js/drawingComponets/drawingUtils/button.js"></script>
+      <script type="text/javascript" src="js/drawingComponets/drawingUtils/utils.js"></script>
 
       <script type="text/javascript" src="js/drawingComponets/rope.js"></script>
       <script type="text/javascript" src="js/drawingComponets/swing.js"></script>

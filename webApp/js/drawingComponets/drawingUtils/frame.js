@@ -79,13 +79,6 @@ function toCanvasCoordinates(coordinatesList, ctx) {
 
         frameArray.push(tmpFrame)
     }
-
+    console.log(frameArray);
     return frameArray
 }
-
-
-
-
-
-  
- 

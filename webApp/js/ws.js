@@ -14,31 +14,48 @@ socket.on('firstsCalculated', function(msg, cb) {
 
 socket.on('standing', function(msg, cb) {
   console.log('standing');
-  standing_frameList = msg
-  selectMethods("standing", standing_frameList)
+  canvasList[0]["standing_frameList"] = msg
+  selectFirstMethods("standing", canvasList[0]["standing_frameList"])
 });
 
 socket.on('seated', function(msg, cb) {
   console.log('seated');
-  seated_frameList = msg
-  selectMethods("seated", seated_frameList)
+  canvasList[0]["seated_frameList"] = msg
+  selectFirstMethods("seated", canvasList[0]["seated_frameList"])
 });
 
 socket.on('realistic', function(msg, cb) {
   console.log('realistic');
-  realistic_frameList = msg
-  selectMethods("realistic", realistic_frameList)
+  canvasList[0]["realistic_frameList"] = msg
+  selectFirstMethods("realistic", canvasList[0]["realistic_frameList"])
 });
 
 socket.on('combined', function(msg, cb) {
   console.log('combined');
-  combined_frameList = msg
-  selectMethods("combined", combined_frameList)
+  canvasList[0]["combined_frameList"] = msg
+  selectFirstMethods("combined", canvasList[0]["combined_frameList"])
 });
 
+socket.on('standingSecond', function(msg, cb) {
+  console.log('standingSecond');
+  canvasList[1]["standing_frameList"] = msg
+  selectSecondMethods("standing", canvasList[1]["standing_frameList"])
+});
 
+socket.on('seatedSecond', function(msg, cb) {
+  console.log('seatedSecond');
+  canvasList[1]["seated_frameList"] = msg
+  selectSecondMethods("seated", canvasList[1]["seated_frameList"])
+});
 
-function selectMethods(resType ,res){
-  if(firstMethode == resType) toDraw1 = toCanvasCoordinates(res,ctx1)
-  else if(secondMethode == resType) toDraw2 = toCanvasCoordinates(res,ctx2)
-}
+socket.on('realisticSecond', function(msg, cb) {
+  console.log('realisticSecond');
+  canvasList[1]["realistic_frameList"] = msg
+  selectSecondMethods("realistic", canvasList[1]["realistic_frameList"])
+});
+
+socket.on('combinedSecond', function(msg, cb) {
+  console.log('combinedSecond');
+  canvasList[1]["combined_frameList"] = msg
+  selectSecondMethods("combined", canvasList[1]["combined_frameList"])
+});
