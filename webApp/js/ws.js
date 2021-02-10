@@ -15,39 +15,55 @@ socket.on('connect', function() {
 
 socket.on('firstsCalculated', function(msg, cb) {
   console.log('firstsCalculated');
+  onOffPauseButton(false)
+  onOffPlayButton(true)
   draw()
 });
 
 socket.on('standing', function(msg, cb) {
   console.log('standing');
-  standing_frameList = msg
-  selectMethods("standing", standing_frameList)
+  canvasList[0]["standing_frameList"] = toCanvasCoordinates(msg,ctx1)
+  selectFirstMethods("standing", canvasList[0]["standing_frameList"])
 });
 
 socket.on('seated', function(msg, cb) {
   console.log('seated');
-  seated_frameList = msg
-  selectMethods("seated", seated_frameList)
-
-  draw()
-
-
-  // draw()
-  if (cb)  cb();
-  /********
-  if(firstMethode == 'seated') drawFirst
-  else if(secondMethode == 'seated') drawSecond
-  ********/
+  canvasList[0]["seated_frameList"] = toCanvasCoordinates(msg,ctx1)
+  selectFirstMethods("seated", canvasList[0]["seated_frameList"])
 });
 
 socket.on('realistic', function(msg, cb) {
   console.log('realistic');
-  realistic_frameList = msg
-  selectMethods("realistic", realistic_frameList)
+  canvasList[0]["realistic_frameList"] = toCanvasCoordinates(msg,ctx1)
+  selectFirstMethods("realistic", canvasList[0]["realistic_frameList"])
 });
 
 socket.on('combined', function(msg, cb) {
   console.log('combined');
-  combined_frameList = msg
-  selectMethods("combined", combined_frameList)
+  canvasList[0]["combined_frameList"] = toCanvasCoordinates(msg,ctx1)
+  selectFirstMethods("combined", canvasList[0]["combined_frameList"])
+});
+
+socket.on('standingSecond', function(msg, cb) {
+  console.log('standingSecond');
+  canvasList[1]["standing_frameList"] = toCanvasCoordinates(msg,ctx2)
+  selectSecondMethods("standing", canvasList[1]["standing_frameList"])
+});
+
+socket.on('seatedSecond', function(msg, cb) {
+  console.log('seatedSecond');
+  canvasList[1]["seated_frameList"] = toCanvasCoordinates(msg,ctx2)
+  selectSecondMethods("seated", canvasList[1]["seated_frameList"])
+});
+
+socket.on('realisticSecond', function(msg, cb) {
+  console.log('realisticSecond');
+  canvasList[1]["realistic_frameList"] = toCanvasCoordinates(msg,ctx2)
+  selectSecondMethods("realistic", canvasList[1]["realistic_frameList"])
+});
+
+socket.on('combinedSecond', function(msg, cb) {
+  console.log('combinedSecond');
+  canvasList[1]["combined_frameList"] = toCanvasCoordinates(msg,ctx2)
+  selectSecondMethods("combined", canvasList[1]["combined_frameList"])
 });

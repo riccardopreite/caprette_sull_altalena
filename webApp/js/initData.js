@@ -13,21 +13,17 @@ var firstMethode = "", secondMethode = "";
 
 $( document ).ready(function() {
   console.log( "ready!" );
-  var w = window.outerWidth - 400;// remove space for enviroment data and graph
-  var h = window.innerHeight - 100;
-  $("#firstEnvDiv").height(parseInt(h/2))
-  $("#firstEnvDiv").width(w)
-  $("#secondEnvDiv").height(parseInt(h/2))
-  $("#secondEnvDiv").width(w)
-
-  ctx1.canvas.height = $("#firstEnvDiv").height()
-  ctx1.canvas.width = $("#firstEnvDiv").width()*80/100
-  ctx2.canvas.height = $("#secondEnvDiv").height()
-  ctx2.canvas.width = $("#secondEnvDiv").width()*80/100
-
+  prepareCanvas()
 
 });
 function uploadData(){
+  data1 = requestFirstCanvas()
+  data2 = requestSecondCanvas()
+  socket.emit('handleRequest', {data1:data1,data2:data2});
+
+}
+
+function requestFirstCanvas(){
   var gravity = document.getElementById("gravity").value;
   var ropeLength = document.getElementById("ropeLength").value;
   var babyHeight = document.getElementById("babyHeight").value;
@@ -45,24 +41,74 @@ function uploadData(){
   var index = 0;
   // what is 4????? ========================================
   while(index < 4){
-    let check = document.getElementById("checkboxType"+index);
+    let check = document.getElementById("radioType"+index);
     let label = document.getElementById("labelType"+index);
     if(check.checked){
       if(firstMethode == "") firstMethode = label.innerHTML.toLowerCase()
-      else secondMethode = label.innerHTML.toLowerCase()
-      if(secondMethode != "") break;
+      else break;
     }
     index++;
   }
-  if(firstMethode == "") alert("Scegli almeno un metodo da visualizzare") //set standing as default?
-  console.log("INITDATA");
-  console.log(realistic);
-  socket.emit('test', {data:{"gravity": gravity,
-    "ropeLength": ropeLength,
-    "babyHeight": babyHeight,
-    "babyWeigth": babyWeigth,
-    "swingTypeFirst":firstMethode,
-    "swingTypeSecond":secondMethode
+  index = 0;
+  while(index < 4){
+    let check = document.getElementById("radioTypesecond"+index);
+    let label = document.getElementById("labelTypeSecond"+index);
+    if(check.checked){
+      if(secondMethode == "") secondMethode = label.innerHTML.toLowerCase()
+      else break;
+    }
+    index++;
+  }
+  if(firstMethode == "") {
+    alert("Scegli almeno un metodo da visualizzare") //set standing as default?
+    return;
+  }
+  onOffPauseButton(true)
+  onOffPlayButton(true)
+  let data = {
+              "gravity": gravity,
+              "ropeLength": ropeLength,
+              "babyHeight": babyHeight,
+              "babyWeigth": babyWeigth,
+              "swingTypeFirst":firstMethode,
+              "isSecond":0
+  }
+  return data;
+}
 
-  }});
+function requestSecondCanvas(){
+  var gravity = document.getElementById("secondgravity").value;
+  var ropeLength = document.getElementById("secondropeLength").value;
+  var babyHeight = document.getElementById("secondbabyHeight").value;
+  var babyWeigth = document.getElementById("secondbabyWeigth").value;
+
+  secondMethode = "";
+
+  //Default value
+  if(gravity =="") gravity = gravityDef
+  if(ropeLength == "") ropeLength = ropeLengthDef
+  if(babyHeight == "") babyHeight = bodyHeightDef
+  if(babyWeigth == "") babyWeigth = bodyMass
+
+  var index = 0;
+  while(index < 4){
+    let check = document.getElementById("radioTypesecond"+index);
+    let label = document.getElementById("labelTypeSecond"+index);
+    if(check.checked){
+      if(secondMethode == "") secondMethode = label.innerHTML.toLowerCase()
+      else break;
+    }
+    index++;
+  }
+  onOffPauseButton(true)
+  onOffPlayButton(true)
+  let data = {
+              "gravity": gravity,
+              "ropeLength": ropeLength,
+              "babyHeight": babyHeight,
+              "babyWeigth": babyWeigth,
+              "swingTypeFirst":secondMethode,
+              "isSecond":1
+  }
+  return data;
 }

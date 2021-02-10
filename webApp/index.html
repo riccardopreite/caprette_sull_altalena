@@ -5,118 +5,148 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/3.0.0/socket.io.js"></script>
+    <script src="https://code.iconify.design/1/1.0.3/iconify.min.js"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:300,400,600" />
 
-    
+
+    <link rel="stylesheet" href="css/buttonMenu.css" />
+    <link rel="stylesheet" href="fonts/fontawesome-all.min.css" />
+    <link rel="stylesheet" href="fonts/font-awesome.min.css" />
+    <link rel="stylesheet" href="fonts/fontawesome5-overrides.min.css" />
   </head>
   <body>
-    <div id="firstEnvDiv" style="width: 1448px; height: 396px;">
+    <div id="firstEnvDiv" style="width: 1280px; height: 367px;">
 
       <div style="width:19%;height:100%;float:left;border: 1px solid black; margin-top:1em;margin-left:0.5em;">
 
-        <div style="width:100%; padding:1%;">
+        <div style="height: 15%;">
 
-          <div class="form-group" style="float:left; width:40%;">
+            <div id="firstAnimationControl"style="float:right; margin:0.5em;">
+                <div style="text-align: center;">
+                  <button id="firstPauseButton" class="btn btn-dark btn-circle m-1"style="text-align:center;  border-radius: 50%;float:left;"  disabled onclick="firstPausePressed()"><i class="fa fa-pause" aria-hidden="true"></i></button>
+                  <button id="firstPlayButton" class="btn btn-info btn-circle m-1" style="text-align:center; border-radius:50%;float:left;" disabled onclick="firstPlayPressed()"><i class="fa fa-play" aria-hidden="true"></i></button>
+                </div>
+            </div>
+            <div style="float:left; margin:0.5em;">
+
+              <button type="submit" class="btn btn-primary" onclick="uploadData()">Calcola</button>
+            </div>
+
+        </div>
+
+        <div style="width:100%;padding:1%;height: 65%; margin-top:0.5em;">
+
+          <div class="form-group" style="float:left;width:40%;margin: 0.2em;">
             <div style="float:none;">
-              <label for="gravity">Forza di gravita'</label>
+              <h6 for="gravity">Forza di gravità</h6>
               <input name="gravity" type="numer" class="form-control" id="gravity" aria-describedby="gravity" placeholder="gravity">
-              <small id="gravityHelp" class="form-text text-muted">Forza che imprime la gravita in m/s**2</small>
+              <small id="gravityHelp" class="form-text text-muted">m/s<sup>2</sup></small>
             </div>
             <div style="float:none;">
-              <label for="ropeLength">Lunghezza corda</label>
+              <h6 for="ropeLength">Lunghezza della corda</h6>
               <input name="ropeLength" type="numer" class="form-control" id="ropeLength" aria-describedby="ropeLength" placeholder="rope length">
-              <small id="ropeLengthHelp" class="form-text text-muted">Lunghezza corda in metri</small>
+              <small id="ropeLengthHelp" class="form-text text-muted">metri</small>
             </div>
-            <div class="btn-group dropright" style="margin-top: 1em;" style="float:none; ">
-              <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Dropright
-              </button>
-              <ul class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 37px, 0px); top: 0px; left: 0px; will-change: transform;">
-                <li style="padding-left:0.5em;"><input type="checkbox" id="checkboxType0"><label id="labelType0" style="padding-left:0.5em;">Standing</label></li>
-                <li style="padding-left:0.5em;"><input type="checkbox" id="checkboxType1"><label id="labelType1" style="padding-left:0.5em;">Seated</label></li>
-                <li style="padding-left:0.5em;"><input type="checkbox" id="checkboxType2" checked=""><label id="labelType2" style="padding-left:0.5em;">Realistic</label></li>
-                <li style="padding-left:0.5em;"><input type="checkbox" id="checkboxType3" checked=""><label id="labelType3" style="padding-left:0.5em;">Combined</label></li>
-              </ul>
-            </div>
+
 
           </div>
 
-          <div class="form-group" style="float:right; width:40%; padding-right:1em;">
+          <div class="form-group" style="float:right;width:40%;margin: 0.2em;">
 
             <div style="float:none;">
-              <label for="babyHeight">Altezza bambino</label>
+              <h6 for="babyHeight">Altezza del bambino</h6>
               <input name="babyHeight" type="numer" class="form-control" id="babyHeight" aria-describedby="babyHeight" placeholder="Height">
-              <small id="babyHeightHelp" class="form-text text-muted">Altezza del bambino in metri</small>
+              <small id="babyHeightHelp" class="form-text text-muted">metri</small>
             </div>
             <div style="float:none;">
-              <label for="babyWeigth">Peso bambino</label>
+              <h6 for="babyWeigth">Peso del bambino</h6>
               <input name="babyWeigth" type="numer" class="form-control" id="babyWeigth" aria-describedby="babyWeigth" placeholder="Weigth">
-              <small id="babyWeigthHelp" class="form-text text-muted">Peso del bambino in kg</small>
+              <small id="babyWeigthHelp" class="form-text text-muted">kg</small>
             </div>
-            <div style="">
-              <button type="submit" class="btn btn-primary" onclick="uploadData()">Submit</button>
-            </div>
+
           </div>
-      </div>
+        </div>
+        <div>
+          <div class="btn-group dropright" style="margin-left: 0.2em;float:left;">
+            <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Swing type
+            </button>
+            <ul class="dropdown-menu" x-placement="right-start" style="position: absolute; transform: translate3d(109px, 0px, 0px); top: 0px; left: 0px; will-change: transform;">
+              <li style="padding-left:0.5em;"><input type="radio" id="radioType0" name="firstCanvasRadio" checked="" onclick="first('standing')"><h6 id="labelType0" style="padding-left:0.5em;">Standing</h6></li>
+              <li style="padding-left:0.5em;"><input type="radio" id="radioType1" name="firstCanvasRadio" onclick="first('seated')"><h6 id="labelType1" style="padding-left:0.5em;">Seated</h6></li>
+              <li style="padding-left:0.5em;"><input type="radio" id="radioType2" name="firstCanvasRadio" onclick="first('realistic')"><h6 id="labelType2" style="padding-left:0.5em;">Realistic</h6></li>
+              <li style="padding-left:0.5em;"><input type="radio" id="radioType3" name="firstCanvasRadio" onclick="first('combined')"><h6 id="labelType3" style="padding-left:0.5em;">Combined</h6></li>
+            </ul>
+          </div>
+        </div>
 
       </div>
 
 
       <div id="canvasDiv" style="width:80%;height:100%; float:right; margin-top: 1em; border: 1px solid black;">
-        <!-- <div style="float:right; width:100%;height:100%;"> -->
-
-          <canvas id="firstCanvas" width="1158" height="396" style="float:right;   "></canvas>
-        <!-- </div> -->
+        <canvas id="firstCanvas" width="1024" height="367" style="float:right;   "></canvas>
       </div>
   </div>
 
 
-  <div id="secondEnvDiv" style="width: 1448px; height: 396px;">
+  <div id="secondEnvDiv" style="width: 1280px; height: 367px;">
 
     <div style="width:19%;height:100%;float:left;border: 1px solid black; margin-top:1em;margin-left:0.5em;">
 
-      <div style="width:100%; padding:1%;">
+      <div style="height: 15%;">
+        <div id="firstAnimationControl"style="float:right; margin:0.5em;">
+            <div style="text-align: center;">
+          <button id="secondPauseButton" class="btn btn-dark btn-circle m-1"style="text-align:center;  border-radius: 50%;float:left;"  disabled onclick="secondPausePressed()"><i class="fa fa-pause" aria-hidden="true"></i></button>
+          <button id="secondPlayButton" class="btn btn-info btn-circle m-1" style="text-align:center; border-radius:50%;float:left;" disabled onclick="secondPlayPressed()"><i class="fa fa-play" aria-hidden="true"></i></button>
+          </div>
+        </div>
 
-        <div class="form-group" style="float:left; width:40%;">
+      </div>
+      <div style="width:100%;padding:1%;height: 70%;">
+
+        <div class="form-group" style="float:left;width:40%;margin: 0.2em;">
           <div style="float:none;">
-            <label for="secondgravity">Forza di gravita'</label>
+            <h6 for="secondgravity">Forza di gravità</h6>
             <input name="secondgravity" type="numer" class="form-control" id="secondgravity" aria-describedby="gravity" placeholder="gravity">
-            <small id="gravityHelp" class="form-text text-muted">Forza che imprime la gravita in m/s**2</small>
+            <small id="gravityHelp" class="form-text text-muted">m/s<sup>2</sup></small>
           </div>
           <div style="float:none;">
-            <label for="secondropeLength">Lunghezza corda</label>
+            <h6 for="secondropeLength">Lunghezza della corda</h6>
             <input name="secondropeLength" type="numer" class="form-control" id="secondropeLength" aria-describedby="ropeLength" placeholder="rope length">
-            <small id="ropeLengthHelp" class="form-text text-muted">Lunghezza corda in metri</small>
+            <small id="ropeLengthHelp" class="form-text text-muted">metri</small>
           </div>
-          <div class="btn-group dropright" style="margin-top: 1em;" style="float:none; ">
-            <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Dropright
-            </button>
-            <ul class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 37px, 0px); top: 0px; left: 0px; will-change: transform;">
-              <li style="padding-left:0.5em;"><input type="checkbox" id="checkboxTypesecond0"><label id="labelType0" style="padding-left:0.5em;">Standing</label></li>
-              <li style="padding-left:0.5em;"><input type="checkbox" id="checkboxTypesecond1"><label id="labelType1" style="padding-left:0.5em;">Seated</label></li>
-              <li style="padding-left:0.5em;"><input type="checkbox" id="checkboxTypesecond2" checked=""><label id="labelType2" style="padding-left:0.5em;">Realistic</label></li>
-              <li style="padding-left:0.5em;"><input type="checkbox" id="checkboxTypesecond3" checked=""><label id="labelType3" style="padding-left:0.5em;">Combined</label></li>
-            </ul>
-          </div>
+
 
         </div>
 
-        <div class="form-group" style="float:right; width:40%; padding-right:1em;">
+        <div class="form-group" style="float:right;width:40%;/* padding-right:1em; */margin: 0.2em;">
 
           <div style="float:none;">
-            <label for="secondbabyHeight">Altezza bambino</label>
+            <h6 for="secondbabyHeight">Altezza del bambino</h6>
             <input name="secondbabyHeight" type="numer" class="form-control" id="secondbabyHeight" aria-describedby="babyHeight" placeholder="Height">
-            <small id="secondbabyHeightHelp" class="form-text text-muted">Altezza del bambino in metri</small>
+            <small id="secondbabyHeightHelp" class="form-text text-muted">metri</small>
           </div>
           <div style="float:none;">
-            <label for="secondbabyWeigth">Peso bambino</label>
+            <h6 for="secondbabyWeigth">Peso del bambino</h6>
             <input name="secondbabyWeigth" type="numer" class="form-control" id="secondbabyWeigth" aria-describedby="babyWeigth" placeholder="Weigth">
-            <small id="secondbabyWeigthHelp" class="form-text text-muted">Peso del bambino in kg</small>
+            <small id="secondbabyWeigthHelp" class="form-text text-muted">kg</small>
           </div>
-          <div style="">
-            <button type="submit" class="btn btn-primary" onclick="uploadData()">Submit</button>
-          </div>
+
         </div>
+      </div>
+    <div>
+      <div class="btn-group dropright" style="margin-left: 0.2em;float:left;">
+        <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Swing type
+        </button>
+        <ul class="dropdown-menu" x-placement="right-start" style="position: absolute; transform: translate3d(109px, 0px, 0px); top: 0px; left: 0px; will-change: transform;">
+          <li style="padding-left:0.5em;"><input type="radio" id="radioTypesecond0" name="secondCanvasRadio" onclick="second('standing')"><h6 id="labelTypeSecond0" style="padding-left:0.5em;">Standing</h6></li>
+          <li style="padding-left:0.5em;"><input type="radio" id="radioTypesecond1" name="secondCanvasRadio" onclick="second('seated')"><h6 id="labelTypeSecond1" style="padding-left:0.5em;">Seated</h6></li>
+          <li style="padding-left:0.5em;"><input type="radio" id="radioTypesecond2" name="secondCanvasRadio" onclick="second('realistic')"><h6 id="labelTypeSecond2" style="padding-left:0.5em;">Realistic</h6></li>
+          <li style="padding-left:0.5em;"><input type="radio" id="radioTypesecond3" name="secondCanvasRadio" checked="" onclick="second('combined')"><h6 id="labelTypeSecond3" style="padding-left:0.5em;">Combined</h6></li>
+        </ul>
+      </div>
     </div>
 
     </div>
@@ -125,7 +155,7 @@
     <div id="canvasSecondDiv" style="width:80%;height:100%; float:right; margin-top: 1em; border: 1px solid black;">
       <!-- <div style="float:right; width:100%;height:100%;"> -->
 
-        <canvas id="secondCanvas" width="1158" height="396" style="float:right;   "></canvas>
+        <canvas id="secondCanvas" width="1024" height="366" style="float:right;   "></canvas>
       <!-- </div> -->
     </div>
   </div>
@@ -139,24 +169,24 @@
 
         <div class="form-group" style="float:left; width:40%;">
           <div style="float:none;">
-            <label for="secondgravity">Forza di gravita'</label>
-            <input name="secondgravity" type="numer" class="form-control" id="secondgravity" aria-describedby="gravity" placeholder="gravity">
+            <label for="thirdgravity">Forza di gravita'</label>
+            <input name="thirdgravity" type="numer" class="form-control" id="thirdgravity" aria-describedby="gravity" placeholder="gravity">
             <small id="gravityHelp" class="form-text text-muted">Forza che imprime la gravita in m/s**2</small>
           </div>
           <div style="float:none;">
-            <label for="secondropeLength">Lunghezza corda</label>
-            <input name="secondropeLength" type="numer" class="form-control" id="secondropeLength" aria-describedby="ropeLength" placeholder="rope length">
+            <label for="thirdropeLength">Lunghezza corda</label>
+            <input name="thirdropeLength" type="numer" class="form-control" id="thirdropeLength" aria-describedby="ropeLength" placeholder="rope length">
             <small id="ropeLengthHelp" class="form-text text-muted">Lunghezza corda in metri</small>
           </div>
           <div class="btn-group dropright" style="margin-top: 1em;" style="float:none; ">
             <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Dropright
+              Swing type
             </button>
             <ul class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 37px, 0px); top: 0px; left: 0px; will-change: transform;">
-              <li style="padding-left:0.5em;"><input type="checkbox" id="checkboxTypesecond0"><label id="labelType0" style="padding-left:0.5em;">Standing</label></li>
-              <li style="padding-left:0.5em;"><input type="checkbox" id="checkboxTypesecond1"><label id="labelType1" style="padding-left:0.5em;">Seated</label></li>
-              <li style="padding-left:0.5em;"><input type="checkbox" id="checkboxTypesecond2" checked=""><label id="labelType2" style="padding-left:0.5em;">Realistic</label></li>
-              <li style="padding-left:0.5em;"><input type="checkbox" id="checkboxTypesecond3" checked=""><label id="labelType3" style="padding-left:0.5em;">Combined</label></li>
+              <li style="padding-left:0.5em;"><input type="checkbox" id="checkboxTypethird0"><label id="labelType0" style="padding-left:0.5em;">Standing</label></li>
+              <li style="padding-left:0.5em;"><input type="checkbox" id="checkboxTypethird1"><label id="labelType1" style="padding-left:0.5em;">Seated</label></li>
+              <li style="padding-left:0.5em;"><input type="checkbox" id="checkboxTypethird2" checked=""><label id="labelType2" style="padding-left:0.5em;">Realistic</label></li>
+              <li style="padding-left:0.5em;"><input type="checkbox" id="checkboxTypethird3" checked=""><label id="labelType3" style="padding-left:0.5em;">Combined</label></li>
             </ul>
           </div>
 
@@ -165,14 +195,14 @@
         <div class="form-group" style="float:right; width:40%; padding-right:1em;">
 
           <div style="float:none;">
-            <label for="secondbabyHeight">Altezza bambino</label>
-            <input name="secondbabyHeight" type="numer" class="form-control" id="secondbabyHeight" aria-describedby="babyHeight" placeholder="Height">
-            <small id="secondbabyHeightHelp" class="form-text text-muted">Altezza del bambino in metri</small>
+            <label for="thirdbabyHeight">Altezza bambino</label>
+            <input name="thirdbabyHeight" type="numer" class="form-control" id="thirdbabyHeight" aria-describedby="babyHeight" placeholder="Height">
+            <small id="thirdbabyHeightHelp" class="form-text text-muted">Altezza del bambino in metri</small>
           </div>
           <div style="float:none;">
-            <label for="secondbabyWeigth">Peso bambino</label>
-            <input name="secondbabyWeigth" type="numer" class="form-control" id="secondbabyWeigth" aria-describedby="babyWeigth" placeholder="Weigth">
-            <small id="secondbabyWeigthHelp" class="form-text text-muted">Peso del bambino in kg</small>
+            <label for="thirdbabyWeigth">Peso bambino</label>
+            <input name="thirdbabyWeigth" type="numer" class="form-control" id="thirdbabyWeigth" aria-describedby="babyWeigth" placeholder="Weigth">
+            <small id="thirdbabyWeigthHelp" class="form-text text-muted">Peso del bambino in kg</small>
           </div>
           <div style="">
             <button type="submit" class="btn btn-primary" onclick="">Start Training</button>
@@ -192,42 +222,44 @@
   </div>
 
 
-     <!-- <button onclick="draw()">draw</button>
-    <button onclick="speedUpDraw()">+veloce</button>  -->
+       <!-- <button onclick="draw()">draw</button>
+      <button onclick="speedUpDraw()">+veloce</button>  -->
 
-    <!-- JS INCLUSIONS -->
-    <!-- handle server req and res -->
-    <script type="text/javascript" src="js/initData.js"></script>
-    <script type="text/javascript" src="js/ws.js"></script>
+      <!-- JS INCLUSIONS -->
+      <!-- handle server req and res -->
+      <script type="text/javascript" src="js/drawingComponets/drawingUtils/initDocument.js"></script>
+      <script type="text/javascript" src="js/initData.js"></script>
+      <script type="text/javascript" src="js/ws.js"></script>
 
-    <!-- draw utils and components -->
-    <script type="text/javascript" src="js/drawingComponets/drawingUtils/colors.js"></script>
-    <script type="text/javascript" src="js/drawingComponets/drawingUtils/frame.js"></script>
-    <script type="text/javascript" src="js/drawingComponets/drawingUtils/point.js"></script>
+      <!-- draw utils and components -->
+      <script type="text/javascript" src="js/drawingComponets/drawingUtils/colors.js"></script>
+      <script type="text/javascript" src="js/drawingComponets/drawingUtils/frame.js"></script>
+      <script type="text/javascript" src="js/drawingComponets/drawingUtils/point.js"></script>
+      <script type="text/javascript" src="js/drawingComponets/drawingUtils/button.js"></script>
+      <script type="text/javascript" src="js/drawingComponets/drawingUtils/utils.js"></script>
 
-    <script type="text/javascript" src="js/drawingComponets/rope.js"></script>
-    <script type="text/javascript" src="js/drawingComponets/swing.js"></script>
-    <script type="text/javascript" src="js/drawingComponets/centerMass.js"></script>
-    <script type="text/javascript" src="js/drawingComponets/body.js"></script>
+      <script type="text/javascript" src="js/drawingComponets/rope.js"></script>
+      <script type="text/javascript" src="js/drawingComponets/swing.js"></script>
+      <script type="text/javascript" src="js/drawingComponets/centerMass.js"></script>
+      <script type="text/javascript" src="js/drawingComponets/body.js"></script>
 
-    <!-- genetic stuff -->
-    <!-- tensor flow -->
-    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@2.0.0/dist/tf.min.js"></script>
-    <script type="text/javascript" src="js/genetic/nn.js"></script>
-    <script type="text/javascript" src="js/genetic/matrix.js"></script>
-    <script type="text/javascript" src="js/genetic/ga.js"></script>
+      <!-- genetic stuff -->
+      <!-- tensor flow -->
+      <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@2.0.0/dist/tf.min.js"></script>
+      <script type="text/javascript" src="js/genetic/nn.js"></script>
+      <script type="text/javascript" src="js/genetic/matrix.js"></script>
+      <script type="text/javascript" src="js/genetic/ga.js"></script>
 
-    <script type="text/javascript" src="js/standardDraw.js"></script>
-    <script type="text/javascript" src="js/geneticDraw.js"></script>
-s
-    
-
-
-
+      <script type="text/javascript" src="js/standardDraw.js"></script>
+      <script type="text/javascript" src="js/geneticDraw.js"></script>
 
 
 
 
 
 
-</body></html>
+
+
+
+
+  </body></html>
