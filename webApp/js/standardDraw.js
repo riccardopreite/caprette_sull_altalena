@@ -29,29 +29,15 @@ canvasList[1]["combined_frameList"]= [];
 var toDraw1 = undefined,
     toDraw2 = undefined;
 // init varible obj for both environment
-var rope1 = new Rope(ctx1)
-var swing1 = new Swing(ctx1)
-var centerMass1 = new CenterMass(ctx1, showLower, showLower)
-var body1 = new Body(ctx1, bodyHeight)
+var rope1 = undefined
+var swing1 =undefined
+var centerMass1 = undefined
+var body1 = undefined
 
-var rope2 = new Rope(ctx2)
-var swing2 = new Swing(ctx2)
-var centerMass2 = new CenterMass(ctx2, showLower, showLower)
-var body2 = new Body(ctx2, bodyHeight)
-
-/*
-IMPORTANT: always put swing BEFORE body show.
-Body coordinates (and rotations) are calculated based on the Swing
- */
-rope1.show()
-swing1.show()
-centerMass1.show()
-body1.show()
-
-rope2.show()
-swing2.show()
-centerMass2.show()
-body2.show()
+var rope2 = undefined
+var swing2 = undefined
+var centerMass2 = undefined
+var body2 = undefined
 
 var frameCounterFirst = 0, frameCounterSecond = 0, firstChange = false, secondChange = false;
 const FRAME_OFFSET = 20

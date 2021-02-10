@@ -9,6 +9,16 @@ socket.on('firstsCalculated', function(msg, cb) {
   console.log('firstsCalculated');
   onOffPauseButton(false)
   onOffPlayButton(true)
+  document.getElementById("menuDiv0").style.display = 'none';
+  document.getElementById("graphDiv0").style.display = 'inline-block';
+  document.getElementById("menuDiv1").style.display = 'none';
+  document.getElementById("graphDiv1").style.display = 'inline-block';
+  document.getElementById("switchButton0").innerHTML = 'Dati Swing';
+  document.getElementById("switchButton0").className = "btn btn-secondary";
+  document.getElementById("switchButton1").innerHTML = 'Dati Swing';
+  document.getElementById("switchButton1").className = "btn btn-secondary";
+  initCanvas(0)
+  initCanvas(1)
   draw()
 });
 

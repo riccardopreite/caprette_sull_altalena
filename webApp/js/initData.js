@@ -48,16 +48,6 @@ function requestFirstCanvas(){
     }
     index++;
   }
-  index = 0;
-  while(index < 4){
-    let check = document.getElementById("radioTypesecond"+index);
-    let label = document.getElementById("labelTypeSecond"+index);
-    if(check.checked){
-      if(secondMethode == "") secondMethode = label.innerHTML.toLowerCase()
-      else break;
-    }
-    index++;
-  }
   if(firstMethode == "") {
     alert("Scegli almeno un metodo da visualizzare") //set standing as default?
     return;
