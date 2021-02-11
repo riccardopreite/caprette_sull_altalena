@@ -71,9 +71,11 @@ def runFirstsType(form):
     print(form["isSecond"])
     print(form)
     gravity = float(form["gravity"])
-    heightBody = float(form["babyHeight"])
-    massBody = float(form["babyWeigth"])/10
+    heightBody = float(form["height"])
+    massBody = float(form["weigth"])/10
     ropeLength = float(form["ropeLength"])
+    initialSwingDegree = float(form["phi"])
+    initialAngluarSpeed = float(form["w"])
     swingTypeFirst = form["swingTypeFirst"]
     isSecond = form["isSecond"]
     massUpper = massBody/2
@@ -150,7 +152,7 @@ async def calculateSwing(second,third,fourth,secondString,thirdString,fourthStri
 
 @app.route('/')
 def index():
-    content = get_file('webApp/index.html')
+    content = get_file('webApp/main.html')
     return Response(content, mimetype="text/html")
 
 

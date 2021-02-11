@@ -1,13 +1,16 @@
 // get canvas variable
-var canvas1 = document.getElementById('firstCanvas');
-var canvas2 = document.getElementById('secondCanvas');
+var canvas1 = document.getElementById('canvas0');
+var canvas2 = document.getElementById('canvas1');
 var ctx1 = canvas1.getContext('2d');
 var ctx2 = canvas2.getContext('2d');
 
 // get visualization option
 // var showUpper = Document.getElementById("checkbox_shoeUpper").value()
-var showUpper = false
-var showLower = false
+var showUpper0 = $('#lowerCM0').is(":checked")
+var showLower0 = $('#upperCM0').is(":checked")
+var showUpper1 = $('#lowerCM1').is(":checked")
+var showLower1 = $('#upperCM1').is(":checked")
+
 
 var bodyHeight = 160
 
@@ -51,11 +54,11 @@ function draw(){
 }
 
 function drawFirst(){
-  if(checkPause("firstPauseButton")) return;
+  if(document.getElementById("playButton0").innerHTML.includes("play")) return;
   if(toDraw1 != undefined){
     if(frameCounterFirst > toDraw1.length){
       frameCounterFirst = 0;
-      firstPausePressed()
+      document.getElementById("playButton0").innerHTML = "pause";
       return
     }
     else {
@@ -80,11 +83,11 @@ function drawFirst(){
 }
 
 function drawSecond(){
-  if(checkPause("secondPauseButton")) return;
+  if(document.getElementById("playButton1").innerHTML.includes("play")) return;
   if(toDraw2 != undefined){
     if(frameCounterSecond > toDraw2.length) {
       frameCounterSecond = 0;
-     secondPausePressed()
+      document.getElementById("playButton1").innerHTML = "pause";
      return
     }
     else {

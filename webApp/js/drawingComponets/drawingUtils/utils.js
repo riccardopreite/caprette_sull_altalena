@@ -20,12 +20,12 @@ function switchList(methode,index){
 function firstDraw(){
   rope1 = new Rope(ctx1)
   swing1 = new Swing(ctx1)
-  centerMass1 = new CenterMass(ctx1, showLower, showLower)
+  centerMass1 = new CenterMass(ctx1, showUpper0, showLower0)
   body1 = new Body(ctx1, bodyHeight)
 
   rope2 = new Rope(ctx2)
   swing2 = new Swing(ctx2)
-  centerMass2 = new CenterMass(ctx2, showLower, showLower)
+  centerMass2 = new CenterMass(ctx2, showUpper1, showLower1)
   body2 = new Body(ctx2, bodyHeight)
 
   /*
@@ -67,26 +67,23 @@ function initCanvas(id){
   canvas2.height = $("#graph2Canvas"+id).height()
   canvas2.width = $("#graph2Canvas"+id).width()
 }
-function first(text){
-  let i = 0;
-  while(i<4){
-    document.getElementById("radioType"+i).checked = false
-    if(document.getElementById("labelType"+i).innerHTML.toLowerCase() == text) document.getElementById("radioType"+i).checked = true
-    i++
-  }
+
+function updateSwingTypeFirst(){
+  console.log("CIAOOOOOOOOO");
   firstChange = true
-  firstMethode = text
+  firstMethode = $("#swingType0 :selected").val();
+  //To start draw new type now
+  // playPausePressed(0)
+  // playPausePressed(0)
 }
 
-function second(text){
-  let i = 0;
-  while(i<4){
-    document.getElementById("radioTypesecond"+i).checked = false
-    if(document.getElementById("labelTypeSecond"+i).innerHTML.toLowerCase() == text) document.getElementById("radioTypesecond"+i).checked = true
-    i++
-  }
+function updateSwingTypeSecond(){
+  console.log("CIAOOOOOOOOO");
   secondChange = true
-  secondMethode = text
+  secondMethode = $("#swingType1 :selected").val();
+  //To start draw new type now
+  // playPausePressed(1)
+  // playPausePressed(1)
 }
 
 
@@ -95,4 +92,14 @@ function selectFirstMethods(resType ,res){
 }
 function selectSecondMethods(resType ,res){
   if(secondMethode == resType) toDraw2 = canvasList[1][secondMethode+"_frameList"]
+}
+
+function changeLower(id){
+  if(id) centerMass1.showLower = $('#lowerCM0').is(":checked")
+  else centerMass2.showLower = $('#lowerCM1').is(":checked")
+}
+function changeUpper(id){
+  if(id) centerMass1.showUpper = $('#upperCM0').is(":checked")
+  else centerMass2.showUpper = $('#upperCM1').is(":checked")
+
 }
