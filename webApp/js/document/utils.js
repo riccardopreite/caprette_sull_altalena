@@ -28,11 +28,12 @@ function selectSecondMethods(resType ,res){
   if(secondMethode == resType) toDraw1 = canvasList[1][secondMethode+"_frameList"]
 }
 
-function controlButtonSelectSystem(id,bool){
-  disableEnableInput(0,bool);
-  disableEnableInput(1,bool);
-  disableEnableControlButton(0,!bool)
-  disableEnableControlButton(1,!bool)
+function controlSelectSystem(id,bool){
+  disableEnableInput(id,bool);
+}
+
+function controlButtonSystem(id,bool){
+  disableEnableControlButton(id,!bool)
 }
 
 function disableEnableControlButton(id,bool){

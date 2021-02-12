@@ -57,7 +57,7 @@ function drawFirst(){
     }
     else {
       var currentFrame = toDraw0[frameCounterFirst]
-      if(!frameCounterFirst) controlButtonSelectSystem(0,true)
+      if(!frameCounterFirst) controlSelectSystem(0,true)
 
       ctx0.clearRect(0,0,canvas0.width,canvas0.height)
 
@@ -89,7 +89,7 @@ function drawSecond(){
     }
     else {
       var currentFrame = toDraw1[frameCounterSecond]
-      if(!frameCounterSecond) controlButtonSelectSystem(1,true)
+      if(!frameCounterSecond) controlSelectSystem(1,true)
 
       ctx1.clearRect(0,0,canvas1.width,canvas1.height)
 

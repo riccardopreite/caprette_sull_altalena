@@ -10,7 +10,10 @@ function prepareCanvas(){
   initLowerCM();
   initCanvasMeasure()
   initOnChangeEvent()
-  controlButtonSelectSystem(1,false)
+  controlSelectSystem(0,false)
+  controlSelectSystem(0,false)
+  controlButtonSystem(1,true)
+  controlButtonSystem(1,true)
   M.AutoInit();
   //FIRST DRAW
   firstDrawBodies()
