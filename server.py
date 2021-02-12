@@ -152,7 +152,7 @@ async def calculateSwing(second,third,fourth,secondString,thirdString,fourthStri
 
 @app.route('/')
 def index():
-    content = get_file('webApp/main.html')
+    content = get_file('webApp/index.html')
     return Response(content, mimetype="text/html")
 
 
