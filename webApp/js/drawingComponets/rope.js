@@ -2,6 +2,7 @@ class Rope {
     constructor(ctx,canvas){
         this.ctx = ctx
         this.startX = this.endX = this.ctx.canvas.width/2
+        console.log(this.startX);
         this.startY = 0
         this.endY = this.ctx.canvas.height/2
     }
