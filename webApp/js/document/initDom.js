@@ -126,10 +126,10 @@ function firstDrawBodies(){
 
 function initGraph(){
   initGraphMeasure()
-  timeGraph0 = new Graph(ctxTime0,"First Time/Angle graph");
-  // speedGraph0 = new Graph(ctxSpeed0);
-  timeGraph1 = new Graph(ctxTime1,"Second Time/Angle graph");
-  // speedGraph1 = new Graph(ctxSpeed1);
+  timeGraph0 = new Graph(ctxTime0,"First Time/Angle graph","phi(rad)","time(s)","radiant angle")
+  //speedGraph0 = new Graph(ctxTime0,"First Angular Speed/Angle graph","angular speed(rad/s)","time(s)","angular speed")
+  timeGraph1 = new Graph(ctxTime1,"Second Time/Angle graph","phi(rad)","time(s)","radiant angle")
+  // speedGraph1 = new Graph(ctxTime1,"Second Angular Speed/Angle graph","angular speed(rad/s)","time(s)","angular speed")
 }
 
 function initGraphMeasure(){

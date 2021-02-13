@@ -89,7 +89,8 @@ function drawFirst(){
       if(frameCounterFirst == 0) {
         controlSelectSystem(0,true)
         timeGraph0.resetChart()
-        timeGraph0 = new Graph(ctxTime0,"First Time/Angle graph")
+        timeGraph0 = new Graph(ctxTime0,"First Time/Angle graph","phi(rad)","time(s)","radiant angle")
+        //speedGraph0 = new Graph(ctxTime0,"First Angular Speed/Angle graph","angular speed(rad/s)","time(s)","angular speed")
       }
 
       ctx0.clearRect(0,0,canvas0.width,canvas0.height)
@@ -122,7 +123,8 @@ function drawSecond(){
       if(frameCounterSecond == 0) {
         controlSelectSystem(1,true)
         timeGraph1.resetChart()
-        timeGraph1 = new Graph(ctxTime1,"Second Time/Angle graph")
+        timeGraph1 = new Graph(ctxTime1,"Second Time/Angle graph","phi(rad)","time(s)","radiant angle")
+        // speedGraph1 = new Graph(ctxTime1,"Second Angular Speed/Angle graph","angular speed(rad/s)","time(s)","angular speed")
       }
 
       ctx1.clearRect(0,0,canvas1.width,canvas1.height)

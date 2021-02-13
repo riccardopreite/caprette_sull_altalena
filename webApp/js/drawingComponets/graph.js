@@ -1,16 +1,37 @@
 class Graph {
-  constructor(ctx,label) {
+  constructor(ctx,label,yLabel,xLabel,popupValue) {
       this.ctx = ctx
       this.chart = new Chart(this.ctx, {
         type: 'line',
         data: {
           labels: [],
           datasets: [{
-              data: [],
-              label: label
-            }]
+            data: [],
+            label:popupValue
+          }]
         }
       });
+      this.chart.options = {
+        title: {
+            display: true,
+            text: label
+        },
+        scales: {
+          yAxes: [{
+            scaleLabel: {
+              display: true,
+              labelString: yLabel
+            }
+          }],
+          xAxes: [{
+            scaleLabel: {
+              display: true,
+              labelString: xLabel
+            }
+          }],
+        }
+      }
+      this.chart.update();
   }
 
   /**
