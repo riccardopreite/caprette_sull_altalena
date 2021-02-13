@@ -15,7 +15,7 @@ var socket = io(namespace);
 *************************/
 
 var ropeLengthDef = 2.7, // 2.7 metri default = metà del canvas| MAX?
-bodyHeightDef = 1.0,     // 1.0 metri default
+bodyHeightDef = 1.6,     // 1.0 metri default
 bodyMass = 20,           // 20.0kg default
 gravityDef = 9.8,        // 9.8 m/s^2 default
 initPhiDef = -0.50,      //-0.5 default
@@ -71,8 +71,8 @@ var canvasList = [];
 
 var firstInterval = undefined,
     secondInterval = undefined;
-var firstIntervalTimer = 100,
-    secondIntervalTimer = 100;
+var firstIntervalTimer = 10,
+    secondIntervalTimer = 10;
 
 /*************************
         END SECTION

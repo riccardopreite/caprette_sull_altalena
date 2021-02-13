@@ -8,10 +8,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Swing</title>
 
+
   <!-- CSS INCLUSION -->
+  <!-- chart -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.css" integrity="sha512-C7hOmCgGzihKXzyPU/z4nv97W0d9bv4ALuuEbSf6hm93myico9qa0hv4dODThvCsqQUmKmLcJmlpRmCaApr83g==" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.css" integrity="sha512-/zs32ZEJh+/EO2N1b0PEdoA10JkdC3zJ8L5FTiQu82LR9S/rOQNfQN7U59U9BC12swNeRAz3HSzIL2vpp4fv3w==" crossorigin="anonymous" />
   <!-- materialize -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <!-- Custom css -->
+  <link rel="stylesheet" href="css/main.css">
+
+  <!-- JS INCLUSION -->
   <!-- jquery -->
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
     integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous">
@@ -21,9 +29,11 @@
   </script>
   <!-- socket -->
   <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/3.0.0/socket.io.js"></script>
-  <!-- Custom css -->
-  <link rel="stylesheet" href="css/main.css">
-
+  <!-- chart.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js" integrity="sha512-d9xgZrVZpmmQlfonhQUvTR7lMPtO7NkZMkA0ABN3PHCbKA5nqylQ/yWlFAyY6hYgdF1Qh6nYiuADWwKB4C2WSw==" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.bundle.js" integrity="sha512-zO8oeHCxetPn1Hd9PdDleg5Tw1bAaP0YmNvPY8CwcRyUk7d7/+nyElmFrB6f7vg4f7Fv4sui1mcep8RIEShczg==" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.bundle.min.js" integrity="sha512-SuxO9djzjML6b9w9/I07IWnLnQhgyYVSpHZx0JV97kGBfTIsUYlWflyuW4ypnvhBrslz1yJ3R+S14fdCWmSmSA==" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js" integrity="sha512-hZf9Qhp3rlDJBvAKvmiG+goaaKRZA6LKUO35oK6EsM0/kjPK32Yw7URqrq3Q+Nvbbt8Usss+IekL7CRn83dYmw==" crossorigin="anonymous"></script>
 
 
 
@@ -64,7 +74,30 @@
         </div>
       </div>
 
-      <div class="col l6 m12 s12">
+      <!-- graph time container  -->
+      <div class="col l6 m12 s12" id="graphTimeDiv0" style="display:none;">
+        <div class="card medium cardCanvas marginTop shadow">
+          <div class="container">
+            <canvas id="graphTime0" width="200" height="100"></canvas>
+          </div>
+        </div>
+        <a class="btn center-align waves-effect waves-light" type="submit" name="action"
+        onclick="hideTimeGraph(0)">Form
+          <i class="material-icons right">send</i>
+        </a>
+      </div>
+      <!-- graph speed container fare in modo che si possano vedere entrambi in un div -->
+      <!-- speed rimane commentato per il momento -->
+      <!-- <div class="col l6 m12 s12" id="graphSpeedDiv0">
+        <div class="card medium cardCanvas marginTop shadow">
+          <div class="container">
+            <canvas id="graphSpeed0" width="200" height="100"></canvas>
+          </div>
+        </div>
+      </div> -->
+      <!-- form container  -->
+
+      <div class="col l6 m12 s12" id="formDiv0">
         <div class="card medium cardCanvas marginTop shadow">
           <div class="container">
             <form class="col s12 formContainer">
@@ -122,6 +155,10 @@
               onclick="uploadData()">Submit
               <i class="material-icons right">send</i>
             </a>
+            <a class="btn center-align waves-effect waves-light" type="submit" name="action"
+              onclick="showTimeGraph(0)">Graph
+              <i class="material-icons right">send</i>
+            </a>
           </div>
         </div>
       </div>
@@ -172,7 +209,30 @@
         </div>
       </div>
 
-      <div class="col l6 m12 s12">
+      <!-- graph time container  -->
+      <div class="col l6 m12 s12" id="graphTimeDiv1" style="display:none;">
+        <div class="card medium cardCanvas marginTop shadow">
+          <div class="container">
+            <canvas id="graphTime1" width="200" height="100"></canvas>
+          </div>
+        </div>
+          <a class="btn center-align waves-effect waves-light" type="submit" name="action"
+          onclick="hideTimeGraph(1)">Form
+            <i class="material-icons right">send</i>
+          </a>
+      </div>
+      <!-- graph speed container fare in modo che si possano vedere entrambi in un div -->
+      <!-- speed rimane commentato per il momento -->
+      <!-- <div class="col l6 m12 s12" id="graphSpeedDiv1">
+        <div class="card medium cardCanvas marginTop shadow">
+          <div class="container">
+            <canvas id="graphSpeed1" width="200" height="100"></canvas>
+          </div>
+        </div>
+      </div> -->
+
+      <!-- form container  -->
+      <div class="col l6 m12 s12" id="formDiv1">
         <div class="card medium cardCanvas marginBottom shadow">
           <div class="container">
             <form class="col s12 formContainer">
@@ -230,6 +290,10 @@
               onclick="uploadData()">Submit
               <i class="material-icons right">send</i>
             </a>
+            <a class="btn center-align waves-effect waves-light" type="submit" name="action"
+              onclick="showTimeGraph(1)">Graph
+              <i class="material-icons right">send</i>
+            </a>
           </div>
         </div>
       </div>
@@ -279,6 +343,7 @@
   <script type="text/javascript" src="js/drawingComponets/swing.js"></script>
   <script type="text/javascript" src="js/drawingComponets/centerMass.js"></script>
   <script type="text/javascript" src="js/drawingComponets/body.js"></script>
+  <script type="text/javascript" src="js/drawingComponets/graph.js"></script>
 
   <!-- genetic stuff -->
   <!-- tensor flow -->

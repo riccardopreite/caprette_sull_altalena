@@ -5,6 +5,8 @@ socket.on('connect', function() {
 
 socket.on('firstsCalculated', function(msg, cb) {
   console.log('firstsCalculated');
+  showTimeGraph(0)
+  showTimeGraph(1)
 });
 
 socket.on('standing', function(msg, cb) {

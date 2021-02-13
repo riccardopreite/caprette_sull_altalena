@@ -17,6 +17,7 @@ function prepareCanvas(){
   M.AutoInit();
   //FIRST DRAW
   firstDrawBodies()
+  initGraph()
 
   /*************************
   THIS CODE COMMENTED IS NOT WORKING FOR SECOND CANVAS
@@ -123,6 +124,26 @@ function firstDrawBodies(){
   body1.show()
 }
 
+function initGraph(){
+  initGraphMeasure()
+  timeGraph0 = new Graph(ctxTime0,"First Time/Angle graph");
+  // speedGraph0 = new Graph(ctxSpeed0);
+  timeGraph1 = new Graph(ctxTime1,"Second Time/Angle graph");
+  // speedGraph1 = new Graph(ctxSpeed1);
+}
+
+function initGraphMeasure(){
+  timeGraphCanvas0.height = $("#graphTimeDiv0").height()
+  timeGraphCanvas0.width = $("#graphTimeDiv0").width()
+
+  // speedGraphCanvas0.height = $("#graphTimeDiv1").height()
+  // speedGraphCanvas0.width = $("#graphTimeDiv1").width()
+  timeGraphCanvas1.height = $("#graphTimeDiv1").height()
+  timeGraphCanvas1.width = $("#graphTimeDiv1").width()
+
+  // speedGraphCanvas1.height = $("#speedTimeDiv1").height()
+  // speedGraphCanvas1.width = $("#speedTimeDiv1").height()
+}
 /*******************************************************
                     END INIT FUNCTION
 *******************************************************/

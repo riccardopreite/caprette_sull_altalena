@@ -39,7 +39,7 @@ realisticString = None
 combinedString = None
 
 
-no_simulationSteps = 30
+no_simulationSteps = 10
 
 app = Flask(__name__,static_url_path='', static_folder='webApp')
 app.config['SECRET_KEY'] = 'SjdnUends821Jsdlkvxh391ksdODnejdDw'

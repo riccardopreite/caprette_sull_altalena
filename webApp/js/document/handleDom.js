@@ -1,4 +1,47 @@
 /*******************************************************
+        START GRAPH FUNCTION
+*******************************************************/
+
+function showTimeGraph(id){
+  var form = $("#formDiv"+id)
+      graph = $("#graphTimeDiv"+id)
+  form.hide()
+  graph.show()
+  console.log($("#graphTimeDiv1").height());
+  console.log(timeGraphCanvas1.height);
+
+}
+
+function hideTimeGraph(id){
+  var form = $("#formDiv"+id)
+      graph = $("#graphTimeDiv"+id)
+  form.show()
+  graph.hide()
+}
+
+/***************************
+
+function showSpeedGraph(id){
+  var form = $("#formDiv"+id)
+      graph = $("#graphSpeedDiv"+id)
+  form.hide()
+  graph.show()
+}
+
+function hideSpeedGraph(id){
+  var form = $("#formDiv"+id)
+      graph = $("#graphSpeedDiv"+id)
+  form.show()
+  graph.hide()
+}
+
+****************************/
+/*******************************************************
+        END GRAPH FUNCTION
+*******************************************************/
+
+
+/*******************************************************
         START MENU CONTROL BUTTON FUNCTION
 *******************************************************/
       /*******************************************************

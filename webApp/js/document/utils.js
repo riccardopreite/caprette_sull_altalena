@@ -3,22 +3,7 @@
 *******************************************************/
 
 function switchList(methode,index){
-  console.log(index);
-  switch (methode) {
-    case "standing":
-      return canvasList[index]["standing_frameList"]
-      break;
-    case "seated":
-      return canvasList[index]["seated_frameList"]
-      break;
-    case "realistic":
-      return canvasList[index]["realistic_frameList"]
-      break;
-    case "combined":
-      return canvasList[index]["combined_frameList"]
-      break;
-    default:
-  }
+  return canvasList[index][methode+"_frameList"]
 }
 
 function selectFirstMethods(resType ,res){
@@ -32,7 +17,7 @@ function controlSelectSystem(id,bool){
   disableEnableInput(id,bool);
 }
 
-// play/pause speed 
+// play/pause speed
 function controlButtonSystem(id,bool){
   disableEnableControlButton(id,!bool)
 }
@@ -43,6 +28,21 @@ function disableEnableControlButton(id,bool){
   disableSpeedDownButton(id,bool)
 }
 
+function updateSwing(rope,swing,currentFrame){
+  rope.update(currentFrame)
+  swing.update(currentFrame)
+}
+function updateBody(centerMass,body,currentFrame){
+  centerMass.update(currentFrame)
+  body.update(currentFrame)
+}
+
+function showFrame(rope,swing,centerMass,body){
+  rope.show()
+  centerMass.show()
+  swing.show()
+  body.show()
+}
 /*******************************************************
                     END UTILS FUNCTION
 *******************************************************/
@@ -51,28 +51,5 @@ function disableEnableControlButton(id,bool){
 
   OLD FUNCTION USED TO SWITCH FROM GRAPH TO INPUT DATA
 
-function showHideGraph(id){
-  if(document.getElementById("menuDiv"+id).style.display == 'none') {
-    document.getElementById("menuDiv"+id).style.display = 'inline-block';
-    document.getElementById("graphDiv"+id).style.display = 'none';
-    document.getElementById("switchButton"+id).innerHTML = 'Grafici';
-    document.getElementById("switchButton"+id).className = "btn btn-warning";
-  }
-  else{
-    document.getElementById("menuDiv"+id).style.display = 'none';
-    document.getElementById("graphDiv"+id).style.display = 'inline-block';
-    document.getElementById("switchButton"+id).innerHTML = 'Dati Swing';
-    document.getElementById("switchButton"+id).className = "btn btn-secondary";
-    initCanvas(id)
-  }
-}
 
-function initCanvas(id){
-  var canvas0 = document.getElementById("graph1Canvas"+id),
-      canvas1 = document.getElementById("graph2Canvas"+id);
-  canvas0.height = $("#graph1Canvas"+id).height()
-  canvas0.width = $("#graph1Canvas"+id).width()
-  canvas1.height = $("#graph2Canvas"+id).height()
-  canvas1.width = $("#graph2Canvas"+id).width()
-}
 ****************************************************************************************/
