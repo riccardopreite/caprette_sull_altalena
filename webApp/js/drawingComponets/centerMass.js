@@ -2,6 +2,7 @@ const NUMBER_COLORS = 50
 var colorBlue = "#21D4FD"
 var colorPurple = "#B721FF"
 var colors = generateColor(colorBlue, colorPurple, NUMBER_COLORS)
+var alphaValue = "8f"
 
 class CenterMass {
     constructor(ctx, showUpper, showLower) {
@@ -24,7 +25,7 @@ class CenterMass {
             if (this.cm_list.indexOf(cm) % POINT_OFFSET == 0) {
                 this.ctx.beginPath();
                 this.ctx.arc(cm.x, cm.y, this.RADIUS, 0, 2 * Math.PI);
-                this.ctx.fillStyle = "#" + colors[this.cm_list.indexOf(cm) % NUMBER_COLORS]
+                this.ctx.fillStyle = "#" + colors[this.cm_list.indexOf(cm) % NUMBER_COLORS] + alphaValue
                 this.ctx.fill()
             }
         })
@@ -34,7 +35,7 @@ class CenterMass {
                 if (this.cm_list.indexOf(cm) % POINT_OFFSET == 0) {
                     this.ctx.beginPath();
                     this.ctx.arc(cm.x, cm.y, this.RADIUS, 0, 2 * Math.PI);
-                    this.ctx.fillStyle = "#" + colors[this.upper_list.indexOf(cm) % NUMBER_COLORS]
+                    this.ctx.fillStyle = "#" + colors[this.upper_list.indexOf(cm) % NUMBER_COLORS] + alphaValue
                     this.ctx.fill()
                 }
             })
@@ -45,7 +46,7 @@ class CenterMass {
                 if (this.cm_list.indexOf(cm) % POINT_OFFSET == 0) {
                     this.ctx.beginPath();
                     this.ctx.arc(cm.x, cm.y, this.RADIUS, 0, 2 * Math.PI);
-                    this.ctx.fillStyle = "#" + colors[this.lower_list.indexOf(cm) % NUMBER_COLORS]
+                    this.ctx.fillStyle = "#" + colors[this.lower_list.indexOf(cm) % NUMBER_COLORS] + alphaValue
                     this.ctx.fill()
                 }
             })

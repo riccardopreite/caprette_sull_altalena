@@ -60,32 +60,31 @@ class Frame {
 function toCanvasCoordinates(coordinatesList, ctx) {
     // TODO Proporzione dati input con dimensione canvas Scaling100:Canvas300=ScalingX:InputY o limite e pace
     const SCALE_FACTOR = 100
-
     frameArray = []
     for (i in coordinatesList) {
+      let t = coordinatesList[i]["t"],
+      phi = coordinatesList[i]["phi"],
+      w = coordinatesList[i]["w"],
+      bodyPosition = coordinatesList[i]["bodyPosition"],
+      cm = coordinatesList[i].cm,
+      swingCM = coordinatesList[i].swingCM,
+      upperCM = coordinatesList[i].upperCM,
+      lowerCM = coordinatesList[i].lowerCM
         var tmpFrame = new Frame(
             ctx,
-            coordinatesList[i]["t"],
-            coordinatesList[i]["phi"],
-            coordinatesList[i]["w"],
-            coordinatesList[i]["bodyPosition"],
-            coordinatesList[i].cm,
-            coordinatesList[i].swingCM,
-            coordinatesList[i].upperCM,
-            coordinatesList[i].lowerCM
+            t,
+            phi,
+            w,
+            bodyPosition,
+            cm,
+            swingCM,
+            upperCM,
+            lowerCM
         )
         tmpFrame.scaleFrame(SCALE_FACTOR)
         tmpFrame.traslateFrame()
 
         frameArray.push(tmpFrame)
     }
-
     return frameArray
 }
-
-
-
-
-
-  
- 

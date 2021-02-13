@@ -142,6 +142,7 @@ function updateSwingTypeSecond(){
 }
 
 function changeLower(id){
+	//fix <=================================
   if(id) centerMass0.showLower = $('#lowerCM0').is(":checked")
   else centerMass1.showLower = $('#lowerCM1').is(":checked")
 }

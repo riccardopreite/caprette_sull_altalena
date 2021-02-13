@@ -8,11 +8,10 @@ class Rope {
     }
 
     show(){
-
         this.ctx.beginPath();
         this.ctx.moveTo(this.startX, this.startY);
         this.ctx.lineTo(this.endX, this.endY);
-        this.ctx.strokeStyle = "#FF0000";
+        this.ctx.strokeStyle = "rgba(255,255,255,0.6)";
         this.ctx.stroke();
     }
 

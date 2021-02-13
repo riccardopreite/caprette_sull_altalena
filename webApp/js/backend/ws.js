@@ -1,12 +1,4 @@
 
-function selectMethods(resType ,res){
-  // pass ctx1 or ctx2 accordingly to method number (first or second)
-  if(firstMethode == resType) toDraw1 = toCanvasCoordinates(res, ctx1)
-  else if(secondMethode == resType) toDraw2 = toCanvasCoordinates(res, ctx2)
-}
-// ==================================================================================================
-// SOCKET HANDLING
-
 socket.on('connect', function() {
   socket.emit('my_event', {data: 'connected to the SocketServer...'});
 });

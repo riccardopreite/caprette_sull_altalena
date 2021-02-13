@@ -75,6 +75,7 @@ function initLowerCM(){
 
   showLower0 = $('#lowerCM0').is(":checked")
   showLower1 = $('#lowerCM1').is(":checked")
+  // fix <=======================================
   bodyHeight0 = 160
   bodyHeight1 = 160
 }

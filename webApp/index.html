@@ -5,30 +5,26 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Swing</title>
 
   <!-- CSS INCLUSION -->
   <!-- materialize -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-  <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+  <!-- jquery -->
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous">
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous">
+  </script>
+  <!-- socket -->
   <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/3.0.0/socket.io.js"></script>
-  <script src="https://code.iconify.design/1/1.0.3/iconify.min.js"></script>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:300,400,600" />
-
-
   <!-- Custom css -->
   <link rel="stylesheet" href="css/main.css">
-  <link rel="stylesheet" href="css/buttonMenu.css" />
-  <link rel="stylesheet" href="fonts/fontawesome-all.min.css" />
-  <link rel="stylesheet" href="fonts/font-awesome.min.css" />
-  <link rel="stylesheet" href="fonts/fontawesome5-overrides.min.css" />
 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
 
 
 
@@ -43,23 +39,24 @@
 
       <!-- canvas container -->
       <div class="col l6 m12 s12">
-        <div class="card medium cardCanvas">
+        <div class="card medium cardCanvas marginTop shadow">
           <div class="card-image" id="parentCanvas0">
             <canvas id="canvas0" width="200" height="100"></canvas>
-            <a id="speedUpParent0" class="btn-floating btn-small halfway-fab waves-effect waves-light teal btn-speedUp" onclick="speedUpFirst()" ><i
-                id="speedUp0" class="material-icons">fast_forward</i></a>
-            <a  id="playButtonParent0" class="btn-floating btn-small halfway-fab waves-effect waves-light teal btn-play" onclick="playPausePressed(0)" ><i
-                id="playButton0" class="material-icons">pause</i></a>
-            <a id="speedDownParent0" class="btn-floating btn-small halfway-fab waves-effect waves-light teal btn-speedDown" onclick="speedDownFirst()" ><i
-                id="speedDown0" class="material-icons">fast_rewind</i></a>
+            <a id="speedUpParent0" class="btn-floating btn-small halfway-fab waves-effect waves-light teal btn-speedUp"
+              onclick="speedUpFirst()"><i id="speedUp0" class="material-icons">fast_forward</i></a>
+            <a id="playButtonParent0" class="btn-floating btn-small halfway-fab waves-effect waves-light teal btn-play"
+              onclick="playPausePressed(0)"><i id="playButton0" class="material-icons">pause</i></a>
+            <a id="speedDownParent0"
+              class="btn-floating btn-small halfway-fab waves-effect waves-light teal btn-speedDown"
+              onclick="speedDownFirst()"><i id="speedDown0" class="material-icons">fast_rewind</i></a>
           </div>
           <div class="card-content">
             <div class="input-field col s12" id="selectDiv0">
               <select name="swingType0" id="swingType0">
-                <option value="standing" selected="selected" >Standing</option>
-                <option value="seated" >Seated</option>
-                <option value="realistic" >Realistic</option>
-                <option value="combined" >Combined</option>
+                <option value="standing" selected="selected">Standing</option>
+                <option value="seated">Seated</option>
+                <option value="realistic">Realistic</option>
+                <option value="combined">Combined</option>
               </select>
               <label class="label_swingType" for="swingType0">Choose the swing type</label>
             </div>
@@ -68,60 +65,61 @@
       </div>
 
       <div class="col l6 m12 s12">
-        <div class="card medium cardCanvas">
+        <div class="card medium cardCanvas marginTop shadow">
           <div class="container">
             <form class="col s12 formContainer">
               <!-- altezza + massa -->
               <div class="row">
                 <div class="input-field col s6">
-                  <input id="height0" type="number" class="validate">
-                  <label for="height0">Baby Height</label>
+                  <input id="height0" type="number" value="1.6">
+                  <label for="height0">Body Height (m)</label>
                 </div>
                 <div class="input-field col s6">
-                  <input id="mass0" type="number" class="validate">
-                  <label for="mass0">Baby Mass</label>
+                  <input id="mass0" type="number">
+                  <label for="mass0">Body Mass (kg)</label>
                 </div>
               </div>
 
               <!-- lunghezza corda + forza di gravita'-->
               <div class="row">
                 <div class="input-field col s6">
-                  <input id="ropeLength0" type="number" class="validate">
-                  <label for="ropeLength0">Rope Length</label>
+                  <input id="ropeLength0" type="number">
+                  <label for="ropeLength0">Rope Length (m)</label>
                 </div>
                 <div class="input-field col s6">
-                  <input id="gravity0" type="number" class="validate">
-                  <label for="gravity0">Gravity</label>
+                  <input id="gravity0" type="number">
+                  <label for="gravity0">Gravity force (m/s**2)</label>
                 </div>
               </div>
 
               <!-- phi + w -->
               <div class="row">
                 <div class="input-field col s6">
-                  <input id="phi0" type="number" class="validate">
-                  <label for="phi0">Initial Angle</label>
+                  <input id="phi0" type="number">
+                  <label for="phi0">Initial angle (rad) </label>
                 </div>
                 <div class="input-field col s6">
-                  <input id="w0" type="number" class="validate">
-                  <label for="w0">Initial Speed</label>
+                  <input id="w0" type="number">
+                  <label for="w0">Initial speed (m/s)</label>
                 </div>
               </div>
 
               <!-- upper + lower cm -->
               <p>
                 <label>
-                  <input type="checkbox" class="filled-in" checked="checked" id="upperCM0" onclick="changeUpper(0)"/>
-                  <span>Upper center mass</span>
+                  <input type="checkbox" class="filled-in" checked="checked" id="upperCM0" onclick="changeUpper(0)" />
+                  <span>Show upper center mass</span>
                 </label>
               </p>
               <p>
                 <label>
-                  <input type="checkbox" class="filled-in" checked="checked" id="lowerCM0" onclick="changeLower(0)"/>
-                  <span>Lower center mass</span>
+                  <input type="checkbox" class="filled-in" checked="checked" id="lowerCM0" onclick="changeLower(0)" />
+                  <span>Show lower center mass</span>
                 </label>
               </p>
             </form>
-            <a class="btn center-align waves-effect waves-light" type="submit" name="action" onclick="uploadData()">Submit
+            <a class="btn center-align waves-effect waves-light" type="submit" name="action"
+              onclick="uploadData()">Submit
               <i class="material-icons right">send</i>
             </a>
           </div>
@@ -148,23 +146,24 @@
 
       <!-- canvas container -->
       <div class="col l6 m12 s12">
-        <div class="card medium cardCanvas">
+        <div class="card medium cardCanvas marginBottom shadow">
           <div class="card-image" id="parentCanvas1">
             <canvas id="canvas1" width="200" height="100"></canvas>
-            <a id="speedUpParent1" class="btn-floating btn-small halfway-fab waves-effect waves-light teal btn-speedUp" onclick="speedUpSecond()" ><i
-                id="speedUp1" class="material-icons">fast_forward</i></a>
-            <a  id="playButtonParent1" class="btn-floating btn-small halfway-fab waves-effect waves-light teal btn-play" onclick="playPausePressed(1)" ><i
-                id="playButton1" class="material-icons">pause</i></a>
-            <a id="speedDownParent1" class="btn-floating btn-small halfway-fab waves-effect waves-light teal btn-speedDown" onclick="speedDownSecond()" ><i
-                id="speedDown1" class="material-icons">fast_rewind</i></a>
+            <a id="speedUpParent1" class="btn-floating btn-small halfway-fab waves-effect waves-light teal btn-speedUp"
+              onclick="speedUpSecond()"><i id="speedUp1" class="material-icons">fast_forward</i></a>
+            <a id="playButtonParent1" class="btn-floating btn-small halfway-fab waves-effect waves-light teal btn-play"
+              onclick="playPausePressed(1)"><i id="playButton1" class="material-icons">pause</i></a>
+            <a id="speedDownParent1"
+              class="btn-floating btn-small halfway-fab waves-effect waves-light teal btn-speedDown"
+              onclick="speedDownSecond()"><i id="speedDown1" class="material-icons">fast_rewind</i></a>
           </div>
           <div class="card-content">
             <div class="input-field col s12" id="selectDiv1">
               <select name="swingType1" id="swingType1">
-                <option value="standing" selected="selected" >Standing</option>
-                <option value="seated" >Seated</option>
-                <option value="realistic" >Realistic</option>
-                <option value="combined" >Combined</option>
+                <option value="standing" selected="selected">Standing</option>
+                <option value="seated">Seated</option>
+                <option value="realistic">Realistic</option>
+                <option value="combined">Combined</option>
               </select>
               <label class="label_swingType" for="swingType1">Choose the swing type</label>
 
@@ -174,60 +173,61 @@
       </div>
 
       <div class="col l6 m12 s12">
-        <div class="card medium cardCanvas">
+        <div class="card medium cardCanvas marginBottom shadow">
           <div class="container">
             <form class="col s12 formContainer">
               <!-- altezza + massa -->
               <div class="row">
                 <div class="input-field col s6">
-                  <input id="height1" type="number" class="validate">
-                  <label for="height1">Baby Height</label>
+                  <input id="height1" type="number">
+                  <label for="height1">Body Height (m)</label>
                 </div>
                 <div class="input-field col s6">
-                  <input id="mass1" type="number" class="validate">
-                  <label for="mass1">Baby Mass</label>
+                  <input id="mass1" type="number">
+                  <label for="mass1">Body Mass (kg)</label>
                 </div>
               </div>
 
               <!-- lunghezza corda + forza di gravita'-->
               <div class="row">
                 <div class="input-field col s6">
-                  <input id="ropeLength1" type="number" class="validate">
-                  <label for="ropeLength1">Rope Length</label>
+                  <input id="ropeLength1" type="number">
+                  <label for="ropeLength1">Rope Length (m)</label>
                 </div>
                 <div class="input-field col s6">
-                  <input id="gravity1" type="number" class="validate">
-                  <label for="gravity1">Gravity</label>
+                  <input id="gravity1" type="number">
+                  <label for="gravity1">Gravity force (m/s**2)</label>
                 </div>
               </div>
 
               <!-- phi + w -->
               <div class="row">
                 <div class="input-field col s6">
-                  <input id="phi1" type="number" class="validate">
-                  <label for="phi1">Initial Angle</label>
+                  <input id="phi1" type="number">
+                  <label for="phi1">Initial angle (rad)</label>
                 </div>
                 <div class="input-field col s6">
-                  <input id="w1" type="number" class="validate">
-                  <label for="w1">Initial Speed</label>
+                  <input id="w1" type="number">
+                  <label for="w1">Initial speed (m/s)</label>
                 </div>
               </div>
 
               <!-- upper + lower cm -->
               <p>
                 <label>
-                  <input type="checkbox" class="filled-in" checked="checked" id="upperCM1" onclick="changeUpper(1)"/>
-                  <span>Upper center mass</span>
+                  <input type="checkbox" class="filled-in" checked="checked" id="upperCM1" onclick="changeUpper(1)" />
+                  <span>Show upper center mass</span>
                 </label>
               </p>
               <p>
                 <label>
-                  <input type="checkbox" class="filled-in" checked="checked" id="lowerCM1" onclick="changeLower(1)"/>
-                  <span>Lower center mass</span>
+                  <input type="checkbox" class="filled-in" checked="checked" id="lowerCM1" onclick="changeLower(1)" />
+                  <span>Show lower center mass</span>
                 </label>
               </p>
             </form>
-            <a class="btn center-align waves-effect waves-light" type="submit" name="action" onclick="uploadData()">Submit
+            <a class="btn center-align waves-effect waves-light" type="submit" name="action"
+              onclick="uploadData()">Submit
               <i class="material-icons right">send</i>
             </a>
           </div>
@@ -235,36 +235,13 @@
       </div>
 
 
-      <!-- <div class="col l6 m12 s12">
-        <div class="card medium cardCanvas">
-          <div class="card-image">
-            <canvas id="myCanvas" width="200" height="100"></canvas>
-            <a class="btn-floating halfway-fab waves-effect waves-light teal btn-speedUp"><i
-                class="material-icons">fast_forward</i></a>
-            <a class="btn-floating halfway-fab waves-effect waves-light teal btn-play"><i
-                class="material-icons">play_arrow</i></a>
-            <a class="btn-floating halfway-fab waves-effect waves-light teal btn-speedDown"><i
-                class="material-icons">fast_rewind</i></a>
-          </div>
-          <div class="card-content">
-            <div class="input-field col s12">
-              <select>
-                <option value="1">Option 1</option>
-                <option value="2">Option 2</option>
-                <option value="3">Option 3</option>
-              </select>
-              <label class="label_swingType">Choose the swing type</label>
-            </div>
-          </div>
-        </div>
-      </div> -->
+
     </div>
 
 
 
 
   </div>
-
 
 
 

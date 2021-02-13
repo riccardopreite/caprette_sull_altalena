@@ -58,10 +58,10 @@ class Body {
                 headY = this.swingY - this.height/2 - this.height/4
 
                 halfX = this.swingX - halfDIstanceSquat
-                halfY = headY + this.height/2 + this.height/8
+                halfY = headY + this.height/2 + this.height/16
 
                 kneeX = this.swingX + halfDIstanceSquat
-                kneeY = this.swingY - this.height/4 - this.height/8
+                kneeY = this.swingY - this.height/4 - this.height/16
 
                 feetX = this.swingX
                 feetY = this.swingY
@@ -102,8 +102,12 @@ class Body {
         // head
         this.ctx.beginPath();
         this.ctx.arc(headX, headY, headRadius, 0, 2 * Math.PI);
-        this.ctx.strokeStyle = "blue"
+
+        this.ctx.strokeStyle = 'rgba(255,255,255,1)';
+        this.ctx.lineWidth = 1;
         this.ctx.stroke();
+        this.ctx.fillStyle = 'rgba(255,255,255,0.6)';
+        this.ctx.fill();        
         // head-half
         this.ctx.moveTo(headX, headY);
         this.ctx.lineTo(halfX, halfY);

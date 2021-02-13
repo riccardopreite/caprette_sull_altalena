@@ -32,6 +32,7 @@ function controlSelectSystem(id,bool){
   disableEnableInput(id,bool);
 }
 
+// play/pause speed 
 function controlButtonSystem(id,bool){
   disableEnableControlButton(id,!bool)
 }
