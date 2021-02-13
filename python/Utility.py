@@ -48,7 +48,7 @@ class Utility:
         w = standingSwing.environment.initialAngluarSpeed
         lstand = standingSwing.barycenterStanding
         lsquat = standingSwing.barycenterSquat
-        bodyPosition = self.STAND
+        bodyPosition = self.SQUAT
 
         #MODIFICHE COORDINATE
         #COORD BODY

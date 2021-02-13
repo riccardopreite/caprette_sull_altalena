@@ -2,12 +2,12 @@ const NUMBER_COLORS = 50
 var colorBlue = "#21D4FD"
 var colorPurple = "#B721FF"
 var colors = generateColor(colorBlue, colorPurple, NUMBER_COLORS)
-var alphaValue = "8f"
+var alphaValue = "cf"
 
 class CenterMass {
     constructor(ctx, showUpper, showLower) {
         this.ctx = ctx
-        this.RADIUS = 2.5
+        this.RADIUS = 2.1
 
         this.MAX_NUMBER_POINTS = 120
         this.counter = 0
