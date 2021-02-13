@@ -118,7 +118,6 @@ function drawSecond(){
         return
     }
     else {
-      console.log("PORCODIO");
       var currentFrame = toDraw1[frameCounterSecond]
       if(frameCounterSecond == 0) {
         controlSelectSystem(1,true)
