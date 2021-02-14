@@ -88,6 +88,7 @@ function drawFirst(){
       var currentFrame = toDraw0[frameCounterFirst]
       if(frameCounterFirst == 0) {
         controlSelectSystem(0,true)
+        initFirstBody()
         timeGraph0.resetChart()
         timeGraph0 = new Graph(ctxTime0,"First Time/Angle graph","phi(rad)","time(s)","radiant angle")
         //speedGraph0 = new Graph(ctxTime0,"First Angular Speed/Angle graph","angular speed(rad/s)","time(s)","angular speed")
@@ -122,6 +123,7 @@ function drawSecond(){
       var currentFrame = toDraw1[frameCounterSecond]
       if(frameCounterSecond == 0) {
         controlSelectSystem(1,true)
+        initSecondBody()
         timeGraph1.resetChart()
         timeGraph1 = new Graph(ctxTime1,"Second Time/Angle graph","phi(rad)","time(s)","radiant angle")
         // speedGraph1 = new Graph(ctxTime1,"Second Angular Speed/Angle graph","angular speed(rad/s)","time(s)","angular speed")

@@ -43,6 +43,11 @@ function showFrame(rope,swing,centerMass,body){
   swing.show()
   body.show()
 }
+
+function updateHeight(data1,data2){
+  bodyHeight0 = data1["height"]*100
+  bodyHeight1 = data2["height"]*100
+}
 /*******************************************************
                     END UTILS FUNCTION
 *******************************************************/

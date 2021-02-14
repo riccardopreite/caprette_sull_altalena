@@ -1,9 +1,10 @@
 function uploadData(){
   if(firstInterval != undefined) clearInterval(firstInterval)
   if(secondInterval != undefined) clearInterval(secondInterval)
-  // disabilita bottoni 
+  // disabilita bottoni
   data1 = getDataForCaluclateSwing(0)
   data2 = getDataForCaluclateSwing(1)
+  updateHeight(data1,data2)
   socket.emit('handleRequest', {data1:data1,data2:data2});
   draw()
 }
@@ -44,6 +45,6 @@ function getDataForCaluclateSwing(id){
               "swingTypeFirst":methode,
               "isSecond":id
   }
-  
+
   return data;
 }

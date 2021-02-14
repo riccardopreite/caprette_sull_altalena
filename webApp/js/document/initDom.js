@@ -1,23 +1,15 @@
 $( document ).ready(function() {
   console.log( "ready!" );
-  prepareCanvas()
+  prepareDom()
 });
 
-function prepareCanvas(){
-  initCanvasList(0);
-  initCanvasList(1);
-  initUpperCM();
-  initLowerCM();
-  initCanvasMeasure()
-  initOnChangeEvent()
-  controlSelectSystem(0,false)
-  controlSelectSystem(0,false)
-  controlButtonSystem(1,true)
-  controlButtonSystem(1,true)
-  M.AutoInit();
+function prepareDom(){
+  initCanvas()
+  initBody()
+  initDomSystem()
   //FIRST DRAW
-  firstDrawBodies()
-  initGraph()
+  drawDom()
+
 
   /*************************
   THIS CODE COMMENTED IS NOT WORKING FOR SECOND CANVAS
@@ -44,6 +36,31 @@ function prepareCanvas(){
 /*******************************************************
                     START INIT FUNCTION
 *******************************************************/
+function initCanvas(){
+  initCanvasList(0);
+  initCanvasList(1);
+  initCanvasMeasure()
+}
+
+function initBody(){
+  initUpperCM();
+  initLowerCM();
+  initBodyHeight();
+}
+
+function initDomSystem(){
+  initOnChangeEvent()
+  controlSelectSystem(0,false)
+  controlSelectSystem(0,false)
+  controlButtonSystem(1,true)
+  controlButtonSystem(1,true)
+  M.AutoInit();
+}
+
+function drawDom(){
+  drawBodies()
+  initGraph()
+}
 
 function initCanvasList(id){
 
@@ -76,7 +93,15 @@ function initLowerCM(){
 
   showLower0 = $('#lowerCM0').is(":checked")
   showLower1 = $('#lowerCM1').is(":checked")
-  // fix <=======================================
+
+}
+
+function initBodyHeight(){
+
+  /*************************
+    INIT BODY HEIGHT NEEDED FOR DRAWING COMPONENTS OBJECT
+  *************************/
+
   bodyHeight0 = 160
   bodyHeight1 = 160
 }
@@ -98,30 +123,13 @@ function initOnChangeEvent(){
   $("#selectDiv1 :input").change(updateSwingTypeSecond)
 }
 
-function firstDrawBodies(){
-  rope0 = new Rope(ctx0)
-  swing0 = new Swing(ctx0)
-  centerMass0 = new CenterMass(ctx0, showUpper0, showLower0)
-  body0 = new Body(ctx0, bodyHeight0)
-
-  rope1 = new Rope(ctx1)
-  swing1 = new Swing(ctx1)
-  centerMass1 = new CenterMass(ctx1, showUpper1, showLower1)
-  body1 = new Body(ctx1, bodyHeight1)
-
+function drawBodies(){
   /*
   IMPORTANT: always put swing BEFORE body show.
   Body coordinates (and rotations) are calculated based on the Swing
-   */
-  rope0.show()
-  swing0.show()
-  centerMass0.show()
-  body0.show()
-
-  rope1.show()
-  swing1.show()
-  centerMass1.show()
-  body1.show()
+  */
+  initFirstBody()
+  initSecondBody()
 }
 
 function initGraph(){
@@ -130,6 +138,21 @@ function initGraph(){
   //speedGraph0 = new Graph(ctxTime0,"First Angular Speed/Angle graph","angular speed(rad/s)","time(s)","angular speed")
   timeGraph1 = new Graph(ctxTime1,"Second Time/Angle graph","phi(rad)","time(s)","radiant angle")
   // speedGraph1 = new Graph(ctxTime1,"Second Angular Speed/Angle graph","angular speed(rad/s)","time(s)","angular speed")
+}
+
+function initFirstBody(){
+  rope0 = new Rope(ctx0)
+  swing0 = new Swing(ctx0)
+  centerMass0 = new CenterMass(ctx0, showUpper0, showLower0)
+  body0 = new Body(ctx0, bodyHeight0)
+  showFrame(rope0,swing0,centerMass0,body0)
+}
+function initSecondBody(){
+  rope1 = new Rope(ctx1)
+  swing1 = new Swing(ctx1)
+  centerMass1 = new CenterMass(ctx1, showUpper1, showLower1)
+  body1 = new Body(ctx1, bodyHeight1)
+  showFrame(rope1,swing1,centerMass1,body1)
 }
 
 function initGraphMeasure(){
