@@ -45,8 +45,8 @@ function showFrame(rope,swing,centerMass,body){
 }
 
 function updateHeight(data1,data2){
-  bodyHeight0 = data1["height"]*100
-  bodyHeight1 = data2["height"]*100
+  bodyHeight0 = data1["height"]
+  bodyHeight1 = data2["height"]
 }
 /*******************************************************
                     END UTILS FUNCTION

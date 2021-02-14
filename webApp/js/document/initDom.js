@@ -6,6 +6,7 @@ $( document ).ready(function() {
 function prepareDom(){
   initCanvas();
   initBodyHeight();
+  initRopeLenght();
   initDomSystem();
   //FIRST DRAW
   drawDom();
@@ -39,8 +40,8 @@ function prepareDom(){
 function initCanvas(){
   initCanvasList(0);
   initCanvasList(1);
-  // initFirstFrameList(0,ctx0)
-  // initFirstFrameList(1,ctx1)
+  initFirstFrameList(0,ctx0)
+  initFirstFrameList(1,ctx1)
   initCanvasMeasure()
 }
 
@@ -76,14 +77,13 @@ function initFirstFrameList(id,ctx){
   /*************************
     INIT CANVAS LIST
   *************************/
-  var SCALE_FACTOR = 100 / ($('#height'+id).val() / (bodyHeightDef*100))
-  initFrame[id] = new Frame()
-  new Frame(
+  console.log(ctx);
+  initFrame[id] = new Frame(
       ctx,
       0, //time
-      $('#phi'+id).is(":checked"),
-      $('#w'+id).is(":checked"),
-      "seated",
+      $('#phi'+id).val(),
+      $('#w'+id).val(),
+      "seat",
       [],
       [],
       [],
@@ -97,8 +97,18 @@ function initBodyHeight(){
     INIT BODY HEIGHT NEEDED FOR DRAWING COMPONENTS OBJECT
   *************************/
 
-  bodyHeight0 = 160
-  bodyHeight1 = 160
+  bodyHeight0 = 1.6
+  bodyHeight1 = 1.6
+}
+
+function initRopeLenght(){
+
+  /*************************
+    INIT BODY HEIGHT NEEDED FOR DRAWING COMPONENTS OBJECT
+  *************************/
+
+  ropeLength0 = 2.7
+  ropeLength1 = 2.7
 }
 
 function initCanvasMeasure(){
@@ -125,6 +135,8 @@ function drawBodies(){
   */
   initFirstBody()
   initSecondBody()
+  updatePhi(0,-0.05)
+  updatePhi(1,-0.05)
 }
 
 function initGraph(){
@@ -139,14 +151,14 @@ function initFirstBody(){
   rope0 = new Rope(ctx0)
   swing0 = new Swing(ctx0)
   centerMass0 = new CenterMass(ctx0, $('#upperCM0').is(":checked"), $('#lowerCM0').is(":checked"))
-  body0 = new Body(ctx0, bodyHeight0)
+  body0 = new Body(ctx0, bodyHeight0*100)
   showFrame(rope0,swing0,centerMass0,body0)
 }
 function initSecondBody(){
   rope1 = new Rope(ctx1)
   swing1 = new Swing(ctx1)
   centerMass1 = new CenterMass(ctx1, $('#upperCM1').is(":checked"), $('#lowerCM1').is(":checked"))
-  body1 = new Body(ctx1, bodyHeight1)
+  body1 = new Body(ctx1, bodyHeight1*100)
   showFrame(rope1,swing1,centerMass1,body1)
 }
 

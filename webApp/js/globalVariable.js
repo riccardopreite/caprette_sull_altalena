@@ -22,6 +22,7 @@ initPhiDef = -0.50,      //-0.5 default
 initWDef = 0.00;         // 0.00 default
 
 var initFrame = []
+
 /*************************
         END SECTION
 *************************/
@@ -45,10 +46,13 @@ var firstMethode = "", secondMethode = "";
 var showUpper0 = undefined
 var showLower0 = undefined
 var bodyHeight0 = undefined
+var ropeLength0 = undefined
 
 var showUpper1 = undefined
 var showLower1 = undefined
 var bodyHeight1 = undefined
+var ropeLength1 = undefined
+
 
 /*************************
         END SECTION

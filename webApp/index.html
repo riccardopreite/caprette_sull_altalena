@@ -104,12 +104,11 @@
               <!-- altezza + massa -->
               <div class="row">
                 <div class="input-field col s6">
-                  <input id="height0" type="number" value="1.6" >
-                  <!-- oninput="changeHeight(0, this.value)" -->
+                  <input id="height0" type="number" value="1.6" oninput="changeHeight(0, this.value)">
                   <label for="height0">Body Height (m)</label>
                 </div>
                 <div class="input-field col s6">
-                  <input id="mass0" type="number">
+                  <input id="mass0" type="number" value="20">
                   <label for="mass0">Body Mass (kg)</label>
                 </div>
               </div>
@@ -117,11 +116,11 @@
               <!-- lunghezza corda + forza di gravita'-->
               <div class="row">
                 <div class="input-field col s6">
-                  <input id="ropeLength0" type="number">
+                  <input id="ropeLength0" type="number" value="2.7" oninput="changeRopeLenght(0,this.value)">
                   <label for="ropeLength0">Rope Length (m)</label>
                 </div>
                 <div class="input-field col s6">
-                  <input id="gravity0" type="number">
+                  <input id="gravity0" type="number" value="9.8">
                   <label for="gravity0">Gravity force (m/s**2)</label>
                 </div>
               </div>
@@ -129,12 +128,11 @@
               <!-- phi + w -->
               <div class="row">
                 <div class="input-field col s6">
-                  <input id="phi0" type="number" >
-                  <!-- oninput="changeAngle(0, this.value)" -->
+                  <input id="phi0" type="number" value="-0.05" oninput="changePhi(0, this.value)">
                   <label for="phi0">Initial angle (rad) </label>
                 </div>
                 <div class="input-field col s6">
-                  <input id="w0" type="number">
+                  <input id="w0" type="number" value="0.0">
                   <label for="w0">Initial speed (m/s)</label>
                 </div>
               </div>
@@ -241,12 +239,11 @@
               <!-- altezza + massa -->
               <div class="row">
                 <div class="input-field col s6">
-                  <input id="height1" type="number" >
-                  <!-- oninput="changeHeight(1, this.value)" -->
+                  <input id="height1" type="number" value="1.6" oninput="changeHeight(1, this.value)">
                   <label for="height1">Body Height (m)</label>
                 </div>
                 <div class="input-field col s6">
-                  <input id="mass1" type="number">
+                  <input id="mass1" type="number" value="20">
                   <label for="mass1">Body Mass (kg)</label>
                 </div>
               </div>
@@ -254,11 +251,11 @@
               <!-- lunghezza corda + forza di gravita'-->
               <div class="row">
                 <div class="input-field col s6">
-                  <input id="ropeLength1" type="number">
+                  <input id="ropeLength1" type="number" value="2.7" oninput="changeRopeLenght(1,this.value)">
                   <label for="ropeLength1">Rope Length (m)</label>
                 </div>
                 <div class="input-field col s6">
-                  <input id="gravity1" type="number">
+                  <input id="gravity1" type="number" value="9.8">
                   <label for="gravity1">Gravity force (m/s**2)</label>
                 </div>
               </div>
@@ -266,12 +263,11 @@
               <!-- phi + w -->
               <div class="row">
                 <div class="input-field col s6">
-                  <input id="phi1" type="number" >
-                  <!-- oninput="changeAngle(1, this.value)" -->
+                  <input id="phi1" type="number" value="-0.05" oninput="changePhi(1, this.value)">
                   <label for="phi1">Initial angle (rad)</label>
                 </div>
                 <div class="input-field col s6">
-                  <input id="w1" type="number">
+                  <input id="w1" type="number" value="0.0">
                   <label for="w1">Initial speed (m/s)</label>
                 </div>
               </div>
@@ -356,6 +352,7 @@
   <script type="text/javascript" src="js/genetic/matrix.js"></script>
   <script type="text/javascript" src="js/genetic/ga.js"></script>
 
+  <script type="text/javascript" src="js/drawCanvas/formFrameDraw.js"></script>
   <script type="text/javascript" src="js/drawCanvas/standardDraw.js"></script>
   <script type="text/javascript" src="js/drawCanvas/geneticDraw.js"></script>
 

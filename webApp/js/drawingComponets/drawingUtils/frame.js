@@ -49,6 +49,13 @@ class Frame {
             this.lowerCM["y"] = this.lowerCM["y"] * scaleFactor
         }
     }
+
+    updateCM(swingCM,upperCM,cm,lowerCM){
+      this.swingCM = swingCM
+      this.upperCM = upperCM
+      this.cm = cm
+      this.lowerCM = lowerCM
+    }
 }
 
 /**
@@ -59,7 +66,7 @@ class Frame {
  */
 function toCanvasCoordinates(coordinatesList, ctx,height) {
     // TODO Proporzione dati input con dimensione canvas Scaling100:Canvas300=ScalingX:InputY o limite e pace
-    var SCALE_FACTOR = 100 / (height / (bodyHeightDef*100))
+    var SCALE_FACTOR = 100 / (height / bodyHeightDef)
     frameArray = []
     for (i in coordinatesList) {
       let t = coordinatesList[i]["t"],

@@ -43,30 +43,18 @@ function hideSpeedGraph(id){
 /*******************************************************
         START FORM FUNCTION
 *******************************************************/
-// function changeHeight(id, newHeight){
-//   if(id){
-//     bodyHeight1 = newHeight
-//     initSecondBody()
-//   }
-//   else{
-//     bodyHeight0 = newHeight
-//     initFirstBody()
-//   }
-// }
-//
-// function changeAngle(id, newAngle){
-//   initFrame[id].phi = newAngle
-//   if(id){
-//     updateSwing(rope0,swing0,initFrame[id])
-//     updateBody(centerMass0,body0,initFrame[id])
-//     showFrame(rope0,swing0,centerMass0,body0)
-//   }
-//   else{
-//     updateSwing(rope1,swing1,initFrame[id])
-//     updateBody(centerMass1,body1,initFrame[id])
-//     showFrame(rope1,swing1,centerMass1,body1)
-//   }
-// }
+function changeHeight(id, newHeight){
+  updateHeightFrame(id,newHeight)
+}
+
+function changePhi(id, newPhi){
+  updatePhi(id,newPhi)
+}
+
+function changeRopeLenght(id, newRopeLenght){
+  console.log(newRopeLenght);
+  updateRopeLenght(id,newRopeLenght)
+}
 
 
 /*******************************************************
