@@ -57,9 +57,9 @@ class Frame {
  * @returns {Frame[]} frameArray: array of frame with scaled and translated
  * coordiantes
  */
-function toCanvasCoordinates(coordinatesList, ctx) {
+function toCanvasCoordinates(coordinatesList, ctx,height) {
     // TODO Proporzione dati input con dimensione canvas Scaling100:Canvas300=ScalingX:InputY o limite e pace
-    const SCALE_FACTOR = 100
+    var SCALE_FACTOR = 100 / (height / (bodyHeightDef*100))
     frameArray = []
     for (i in coordinatesList) {
       let t = coordinatesList[i]["t"],

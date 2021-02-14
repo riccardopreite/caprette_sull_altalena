@@ -137,7 +137,6 @@ function drawSecond(){
       showFrame(rope1,swing1,centerMass1,body1)
 
       ctx1.setTransform(1,0,0,1,0,0)
-      console.log(currentFrame.t.toFixed(3));
       timeGraph1.addPoint(currentFrame.t.toFixed(3), currentFrame.phi.toFixed(3))
       // speed try
       // timeGraph1.addPoint(currentFrame.w.toFixed(3), currentFrame.phi.toFixed(3))

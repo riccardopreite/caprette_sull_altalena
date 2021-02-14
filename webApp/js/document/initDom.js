@@ -4,11 +4,11 @@ $( document ).ready(function() {
 });
 
 function prepareDom(){
-  initCanvas()
-  initBody()
-  initDomSystem()
+  initCanvas();
+  initBodyHeight();
+  initDomSystem();
   //FIRST DRAW
-  drawDom()
+  drawDom();
 
 
   /*************************
@@ -39,13 +39,9 @@ function prepareDom(){
 function initCanvas(){
   initCanvasList(0);
   initCanvasList(1);
+  initFirstFrameList(0,ctx0)
+  initFirstFrameList(1,ctx1)
   initCanvasMeasure()
-}
-
-function initBody(){
-  initUpperCM();
-  initLowerCM();
-  initBodyHeight();
 }
 
 function initDomSystem(){
@@ -75,25 +71,24 @@ function initCanvasList(id){
   canvasList[id]["combined_frameList"]= [];
 }
 
-function initUpperCM(){
+function initFirstFrameList(id,ctx){
 
   /*************************
-    INIT UPPERCM NEEDED FOR DRAWING COMPONENTS OBJECT
+    INIT CANVAS LIST
   *************************/
-
-  showUpper0 = $('#upperCM0').is(":checked")
-  showUpper1 = $('#upperCM1').is(":checked")
-}
-
-function initLowerCM(){
-
-  /*************************
-    INIT LOWERCM NEEDED FOR DRAWING COMPONENTS OBJECT
-  *************************/
-
-  showLower0 = $('#lowerCM0').is(":checked")
-  showLower1 = $('#lowerCM1').is(":checked")
-
+  var SCALE_FACTOR = 100 / ($('#height'+id).val() / (bodyHeightDef*100))
+  initFrame[id] = new Frame()
+  new Frame(
+      ctx,
+      0, //time
+      $('#phi'+id).is(":checked"),
+      $('#w'+id).is(":checked"),
+      "seated",
+      [],
+      [],
+      [],
+      []
+  )
 }
 
 function initBodyHeight(){
@@ -143,14 +138,14 @@ function initGraph(){
 function initFirstBody(){
   rope0 = new Rope(ctx0)
   swing0 = new Swing(ctx0)
-  centerMass0 = new CenterMass(ctx0, showUpper0, showLower0)
+  centerMass0 = new CenterMass(ctx0, $('#upperCM0').is(":checked"), $('#lowerCM0').is(":checked"))
   body0 = new Body(ctx0, bodyHeight0)
   showFrame(rope0,swing0,centerMass0,body0)
 }
 function initSecondBody(){
   rope1 = new Rope(ctx1)
   swing1 = new Swing(ctx1)
-  centerMass1 = new CenterMass(ctx1, showUpper1, showLower1)
+  centerMass1 = new CenterMass(ctx1, $('#upperCM1').is(":checked"), $('#lowerCM1').is(":checked"))
   body1 = new Body(ctx1, bodyHeight1)
   showFrame(rope1,swing1,centerMass1,body1)
 }

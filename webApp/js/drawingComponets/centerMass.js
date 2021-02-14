@@ -29,10 +29,9 @@ class CenterMass {
                 this.ctx.fill()
             }
         })
-
         if (this.showUpper) {
             this.upper_list.forEach(cm => {
-                if (this.cm_list.indexOf(cm) % POINT_OFFSET == 0) {
+                if (this.upper_list.indexOf(cm) % POINT_OFFSET == 0) {
                     this.ctx.beginPath();
                     this.ctx.arc(cm.x, cm.y, this.RADIUS, 0, 2 * Math.PI);
                     this.ctx.fillStyle = "#" + colors[this.upper_list.indexOf(cm) % NUMBER_COLORS] + alphaValue
@@ -43,7 +42,7 @@ class CenterMass {
 
         if (this.showLower) {
             this.lower_list.forEach(cm => {
-                if (this.cm_list.indexOf(cm) % POINT_OFFSET == 0) {
+                if (this.lower_list.indexOf(cm) % POINT_OFFSET == 0) {
                     this.ctx.beginPath();
                     this.ctx.arc(cm.x, cm.y, this.RADIUS, 0, 2 * Math.PI);
                     this.ctx.fillStyle = "#" + colors[this.lower_list.indexOf(cm) % NUMBER_COLORS] + alphaValue

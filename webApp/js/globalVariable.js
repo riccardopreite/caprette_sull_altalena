@@ -21,6 +21,7 @@ gravityDef = 9.8,        // 9.8 m/s^2 default
 initPhiDef = -0.50,      //-0.5 default
 initWDef = 0.00;         // 0.00 default
 
+var initFrame = []
 /*************************
         END SECTION
 *************************/

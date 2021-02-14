@@ -40,6 +40,39 @@ function hideSpeedGraph(id){
         END GRAPH FUNCTION
 *******************************************************/
 
+/*******************************************************
+        START FORM FUNCTION
+*******************************************************/
+// function changeHeight(id, newHeight){
+//   if(id){
+//     bodyHeight1 = newHeight
+//     initSecondBody()
+//   }
+//   else{
+//     bodyHeight0 = newHeight
+//     initFirstBody()
+//   }
+// }
+//
+// function changeAngle(id, newAngle){
+//   initFrame[id].phi = newAngle
+//   if(id){
+//     updateSwing(rope0,swing0,initFrame[id])
+//     updateBody(centerMass0,body0,initFrame[id])
+//     showFrame(rope0,swing0,centerMass0,body0)
+//   }
+//   else{
+//     updateSwing(rope1,swing1,initFrame[id])
+//     updateBody(centerMass1,body1,initFrame[id])
+//     showFrame(rope1,swing1,centerMass1,body1)
+//   }
+// }
+
+
+/*******************************************************
+        END FORM FUNCTION
+*******************************************************/
+
 
 /*******************************************************
         START MENU CONTROL BUTTON FUNCTION
@@ -186,13 +219,13 @@ function updateSwingTypeSecond(){
 
 function changeLower(id){
 	//fix <=================================
-  if(id) centerMass0.showLower = $('#lowerCM0').is(":checked")
-  else centerMass1.showLower = $('#lowerCM1').is(":checked")
+  if(id) centerMass1.showLower = $('#lowerCM1').is(":checked")
+  else centerMass0.showLower =  $('#lowerCM0').is(":checked")
 }
 
 function changeUpper(id){
-  if(id) centerMass0.showUpper = $('#upperCM0').is(":checked")
-  else centerMass1.showUpper = $('#upperCM1').is(":checked")
+  if(id) centerMass1.showUpper = $('#upperCM1').is(":checked")
+  else centerMass0.showUpper = $('#upperCM0').is(":checked")
 }
 
 /*******************************************************
