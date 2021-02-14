@@ -11,7 +11,7 @@ socket.on('firstsCalculated', function(msg, cb) {
 
 socket.on('standing', function(msg, cb) {
   console.log('standing');
-  canvasList[0]["standing_frameList"] = toCanvasCoordinates(msg,ctx0),bodyHeight0
+  canvasList[0]["standing_frameList"] = toCanvasCoordinates(msg,ctx0,bodyHeight0)
   selectFirstMethods("standing", canvasList[0]["standing_frameList"])
 });
 

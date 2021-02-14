@@ -39,8 +39,8 @@ function prepareDom(){
 function initCanvas(){
   initCanvasList(0);
   initCanvasList(1);
-  initFirstFrameList(0,ctx0)
-  initFirstFrameList(1,ctx1)
+  // initFirstFrameList(0,ctx0)
+  // initFirstFrameList(1,ctx1)
   initCanvasMeasure()
 }
 
