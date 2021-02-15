@@ -45,13 +45,23 @@ var firstMethode = "", secondMethode = "";
 
 var showUpper0 = undefined
 var showLower0 = undefined
+var phi0 = undefined
+var w0 = undefined
+var gravity0 = undefined
+var mass0 = undefined
 var bodyHeight0 = undefined
 var ropeLength0 = undefined
+var bodyPosition0 = undefined
 
 var showUpper1 = undefined
 var showLower1 = undefined
+var phi1 = undefined
+var w1 = undefined
+var gravity1 = undefined
+var mass1 = undefined
 var bodyHeight1 = undefined
 var ropeLength1 = undefined
+var bodyPosition1 = undefined
 
 
 /*************************

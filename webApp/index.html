@@ -108,7 +108,7 @@
                   <label for="height0">Body Height (m)</label>
                 </div>
                 <div class="input-field col s6">
-                  <input id="mass0" type="number" value="20">
+                  <input id="mass0" type="number" value="20" oninput="changeMass(0, this.value)">
                   <label for="mass0">Body Mass (kg)</label>
                 </div>
               </div>
@@ -120,7 +120,7 @@
                   <label for="ropeLength0">Rope Length (m)</label>
                 </div>
                 <div class="input-field col s6">
-                  <input id="gravity0" type="number" value="9.8">
+                  <input id="gravity0" type="number" value="9.8" oninput="changeGravity(0,this.value)">
                   <label for="gravity0">Gravity acceleration (m/s**2)</label>
                 </div>
               </div>
@@ -132,7 +132,7 @@
                   <label for="phi0">Initial angle (rad) </label>
                 </div>
                 <div class="input-field col s6">
-                  <input id="w0" type="number" value="0.0">
+                  <input id="w0" type="number" value="0.0" oninput="changeW(0,this.value)">
                   <label for="w0">Initial speed (m/s)</label>
                 </div>
               </div>
@@ -243,7 +243,7 @@
                   <label for="height1">Body Height (m)</label>
                 </div>
                 <div class="input-field col s6">
-                  <input id="mass1" type="number" value="20">
+                  <input id="mass1" type="number" value="20" oninput="changeMass(1, this.value)">
                   <label for="mass1">Body Mass (kg)</label>
                 </div>
               </div>
@@ -255,7 +255,7 @@
                   <label for="ropeLength1">Rope Length (m)</label>
                 </div>
                 <div class="input-field col s6">
-                  <input id="gravity1" type="number" value="9.8">
+                  <input id="gravity1" type="number" value="9.8" oninput="changeGravity(1,this.value)">
                   <label for="gravity1">Gravity acceleration (m/s**2)</label>
                 </div>
               </div>
@@ -267,7 +267,7 @@
                   <label for="phi1">Initial angle (rad)</label>
                 </div>
                 <div class="input-field col s6">
-                  <input id="w1" type="number" value="0.0">
+                  <input id="w1" type="number" value="0.0" oninput="changeW(1,this.value)">
                   <label for="w1">Initial speed (m/s)</label>
                 </div>
               </div>

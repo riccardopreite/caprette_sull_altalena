@@ -7,8 +7,6 @@ function showTimeGraph(id){
       graph = $("#graphTimeDiv"+id)
   form.hide()
   graph.show()
-  console.log($("#graphTimeDiv1").height());
-  console.log(timeGraphCanvas1.height);
 
 }
 
@@ -43,16 +41,25 @@ function hideSpeedGraph(id){
 /*******************************************************
         START FORM FUNCTION
 *******************************************************/
+function changePhi(id, newPhi){
+  updatePhi(id,newPhi)
+}
+function changeW(id, newW){
+  updateW(id,newW)
+}
+
+function changeGravity(id, newGravity){
+  updateGravity(id,newGravity)
+}
+
+function changeMass(id, newMass){
+  updateMass(id,newMass)
+}
 function changeHeight(id, newHeight){
   updateHeightFrame(id,newHeight)
 }
 
-function changePhi(id, newPhi){
-  updatePhi(id,newPhi)
-}
-
 function changeRopeLenght(id, newRopeLenght){
-  console.log(newRopeLenght);
   updateRopeLenght(id,newRopeLenght)
 }
 
@@ -198,11 +205,18 @@ function disableEnableInput(id, bool){
 function updateSwingTypeFirst(){
   firstChange = true
   firstMethode = $("#swingType0 :selected").val();
+  let t = firstMethode.toLowerCase()
+  if(t == "standing") updateSwingType(0,"stand")
+  else updateSwingType(0,"seat")
 }
 
 function updateSwingTypeSecond(){
   secondChange = true
   secondMethode = $("#swingType1 :selected").val();
+  let t = secondMethode.toLowerCase()
+  if(t == "standing") updateSwingType(1,"stand")
+  else updateSwingType(1,"seat")
+
 }
 
 function changeLower(id){

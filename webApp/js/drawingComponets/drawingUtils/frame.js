@@ -1,10 +1,16 @@
 class Frame {
-    constructor(ctx, t, phi, w, bodyPosition, cm, swingCM, upperCM, lowerCM) {
+    constructor(ctx, t, phi, w,gravity,mass,height,ropeLength, bodyPosition, cm, swingCM, upperCM, lowerCM) {
         this.ctx = ctx
 
         this.t = t
         this.phi = phi
         this.w = w
+        this.gravity = gravity
+        this.mass = mass
+        this.height = height
+        this.ropeLength = ropeLength
+
+
 
         this.bodyPosition = bodyPosition
         this.cm = cm
@@ -64,7 +70,7 @@ class Frame {
  * @returns {Frame[]} frameArray: array of frame with scaled and translated
  * coordiantes
  */
-function toCanvasCoordinates(coordinatesList, ctx,height) {
+function toCanvasCoordinates(coordinatesList, ctx,height,gravity,mass,ropeLength) {
     // TODO Proporzione dati input con dimensione canvas Scaling100:Canvas300=ScalingX:InputY o limite e pace
     var SCALE_FACTOR = 100 / (height / bodyHeightDef)
     frameArray = []
@@ -82,6 +88,10 @@ function toCanvasCoordinates(coordinatesList, ctx,height) {
             t,
             phi,
             w,
+            gravity,
+            mass,
+            height,
+            ropeLength,
             bodyPosition,
             cm,
             swingCM,

@@ -77,12 +77,19 @@ function initFirstFrameList(id,ctx){
   /*************************
     INIT CANVAS LIST
   *************************/
+  let t  = $("#swingType"+id+ " :selected").val(),type = "";
+  if(t == "standing") type = "stand"
+  else type = "seat"
   initFrame[id] = new Frame(
       ctx,
       0, //time
       $('#phi'+id).val(),
       $('#w'+id).val(),
-      "seat",
+      $('#gravity'+id).val(),
+      $('#mass'+id).val(),
+      $('#height'+id).val(),
+      $('#ropeLength'+id).val(),
+      type,
       [],
       [],
       [],
