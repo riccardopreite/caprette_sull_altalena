@@ -5,8 +5,6 @@ $( document ).ready(function() {
 
 function prepareDom(){
   initCanvas();
-  initBodyHeight();
-  initRopeLenght();
   initDomSystem();
   //FIRST DRAW
   drawDom();
@@ -55,6 +53,8 @@ function initDomSystem(){
 }
 
 function drawDom(){
+  initBodyHeight();
+  initRopeLenght();
   drawBodies()
   initGraph()
 }
@@ -77,7 +77,6 @@ function initFirstFrameList(id,ctx){
   /*************************
     INIT CANVAS LIST
   *************************/
-  console.log(ctx);
   initFrame[id] = new Frame(
       ctx,
       0, //time
@@ -97,18 +96,18 @@ function initBodyHeight(){
     INIT BODY HEIGHT NEEDED FOR DRAWING COMPONENTS OBJECT
   *************************/
 
-  bodyHeight0 = 1.6
-  bodyHeight1 = 1.6
+  bodyHeight0 = bodyHeightDef
+  bodyHeight1 = bodyHeightDef
 }
 
 function initRopeLenght(){
 
   /*************************
-    INIT BODY HEIGHT NEEDED FOR DRAWING COMPONENTS OBJECT
+    INIT ROPE LENGHT NEEDED FOR DRAWING COMPONENTS OBJECT
   *************************/
 
-  ropeLength0 = 2.7
-  ropeLength1 = 2.7
+  ropeLength0 = ropeLengthDef
+  ropeLength1 = ropeLengthDef
 }
 
 function initCanvasMeasure(){

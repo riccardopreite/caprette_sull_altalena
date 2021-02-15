@@ -2,6 +2,18 @@
                     START UTILS FUNCTION
 *******************************************************/
 
+function chooseObject(id){
+  if(id){
+    initSecondBody()
+    reDrawFirstFrame(rope1,swing1,centerMass1,body1,initFrame[id],bodyHeight0/2,ropeLength1,initFrame[id].phi);
+
+  }
+  else {
+    initFirstBody()
+    reDrawFirstFrame(rope0,swing0,centerMass0,body0,initFrame[id],bodyHeight1/2,ropeLength0,initFrame[id].phi);
+  }
+}
+
 function switchList(methode,index){
   return canvasList[index][methode+"_frameList"]
 }

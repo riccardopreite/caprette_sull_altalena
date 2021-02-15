@@ -61,12 +61,12 @@ def handleRequest(message):
     initBodyObj()
     form1 = message["data1"]
     form2 = message["data2"]
-    runFirstsType(form1)
-    runFirstsType(form2)
+    runFirstType(form1)
+    runFirstType(form2)
     switchForm(form1,form1["isSecond"],form1["swingTypeFirst"])
     switchForm(form2,form2["isSecond"],form2["swingTypeFirst"])
 
-def runFirstsType(form):
+def runFirstType(form):
     print("FORM")
     print(form["isSecond"])
     print(form)
