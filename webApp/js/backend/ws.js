@@ -5,8 +5,8 @@ socket.on('connect', function() {
 
 socket.on('firstsCalculated', function(msg, cb) {
   console.log('firstsCalculated');
-  switchGraphForm(0,true)
-  switchGraphForm(1,true)
+  drawMode(0)
+  drawMode(1)
 });
 
 socket.on('standing', function(msg, cb) {

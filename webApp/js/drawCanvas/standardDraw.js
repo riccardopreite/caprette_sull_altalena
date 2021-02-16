@@ -11,14 +11,14 @@ var ctx1 = canvas1.getContext('2d');
       GRAPH VARIABLE
 *************************/
 var timeGraphCanvas0 = document.getElementById("graphTime0"),
-    // speedGraphCanvas0 = document.getElementById("graphSpeed0"),
+    speedGraphCanvas0 = document.getElementById("graphSpeed0"),
     timeGraphCanvas1 = document.getElementById("graphTime1");
-    // var speedGraphCanvas1 = document.getElementById("graphSpeed1");
+    var speedGraphCanvas1 = document.getElementById("graphSpeed1");
 
 var ctxTime0 = timeGraphCanvas0.getContext('2d'),
-    // ctxSpeed0 = speedGraphCanvas0.getContext('2d'),
+    ctxSpeed0 = speedGraphCanvas0.getContext('2d'),
     ctxTime1 = timeGraphCanvas1.getContext('2d');
-    // var ctxSpeed1 = speedGraphCanvas1.getContext('2d');
+    var ctxSpeed1 = speedGraphCanvas1.getContext('2d');
 
 /*************************
         DRAWING VARIABLE
@@ -77,13 +77,13 @@ function draw(){
 }
 
 function drawFirst(){
-  if(document.getElementById("playButton0").innerHTML.includes("play")) return;
+  if(!isDrawFirst) return;
   if(toDraw0 != undefined && toDraw1 != undefined){
     if(frameCounterFirst > toDraw0.length){
       // To restart draw
       $("#selectDiv0 :input").prop( "disabled", false);
       frameCounterFirst = 0;
-      document.getElementById("playButton0").innerHTML = "play_arrow";
+      $("#playButtonIcon0").text("play_arrow")
 
     }
     else {
@@ -91,13 +91,14 @@ function drawFirst(){
       if(frameCounterFirst == 0) {
         //MANIPULATING DOM
         $("#selectDiv0 :input").prop( "disabled", true);
-        switchPausePlayDrawButton(0,false)
-        disableSpeedUpButton(0,false)
-        disableSpeedDownButton(0,false)
+        $("#speedDownParent0").removeClass("disabled");
+        $("#speedUpParent0").removeClass("disabled");
+        $("#playButton0").removeClass("disabled");
         drawFirstBody()
         timeGraph0.resetChart()
+        speedGraph0.resetChart()
         timeGraph0 = new Graph(ctxTime0,"First Time/Angle graph","phi(rad)","time(s)","radiant angle")
-        //speedGraph0 = new Graph(ctxTime0,"First Angular Speed/Angle graph","angular speed(rad/s)","time(s)","angular speed")
+        speedGraph0 = new Graph(ctxSpeed0,"First Angular Speed/Angle graph","angular speed(rad/s)","time(s)","angular speed")
       }
 
       ctx0.clearRect(0,0,canvas0.width,canvas0.height)
@@ -109,20 +110,20 @@ function drawFirst(){
       ctx0.setTransform(1,0,0,1,0,0)
       timeGraph0.addPoint(currentFrame.t.toFixed(3), currentFrame.phi.toFixed(3))
       // speed try
-      // timeGraph0.addPoint(currentFrame.w.toFixed(3), currentFrame.phi.toFixed(3))
+      speedGraph0.addPoint(currentFrame.t.toFixed(3), currentFrame.w.toFixed(3))
       frameCounterFirst += FRAME_OFFSET;
     }
   }
 }
 
 function drawSecond(){
-  if(document.getElementById("playButton1").innerHTML.includes("play")) return;
+  if(!isDrawSecond) return;
   if(toDraw0 != undefined && toDraw1 != undefined){
     if(frameCounterSecond > toDraw1.length) {
         // To restart draw
         $("#selectDiv1 :input").prop( "disabled", false);
         frameCounterSecond = 0;
-        document.getElementById("playButton1").innerHTML = "play_arrow";
+        $("#playButtonIcon1").text("play_arrow")
         return
     }
     else {
@@ -130,13 +131,14 @@ function drawSecond(){
       if(frameCounterSecond == 0) {
         //MANIPULATING DOM
         $("#selectDiv1 :input").prop( "disabled", true);
-        switchPausePlayDrawButton(1,false)
-        disableSpeedUpButton(1,false)
-        disableSpeedDownButton(1,false)
+        $("#speedDownParent1").removeClass("disabled");
+        $("#speedUpParent1").removeClass("disabled");
+        $("#playButton1").removeClass("disabled");
         drawSecondBody()
         timeGraph1.resetChart()
+        speedGraph1.resetChart()
         timeGraph1 = new Graph(ctxTime1,"Second Time/Angle graph","phi(rad)","time(s)","radiant angle")
-        // speedGraph1 = new Graph(ctxTime1,"Second Angular Speed/Angle graph","angular speed(rad/s)","time(s)","angular speed")
+        speedGraph1 = new Graph(ctxSpeed1,"Second Angular Speed/Angle graph","angular speed(rad/s)","time(s)","angular speed")
       }
 
       ctx1.clearRect(0,0,canvas1.width,canvas1.height)
@@ -149,7 +151,8 @@ function drawSecond(){
       ctx1.setTransform(1,0,0,1,0,0)
       timeGraph1.addPoint(currentFrame.t.toFixed(3), currentFrame.phi.toFixed(3))
       // speed try
-      // timeGraph1.addPoint(currentFrame.w.toFixed(3), currentFrame.phi.toFixed(3))
+      // speedGraph1.addPoint(currentFrame.w.toFixed(3), currentFrame.phi.toFixed(3))
+      speedGraph1.addPoint(currentFrame.t.toFixed(3), currentFrame.w.toFixed(3))
       frameCounterSecond += FRAME_OFFSET;
     }
   }

@@ -61,13 +61,37 @@ class Frame {
     }
 
     calculateCM(){
-      this.swingCM = calculateSwingCM(this.ropeLength,this.phi)
-      this.upperCM = calculateUpperCM(this.ropeLength,this.phi,this.height)
-      this.cm = calculateCM(this.ropeLength,this.phi)
-      if(this.bodyPosition == "stand") this.cm = calculateStandingCM(this.ropeLength,this.height,this.phi)
-      this.lowerCM = calculateLowerCM(this.ropeLength,this.phi,this.height)
-      // msg[0] = {"t":0,"phi":this.phi,"w":0,"bodyPosition":bodyPosition,"upperCM":upperCM,"cm":cm,"lowerCM":lowerCM,"swingCM":swingCM}
-      // let tmp = toCanvasCoordinates(msg,ctx,height,gravity,mass,this.ropeLength)
+      switch (this.swingType) {
+        case "standing":
+        this.swingCM = calculateSwingCM(this.ropeLength,this.phi)
+        this.upperCM = {}
+        this.cm = calculateStandingBodyCM(this.ropeLength,this.bodyHeight,this.phi)
+        this.lowerCM = {}
+          break;
+        case "seated":
+        this.swingCM = calculateSwingCM(this.ropeLength,this.phi)
+        this.upperCM = calculateSeatedBodyUpperCM(this.ropeLength,this.phi,this.bodyHeight*0.5)
+        this.cm = calculateSeatedBodyCM(this.ropeLength,this.phi)
+        this.lowerCM = calculateSeatedBodyLowerCM(this.ropeLength,this.phi,this.bodyHeight*0.5)
+
+          break;
+        case "realistic":
+        this.swingCM = calculateSwingCM(this.ropeLength,this.phi)
+        this.upperCM = calculateSeatedBodyUpperCM(this.ropeLength,this.phi,this.bodyHeight*0.6)
+        this.cm = calculateSeatedBodyCM(this.ropeLength,this.phi)
+        this.lowerCM = calculateSeatedBodyLowerCM(this.ropeLength,this.phi,this.bodyHeight*0.4)
+
+          break;
+        case "combined":
+        this.swingCM = calculateSwingCM(this.ropeLength,this.phi)
+        this.upperCM = calculateSeatedBodyUpperCM(this.ropeLength,this.phi,this.bodyHeight*0.6)
+        this.cm = calculateSeatedBodyCM(this.ropeLength,this.phi)
+        this.lowerCM = calculateSeatedBodyLowerCM(this.ropeLength,this.phi,this.bodyHeight*0.4)
+
+          break;
+        default:
+          break;
+      }
     }
 }
 
@@ -118,39 +142,42 @@ function toCanvasCoordinates(coordinatesList, ctx,height,gravity,mass,ropeLength
 }
 
 
-/*******************************************************
-        START SEATED CENTER MASS FUNCTION
-*******************************************************/
-
 function calculateSwingCM(ropeLength,phi){
   let tmp = {}
   tmp["x"] = ropeLength*Math.sin(phi)
   tmp["y"] = -(ropeLength*Math.cos(phi))
   return tmp;
 }
+/*******************************************************
+        START SEATED CENTER MASS FUNCTION
+*******************************************************/
 
-function calculateUpperCM(ropeLength,phi,height){
+
+function calculateSeatedBodyUpperCM(ropeLength,phi,height){
+  console.log("CIAOOOOOOO");
+  console.log(ropeLength);
+  console.log(phi);
+  console.log(height);
   let tmp = {}
   tmp["x"] = ropeLength*Math.sin(phi) - height*Math.sin(phi)
   tmp["y"] = -(ropeLength) + height*Math.cos(phi)
+  console.log(tmp);
   return tmp;
 }
 
-function calculateCM(ropeLength,phi){
+function calculateSeatedBodyCM(ropeLength,phi){
   let tmp = {}
   tmp["x"] = ropeLength*Math.sin(phi)
   tmp["y"] = -(ropeLength*Math.cos(phi))
   return tmp;
 }
 
-function calculateLowerCM(ropeLength,phi,height){
+function calculateSeatedBodyLowerCM(ropeLength,phi,height){
   let tmp = {}
   tmp["x"] = ropeLength*Math.sin(phi) + height*Math.sin(phi)
   tmp["y"] = -(ropeLength*Math.cos(phi)) - height*Math.cos(phi)
   return tmp;
 }
-
-
 
 /*******************************************************
         END CENTER MASS FUNCTION
@@ -160,7 +187,7 @@ function calculateLowerCM(ropeLength,phi,height){
         START STANDING CENTER MASS FUNCTION
 *******************************************************/
 
-function calculateStandingCM(ropeLen,halfHeight,phi){
+function calculateStandingBodyCM(ropeLen,halfHeight,phi){
   let currentBarycenter = ropeLen - halfHeight + 0.4
   let tmp = {}
   tmp["x"] = currentBarycenter*Math.sin(phi)

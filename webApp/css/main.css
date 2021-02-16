@@ -133,3 +133,20 @@ label {
 label {
     font-size: 115% !important;
 }
+
+.buttonMarginRight {
+    margin-right: 10px;
+}
+
+/* Cards Graph =========================================================================== */
+.graphContainer {
+    height: 90%;
+}
+
+.graph {
+    height: 50%;
+}
+
+.card-action  {
+    border-radius: 10px !important;
+}

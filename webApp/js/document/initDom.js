@@ -109,15 +109,16 @@ function prepareDom(){
       // $("#selectDiv1 :input").change(updateSwingTypeSecond)
       $("#selectDiv0 :input").prop( "disabled", false);
       $("#selectDiv1 :input").prop( "disabled", false);
-      controlButtonSystem(0,true)
-      controlButtonSystem(1,true)
+      controlButtonSystem(0)
+      controlButtonSystem(1)
+
       M.AutoInit();
     }
 
-      function controlButtonSystem(id,bool){
-        switchPausePlayDrawButton(id,bool)
-        disableSpeedUpButton(id,bool)
-        disableSpeedDownButton(id,bool)
+      function controlButtonSystem(id){
+        $("#speedUpParent"+id).addClass("disabled");
+        $("#playButton"+id).addClass("disabled");
+        $("#speedDownParent"+id).addClass("disabled");
       }
     /*******************************************************
                         END INIT DOCUMENT FUNCTION
@@ -145,24 +146,26 @@ function prepareDom(){
       function initGraph(){
         initGraphMeasure()
         timeGraph0 = new Graph(ctxTime0,"First Time/Angle graph","phi(rad)","time(s)","radiant angle")
-        //speedGraph0 = new Graph(ctxTime0,"First Angular Speed/Angle graph","angular speed(rad/s)","time(s)","angular speed")
+        speedGraph0 = new Graph(ctxSpeed0,"First Angular Speed/Angle graph","angular speed(rad/s)","time(s)","angular speed")
         timeGraph1 = new Graph(ctxTime1,"Second Time/Angle graph","phi(rad)","time(s)","radiant angle")
-        // speedGraph1 = new Graph(ctxTime1,"Second Angular Speed/Angle graph","angular speed(rad/s)","time(s)","angular speed")
+        speedGraph1 = new Graph(ctxSpeed1,"Second Angular Speed/Angle graph","angular speed(rad/s)","time(s)","angular speed")
       }
 
 
 
       function initGraphMeasure(){
-        timeGraphCanvas0.height = $("#graphTimeDiv0").height()
+        timeGraphCanvas0.height = $(".col").height()*0.4
         timeGraphCanvas0.width = $("#graphTimeDiv0").width()
 
-        // speedGraphCanvas0.height = $("#graphTimeDiv1").height()
-        // speedGraphCanvas0.width = $("#graphTimeDiv1").width()
-        timeGraphCanvas1.height = $("#graphTimeDiv1").height()
+        speedGraphCanvas0.height = $(".col").height()*0.4
+        speedGraphCanvas0.width = $("#graphSpeedDiv0").width()
+
+
+        timeGraphCanvas1.height = $(".col").height()*0.4
         timeGraphCanvas1.width = $("#graphTimeDiv1").width()
 
-        // speedGraphCanvas1.height = $("#speedTimeDiv1").height()
-        // speedGraphCanvas1.width = $("#speedTimeDiv1").height()
+        speedGraphCanvas1.height = $(".col").height()*0.4
+        speedGraphCanvas1.width = $("#graphSpeedDiv1").width()
       }
     /*******************************************************
                         END INIT DOCUMENT FUNCTION

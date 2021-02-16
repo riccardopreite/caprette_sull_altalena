@@ -1,27 +1,38 @@
-function switchGraphForm(id,showGraph){
-  //if bool is true show Graph
 
-  //if graph is visible form is hided and control button are enabled select is disabled
-  //if form is visible graph is hided and control button are disabled select is enabled
+function formMode(id){
+  //control element
+  $("#speedDownParent"+id).addClass("disabled");
+  $("#speedUpParent"+id).addClass("disabled");
+  $("#playButton"+id).addClass("disabled");
+  $("#playButtonIcon"+id).text("play_arrow")
 
-  if(showGraph){
-    showHideGraph("#graphTimeDiv"+id,"#formDiv"+id)
-    switchPausePlayDrawButton(id,false)
-    disableSpeedUpButton(id,false)
-    disableSpeedDownButton(id,false)
-    disableEnableInput(id, true)
-  }
-  else{
-    showHideGraph("#formDiv"+id,"#graphTimeDiv"+id)
-    switchPausePlayDrawButton(id,true)
-    disableSpeedUpButton(id,true)
-    disableSpeedDownButton(id,true)
-    disableEnableInput(id, false)
-  }
+  //select
+  $("#selectDiv"+id+" :input").prop( "disabled", false);
 
+  //form & graph
+  showHideGraph("#formDiv"+id,"#graphDiv"+id)
+  //isDraw
+  if(id) isDrawSecond = false
+  else isDrawFirst = false
 }
+function drawMode(id){
+  //control element
+  $("#speedDownParent"+id).removeClass("disabled");
+  $("#speedUpParent"+id).removeClass("disabled");
+  $("#playButton"+id).removeClass("disabled");
+  $("#playButtonIcon"+id).text("pause")
+
+  //select
+  $("#selectDiv"+id+" :input").prop( "disabled", true);
+
+  //form & graph
+  showHideGraph("#graphDiv"+id,"#formDiv"+id)
 
 
+  //isDraw
+  if(id) isDrawSecond = false
+  else isDrawFirst = false
+}
 /*******************************************************
         START GRAPH FUNCTION
 *******************************************************/
@@ -118,20 +129,17 @@ function getFormValue(){
               START PLAY FUNCTION
       *******************************************************/
 
-      function switchPausePlayDrawButton(id,bool){
-        let playButton = document.getElementById("playButton"+id);
-        let playButtonParent = document.getElementById("playButtonParent"+id);
-        let css = "";
-        if(bool) css = "pointer-events: none; cursor: default;";
-        playButton.innerHTML = "pause";
-        playButtonParent.style = css;
-      }
+      function onPausePlayDrawButton(id){
+        let playButtonIcon = document.getElementById("playButtonIcon"+id);
+        if(playButtonIcon.innerHTML.includes("pause")) {
 
-      function playPausePressed(id){
-        let className = document.getElementById("playButton"+id);
-        if(className.innerHTML.includes("play")) {
-          className.innerHTML = "pause";
-          disableEnableInput(id,true)
+          if(id) isDrawSecond = false
+          else isDrawFirst = false
+          playButtonIcon.innerHTML = "play_arrow"
+          disableInput(id,false)
+        }
+        else{
+          playButtonIcon.innerHTML = "pause"
           if(id){
             if(secondChange){
               secondChange = false
@@ -139,6 +147,7 @@ function getFormValue(){
               toDraw1 = canvasList[1][secondMethode+"_frameList"]
               frameCounterSecond = 0
             }
+            isDrawSecond = true
           }
           else{
             if(firstChange){
@@ -147,11 +156,9 @@ function getFormValue(){
               toDraw0 = canvasList[0][firstMethode+"_frameList"]
               frameCounterFirst = 0
             }
+            isDrawFirst = true
           }
-        }
-        else {
-          className.innerHTML = "play_arrow";
-          disableEnableInput(id,false)
+          disableInput(id,true)
         }
       }
 
@@ -164,28 +171,22 @@ function getFormValue(){
               START SPEEDUP FUNCTION
       *******************************************************/
 
-      function disableSpeedUpButton(id,bool){
-        let speedUpButton = document.getElementById("speedUpParent"+id);
-        let css = "";
-        if(bool) css = "pointer-events: none; cursor: default;";
-        speedUpButton.style = css;
-      }
       function speedUpFirst(){
-        disableSpeedDownButton(0,false)
+        $("#speedDownParent0").removeClass("disabled");
         firstIntervalTimer -= 100;
         if(firstIntervalTimer <= 100) {
           firstIntervalTimer = 100;
-          disableSpeedUpButton(0,true)
+          $("#speedUpParent0").addClass("disabled");
         }
         clearInterval(firstInterval)
         firstInterval = setInterval(drawFirst, firstIntervalTimer);
         }
       function speedUpSecond(){
-        disableSpeedDownButton(1,false)
+        $("#speedDownParent1").removeClass("disabled");
         secondIntervalTimer -= 100;
         if(secondIntervalTimer <= 100) {
           secondIntervalTimer = 100;
-          disableSpeedUpButton(1,true)
+          $("#speedUpParent1").addClass("disabled");
         }
         clearInterval(secondInterval)
         secondInterval = setInterval(drawSecond, secondIntervalTimer);
@@ -200,19 +201,13 @@ function getFormValue(){
               START SPEEDDOWN FUNCTION
       *******************************************************/
 
-      function disableSpeedDownButton(id,bool){
-        let speedDownButton = document.getElementById("speedDownParent"+id);
-        let css = "";
-        if(bool) css = "pointer-events: none; cursor: default;";
-        speedDownButton.style = css;
-      }
       function speedDownFirst(){
         firstIntervalTimer += 100
         if(firstIntervalTimer > 1000) {
           firstIntervalTimer = 1000;
-          disableSpeedDownButton(0,true)
+          $("#speedDownParent0").addClass("disabled");
         }
-        disableSpeedUpButton(0,false)
+        $("#speedUpParent0").removeClass("disabled");
         clearInterval(firstInterval)
         firstInterval = setInterval(drawFirst, firstIntervalTimer);
       }
@@ -220,9 +215,9 @@ function getFormValue(){
         secondIntervalTimer += 100
         if(secondIntervalTimer > 1000) {
           secondIntervalTimer = 1000;
-          disableSpeedDownButton(1,true)
+          $("#speedDownParent1").addClass("disabled");
         }
-        disableSpeedUpButton(1,false)
+        $("#speedUpParent1").removeClass("disabled");
         clearInterval(secondInterval)
         secondInterval = setInterval(drawSecond, secondIntervalTimer);
       }
@@ -239,7 +234,7 @@ function getFormValue(){
         START LISTENER FOR DRAWING COMPONENT FUNCTION
 *******************************************************/
 
-function disableEnableInput(id, bool){
+function disableInput(id, bool){
   $("#selectDiv"+id+" :input").prop( "disabled", bool);
 }
 

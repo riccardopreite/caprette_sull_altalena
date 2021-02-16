@@ -54,8 +54,8 @@
             <canvas id="canvas0" width="200" height="100"></canvas>
             <a id="speedUpParent0" class="btn-floating btn-small halfway-fab waves-effect waves-light teal btn-speedUp"
               onclick="speedUpFirst()"><i id="speedUp0" class="material-icons">fast_forward</i></a>
-            <a id="playButtonParent0" class="btn-floating btn-small halfway-fab waves-effect waves-light teal btn-play"
-              onclick="playPausePressed(0)"><i id="playButton0" class="material-icons">pause</i></a>
+            <a id="playButton0" class="btn-floating btn-small halfway-fab waves-effect waves-light teal btn-play"
+              onclick="onPausePlayDrawButton(0)"><i id="playButtonIcon0" class="material-icons">pause</i></a>
             <a id="speedDownParent0"
               class="btn-floating btn-small halfway-fab waves-effect waves-light teal btn-speedDown"
               onclick="speedDownFirst()"><i id="speedDown0" class="material-icons">fast_rewind</i></a>
@@ -74,8 +74,31 @@
         </div>
       </div>
 
+      <div class="col l6 m12 s12" style="display:none;" id="graphDiv0">
+              <div class="card medium cardCanvas marginTop shadow">
+                <div class="card-content graphContainer">
+
+                  <div class="row">
+                    <div class="col s12 graph" id="graphTimeDiv0">
+                      <canvas id="graphTime0" width="200" height="100"></canvas>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col s12 graph" id="graphSpeedDiv0">
+                      <canvas id="graphSpeed0" width="200" height="100"></canvas>
+                    </div>
+                  </div>
+
+                </div>
+                <div class="card-action graphActions">
+                  <a href="#">This is a link</a>
+                  <a href="#">This is a link</a>
+                </div>
+              </div>
+      </div>
       <!-- graph time container  -->
-      <div class="col l6 m12 s12" id="graphTimeDiv0" style="display:none;">
+      <!-- <div class="col l6 m12 s12" id="graphTimeDiv0" style="display:none;">
         <div class="card medium cardCanvas marginTop shadow">
           <div class="container">
             <canvas id="graphTime0" width="200" height="100"></canvas>
@@ -85,7 +108,7 @@
         onclick="switchGraphForm(0,false)">Form
           <i class="material-icons right">send</i>
         </a>
-      </div>
+      </div> -->
       <!-- graph speed container fare in modo che si possano vedere entrambi in un div -->
       <!-- speed rimane commentato per il momento -->
       <!-- <div class="col l6 m12 s12" id="graphSpeedDiv0">
@@ -104,11 +127,11 @@
               <!-- altezza + massa -->
               <div class="row">
                 <div class="input-field col s6">
-                  <input class="formInput" id="height0" type="number" value="1.6">
+                  <input class="formInput" id="height0" type="number" value="1.6" step="0.1">
                   <label for="height0">Body Height (m)</label>
                 </div>
                 <div class="input-field col s6">
-                  <input class="formInput" id="mass0" type="number" value="20">
+                  <input class="formInput" id="mass0" type="number" value="20" step="0.1">
                   <label for="mass0">Body Mass (kg)</label>
                 </div>
               </div>
@@ -116,11 +139,11 @@
               <!-- lunghezza corda + forza di gravita'-->
               <div class="row">
                 <div class="input-field col s6">
-                  <input class="formInput" id="ropeLength0" type="number" value="2.7">
+                  <input class="formInput" id="ropeLength0" type="number" value="2.7" step="0.1">
                   <label for="ropeLength0">Rope Length (m)</label>
                 </div>
                 <div class="input-field col s6">
-                  <input class="formInput" id="gravity0" type="number" value="9.8">
+                  <input class="formInput" id="gravity0" type="number" value="9.8" step="0.1">
                   <label for="gravity0">Accelleration force (m/s**2)</label>
                 </div>
               </div>
@@ -128,11 +151,11 @@
               <!-- phi + w -->
               <div class="row">
                 <div class="input-field col s6">
-                  <input class="formInput" id="phi0" type="number" value="-0.5">
+                  <input class="formInput" id="phi0" type="number" value="-0.5" step="0.01">
                   <label for="phi0">Initial angle (rad) </label>
                 </div>
                 <div class="input-field col s6">
-                  <input class="formInput" id="w0" type="number" value="0.0">
+                  <input class="formInput" id="w0" type="number" value="0.0" step="0.01">
                   <label for="w0">Initial speed (m/s)</label>
                 </div>
               </div>
@@ -156,7 +179,7 @@
               <i class="material-icons right">send</i>
             </a>
             <a class="btn center-align waves-effect waves-light" type="submit" name="action"
-              onclick="switchGraphForm(0,true)">Graph
+              onclick="drawMode(0)">Graph
               <i class="material-icons right">send</i>
             </a>
           </div>
@@ -175,8 +198,8 @@
             <canvas id="canvas1" width="200" height="100"></canvas>
             <a id="speedUpParent1" class="btn-floating btn-small halfway-fab waves-effect waves-light teal btn-speedUp"
               onclick="speedUpSecond()"><i id="speedUp1" class="material-icons">fast_forward</i></a>
-            <a id="playButtonParent1" class="btn-floating btn-small halfway-fab waves-effect waves-light teal btn-play"
-              onclick="playPausePressed(1)"><i id="playButton1" class="material-icons">pause</i></a>
+            <a id="playButton1" class="btn-floating btn-small halfway-fab waves-effect waves-light teal btn-play"
+              onclick="onPausePlayDrawButton(1)"><i id="playButtonIcon1" class="material-icons">pause</i></a>
             <a id="speedDownParent1"
               class="btn-floating btn-small halfway-fab waves-effect waves-light teal btn-speedDown"
               onclick="speedDownSecond()"><i id="speedDown1" class="material-icons">fast_rewind</i></a>
@@ -196,8 +219,33 @@
         </div>
       </div>
 
+      <div class="col l6 m12 s12" style="display:none;" id="graphDiv1">
+              <div class="card medium cardCanvas marginTop shadow">
+                <div class="card-content graphContainer">
+
+                  <div class="row">
+                    <div class="col s12 graph" id="graphTimeDiv1">
+                      <canvas id="graphTime1" width="200" height="100"></canvas>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col s12 graph" id="graphSpeedDiv1">
+                      <canvas id="graphSpeed1" width="200" height="100"></canvas>
+                    </div>
+                  </div>
+
+                </div>
+                <div class="card-action graphActions">
+                  <a href="#">This is a link</a>
+                  <a href="#">This is a link</a>
+                </div>
+              </div>
+      </div>
+
+
       <!-- graph time container  -->
-      <div class="col l6 m12 s12" id="graphTimeDiv1" style="display:none;">
+      <!-- <div class="col l6 m12 s12" id="graphTimeDiv1" style="display:none;">
         <div class="card medium cardCanvas marginTop shadow">
           <div class="container">
             <canvas id="graphTime1" width="200" height="100"></canvas>
@@ -207,7 +255,7 @@
           onclick="switchGraphForm(1,false)">Form
             <i class="material-icons right">send</i>
           </a>
-      </div>
+      </div> -->
       <!-- graph speed container fare in modo che si possano vedere entrambi in un div -->
       <!-- speed rimane commentato per il momento -->
       <!-- <div class="col l6 m12 s12" id="graphSpeedDiv1">
@@ -226,11 +274,11 @@
               <!-- altezza + massa -->
               <div class="row">
                 <div class="input-field col s6">
-                  <input class="formInput" id="height1" type="number" value="1.6">
+                  <input class="formInput" id="height1" type="number" value="1.6" step="0.1">
                   <label for="height1">Body Height (m)</label>
                 </div>
                 <div class="input-field col s6">
-                  <input class="formInput" id="mass1" type="number" value="20">
+                  <input class="formInput" id="mass1" type="number" value="20" step="0.1">
                   <label for="mass1">Body Mass (kg)</label>
                 </div>
               </div>
@@ -238,11 +286,11 @@
               <!-- lunghezza corda + forza di gravita'-->
               <div class="row">
                 <div class="input-field col s6">
-                  <input class="formInput" id="ropeLength1" type="number" value="2.7">
+                  <input class="formInput" id="ropeLength1" type="number" value="2.7" step="0.1">
                   <label for="ropeLength1">Rope Length (m)</label>
                 </div>
                 <div class="input-field col s6">
-                  <input class="formInput" id="gravity1" type="number" value="9.8">
+                  <input class="formInput" id="gravity1" type="number" value="9.8" step="0.1">
                   <label for="gravity1">Accelleration force (m/s**2)</label>
                 </div>
               </div>
@@ -250,11 +298,11 @@
               <!-- phi + w -->
               <div class="row">
                 <div class="input-field col s6">
-                  <input class="formInput" id="phi1" type="number" value="-0.05">
+                  <input class="formInput" id="phi1" type="number" value="-0.5" step="0.01">
                   <label for="phi1">Initial angle (rad)</label>
                 </div>
                 <div class="input-field col s6">
-                  <input class="formInput" id="w1" type="number" value="0.0">
+                  <input class="formInput" id="w1" type="number" value="0.0" step="0.01">
                   <label for="w1">Initial speed (m/s)</label>
                 </div>
               </div>
@@ -278,7 +326,7 @@
               <i class="material-icons right">send</i>
             </a>
             <a class="btn center-align waves-effect waves-light" type="submit" name="action"
-              onclick="switchGraphForm(1,true)">Graph
+              onclick="drawMode(1)">Graph
               <i class="material-icons right">send</i>
             </a>
           </div>

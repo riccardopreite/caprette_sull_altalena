@@ -3,14 +3,15 @@ function livePreview(){
   drawSecondBody()
 
   previewFrame0 = prepareFrame(0)
-
   ctx0.clearRect(0,0,canvas0.width,canvas0.height)
 
+  console.log("ECCOMI");
+  console.log(drawComp0);
   drawComp0.forEach(obj => {
+    console.log(obj);
     obj.update(previewFrame0)
     obj.show()
   })
-
   ctx0.setTransform(1,0,0,1,0,0)
 
   /**************************/
@@ -25,13 +26,14 @@ function livePreview(){
   })
 
   ctx1.setTransform(1,0,0,1,0,0)
-
 }
-function drawFirstBody(){
+
+  function drawFirstBody(){
   rope0 = new Rope(ctx0)
   swing0 = new Swing(ctx0)
-  centerMass0 = new CenterMass(ctx0, upperCM0, lowerCM0)
+  centerMass0 = new CenterMass(ctx0, showUpper0, showLower0)
   body0 = new Body(ctx0, bodyHeight0*100)
+  console.log(rope0);
 
   drawComp0 = [rope0, centerMass0, swing0, body0]
 
@@ -43,7 +45,7 @@ function drawFirstBody(){
 function drawSecondBody(){
   rope1 = new Rope(ctx1)
   swing1 = new Swing(ctx1)
-  centerMass1 = new CenterMass(ctx1, upperCM1, lowerCM1)
+  centerMass1 = new CenterMass(ctx1, showUpper1, showLower1)
   body1 = new Body(ctx1, bodyHeight1*100)
 
   drawComp1 = [rope1, centerMass1, swing1, body1]

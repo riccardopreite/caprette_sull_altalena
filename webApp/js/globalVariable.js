@@ -18,9 +18,9 @@ var ropeLengthDef = 2.7, // 2.7 metri default = metà del canvas| MAX?
 bodyHeightDef = 1.6,     // 1.0 metri default
 bodyMass = 20,           // 20.0kg default
 gravityDef = 9.8,        // 9.8 m/s^2 default
-initPhiDef = -0.05,      //-0.5 default
+initPhiDef = -0.5,      //-0.05 default
 initWDef = 0.00,         // 0.00 default
-initPos = "stand"
+initPos = "squat"
 var initFrame = []
 
 /*************************
