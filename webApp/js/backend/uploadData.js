@@ -4,7 +4,6 @@ function uploadData(){
   // disabilita bottoni
   data1 = getDataForCaluclateSwing(0)
   data2 = getDataForCaluclateSwing(1)
-  updateHeight(data1,data2)
   socket.emit('handleRequest', {data1:data1,data2:data2});
   draw()
 }

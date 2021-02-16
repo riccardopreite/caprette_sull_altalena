@@ -9,25 +9,6 @@ function prepareDom(){
   //FIRST DRAW
   drawDom();
 
-
-  /*************************
-  THIS CODE COMMENTED IS NOT WORKING FOR SECOND CANVAS
-  *************************/
-  // var canvasContainer = document.getElementsByClassName('card-image');
-  // var cs0 = getComputedStyle(canvasContainer[0]);
-  // var cs1 = getComputedStyle(canvasContainer[1]);
-  //
-  // /// these will return dimensions in *pixel* regardless of what
-  // /// you originally specified for image:
-  // var width = parseInt(cs0.getPropertyValue('width'), 10);
-  // var height = parseInt(cs0.getPropertyValue('height'), 10);
-  //
-  // canvas0.width = width;
-  // canvas0.height = height;
-  // width = parseInt(cs1.getPropertyValue('width'), 10);
-  // height = parseInt(cs1.getPropertyValue('height'), 10);
-  // canvas1.width = width;
-  // canvas1.height = height;
 }
 
 
@@ -35,151 +16,158 @@ function prepareDom(){
 /*******************************************************
                     START INIT FUNCTION
 *******************************************************/
-function initCanvas(){
-  initCanvasList(0);
-  initCanvasList(1);
-  initFirstFrameList(0,ctx0)
-  initFirstFrameList(1,ctx1)
-  initCanvasMeasure()
-}
 
-function initDomSystem(){
-  initOnChangeEvent()
-  controlSelectSystem(0,false)
-  controlSelectSystem(0,false)
-  controlButtonSystem(1,true)
-  controlButtonSystem(1,true)
-  M.AutoInit();
-}
+    /*******************************************************
+                        START INIT CANVAS FUNCTION
+    *******************************************************/
+    function initCanvas(){
+      initCanvasList(0);
+      initCanvasList(1);
+      initDrawComponentsUtils();
+      initDrawComponents();
+      initCanvasMeasure()
+    }
 
-function drawDom(){
-  initBodyHeight();
-  initRopeLenght();
-  drawBodies()
-  initGraph()
-}
+      function initCanvasList(id){
 
-function initCanvasList(id){
+        /*************************
+          INIT CANVAS LIST
+        *************************/
 
-  /*************************
-    INIT CANVAS LIST
-  *************************/
+        canvasList[id] = {};
+        canvasList[id]["standing_frameList"]= [];
+        canvasList[id]["seated_frameList"]= [];
+        canvasList[id]["realistic_frameList"]= [];
+        canvasList[id]["combined_frameList"]= [];
+      }
+      function initDrawComponentsUtils(){
+        firstMethode = $("#swingType0").val()
+        secondMethode = $("#swingType1").val()
 
-  canvasList[id] = {};
-  canvasList[id]["standing_frameList"]= [];
-  canvasList[id]["seated_frameList"]= [];
-  canvasList[id]["realistic_frameList"]= [];
-  canvasList[id]["combined_frameList"]= [];
-}
 
-function initFirstFrameList(id,ctx){
+        phi0 = $("#phi0").val()
+        phi1 = $("#phi1").val()
 
-  /*************************
-    INIT CANVAS LIST
-  *************************/
-  let t  = $("#swingType"+id+ " :selected").val(),type = "";
-  if(t == "standing") type = "stand"
-  else type = "seat"
-  initFrame[id] = new Frame(
-      ctx,
-      0, //time
-      $('#phi'+id).val(),
-      $('#w'+id).val(),
-      $('#gravity'+id).val(),
-      $('#mass'+id).val(),
-      $('#height'+id).val(),
-      $('#ropeLength'+id).val(),
-      type,
-      [],
-      [],
-      [],
-      []
-  )
-}
+        w0 = $("#w0").val()
+        w1 = $("#w1").val()
 
-function initBodyHeight(){
+        if (firstMethode == "standing") bodyPosition0 = "squat"
+        else bodyPosition0 = "seat"
 
-  /*************************
-    INIT BODY HEIGHT NEEDED FOR DRAWING COMPONENTS OBJECT
-  *************************/
+        if (secondMethode == "standing") bodyPosition1 = "squat"
+        else bodyPosition1 = "seat"
 
-  bodyHeight0 = bodyHeightDef
-  bodyHeight1 = bodyHeightDef
-}
+        gravity0 = $("#gravity0").val()
+        gravity1 = $("#gravity1").val()
 
-function initRopeLenght(){
+        mass0 = $("#mass0").val()
+        mass1 = $("#mass1").val()
 
-  /*************************
-    INIT ROPE LENGHT NEEDED FOR DRAWING COMPONENTS OBJECT
-  *************************/
+        bodyHeight0 = $("#height0").val()
+        bodyHeight1 = $("#height1").val()
 
-  ropeLength0 = ropeLengthDef
-  ropeLength1 = ropeLengthDef
-}
+        ropeLength0 = $("#ropeLength0").val()
+        ropeLength1 = $("#ropeLength1").val()
 
-function initCanvasMeasure(){
+        showUpper0 = $('#upperCM0').is(":checked")
+        showLower0 = $('#lowerCM0').is(":checked")
+        showUpper1 = $('#upperCM1').is(":checked")
+        showLower1 = $('#lowerCM1').is(":checked")
+      }
 
-  /*************************
-    INIT CANVAS MEASURE
-  *************************/
+      function initDrawComponents(){
+        rope0 = new Rope(ctx0)
+        swing0 = new Swing(ctx0)
+        centerMass0 = new CenterMass(ctx0, showUpper0, showLower0)
+        body0 = new Body(ctx0, bodyHeight0)
 
-  ctx0.canvas.height = $("#parentCanvas0").height()
-  ctx0.canvas.width = $("#parentCanvas0").width()
-  ctx1.canvas.height = $("#parentCanvas1").height()
-  ctx1.canvas.width = $("#parentCanvas1").width()
-}
+        rope1 = new Rope(ctx1)
+        swing1 = new Swing(ctx1)
+        centerMass1 = new CenterMass(ctx1, showUpper1, showLower1)
+        body1 = new Body(ctx1, bodyHeight1)
+      }
 
-function initOnChangeEvent(){
-  $("#selectDiv0 :input").change(updateSwingTypeFirst)
-  $("#selectDiv1 :input").change(updateSwingTypeSecond)
-}
+      function initCanvasMeasure(){
 
-function drawBodies(){
-  /*
-  IMPORTANT: always put swing BEFORE body show.
-  Body coordinates (and rotations) are calculated based on the Swing
-  */
-  initFirstBody()
-  initSecondBody()
-  updatePhi(0,-0.05)
-  updatePhi(1,-0.05)
-}
+        /*************************
+          INIT CANVAS MEASURE
+        *************************/
 
-function initGraph(){
-  initGraphMeasure()
-  timeGraph0 = new Graph(ctxTime0,"First Time/Angle graph","phi(rad)","time(s)","radiant angle")
-  //speedGraph0 = new Graph(ctxTime0,"First Angular Speed/Angle graph","angular speed(rad/s)","time(s)","angular speed")
-  timeGraph1 = new Graph(ctxTime1,"Second Time/Angle graph","phi(rad)","time(s)","radiant angle")
-  // speedGraph1 = new Graph(ctxTime1,"Second Angular Speed/Angle graph","angular speed(rad/s)","time(s)","angular speed")
-}
+        ctx0.canvas.height = $("#parentCanvas0").height()
+        ctx0.canvas.width = $("#parentCanvas0").width()
+        ctx1.canvas.height = $("#parentCanvas1").height()
+        ctx1.canvas.width = $("#parentCanvas1").width()
+      }
+    /*******************************************************
+                        END INIT CANVAS FUNCTION
+    *******************************************************/
+    /*******************************************************
+                        START INIT DOCUMENT FUNCTION
+    *******************************************************/
+    function initDomSystem(){
+      // $("#selectDiv0 :input").change(updateSwingTypeFirst)
+      // $("#selectDiv1 :input").change(updateSwingTypeSecond)
+      $("#selectDiv0 :input").prop( "disabled", false);
+      $("#selectDiv1 :input").prop( "disabled", false);
+      controlButtonSystem(0,true)
+      controlButtonSystem(1,true)
+      M.AutoInit();
+    }
 
-function initFirstBody(){
-  rope0 = new Rope(ctx0)
-  swing0 = new Swing(ctx0)
-  centerMass0 = new CenterMass(ctx0, $('#upperCM0').is(":checked"), $('#lowerCM0').is(":checked"))
-  body0 = new Body(ctx0, bodyHeight0*100)
-  showFrame(rope0,swing0,centerMass0,body0)
-}
-function initSecondBody(){
-  rope1 = new Rope(ctx1)
-  swing1 = new Swing(ctx1)
-  centerMass1 = new CenterMass(ctx1, $('#upperCM1').is(":checked"), $('#lowerCM1').is(":checked"))
-  body1 = new Body(ctx1, bodyHeight1*100)
-  showFrame(rope1,swing1,centerMass1,body1)
-}
+      function controlButtonSystem(id,bool){
+        switchPausePlayDrawButton(id,bool)
+        disableSpeedUpButton(id,bool)
+        disableSpeedDownButton(id,bool)
+      }
+    /*******************************************************
+                        END INIT DOCUMENT FUNCTION
+    *******************************************************/
 
-function initGraphMeasure(){
-  timeGraphCanvas0.height = $("#graphTimeDiv0").height()
-  timeGraphCanvas0.width = $("#graphTimeDiv0").width()
+    /*******************************************************
+                        START INIT DOCUMENT FUNCTION
+    *******************************************************/
+    function drawDom(){
+      initDefVar();
+      livePreview();
+      initGraph();
+    }
 
-  // speedGraphCanvas0.height = $("#graphTimeDiv1").height()
-  // speedGraphCanvas0.width = $("#graphTimeDiv1").width()
-  timeGraphCanvas1.height = $("#graphTimeDiv1").height()
-  timeGraphCanvas1.width = $("#graphTimeDiv1").width()
+      function initDefVar(){
+        initPhi();
+        initW();
+        initGravity();
+        initMass();
+        initBodyHeight();
+        initRopeLenght();
+        initBodyPosition();
+      }
 
-  // speedGraphCanvas1.height = $("#speedTimeDiv1").height()
-  // speedGraphCanvas1.width = $("#speedTimeDiv1").height()
-}
+      function initGraph(){
+        initGraphMeasure()
+        timeGraph0 = new Graph(ctxTime0,"First Time/Angle graph","phi(rad)","time(s)","radiant angle")
+        //speedGraph0 = new Graph(ctxTime0,"First Angular Speed/Angle graph","angular speed(rad/s)","time(s)","angular speed")
+        timeGraph1 = new Graph(ctxTime1,"Second Time/Angle graph","phi(rad)","time(s)","radiant angle")
+        // speedGraph1 = new Graph(ctxTime1,"Second Angular Speed/Angle graph","angular speed(rad/s)","time(s)","angular speed")
+      }
+
+
+
+      function initGraphMeasure(){
+        timeGraphCanvas0.height = $("#graphTimeDiv0").height()
+        timeGraphCanvas0.width = $("#graphTimeDiv0").width()
+
+        // speedGraphCanvas0.height = $("#graphTimeDiv1").height()
+        // speedGraphCanvas0.width = $("#graphTimeDiv1").width()
+        timeGraphCanvas1.height = $("#graphTimeDiv1").height()
+        timeGraphCanvas1.width = $("#graphTimeDiv1").width()
+
+        // speedGraphCanvas1.height = $("#speedTimeDiv1").height()
+        // speedGraphCanvas1.width = $("#speedTimeDiv1").height()
+      }
+    /*******************************************************
+                        END INIT DOCUMENT FUNCTION
+    *******************************************************/
+
 /*******************************************************
                     END INIT FUNCTION
 *******************************************************/

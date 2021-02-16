@@ -1,21 +1,36 @@
+function switchGraphForm(id,showGraph){
+  //if bool is true show Graph
+
+  //if graph is visible form is hided and control button are enabled select is disabled
+  //if form is visible graph is hided and control button are disabled select is enabled
+
+  if(showGraph){
+    showHideGraph("#graphTimeDiv"+id,"#formDiv"+id)
+    switchPausePlayDrawButton(id,false)
+    disableSpeedUpButton(id,false)
+    disableSpeedDownButton(id,false)
+    disableEnableInput(id, true)
+  }
+  else{
+    showHideGraph("#formDiv"+id,"#graphTimeDiv"+id)
+    switchPausePlayDrawButton(id,true)
+    disableSpeedUpButton(id,true)
+    disableSpeedDownButton(id,true)
+    disableEnableInput(id, false)
+  }
+
+}
+
+
 /*******************************************************
         START GRAPH FUNCTION
 *******************************************************/
 
-function showTimeGraph(id){
-  var form = $("#formDiv"+id)
-      graph = $("#graphTimeDiv"+id)
-  form.hide()
-  graph.show()
-
+function showHideGraph(toShow,toHide){
+  $(toShow).show()
+  $(toHide).hide()
 }
 
-function hideTimeGraph(id){
-  var form = $("#formDiv"+id)
-      graph = $("#graphTimeDiv"+id)
-  form.show()
-  graph.hide()
-}
 
 /***************************
 
@@ -41,28 +56,55 @@ function hideSpeedGraph(id){
 /*******************************************************
         START FORM FUNCTION
 *******************************************************/
-function changePhi(id, newPhi){
-  updatePhi(id,newPhi)
-}
-function changeW(id, newW){
-  updateW(id,newW)
-}
 
-function changeGravity(id, newGravity){
-  updateGravity(id,newGravity)
-}
+$(".formInput").change(function(){
+  getFormValue()
+  livePreview()
+})
 
-function changeMass(id, newMass){
-  updateMass(id,newMass)
-}
-function changeHeight(id, newHeight){
-  updateHeightFrame(id,newHeight)
-}
+function getFormValue(){
+  firstMethode = $("#swingType0").val()
+  secondMethode = $("#swingType1").val()
+  if(firstMethode != oldFirst){
+    firstChange = true
+    oldFirst = firstMethode
+  }
+  if(secondMethode != oldSecond){
+    secondChange = true
+    oldSecond = secondMethode
+  }
+  var start_t = 0
 
-function changeRopeLenght(id, newRopeLenght){
-  updateRopeLenght(id,newRopeLenght)
-}
+  phi0 = $("#phi0").val()
+  phi1 = $("#phi1").val()
 
+  w0 = $("#w0").val()
+  w1 = $("#w1").val()
+
+  if (firstMethode == "standing") bodyPosition0 = "squat"
+  else bodyPosition0 = "seat"
+
+  if (secondMethode == "standing") bodyPosition1 = "squat"
+  else bodyPosition1 = "seat"
+
+  gravity0 = $("#gravity0").val()
+  gravity1 = $("#gravity1").val()
+
+  mass0 = $("#mass0").val()
+  mass1 = $("#mass1").val()
+
+  bodyHeight0 = $("#height0").val()
+  bodyHeight1 = $("#height1").val()
+
+  ropeLength0 = $("#ropeLength0").val()
+  ropeLength1 = $("#ropeLength1").val()
+
+  showUpper0 = $('#upperCM0').is(":checked")
+  showLower0 = $('#lowerCM0').is(":checked")
+  showUpper1 = $('#upperCM1').is(":checked")
+  showLower1 = $('#lowerCM1').is(":checked")
+
+}
 
 /*******************************************************
         END FORM FUNCTION
@@ -94,7 +136,7 @@ function changeRopeLenght(id, newRopeLenght){
             if(secondChange){
               secondChange = false
               ctx1.clearRect(0,0,canvas1.width,canvas1.height)
-              toDraw1 = switchList(secondMethode,1)
+              toDraw1 = canvasList[1][secondMethode+"_frameList"]
               frameCounterSecond = 0
             }
           }
@@ -102,7 +144,7 @@ function changeRopeLenght(id, newRopeLenght){
             if(firstChange){
               firstChange = false
               ctx0.clearRect(0,0,canvas0.width,canvas0.height)
-              toDraw0 = switchList(firstMethode,0)
+              toDraw0 = canvasList[0][firstMethode+"_frameList"]
               frameCounterFirst = 0
             }
           }
@@ -198,29 +240,10 @@ function changeRopeLenght(id, newRopeLenght){
 *******************************************************/
 
 function disableEnableInput(id, bool){
-  let input = $("#selectDiv"+id+" :input")
-  input.prop( "disabled", bool);
-}
-
-function updateSwingTypeFirst(){
-  firstChange = true
-  firstMethode = $("#swingType0 :selected").val();
-  let t = firstMethode.toLowerCase()
-  if(t == "standing") updateSwingType(0,"stand")
-  else updateSwingType(0,"seat")
-}
-
-function updateSwingTypeSecond(){
-  secondChange = true
-  secondMethode = $("#swingType1 :selected").val();
-  let t = secondMethode.toLowerCase()
-  if(t == "standing") updateSwingType(1,"stand")
-  else updateSwingType(1,"seat")
-
+  $("#selectDiv"+id+" :input").prop( "disabled", bool);
 }
 
 function changeLower(id){
-	//fix <=================================
   if(id) centerMass1.showLower = $('#lowerCM1').is(":checked")
   else centerMass0.showLower =  $('#lowerCM0').is(":checked")
 }

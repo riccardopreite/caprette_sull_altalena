@@ -39,6 +39,8 @@ var ctxTime0 = timeGraphCanvas0.getContext('2d'),
   /*************************
   DRAWING COMPONENTS OBJECTS
   *************************/
+  var drawComp0 = [rope0, swing0, centerMass0, body0]
+  var drawComp1 = [rope1, swing1, centerMass1, body1]
     /*************************
     SWING DRAWING COMPONENTS OBJECTS
     *************************/
@@ -79,7 +81,7 @@ function drawFirst(){
   if(toDraw0 != undefined && toDraw1 != undefined){
     if(frameCounterFirst > toDraw0.length){
       // To restart draw
-      disableEnableInput(0,false)
+      $("#selectDiv0 :input").prop( "disabled", false);
       frameCounterFirst = 0;
       document.getElementById("playButton0").innerHTML = "play_arrow";
 
@@ -87,18 +89,22 @@ function drawFirst(){
     else {
       var currentFrame = toDraw0[frameCounterFirst]
       if(frameCounterFirst == 0) {
-        controlSelectSystem(0,true)
-        initFirstBody()
+        //MANIPULATING DOM
+        $("#selectDiv0 :input").prop( "disabled", true);
+        switchPausePlayDrawButton(0,false)
+        disableSpeedUpButton(0,false)
+        disableSpeedDownButton(0,false)
+        drawFirstBody()
         timeGraph0.resetChart()
         timeGraph0 = new Graph(ctxTime0,"First Time/Angle graph","phi(rad)","time(s)","radiant angle")
         //speedGraph0 = new Graph(ctxTime0,"First Angular Speed/Angle graph","angular speed(rad/s)","time(s)","angular speed")
       }
 
       ctx0.clearRect(0,0,canvas0.width,canvas0.height)
-      updateSwing(rope0,swing0,currentFrame)
-      updateBody(centerMass0,body0,currentFrame)
-
-      showFrame(rope0,swing0,centerMass0,body0)
+      drawComp0.forEach(obj => {
+        obj.update(currentFrame)
+        obj.show()
+      })
 
       ctx0.setTransform(1,0,0,1,0,0)
       timeGraph0.addPoint(currentFrame.t.toFixed(3), currentFrame.phi.toFixed(3))
@@ -114,7 +120,7 @@ function drawSecond(){
   if(toDraw0 != undefined && toDraw1 != undefined){
     if(frameCounterSecond > toDraw1.length) {
         // To restart draw
-        disableEnableInput(1,false)
+        $("#selectDiv1 :input").prop( "disabled", false);
         frameCounterSecond = 0;
         document.getElementById("playButton1").innerHTML = "play_arrow";
         return
@@ -122,8 +128,12 @@ function drawSecond(){
     else {
       var currentFrame = toDraw1[frameCounterSecond]
       if(frameCounterSecond == 0) {
-        controlSelectSystem(1,true)
-        initSecondBody()
+        //MANIPULATING DOM
+        $("#selectDiv1 :input").prop( "disabled", true);
+        switchPausePlayDrawButton(1,false)
+        disableSpeedUpButton(1,false)
+        disableSpeedDownButton(1,false)
+        drawSecondBody()
         timeGraph1.resetChart()
         timeGraph1 = new Graph(ctxTime1,"Second Time/Angle graph","phi(rad)","time(s)","radiant angle")
         // speedGraph1 = new Graph(ctxTime1,"Second Angular Speed/Angle graph","angular speed(rad/s)","time(s)","angular speed")
@@ -131,10 +141,10 @@ function drawSecond(){
 
       ctx1.clearRect(0,0,canvas1.width,canvas1.height)
 
-      updateSwing(rope1,swing1,currentFrame)
-      updateBody(centerMass1,body1,currentFrame)
-
-      showFrame(rope1,swing1,centerMass1,body1)
+      drawComp1.forEach(obj => {
+        obj.update(currentFrame)
+        obj.show()
+      })
 
       ctx1.setTransform(1,0,0,1,0,0)
       timeGraph1.addPoint(currentFrame.t.toFixed(3), currentFrame.phi.toFixed(3))
