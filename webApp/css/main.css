@@ -138,6 +138,11 @@ label {
     margin-right: 10px;
 }
 
+.formActions {
+    position: absolute;
+    bottom: 15px;
+}
+
 /* Cards Graph =========================================================================== */
 .graphContainer {
     height: 90%;
@@ -152,4 +157,8 @@ label {
 
 .card-action  {
     border-radius: 10px !important;
+}
+
+.graphActions {
+    padding: 16px 49px !important;
 }

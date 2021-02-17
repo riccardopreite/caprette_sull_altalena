@@ -11,8 +11,12 @@
 
   <!-- CSS INCLUSION -->
   <!-- chart -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.css" integrity="sha512-C7hOmCgGzihKXzyPU/z4nv97W0d9bv4ALuuEbSf6hm93myico9qa0hv4dODThvCsqQUmKmLcJmlpRmCaApr83g==" crossorigin="anonymous" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.css" integrity="sha512-/zs32ZEJh+/EO2N1b0PEdoA10JkdC3zJ8L5FTiQu82LR9S/rOQNfQN7U59U9BC12swNeRAz3HSzIL2vpp4fv3w==" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.css"
+    integrity="sha512-C7hOmCgGzihKXzyPU/z4nv97W0d9bv4ALuuEbSf6hm93myico9qa0hv4dODThvCsqQUmKmLcJmlpRmCaApr83g=="
+    crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.css"
+    integrity="sha512-/zs32ZEJh+/EO2N1b0PEdoA10JkdC3zJ8L5FTiQu82LR9S/rOQNfQN7U59U9BC12swNeRAz3HSzIL2vpp4fv3w=="
+    crossorigin="anonymous" />
   <!-- materialize -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -30,10 +34,18 @@
   <!-- socket -->
   <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/3.0.0/socket.io.js"></script>
   <!-- chart.js -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js" integrity="sha512-d9xgZrVZpmmQlfonhQUvTR7lMPtO7NkZMkA0ABN3PHCbKA5nqylQ/yWlFAyY6hYgdF1Qh6nYiuADWwKB4C2WSw==" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.bundle.js" integrity="sha512-zO8oeHCxetPn1Hd9PdDleg5Tw1bAaP0YmNvPY8CwcRyUk7d7/+nyElmFrB6f7vg4f7Fv4sui1mcep8RIEShczg==" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.bundle.min.js" integrity="sha512-SuxO9djzjML6b9w9/I07IWnLnQhgyYVSpHZx0JV97kGBfTIsUYlWflyuW4ypnvhBrslz1yJ3R+S14fdCWmSmSA==" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js" integrity="sha512-hZf9Qhp3rlDJBvAKvmiG+goaaKRZA6LKUO35oK6EsM0/kjPK32Yw7URqrq3Q+Nvbbt8Usss+IekL7CRn83dYmw==" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"
+    integrity="sha512-d9xgZrVZpmmQlfonhQUvTR7lMPtO7NkZMkA0ABN3PHCbKA5nqylQ/yWlFAyY6hYgdF1Qh6nYiuADWwKB4C2WSw=="
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.bundle.js"
+    integrity="sha512-zO8oeHCxetPn1Hd9PdDleg5Tw1bAaP0YmNvPY8CwcRyUk7d7/+nyElmFrB6f7vg4f7Fv4sui1mcep8RIEShczg=="
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.bundle.min.js"
+    integrity="sha512-SuxO9djzjML6b9w9/I07IWnLnQhgyYVSpHZx0JV97kGBfTIsUYlWflyuW4ypnvhBrslz1yJ3R+S14fdCWmSmSA=="
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"
+    integrity="sha512-hZf9Qhp3rlDJBvAKvmiG+goaaKRZA6LKUO35oK6EsM0/kjPK32Yw7URqrq3Q+Nvbbt8Usss+IekL7CRn83dYmw=="
+    crossorigin="anonymous"></script>
 
 
 
@@ -44,10 +56,10 @@
 <body>
   <div class="container displayWidth">
 
-    <!-- env1 row -->
+    <!-- env1 row ---------------------------------------------------------------------------------------------------------->
     <div class="row">
 
-      <!-- canvas container -->
+      <!-- canvas container ------------------------------------------------------>
       <div class="col l6 m12 s12">
         <div class="card medium cardCanvas marginTop shadow">
           <div class="card-image" id="parentCanvas0">
@@ -89,34 +101,33 @@
         </div>
       </div>
 
+      <!-- graph container ------------------------------------------------------>
       <div class="col l6 m12 s12" style="display:none;" id="graphDiv0">
-              <div class="card medium cardCanvas marginTop shadow">
-                <div class="card-content container graphContainer">
-
-                  <div class="row graph">
-                    <div class="col s12 graphCanvas" id="graphTimeDiv0">
-                      <canvas id="graphTime0" width="200" height="100"></canvas>
-                    </div>
-                  </div>
-
-                  <div class="row graph">
-                    <div class="col s12 graphCanvas" id="graphSpeedDiv0">
-                      <canvas id="graphSpeed0" width="200" height="100"></canvas>
-                    </div>
-                  </div>
-
-                </div>
-                <div class="card-action graphActions">
-                  <a class="btn center-align waves-effect waves-light" type="submit" name="action"
-                  onclick="formMode(0)" style="float: left;">Form
-                    <i class="material-icons right">mode_edit</i>
-                  </a>
-                </div>
+        <div class="card medium cardCanvas marginTop shadow">
+          <div class="card-content container graphContainer">
+            <div class="row graph">
+              <div class="col s12 graphCanvas" id="graphTimeDiv0">
+                <canvas id="graphTime0" width="200" height="100"></canvas>
               </div>
+            </div>
+            <div class="row graph">
+              <div class="col s12 graphCanvas" id="graphSpeedDiv0">
+                <canvas id="graphSpeed0" width="200" height="100"></canvas>
+              </div>
+            </div>
+
+            <div class="card-action graphActions">
+              <a class="btn center-align waves-effect waves-light" type="submit" name="action"
+                onclick="formMode(0)">Form
+                <i class="material-icons right">mode_edit</i>
+              </a>
+            </div>
+
+          </div>
+        </div>
       </div>
 
-      <!-- form container  -->
-
+      <!-- form container ------------------------------------------------------>
       <div class="col l6 m12 s12" id="formDiv0">
         <div class="card medium cardCanvas marginTop shadow">
           <div class="container">
@@ -157,18 +168,15 @@
                 </div>
               </div>
 
-
             </form>
-            <div class="card-action formActions">
+
+            <div class="formActions">
               <a class="btn center-align waves-effect waves-light" type="submit" name="action"
-                onclick="uploadData()" style="float: right;">Calculate Swing
-                <i class="material-icons right">send</i>
-              </a>
-              <a class="btn center-align waves-effect waves-light" type="submit" name="action"
-              onclick="drawMode(0)" style="float: left;">Graph
-                <i class="material-icons right">scatter_plot</i>
+                onclick="drawMode(0)">Graph
+                <i class="material-icons right">timeline</i>
               </a>
             </div>
+
           </div>
         </div>
       </div>
@@ -222,29 +230,31 @@
       </div>
 
       <div class="col l6 m12 s12" style="display:none;" id="graphDiv1">
-              <div class="card medium cardCanvas marginBottom shadow">
-                <div class="card-content container graphContainer">
+        <div class="card medium cardCanvas marginBottom shadow">
+          <div class="card-content container graphContainer">
 
-                  <div class="row graph">
-                    <div class="col s12 graphCanvas" id="graphTimeDiv1">
-                      <canvas id="graphTime1" width="200" height="100"></canvas>
-                    </div>
-                  </div>
-
-                  <div class="row graph">
-                    <div class="col s12 graphCanvas" id="graphSpeedDiv1">
-                      <canvas id="graphSpeed1" width="200" height="100"></canvas>
-                    </div>
-                  </div>
-
-                </div>
-                <div class="card-action graphActions">
-                  <a class="btn center-align waves-effect waves-light" type="submit" name="action"
-                  onclick="formMode(1)" style="float: left;">Form
-                    <i class="material-icons right">mode_edit</i>
-                  </a>
-                </div>
+            <div class="row graph">
+              <div class="col s12 graphCanvas" id="graphTimeDiv1">
+                <canvas id="graphTime1" width="200" height="100"></canvas>
               </div>
+            </div>
+
+            <div class="row graph">
+              <div class="col s12 graphCanvas" id="graphSpeedDiv1">
+                <canvas id="graphSpeed1" width="200" height="100"></canvas>
+              </div>
+            </div>
+
+            <div class="card-action graphActions">
+              <a class="btn center-align waves-effect waves-light" type="submit" name="action" onclick="formMode(1)"
+                style="float: left;">Form
+                <i class="material-icons right">mode_edit</i>
+              </a>
+            </div>
+
+          </div>
+
+        </div>
       </div>
 
       <!-- form container  -->
@@ -289,10 +299,15 @@
               </div>
 
             </form>
-            <div class="card-action formActions">
+            <div class="formActions">
+
               <a class="btn center-align waves-effect waves-light" type="submit" name="action"
-              onclick="drawMode(1)" style="float: left;">Graph
-                <i class="material-icons right">scatter_plot</i>
+                onclick="drawMode(1)">Graph
+                <i class="material-icons right">timeline</i>
+              </a>
+              <a class="btn center-align waves-effect waves-light" type="submit" name="action"
+                onclick="uploadData()">Calculate Swing
+                <i class="material-icons right">send</i>
               </a>
             </div>
           </div>
