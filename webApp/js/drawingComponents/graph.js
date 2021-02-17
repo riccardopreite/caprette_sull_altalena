@@ -44,7 +44,7 @@ class Graph {
                 ticks: {
                     fontColor: "red",
                     fontSize: 10,
-                    stepSize: 1,
+                    stepSize: 0.1,
                     beginAtZero: true
                 }
             }]

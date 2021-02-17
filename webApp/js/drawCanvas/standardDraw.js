@@ -113,7 +113,7 @@ function drawFirst(){
       ctx0.setTransform(1,0,0,1,0,0)
       timeGraph0.addPoint(currentFrame.t.toFixed(3), currentFrame.phi.toFixed(3))
       // speed try
-      speedGraph0.addPoint(currentFrame.t.toFixed(3), currentFrame.w.toFixed(3))
+      speedGraph0.addPoint(currentFrame.phi.toFixed(3), currentFrame.w.toFixed(3))
       frameCounterFirst += FRAME_OFFSET;
     }
   }
@@ -155,7 +155,7 @@ function drawSecond(){
       timeGraph1.addPoint(currentFrame.t.toFixed(3), currentFrame.phi.toFixed(3))
       // speed try
       // speedGraph1.addPoint(currentFrame.w.toFixed(3), currentFrame.phi.toFixed(3))
-      speedGraph1.addPoint(currentFrame.t.toFixed(3), currentFrame.w.toFixed(3))
+      speedGraph1.addPoint(currentFrame.phi.toFixed(3), currentFrame.w.toFixed(3))
       frameCounterSecond += FRAME_OFFSET;
     }
   }
