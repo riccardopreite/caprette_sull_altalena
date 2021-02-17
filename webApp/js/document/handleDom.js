@@ -1,3 +1,9 @@
+document.addEventListener("click", e => {
+    if (freeze) {
+        e.stopPropagation();
+        e.preventDefault();
+    }
+}, true);
 
 function formMode(id){
   //control element

@@ -102,3 +102,8 @@ var firstChange = false, secondChange = false;
 /*************************
         END SECTION
 *************************/
+
+/*************************
+  BOOLEAN FOR FREEZE SCREEN WHILE LOAD DATA
+*************************/
+var freeze = false;

@@ -4,7 +4,11 @@ function uploadData(){
   // disabilita bottoni
   data1 = getDataForCaluclateSwing(0)
   data2 = getDataForCaluclateSwing(1)
+  // socket.emit('handleRequestFirst', {data1:data1});
+  // socket.emit('handleRequestSecond', {data2:data2});
+
   socket.emit('handleRequest', {data1:data1,data2:data2});
+  freeze = true
   draw()
 }
 

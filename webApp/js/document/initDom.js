@@ -136,6 +136,8 @@ function prepareDom(){
     }
 
       function initDefVar(){
+        oldFirst = "standing"
+        oldSecond = "standing"
         initPhi();
         initW();
         initGravity();

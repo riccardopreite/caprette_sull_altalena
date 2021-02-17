@@ -86,6 +86,7 @@ function drawFirst(){
       // To restart draw
       $("#selectDiv0 :input").prop( "disabled", false);
       // frameCounterFirst = 0;
+      isDrawFirst = false
       $("#playButtonIcon0").text("play_arrow")
 
     }
@@ -109,11 +110,10 @@ function drawFirst(){
         obj.update(currentFrame)
         obj.show()
       })
-
       ctx0.setTransform(1,0,0,1,0,0)
-      timeGraph0.addPoint(currentFrame.t.toFixed(3), currentFrame.phi.toFixed(3))
+      timeGraph0.addScatterPoint(currentFrame.t.toFixed(3), currentFrame.phi.toFixed(3))
       // speed try
-      speedGraph0.addPoint(currentFrame.phi.toFixed(3), currentFrame.w.toFixed(3))
+      speedGraph0.addScatterPoint(currentFrame.phi.toFixed(3), currentFrame.w.toFixed(3))
       frameCounterFirst += FRAME_OFFSET;
     }
   }
@@ -126,6 +126,7 @@ function drawSecond(){
         // To restart draw
         $("#selectDiv1 :input").prop( "disabled", false);
         // frameCounterSecond = 0;
+        isDrawSecond = false
         $("#playButtonIcon1").text("play_arrow")
         return
     }
@@ -150,12 +151,11 @@ function drawSecond(){
         obj.update(currentFrame)
         obj.show()
       })
-
       ctx1.setTransform(1,0,0,1,0,0)
-      timeGraph1.addPoint(currentFrame.t.toFixed(3), currentFrame.phi.toFixed(3))
+      timeGraph1.addScatterPoint(currentFrame.t.toFixed(3), currentFrame.phi.toFixed(3))
       // speed try
-      // speedGraph1.addPoint(currentFrame.w.toFixed(3), currentFrame.phi.toFixed(3))
-      speedGraph1.addPoint(currentFrame.phi.toFixed(3), currentFrame.w.toFixed(3))
+      // speedGraph1.addScatterPoint(currentFrame.w.toFixed(3), currentFrame.phi.toFixed(3))
+      speedGraph1.addScatterPoint(currentFrame.phi.toFixed(3), currentFrame.w.toFixed(3))
       frameCounterSecond += FRAME_OFFSET;
     }
   }

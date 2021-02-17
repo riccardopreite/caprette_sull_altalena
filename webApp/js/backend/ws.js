@@ -7,7 +7,8 @@ socket.on('firstsCalculated', function(msg, cb) {
   console.log('firstsCalculated');
   drawMode(0)
   drawMode(1)
-  initGraphMeasure()
+  freeze = false
+  // initGraphMeasure()
 });
 
 socket.on('standing', function(msg, cb) {
@@ -32,6 +33,7 @@ socket.on('combined', function(msg, cb) {
   console.log('combined');
   canvasList[0]["combined_frameList"] = toCanvasCoordinates(msg,ctx0,bodyHeight0,gravity0,mass0,ropeLength0,'combined')
   selectFirstMethods("combined", canvasList[0]["combined_frameList"])
+  console.log(msg);
 });
 
 socket.on('standingSecond', function(msg, cb) {
@@ -54,6 +56,8 @@ socket.on('realisticSecond', function(msg, cb) {
 
 socket.on('combinedSecond', function(msg, cb) {
   console.log('combinedSecond');
+  console.log(msg);
   canvasList[1]["combined_frameList"] = toCanvasCoordinates(msg,ctx1,bodyHeight1,gravity1,mass1,ropeLength1,'combined')
   selectSecondMethods("combined", canvasList[1]["combined_frameList"])
+
 });

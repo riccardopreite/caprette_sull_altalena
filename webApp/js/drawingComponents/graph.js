@@ -16,12 +16,10 @@ class Graph {
             display: true,
             text: label,
             fontColor: "blue",
+            fontSize: 18
           },
           legend: {
-              labels: {
-                  fontColor: "blue",
-                  fontSize: 18
-              }
+              display: false,
           },
           scales: {
               yAxes: [{
@@ -37,6 +35,8 @@ class Graph {
                 }
               }],
               xAxes: [{
+                type: 'linear',
+                position: 'bottom',
                 scaleLabel: {
                   display: true,
                   labelString: xLabel
@@ -60,11 +60,19 @@ class Graph {
    * @returns {int} data: y axys value
    * coordiantes
    */
+   addPoint(label,data){
 
-  addPoint(label,data){
-    this.chart.data.labels.push(label);
+     this.chart.data.labels.push(label);
+     this.chart.data.datasets.forEach((dataset) => {
+         dataset.data.push(data);
+     });
+     this.chart.update();
+   }
+  addScatterPoint(label,data){
+    // this.chart.data.labels.push(label);
     this.chart.data.datasets.forEach((dataset) => {
-        dataset.data.push(data);
+      let tmp = {"x":label,"y":data}
+      dataset.data.push(tmp);
     });
     this.chart.update();
   }
@@ -98,6 +106,7 @@ class Graph {
     this.chart.data.datasets.forEach((dataset) => {
         dataset.data.pop();
     });
+    this.chart.clear();
     this.chart.destroy();
   }
 }

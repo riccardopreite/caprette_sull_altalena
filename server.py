@@ -62,9 +62,21 @@ def handleRequest(message):
     form1 = message["data1"]
     form2 = message["data2"]
     runFirstType(form1)
-    runFirstType(form2)
     switchForm(form1,form1["isSecond"],form1["swingTypeFirst"])
+    runFirstType(form2)
     switchForm(form2,form2["isSecond"],form2["swingTypeFirst"])
+
+@socket.on('handleRequestFirst', namespace='/test')
+def handleRequest(message):
+    initBodyObj()
+    form1 = message["data1"]
+    runFirstType(form1)
+
+@socket.on('handleRequestSecond', namespace='/test')
+def handleRequest(message):
+    initBodyObj()
+    form2 = message["data2"]
+    runFirstType(form2)
 
 def runFirstType(form):
     print("FORM")
@@ -114,11 +126,16 @@ def runFirstType(form):
         bodyObj[isSecond]["seatedSwing"].calculateSwingMotion("symplectic", no_simulationSteps)
         emit(seatedString, bodyObj[isSecond]["seatedSwing"].frame_list);
     elif(swingTypeFirst == "realistic"):
+        bodyObj[isSecond]["realisticSwing"].theta0 = 0.1
+        bodyObj[isSecond]["realisticSwing"].theta = 1.5
         bodyObj[isSecond]["realisticSwing"].calculateSwingMotion("realistic", no_simulationSteps)
         emit(realisticString, bodyObj[isSecond]["realisticSwing"].frame_listRealistic);
     elif(swingTypeFirst == "combined"):
+        bodyObj[isSecond]["realisticSwing"].theta0 = 0.1
+        bodyObj[isSecond]["realisticSwing"].theta = 1.5
         bodyObj[isSecond]["realisticSwing"].calculateSwingMotion("combined", no_simulationSteps)
         emit(combinedString, bodyObj[isSecond]["realisticSwing"].frame_listCombined);
+
 
     if isSecond:
         emit("firstsCalculated","firstsCalculated")
@@ -136,18 +153,32 @@ def switchForm(form,isSecond,swingTypeFirst):
         combinedString = "combined"
 
     if(swingTypeFirst == "standing"):
+        bodyObj[isSecond]["realisticSwing"].theta0 = 0.1
+        bodyObj[isSecond]["realisticSwing"].theta = 1.5
         asyncio.run(calculateSwing(bodyObj[isSecond]["seatedSwing"],bodyObj[isSecond]["realisticSwing"],bodyObj[isSecond]["realisticSwing"],seatedString,realisticString,combinedString,"symplectic","realistic","combined",isSecond))
     elif(swingTypeFirst == "seated"):
+        bodyObj[isSecond]["realisticSwing"].theta0 = 0.1
+        bodyObj[isSecond]["realisticSwing"].theta = 1.5
         asyncio.run(calculateSwing(bodyObj[isSecond]["standingSwing"],bodyObj[isSecond]["realisticSwing"],bodyObj[isSecond]["realisticSwing"],standingString,realisticString,combinedString,"symplectic","realistic","combined",isSecond))
     elif(swingTypeFirst == "realistic"):
+        bodyObj[isSecond]["realisticSwing"].theta0 = 0.1
+        bodyObj[isSecond]["realisticSwing"].theta = 1.5
         asyncio.run(calculateSwing(bodyObj[isSecond]["standingSwing"],bodyObj[isSecond]["seatedSwing"],bodyObj[isSecond]["realisticSwing"],standingString,seatedString,combinedString,"symplectic","symplectic","combined",isSecond))
     elif(swingTypeFirst == "combined"):
+        bodyObj[isSecond]["realisticSwing"].theta0 = 0.1
+        bodyObj[isSecond]["realisticSwing"].theta = 1.5
         asyncio.run(calculateSwing(bodyObj[isSecond]["standingSwing"],bodyObj[isSecond]["seatedSwing"],bodyObj[isSecond]["realisticSwing"],standingString,seatedString,realisticString,"symplectic","symplectic","realistic",isSecond))
 
 async def calculateSwing(second,third,fourth,secondString,thirdString,fourthString,secondStringMethode,thirdStringMethode,fourthStringMethode,isSecond):
     socket.on('connect')
+
+    resetTheta(second)
     callSwingMotion(second,secondString,secondStringMethode,no_simulationSteps)
+
+    resetTheta(third)
     callSwingMotion(third,thirdString,thirdStringMethode,no_simulationSteps)
+
+    resetTheta(fourth)
     callSwingMotion(fourth,fourthString,fourthStringMethode,no_simulationSteps)
 
 @app.route('/')
@@ -202,6 +233,11 @@ def initBodyObj():
 
 def root_dir():  # pragma: no cover
     return os.path.abspath(os.path.dirname(__file__))
+
+def resetTheta(obj):  # pragma: no cover
+    if(isinstance(obj, RealisticSwing.RealisticSwing)):
+        obj.theta0 = 0.1
+        obj.theta = 1.5
 
 if __name__ == '__main__':
     socket.run(app,port=8000,host='0.0.0.0', debug=True)
