@@ -30,8 +30,8 @@ function drawMode(id){
 
 
   //isDraw
-  if(id) isDrawSecond = false
-  else isDrawFirst = false
+  if(id) isDrawSecond = true
+  else isDrawFirst = true
 }
 /*******************************************************
         START GRAPH FUNCTION

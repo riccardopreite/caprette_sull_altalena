@@ -30,6 +30,9 @@ var ctxTime0 = timeGraphCanvas0.getContext('2d'),
   var toDraw0 = undefined,
   toDraw1 = undefined;
 
+  var isDrawSecond = undefined,
+      isDrawFirst = undefined;
+
   /*************************
   FRAME VARIABLE
   *************************/
@@ -82,7 +85,7 @@ function drawFirst(){
     if(frameCounterFirst > toDraw0.length){
       // To restart draw
       $("#selectDiv0 :input").prop( "disabled", false);
-      frameCounterFirst = 0;
+      // frameCounterFirst = 0;
       $("#playButtonIcon0").text("play_arrow")
 
     }
@@ -122,7 +125,7 @@ function drawSecond(){
     if(frameCounterSecond > toDraw1.length) {
         // To restart draw
         $("#selectDiv1 :input").prop( "disabled", false);
-        frameCounterSecond = 0;
+        // frameCounterSecond = 0;
         $("#playButtonIcon1").text("play_arrow")
         return
     }

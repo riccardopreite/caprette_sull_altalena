@@ -146,6 +146,9 @@ label {
 .graph {
     height: 50%;
 }
+.graphCanvas {
+    height: 100%;
+}
 
 .card-action  {
     border-radius: 10px !important;

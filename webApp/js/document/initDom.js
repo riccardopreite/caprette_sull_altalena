@@ -131,6 +131,8 @@ function prepareDom(){
       initDefVar();
       livePreview();
       initGraph();
+      formMode(0)
+      formMode(1)
     }
 
       function initDefVar(){
@@ -154,17 +156,17 @@ function prepareDom(){
 
 
       function initGraphMeasure(){
-        timeGraphCanvas0.height = $(".col").height()*0.4
+        timeGraphCanvas0.height = $("#graphTimeDiv0").height()
         timeGraphCanvas0.width = $("#graphTimeDiv0").width()
 
-        speedGraphCanvas0.height = $(".col").height()*0.4
+        speedGraphCanvas0.height = $("#graphSpeedDiv0").height()
         speedGraphCanvas0.width = $("#graphSpeedDiv0").width()
 
 
-        timeGraphCanvas1.height = $(".col").height()*0.4
+        timeGraphCanvas1.height = $("#graphTimeDiv1").height()
         timeGraphCanvas1.width = $("#graphTimeDiv1").width()
 
-        speedGraphCanvas1.height = $(".col").height()*0.4
+        speedGraphCanvas1.height = $("#graphSpeedDiv1").height()
         speedGraphCanvas1.width = $("#graphSpeedDiv1").width()
       }
     /*******************************************************

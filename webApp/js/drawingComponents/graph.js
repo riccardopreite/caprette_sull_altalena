@@ -7,30 +7,50 @@ class Graph {
           labels: [],
           datasets: [{
             data: [],
-            label:popupValue
+            label:popupValue,
+            fontColor: "blue",
           }]
+        },
+        options: {
+          title: {
+            display: true,
+            text: label,
+            fontColor: "blue",
+          },
+          legend: {
+              labels: {
+                  fontColor: "blue",
+                  fontSize: 18
+              }
+          },
+          scales: {
+              yAxes: [{
+                scaleLabel: {
+                  display: true,
+                  labelString: yLabel
+                },
+                ticks: {
+                    fontColor: "red",
+                    fontSize: 10,
+                    stepSize: 0.1,
+                    beginAtZero: true
+                }
+              }],
+              xAxes: [{
+                scaleLabel: {
+                  display: true,
+                  labelString: xLabel
+                },
+                ticks: {
+                    fontColor: "red",
+                    fontSize: 10,
+                    stepSize: 1,
+                    beginAtZero: true
+                }
+            }]
+          }
         }
       });
-      this.chart.options = {
-        title: {
-            display: true,
-            text: label
-        },
-        scales: {
-          yAxes: [{
-            scaleLabel: {
-              display: true,
-              labelString: yLabel
-            }
-          }],
-          xAxes: [{
-            scaleLabel: {
-              display: true,
-              labelString: xLabel
-            }
-          }],
-        }
-      }
       this.chart.update();
   }
 

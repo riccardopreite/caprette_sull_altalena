@@ -7,6 +7,7 @@ socket.on('firstsCalculated', function(msg, cb) {
   console.log('firstsCalculated');
   drawMode(0)
   drawMode(1)
+  initGraphMeasure()
 });
 
 socket.on('standing', function(msg, cb) {
