@@ -1,3 +1,6 @@
+var lineColor =  "#4bc0c0"
+var fontColor = "rgb(181,181,181)"
+
 class Graph {
   constructor(ctx,label,yLabel,xLabel,popupValue) {
       this.ctx = ctx
@@ -8,15 +11,18 @@ class Graph {
           datasets: [{
             data: [],
             label:popupValue,
-            fontColor: "blue",
+            pointBackgroundColor: lineColor,
+            pointRadius: 1,
+            borderColor: lineColor,
+            borderWidth: 0.4
           }]
         },
         options: {
           title: {
             display: true,
             text: label,
-            fontColor: "gray",
-            fontSize: 16
+            fontColor: fontColor,
+            fontSize: 13
           },
           legend: {
               display: false,
@@ -25,10 +31,11 @@ class Graph {
               yAxes: [{
                 scaleLabel: {
                   display: true,
-                  labelString: yLabel
+                  labelString: yLabel,
+                  fontColor: fontColor
                 },
                 ticks: {
-                    fontColor: "red",
+                    fontColor: fontColor,
                     fontSize: 10,
                     stepSize: 1,
                     beginAtZero: true
@@ -39,10 +46,12 @@ class Graph {
                 position: 'bottom',
                 scaleLabel: {
                   display: true,
-                  labelString: xLabel
+                  labelString: xLabel,
+                  fontColor: fontColor
+
                 },
                 ticks: {
-                    fontColor: "red",
+                    fontColor: fontColor,
                     fontSize: 10,
                     stepSize: 0.1,
                     beginAtZero: true
