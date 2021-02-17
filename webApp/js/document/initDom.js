@@ -149,10 +149,10 @@ function prepareDom(){
 
       function initGraph(){
         initGraphMeasure()
-        timeGraph0 = new Graph(ctxTime0,"First Time/Angle graph","phi(rad)","time(s)","radiant angle")
-        speedGraph0 = new Graph(ctxSpeed0,"First Angular Speed/Angle graph","angular speed(rad/s)","time(s)","angular speed")
-        timeGraph1 = new Graph(ctxTime1,"Second Time/Angle graph","phi(rad)","time(s)","radiant angle")
-        speedGraph1 = new Graph(ctxSpeed1,"Second Angular Speed/Angle graph","angular speed(rad/s)","time(s)","angular speed")
+        timeGraph0 = new Graph(ctxTime0,"Time/Angle graph","phi(rad)","time(s)","radiant angle")
+        speedGraph0 = new Graph(ctxSpeed0,"Angular Speed/Angle graph","angular speed(rad/s)","phi(rad)","angular speed")
+        timeGraph1 = new Graph(ctxTime1,"Time/Angle graph","phi(rad)","time(s)","radiant angle")
+        speedGraph1 = new Graph(ctxSpeed1,"Angular Speed/Angle graph","angular speed(rad/s)","phi(rad)","angular speed")
       }
 
 

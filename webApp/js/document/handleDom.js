@@ -85,10 +85,13 @@ function getFormValue(){
   if(firstMethode != oldFirst){
     firstChange = true
     oldFirst = firstMethode
+    $("#playButtonIcon0").text("play_arrow")
   }
   if(secondMethode != oldSecond){
     secondChange = true
     oldSecond = secondMethode
+    $("#playButtonIcon1").text("play_arrow")
+
   }
   var start_t = 0
 
@@ -137,6 +140,18 @@ function getFormValue(){
 
       function onPausePlayDrawButton(id){
         let playButtonIcon = document.getElementById("playButtonIcon"+id);
+        if(playButtonIcon.innerHTML.includes("refresh")) {
+          playButtonIcon.innerHTML = "pause"
+          if(id) {
+            isDrawSecond = true
+            frameCounterSecond = 0;
+          }
+          else {
+            isDrawFirst = true
+            frameCounterFirst = 0;
+          }
+          return
+        }
         if(playButtonIcon.innerHTML.includes("pause")) {
 
           if(id) isDrawSecond = false

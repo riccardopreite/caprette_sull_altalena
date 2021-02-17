@@ -87,7 +87,7 @@ function drawFirst(){
       $("#selectDiv0 :input").prop( "disabled", false);
       // frameCounterFirst = 0;
       isDrawFirst = false
-      $("#playButtonIcon0").text("play_arrow")
+      $("#playButtonIcon0").text("refresh")
 
     }
     else {
@@ -101,8 +101,8 @@ function drawFirst(){
         drawFirstBody()
         timeGraph0.resetChart()
         speedGraph0.resetChart()
-        timeGraph0 = new Graph(ctxTime0,"First Time/Angle graph","phi(rad)","time(s)","radiant angle")
-        speedGraph0 = new Graph(ctxSpeed0,"First Angular Speed/Angle graph","angular speed(rad/s)","time(s)","angular speed")
+        timeGraph0 = new Graph(ctxTime0,"Time/Angle graph","phi(rad)","time(s)","radiant angle")
+        speedGraph0 = new Graph(ctxSpeed0,"Angular Speed/Angle graph","angular speed(rad/s)","time(s)","angular speed")
       }
 
       ctx0.clearRect(0,0,canvas0.width,canvas0.height)
@@ -127,7 +127,7 @@ function drawSecond(){
         $("#selectDiv1 :input").prop( "disabled", false);
         // frameCounterSecond = 0;
         isDrawSecond = false
-        $("#playButtonIcon1").text("play_arrow")
+        $("#playButtonIcon1").text("refresh")
         return
     }
     else {
@@ -141,8 +141,8 @@ function drawSecond(){
         drawSecondBody()
         timeGraph1.resetChart()
         speedGraph1.resetChart()
-        timeGraph1 = new Graph(ctxTime1,"Second Time/Angle graph","phi(rad)","time(s)","radiant angle")
-        speedGraph1 = new Graph(ctxSpeed1,"Second Angular Speed/Angle graph","angular speed(rad/s)","time(s)","angular speed")
+        timeGraph1 = new Graph(ctxTime1,"Time/Angle graph","phi(rad)","time(s)","radiant angle")
+        speedGraph1 = new Graph(ctxSpeed1,"Angular Speed/Angle graph","angular speed(rad/s)","time(s)","angular speed")
       }
 
       ctx1.clearRect(0,0,canvas1.width,canvas1.height)

@@ -15,8 +15,8 @@ class Graph {
           title: {
             display: true,
             text: label,
-            fontColor: "blue",
-            fontSize: 18
+            fontColor: "gray",
+            fontSize: 16
           },
           legend: {
               display: false,
@@ -30,7 +30,7 @@ class Graph {
                 ticks: {
                     fontColor: "red",
                     fontSize: 10,
-                    stepSize: 0.1,
+                    stepSize: 1,
                     beginAtZero: true
                 }
               }],
