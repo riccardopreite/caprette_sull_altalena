@@ -9,6 +9,6 @@ setup(
     description='Progetto fisica dei sistemi complessi',
     # long_description=open('README.md').read(),
     py_modules=['python'],
-    install_requires=['asyncio','flask','flask_socketio','wtforms','gevent', 'gevent-websocket'],
+    install_requires=['asyncio','flask','flask_socketio','wtforms','gevent', 'gevent-websocket','matplotlib','websockets'],
 
 )

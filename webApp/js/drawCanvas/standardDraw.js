@@ -102,7 +102,7 @@ function drawFirst(){
         timeGraph0.resetChart()
         speedGraph0.resetChart()
         timeGraph0 = new Graph(ctxTime0,"Time/Angle graph","phi(rad)","time(s)","radiant angle")
-        speedGraph0 = new Graph(ctxSpeed0,"Angular Speed/Angle graph","angular speed(rad/s)","time(s)","angular speed")
+        speedGraph0 = new Graph(ctxSpeed0,"Angular Speed/Angle graph","angular speed(rad/s)","phi(rad)","angular speed")
       }
 
       ctx0.clearRect(0,0,canvas0.width,canvas0.height)
@@ -142,7 +142,7 @@ function drawSecond(){
         timeGraph1.resetChart()
         speedGraph1.resetChart()
         timeGraph1 = new Graph(ctxTime1,"Time/Angle graph","phi(rad)","time(s)","radiant angle")
-        speedGraph1 = new Graph(ctxSpeed1,"Angular Speed/Angle graph","angular speed(rad/s)","time(s)","angular speed")
+        speedGraph1 = new Graph(ctxSpeed1,"Angular Speed/Angle graph","angular speed(rad/s)","phi(rad)","angular speed")
       }
 
       ctx1.clearRect(0,0,canvas1.width,canvas1.height)
