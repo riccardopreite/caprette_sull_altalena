@@ -1,4 +1,4 @@
-// get canvas variable
+
 var canvas3 = document.getElementById('thirdCanvas')
 var ctx3 = canvas3.getContext('2d')
 

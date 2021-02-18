@@ -17,6 +17,18 @@ class Graph {
             borderWidth: 0.4
           }]
         },
+        // plugins: {
+        //   zoom: {
+        //     pan: {
+        //       enabled: false,
+        //       mode: 'xy',
+        //     },
+        //     zoom: {
+        //       enabled: true,
+        //       mode: 'xy',
+        //     }
+        //   }
+        // },        
         options: {
           title: {
             display: true,
