@@ -260,13 +260,25 @@ function disableInput(id, bool){
 }
 
 function changeLower(id){
-  if(id) centerMass1.showLower = $('#lowerCM1').is(":checked")
-  else centerMass0.showLower =  $('#lowerCM0').is(":checked")
+  if(id){
+    centerMass1.showLower = $('#lowerCM1').is(":checked")
+    showLower1 = $('#lowerCM1').is(":checked")
+  }
+  else{
+    showLower0 = $('#lowerCM0').is(":checked")
+    centerMass0.showLower =  $('#lowerCM0').is(":checked")
+  }
 }
 
 function changeUpper(id){
-  if(id) centerMass1.showUpper = $('#upperCM1').is(":checked")
-  else centerMass0.showUpper = $('#upperCM0').is(":checked")
+  if(id){
+    centerMass1.showUpper = $('#upperCM1').is(":checked")
+    showUpper1 = $('#upperCM1').is(":checked")
+  }
+  else{
+    showUpper0 = $('#upperCM0').is(":checked")
+    centerMass0.showUpper =  $('#upperCM0').is(":checked")
+  }
 }
 
 /*******************************************************

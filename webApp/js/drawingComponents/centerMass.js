@@ -61,18 +61,18 @@ class CenterMass {
         this.cm_list[nextPos] = p
         this.counter++
 
-        if (this.showUpper) {
+        // if (this.showUpper) {
             var ux = frame.upperCM["x"]
             var uy = frame.upperCM["y"]
             var p = new Point(ux, uy)
             this.upper_list[nextPos] = p
-        }
+        // }
 
-        if (this.showLower) {
+        // if (this.showLower) {
             var lx = frame.lowerCM["x"]
             var ly = frame.lowerCM["y"]
             var p = new Point(lx, ly)
             this.lower_list[nextPos] = p
-        }
+        // }
     }
 }
