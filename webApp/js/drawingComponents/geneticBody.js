@@ -10,11 +10,11 @@ var MAX_PHI_ANGLE = 1.48353 //85 degree
 
 class GeneticBody {
     /**
-     * 
-     * @param {*} ctx 
-     * @param {String} type: "standing" or "seated", indicates which position are allowed  
+     *
+     * @param {*} ctx
+     * @param {String} type: "standing" or "seated", indicates which position are allowed
      * @param {Frame} initialStateFrame: get initial Conditions from form
-     * 
+     *
      * @var {Frame} stateFrame: store the current frame (at time t)
      * @var {Array String} positionsSet: store the allowed position based on the swing type
      * @var {String} nextPosition: indicates the next position that the neural network predicts
@@ -24,7 +24,7 @@ class GeneticBody {
         this.ctx = ctx
 
         // select proper postions set
-        if (type == "standing")
+        if (type.includes("standing"))
             this.positionsSet = standing_positions
         else
             this.positionsSet = seated_positions
@@ -41,7 +41,7 @@ class GeneticBody {
     /**
      * Gives the current input, the network make a predition,
      * that is stored in nextPosition
-     * 
+     *
      * input:
      *  - phi: normalized [-1,1] with MAX_PHI_ANGLE
      *  - w

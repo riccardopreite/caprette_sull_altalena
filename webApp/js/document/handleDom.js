@@ -101,28 +101,37 @@ function getFormValue(){
   w0 = $("#w0").val()
   w1 = $("#w1").val()
 
-  if (firstMethode == "standing") bodyPosition0 = "squat"
+  if (firstMethode.includes("standing")) bodyPosition0 = "squat"
   else bodyPosition0 = "seat"
 
-  if (secondMethode == "standing") bodyPosition1 = "squat"
+  if (secondMethode.includes("standing")) bodyPosition1 = "squat"
   else bodyPosition1 = "seat"
 
-  gravity0 = $("#gravity0").val()
-  gravity1 = $("#gravity1").val()
+  gravity0 = ($("#gravity0").val() > $("#gravity0").attr("min") ? $("#gravity0").val() : $("#gravity0").attr("min"))
+  gravity1 = ($("#gravity1").val() > $("#gravity1").attr("min") ? $("#gravity1").val() : $("#gravity1").attr("min"))
+  
+  mass0 = ($("#mass0").val() > $("#mass0").attr("min") ? $("#mass0").val() : $("#mass0").attr("min"))
+  mass1 = ($("#mass1").val() > $("#mass1").attr("min") ? $("#mass1").val() : $("#mass1").attr("min"))
 
-  mass0 = $("#mass0").val()
-  mass1 = $("#mass1").val()
+  bodyHeight0 = ($("#height0").val() > $("#height0").attr("min") ? $("#height0").val() : $("#height0").attr("min"))
+  bodyHeight1 = ($("#height1").val() > $("#height1").attr("min") ? $("#height1").val() : $("#height1").attr("min"))
 
-  bodyHeight0 = $("#height0").val()
-  bodyHeight1 = $("#height1").val()
-
-  ropeLength0 = $("#ropeLength0").val()
-  ropeLength1 = $("#ropeLength1").val()
+  ropeLength0 = ($("#ropeLength0").val() > $("#ropeLength0").attr("min") ? $("#ropeLength0").val() : $("#ropeLength0").attr("min"))
+  ropeLength1 = ($("#ropeLength1").val() > $("#ropeLength1").attr("min") ? $("#ropeLength1").val() : $("#ropeLength1").attr("min"))
 
   showUpper0 = $('#upperCM0').is(":checked")
   showLower0 = $('#lowerCM0').is(":checked")
   showUpper1 = $('#upperCM1').is(":checked")
   showLower1 = $('#lowerCM1').is(":checked")
+
+  $("#gravity0").val(gravity0)
+  $("#gravity1").val(gravity1)
+  $("#mass0").val(mass0)
+  $("#mass1").val(mass1)
+  $("#height0").val(bodyHeight0)
+  $("#height1").val(bodyHeight1)
+  $("#ropeLength0").val(ropeLength0)
+  $("#ropeLength1").val(ropeLength1)
 
 }
 
