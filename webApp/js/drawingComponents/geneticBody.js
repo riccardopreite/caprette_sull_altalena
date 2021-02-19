@@ -15,10 +15,12 @@ class GeneticBody {
      * @param {String} type: "standing" or "seated", indicates which position are allowed  
      * @param {Frame} initialStateFrame: get initial Conditions from form
      * 
-     * @var {Frame} stateFrame: store the current frame (at time t)
      * @var {Array String} positionsSet: store the allowed position based on the swing type
-     * @var {String} nextPosition: indicates the next position that the neural network predicts
+     * @var {Frame} stateFrame: store the current frame (at time t)
      * @var {NeuralNetwork} brain
+     * @var {String} nextPosition: indicates the next position that the neural network predicts
+     * @var {int} max_phi: store the record phi reached in absolute value
+     * 
      */
     constructor(ctx, type, initialStateFrame) {
         this.ctx = ctx
@@ -35,6 +37,7 @@ class GeneticBody {
 
         this.brain = new NeuralNetwork(n_input, n_hidden, n_output)
         this.nextPosition = null
+        this.max_phi = Math.abs(this.stateFrame.phi)
     }
 
 
@@ -157,10 +160,10 @@ class GeneticBody {
         this.ctx.beginPath();
         this.ctx.arc(headX, headY, headRadius, 0, 2 * Math.PI);
 
-        this.ctx.strokeStyle = 'rgba(255,255,255,1)';
+        this.ctx.strokeStyle = 'rgba(255,255,255,0.6)';
         this.ctx.lineWidth = 1;
         this.ctx.stroke();
-        this.ctx.fillStyle = 'rgba(255,255,255,0.6)';
+        this.ctx.fillStyle = 'rgba(255,255,255,0.3)';
         this.ctx.fill();
         // head-half
         this.ctx.moveTo(headX, headY);
