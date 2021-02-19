@@ -55,6 +55,12 @@ def test_message(message):
     print("OHHHH")
     emit('my_response', message)
 
+@socket.on('handleGeneticRequest', namespace='/test')
+def handleRequest(message):
+    initBodyObj()
+    form1 = message["data1"]
+    form2 = message["data2"]
+    #DOING GENETIC BOY STUFF
 
 @socket.on('handleRequest', namespace='/test')
 def handleRequest(message):

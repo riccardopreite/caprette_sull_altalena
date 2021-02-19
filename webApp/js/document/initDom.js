@@ -51,10 +51,10 @@ function prepareDom(){
         w0 = $("#w0").val()
         w1 = $("#w1").val()
 
-        if (firstMethode == "standing") bodyPosition0 = "squat"
+        if (firstMethode.includes("standing")) bodyPosition0 = "squat"
         else bodyPosition0 = "seat"
 
-        if (secondMethode == "standing") bodyPosition1 = "squat"
+        if (secondMethode.includes("standing")) bodyPosition1 = "squat"
         else bodyPosition1 = "seat"
 
         gravity0 = $("#gravity0").val()

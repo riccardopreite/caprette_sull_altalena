@@ -61,20 +61,23 @@ class Frame {
     }
 
     calculateCM(){
-      switch (this.swingType) {
+      let basicSwingType = this.swingType
+      basicSwingType = basicSwingType.replace("Genetic","")
+      switch (basicSwingType) {
         case "standing":
         this.swingCM = calculateSwingCM(this.ropeLength,this.phi)
         this.upperCM = {}
         this.cm = calculateStandingBodyCM(this.ropeLength,this.bodyHeight,this.phi)
         this.lowerCM = {}
           break;
+          
         case "seated":
         this.swingCM = calculateSwingCM(this.ropeLength,this.phi)
         this.upperCM = calculateSeatedBodyUpperCM(this.ropeLength,this.phi,this.bodyHeight*0.5)
         this.cm = calculateSeatedBodyCM(this.ropeLength,this.phi)
         this.lowerCM = calculateSeatedBodyLowerCM(this.ropeLength,this.phi,this.bodyHeight*0.5)
-
           break;
+
         case "realistic":
         this.swingCM = calculateSwingCM(this.ropeLength,this.phi)
         this.upperCM = calculateSeatedBodyUpperCM(this.ropeLength,this.phi,this.bodyHeight*0.6)
@@ -154,14 +157,9 @@ function calculateSwingCM(ropeLength,phi){
 
 
 function calculateSeatedBodyUpperCM(ropeLength,phi,height){
-  console.log("CIAOOOOOOO");
-  console.log(ropeLength);
-  console.log(phi);
-  console.log(height);
   let tmp = {}
   tmp["x"] = ropeLength*Math.sin(phi) - height*Math.sin(phi)
   tmp["y"] = -(ropeLength) + height*Math.cos(phi)
-  console.log(tmp);
   return tmp;
 }
 

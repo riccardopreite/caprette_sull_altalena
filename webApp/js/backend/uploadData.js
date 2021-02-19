@@ -1,13 +1,14 @@
 function uploadData(){
   if(firstInterval != undefined) clearInterval(firstInterval)
   if(secondInterval != undefined) clearInterval(secondInterval)
-  // disabilita bottoni
+
+
   data1 = getDataForCaluclateSwing(0)
   data2 = getDataForCaluclateSwing(1)
   // socket.emit('handleRequestFirst', {data1:data1});
   // socket.emit('handleRequestSecond', {data2:data2});
-
-  socket.emit('handleRequest', {data1:data1,data2:data2});
+  if(data1.swingTypeFirst.includes("genetic") || data2.swingTypeFirst.includes("genetic")) socket.emit('handleGeneticRequest', {data1:data1,data2:data2});
+  else socket.emit('handleRequest', {data1:data1,data2:data2});
   freeze = true
   draw()
 }

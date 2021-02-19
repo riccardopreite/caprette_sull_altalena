@@ -79,6 +79,8 @@
                 <option value="seated">Seated</option>
                 <option value="realistic">Realistic</option>
                 <option value="combined">Combined</option>
+                <option value="standinggenetic">Genetic Standing</option>
+                <option value="seatedgenetic">Genetic Seated</option>
               </select>
               <label class="label_swingType" for="swingType0">Choose the swing type</label>
               <!-- upper + lower cm -->
@@ -135,11 +137,11 @@
               <!-- altezza + massa -->
               <div class="row">
                 <div class="input-field col s6">
-                  <input class="formInput" id="height0" type="number" value="1.6" step="0.1">
+                  <input class="formInput" id="height0" type="number" value="1.6" step="0.1" min="1.3">
                   <label for="height0">Body Height (m)</label>
                 </div>
                 <div class="input-field col s6">
-                  <input class="formInput" id="mass0" type="number" value="20" step="0.1">
+                  <input class="formInput" id="mass0" type="number" value="20" step="0.1" min="10">
                   <label for="mass0">Body Mass (kg)</label>
                 </div>
               </div>
@@ -147,11 +149,11 @@
               <!-- lunghezza corda + forza di gravita'-->
               <div class="row">
                 <div class="input-field col s6">
-                  <input class="formInput" id="ropeLength0" type="number" value="2.7" step="0.1">
+                  <input class="formInput" id="ropeLength0" type="number" value="2.7" step="0.1" min="1.7">
                   <label for="ropeLength0">Rope Length (m)</label>
                 </div>
                 <div class="input-field col s6">
-                  <input class="formInput" id="gravity0" type="number" value="9.8" step="0.1">
+                  <input class="formInput" id="gravity0" type="number" value="9.8" step="0.1" min="0.1">
                   <label for="gravity0">Accelleration force (m/s**2)</label>
                 </div>
               </div>
@@ -159,7 +161,7 @@
               <!-- phi + w -->
               <div class="row">
                 <div class="input-field col s6">
-                  <input class="formInput" id="phi0" type="number" value="-0.5" step="0.01">
+                  <input class="formInput" id="phi0" type="number" value="-0.5" step="0.01" >
                   <label for="phi0">Initial angle (rad) </label>
                 </div>
                 <div class="input-field col s6">
@@ -206,6 +208,8 @@
                 <option value="seated">Seated</option>
                 <option value="realistic">Realistic</option>
                 <option value="combined">Combined</option>
+                <option value="standinggenetic">Genetic Standing</option>
+                <option value="seatedgenetic">Genetic Seated</option>
               </select>
               <label class="label_swingType" for="swingType1">Choose the swing type</label>
 
@@ -265,11 +269,11 @@
               <!-- altezza + massa -->
               <div class="row">
                 <div class="input-field col s6">
-                  <input class="formInput" id="height1" type="number" value="1.6" step="0.1">
+                  <input class="formInput" id="height1" type="number" value="1.6" step="0.1" min="1.3">
                   <label for="height1">Body Height (m)</label>
                 </div>
                 <div class="input-field col s6">
-                  <input class="formInput" id="mass1" type="number" value="20" step="0.1">
+                  <input class="formInput" id="mass1" type="number" value="20" step="0.1" min="10">
                   <label for="mass1">Body Mass (kg)</label>
                 </div>
               </div>
@@ -277,11 +281,11 @@
               <!-- lunghezza corda + forza di gravita'-->
               <div class="row">
                 <div class="input-field col s6">
-                  <input class="formInput" id="ropeLength1" type="number" value="2.7" step="0.1">
+                  <input class="formInput" id="ropeLength1" type="number" value="2.7" step="0.1" min="1.7">
                   <label for="ropeLength1">Rope Length (m)</label>
                 </div>
                 <div class="input-field col s6">
-                  <input class="formInput" id="gravity1" type="number" value="9.8" step="0.1">
+                  <input class="formInput" id="gravity1" type="number" value="9.8" step="0.1" min="0.1">
                   <label for="gravity1">Accelleration force (m/s**2)</label>
                 </div>
               </div>
