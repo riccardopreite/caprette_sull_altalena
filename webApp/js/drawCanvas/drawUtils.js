@@ -61,8 +61,7 @@ function prepareFrame(id){
   let tmpFrame;
   var start_t = 0
   var cm = swingCM = upperCM = lowerCM = {}
-  var SCALE_FACTOR = 100
-
+  
   if(id){
     tmpFrame = new Frame(
       ctx1,
@@ -107,8 +106,8 @@ function prepareFrame(id){
         ropeLength0
     )
   }
-  tmpFrame.scaleFrame(SCALE_FACTOR)
-  tmpFrame.traslateFrame()
+  tmpFrame.scaleFrame()
+  tmpFrame.translateFrame()
 
   return tmpFrame
 }

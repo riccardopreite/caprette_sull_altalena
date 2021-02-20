@@ -1,9 +1,20 @@
 class Rope {
-    constructor(ctx,canvas){
+    /**
+     * 
+     * @param {Contex} ctx 
+     * @param {Frame} initialStateFrame: (optional) indicates the init Frame
+     *        it is automatically converted into canvas coordinates, ready to be displayed
+     *                                  
+     */
+    constructor(ctx, initialStateFrame){
         this.ctx = ctx
-        this.startX = this.endX = this.ctx.canvas.width/2
-        this.startY = 0
-        this.endY = this.ctx.canvas.height/2
+
+        if(initialStateFrame) {
+            initialStateFrame.scaleFrame()
+            initialStateFrame.translateFrame()
+            this.update(initialStateFrame)       
+        }
+            
     }
 
     show(){

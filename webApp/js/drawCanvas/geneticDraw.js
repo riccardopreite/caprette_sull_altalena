@@ -1,13 +1,5 @@
-
-var canvas3 = document.getElementById('thirdCanvas')
-var ctx3 = canvas3.getContext('2d')
-
-// get visualization option
-// var showUpper = Document.getElementById("checkbox_shoeUpper").value()
-var showUpper = false
-var showLower = false
-
-var bodyHeight = 160
+const POPULATION = 100
+var stopTraining = false
 
 // create a frame for the initial conditions
 // phi = document.getElementById('phi_selector').value()
@@ -17,14 +9,106 @@ var bodyHeight = 160
 // CM, SWING, LOWER, UPPER, POSITION ECC
 // Frame initialCond = new Frame(.......)
 
-// init variables for genetic env
-var rope = new Rope(ctx3)
-var swing = new Swing(ctx3)
-var centerMass = new CenterMass(ctx3, showLower, showLower)
-// var body = new Body(ctx3, initialCond)
-var body = new Body(ctx3, bodyHeight)
+// grab proper ctx <===================
+var geneticCtx = ctx0
+let initialStateFrame = null
+let genetictype = null
 
-rope.show()
-swing.show()
-centerMass.show()
-body.show()
+let geneticBodies = []
+let ropes = []
+let swings = []
+let savedGenticBodies = []
+// log vars
+var genCounter = 0
+var maxPhi_counter = 0
+var jumps_counter = 0
+
+
+
+// =========================================================================================
+
+function setup() {
+    // reset
+    stopTraining = false
+    geneticBodies = []
+    ropes = []
+    swings = []
+    savedGenticBodies = []
+    genCounter = 0
+
+    // get initial conditions
+    initialStateFrame = getValueFrom()
+    genetictype = $("#swingType0").val()
+    maxPhi_counter = Math.abs(initialStateFrame.phi)
+    jumps_counter = 0
+    
+    // init
+    for (let i = 0; i < POPULATION; i++) {
+        geneticBodies.push(new GeneticBody(geneticCtx, genetictype, initialStateFrame))
+        ropes.push(new Rope(geneticCtx, initialStateFrame))
+        swings.push(new Swing(geneticCtx, initialStateFrame))
+    }
+}
+
+
+function draw() {
+    // DOM handling
+    addLogMsgDOM("========================================\n")
+    addLogMsgDOM("GENERATION NUMBER: " + genCounter + "\n")
+    addLogMsgDOM("========================================\n\n")
+    
+
+    // show the last frame
+    for (let i = 0; i < POPULATION; i++) {
+        geneticBodies[i].show()
+        ropes[i].show()
+        swings[i].show()
+    }
+
+    // delete failing or successful bodies, store them in a backup array
+    for (let i = 0; i < POPULATION; i++) {
+        if (geneticBodies[i].isImproving() === false || geneticBodies[i].reachMaxPhi) {
+            savedGenticBodies.push(geneticBodies.splice(i, 1)[0])
+            ropes.splice(i, 1)
+            swings.splice(i, 1)
+        }
+    }
+
+    // check empty array
+    if (geneticBodies.length === 0) {
+        nextGeneration()
+    }
+
+
+
+
+    //THINK PHASE
+    /**
+     * foreach body
+     *      body.think -----> my next position will be "standing"
+     *      nextMove.push(body.currentPostion(body.nextPosition))
+     */
+
+    // UPDATE PHASE
+    /**
+     * foreach obj
+     *      body[i].update(nextMove[i])
+     *      rope...
+     *      swing...
+     */
+
+
+
+
+
+}
+
+
+
+
+
+function trainLoop() {
+    setup()
+    while (!stopTraining)
+        draw()
+}

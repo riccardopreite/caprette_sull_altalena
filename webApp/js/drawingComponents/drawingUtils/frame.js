@@ -23,40 +23,69 @@ class Frame {
       if(isEmpty(this.cm)) this.calculateCM()
   }
 
+  /**
+   * @returns {Frame}: new frame with current values
+   */
+  clone(){
+    return new Frame(
+      this.ctx,
+      this.t,
+      this.phi,
+      this.w,
+      this.bodyPosition,
+      this.cm,
+      this.swingCM,
+      this.upperCM,
+      this.lowerCM,
+      this.swingType,
+      this.gravity,
+      this.bodyHeight,
+      this.bodyMass,
+      this.ropeLength
+    )
+  }
+
+
     /**
      * Adapt original coordinates to the canvas coordinates system
      * x -> x+canvas.width/2 (move x to the center of the canvas)
      * y -> |y| (invert the y axis to match canvas)
      */
-    traslateFrame() {
-        this.cm["x"] += this.ctx.canvas.width / 2
+    translateFrame() {
+        halfCanvas_offset = this.ctx.canvas.width/2
+
+        this.cm["x"] += halfCanvas_offset
         this.cm["y"] = Math.abs(this.cm["y"])
 
-        this.swingCM["x"] += this.ctx.canvas.width / 2
+        this.swingCM["x"] += halfCanvas_offset
         this.swingCM["y"] = Math.abs(this.swingCM["y"])
+
         if (this.upperCM != {}) {
-            this.upperCM["x"] += this.ctx.canvas.width / 2
+            this.upperCM["x"] += halfCanvas_offset
             this.upperCM["y"] = Math.abs(this.upperCM["y"])
 
-            this.lowerCM["x"] += this.ctx.canvas.width / 2
+            this.lowerCM["x"] += halfCanvas_offset
             this.lowerCM["y"] = Math.abs(this.lowerCM["y"])
         }
     }
+    
     /**
      * Scale any coordinates by a factor
      */
-    scaleFrame(scaleFactor) {
-        this.cm["y"] = this.cm["y"] * scaleFactor
-        this.cm["x"] = this.cm["x"] * scaleFactor
+    scaleFrame() {
+        const SCALE_FACTOR = 100
 
-        this.swingCM["x"] = this.swingCM["x"] * scaleFactor
-        this.swingCM["y"] = this.swingCM["y"] * scaleFactor
+        this.cm["y"] = this.cm["y"] * SCALE_FACTOR
+        this.cm["x"] = this.cm["x"] * SCALE_FACTOR
+
+        this.swingCM["x"] = this.swingCM["x"] * SCALE_FACTOR
+        this.swingCM["y"] = this.swingCM["y"] * SCALE_FACTOR
         if (this.upperCM != {}) {
-            this.upperCM["x"] = this.upperCM["x"] * scaleFactor
-            this.upperCM["y"] = this.upperCM["y"] * scaleFactor
+            this.upperCM["x"] = this.upperCM["x"] * SCALE_FACTOR
+            this.upperCM["y"] = this.upperCM["y"] * SCALE_FACTOR
 
-            this.lowerCM["x"] = this.lowerCM["x"] * scaleFactor
-            this.lowerCM["y"] = this.lowerCM["y"] * scaleFactor
+            this.lowerCM["x"] = this.lowerCM["x"] * SCALE_FACTOR
+            this.lowerCM["y"] = this.lowerCM["y"] * SCALE_FACTOR
         }
     }
 
@@ -106,7 +135,6 @@ class Frame {
  */
 function toCanvasCoordinates(coordinatesList, ctx,height,gravity,mass,ropeLength,swingType) {
     // TODO Proporzione dati input con dimensione canvas Scaling100:Canvas300=ScalingX:InputY o limite e pace
-    var SCALE_FACTOR = 100
     frameArray = []
     for (i in coordinatesList) {
       let t = coordinatesList[i]["t"],
@@ -136,8 +164,8 @@ function toCanvasCoordinates(coordinatesList, ctx,height,gravity,mass,ropeLength
             mass,
             ropeLength,
         )
-        tmpFrame.scaleFrame(SCALE_FACTOR)
-        tmpFrame.traslateFrame()
+        tmpFrame.scaleFrame()
+        tmpFrame.translateFrame()
 
         frameArray.push(tmpFrame)
     }
