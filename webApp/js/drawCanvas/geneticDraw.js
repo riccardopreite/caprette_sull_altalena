@@ -38,20 +38,19 @@ function setup() {
 
     // get initial conditions
     initialStateFrame = getValueFrom()
-    genetictype = $("#swingType0").val()
     maxPhi_counter = Math.abs(initialStateFrame.phi)
     jumps_counter = 0
     
     // init
     for (let i = 0; i < POPULATION; i++) {
-        geneticBodies.push(new GeneticBody(geneticCtx, genetictype, initialStateFrame))
+        geneticBodies.push(new GeneticBody(geneticCtx, initialStateFrame))
         ropes.push(new Rope(geneticCtx, initialStateFrame))
         swings.push(new Swing(geneticCtx, initialStateFrame))
     }
 }
 
 
-function draw() {
+function geneticDraw() {
     // DOM handling
     addLogMsgDOM("========================================\n")
     addLogMsgDOM("GENERATION NUMBER: " + genCounter + "\n")
@@ -110,5 +109,5 @@ function draw() {
 function trainLoop() {
     setup()
     while (!stopTraining)
-        draw()
+        geneticDraw()
 }

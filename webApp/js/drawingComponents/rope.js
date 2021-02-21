@@ -14,9 +14,10 @@ class Rope {
         this.endY = null
 
         if(initialStateFrame) {
-            initialStateFrame.scaleFrame()
-            initialStateFrame.translateFrame()
-            this.update(initialStateFrame)       
+            this.currentFrame = initialStateFrame.clone()
+            this.currentFrame.scaleFrame()
+            this.currentFrame.translateFrame()
+            this.update(this.currentFrame)       
         }
     }
 

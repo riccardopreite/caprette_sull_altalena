@@ -35,11 +35,11 @@ class GeneticBody {
      * @var {Jump} jumps: array of jumps performed
      * 
      */
-    constructor(ctx, type, initialStateFrame, brain) {
+    constructor(ctx, initialStateFrame, brain) {
         this.ctx = ctx
 
         // select proper postions set
-        if (type.includes("standing"))
+        if (initialStateFrame.swingType.includes("standing"))
             this.positionsSet = standing_positions
         else
             this.positionsSet = seated_positions
@@ -143,7 +143,7 @@ class GeneticBody {
     log() {
         var logMsg = ""
         logMsg += "Score: " + this.score + "\n"
-        logMsg += "Fitness: " + this.fitness + "\n"
+        logMsg += "Fitness: " + this.fitness*100 + "\n"
         logMsg += "Number of jumps: " + this.jumps.length + "\n"
         logMsg += "-------------------------------------------\n"
         this.jumps.forEach(jump => {

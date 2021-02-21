@@ -16,10 +16,7 @@ function nextGeneration() {
 
     // repopulation 
     for (let i = 0; i < POPULATION; i++) {
-        if (i === 0) //!i
-            geneticBodies[i] = pickBest(true)
-        else
-            geneticBodies[i] = pickBest(false)
+        geneticBodies[i] = pickBest(!i)
         ropes[i] = new Rope(geneticCtx, initialStateFrame)
         swings[i] = new Swing(geneticCtx, initialStateFrame)
     }
