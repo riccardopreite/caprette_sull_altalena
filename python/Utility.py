@@ -69,7 +69,7 @@ class Utility:
         foutStanding.write("\n" + str.format('{0:.8f}', t) + "\t" + str.format('{0:.8f}' , phi) + "\t" + str.format('{0:.8f}' , w))
 
         # updating cycle ============================================================
-        while t <= steps:
+        while t <= steps and abs(phi) < 1.48353:
             # variables update
             prev_phi = phi
             prev_w = w
@@ -187,7 +187,7 @@ class Utility:
 
 
         # updating cycle ========================================================
-        while t <= steps:
+        while t <= steps and abs(phi) < 1.48353:
             prev_w = w
 
             t += self.deltaTime
@@ -318,7 +318,7 @@ class Utility:
          fout3.write("Time(s) \t Phi(rad) \t Angular velocity (rad/s)")
          fout3.write("\n" + str.format('{0:.8f}', t) + "\t" + str.format('{0:.8f}' , phi) + "\t" + str.format('{0:.8f}' , w))
 
-         while t <= steps:
+         while t <= steps and abs(phi) < 1.48353:
              t += self.deltaTime
              prev_w = w
 
@@ -454,7 +454,7 @@ class Utility:
          realistic_children.bodyCM_listCombined.append(bodyCM)
 
 
-         while t <= steps:
+         while t <= steps and abs(phi) < 1.48353:
              t += self.deltaTime
              prev_phi = phi
              prev_w = w
@@ -568,7 +568,7 @@ class Utility:
          fout.write("\n" + str.format('{0:.8f}', t) + "\t" + str.format('{0:.8f}' , phi) + "\t" + str.format('{0:.8f}' , w))
 
 
-         while t <= steps:
+         while t <= steps and abs(phi) < 1.48353:
              t += self.deltaTime
              if(w <= 0):
                  if(realistic[2][counter-2] > 0):

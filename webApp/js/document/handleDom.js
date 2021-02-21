@@ -5,6 +5,45 @@ document.addEventListener("click", e => {
     }
 }, true);
 
+
+
+/*******************************************************
+        START HANDLE GENETIC DIV FUNCTION
+*******************************************************/
+
+function saveBrain(){
+  var bestBrain = {}
+  //add get the best
+  var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(bestBrain));
+  var dlAnchorElem = document.getElementById('downloadAnchorElem');
+  dlAnchorElem.setAttribute("href",     dataStr     );
+  dlAnchorElem.setAttribute("download", "brain.json");
+  dlAnchorElem.click();
+}
+function uploadBrain(){
+  let input = document.getElementById("loadInput")
+  var reader = new FileReader();
+  reader.onload = onReaderLoad;
+  reader.readAsText(input.files[0]);
+}
+
+function addLogMsgDOM(string){
+  $("#geneticLog").append(string+"\n")
+}
+
+function updateMaxPhi(newPhi){
+  $("#phiScore").text(newPhi)
+}
+
+function updateJumper(newJumper){
+  $("#jumpCounter").text(newJumper)
+}
+
+/*******************************************************
+        SWITCH DRAW FORM MODE FUNCTION
+*******************************************************/
+
+
 function formMode(id){
   //control element
   $("#speedDownParent"+id).addClass("disabled");
@@ -15,8 +54,10 @@ function formMode(id){
   //select
   $("#selectDiv"+id+" :input").prop( "disabled", false);
 
-  //form & graph
+  //form & graph & genetic
   showHideGraph("#formDiv"+id,"#graphDiv"+id)
+  if(!id)  showHideGraph("#formDiv"+id,"#geneticDiv")
+
   //isDraw
   if(id) isDrawSecond = false
   else isDrawFirst = false
@@ -31,8 +72,9 @@ function drawMode(id){
   //select
   $("#selectDiv"+id+" :input").prop( "disabled", true);
 
-  //form & graph
+  //form & graph & genetic
   showHideGraph("#graphDiv"+id,"#formDiv"+id)
+  if(!id)  showHideGraph("#graphDiv"+id,"#geneticDiv")
 
 
   //isDraw
@@ -109,7 +151,7 @@ function getFormValue(){
 
   gravity0 = ($("#gravity0").val() > $("#gravity0").attr("min") ? $("#gravity0").val() : $("#gravity0").attr("min"))
   gravity1 = ($("#gravity1").val() > $("#gravity1").attr("min") ? $("#gravity1").val() : $("#gravity1").attr("min"))
-  
+
   mass0 = ($("#mass0").val() > $("#mass0").attr("min") ? $("#mass0").val() : $("#mass0").attr("min"))
   mass1 = ($("#mass1").val() > $("#mass1").attr("min") ? $("#mass1").val() : $("#mass1").attr("min"))
 
@@ -132,7 +174,27 @@ function getFormValue(){
   $("#height1").val(bodyHeight1)
   $("#ropeLength0").val(ropeLength0)
   $("#ropeLength1").val(ropeLength1)
-
+  if(firstMethode.includes("genetic")){
+    console.log("PORCODIO");
+    showHideGraph("#geneticDiv","#graphDiv0")
+    showHideGraph("#geneticDiv","#formDiv0")
+  }
+  return new Frame(
+    ctx0,
+    0,
+    phi0,
+    w0,
+    bodyPosition0,
+    [],
+    [],
+    [],
+    [],
+    firstMethode,
+    gravity0,
+    bodyHeight0,
+    mass0,
+    ropeLength0
+  )
 }
 
 /*******************************************************

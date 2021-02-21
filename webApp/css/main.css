@@ -154,6 +154,17 @@ label {
 .graphCanvas {
     height: 100%;
 }
+.geneticDiv{
+    height: 100%;
+}
+
+.genetic {
+    height: 35%;
+}
+
+.geneticLog {
+    height: 65%;
+}
 
 .card-action  {
     border-radius: 10px !important;

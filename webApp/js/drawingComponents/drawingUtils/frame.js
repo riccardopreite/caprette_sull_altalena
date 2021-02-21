@@ -68,7 +68,7 @@ class Frame {
             this.lowerCM["y"] = Math.abs(this.lowerCM["y"])
         }
     }
-    
+
     /**
      * Scale any coordinates by a factor
      */
@@ -99,7 +99,7 @@ class Frame {
         this.cm = calculateStandingBodyCM(this.ropeLength,this.bodyHeight,this.phi)
         this.lowerCM = {}
           break;
-          
+
         case "seated":
         this.swingCM = calculateSwingCM(this.ropeLength,this.phi)
         this.upperCM = calculateSeatedBodyUpperCM(this.ropeLength,this.phi,this.bodyHeight*0.5)
@@ -135,7 +135,7 @@ class Frame {
  */
 function toCanvasCoordinates(coordinatesList, ctx,height,gravity,mass,ropeLength,swingType) {
     // TODO Proporzione dati input con dimensione canvas Scaling100:Canvas300=ScalingX:InputY o limite e pace
-    frameArray = []
+    var frameArray = []
     for (i in coordinatesList) {
       let t = coordinatesList[i]["t"],
       phi = coordinatesList[i]["phi"],

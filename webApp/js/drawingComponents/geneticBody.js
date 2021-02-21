@@ -3,7 +3,7 @@ var MAX_PHI_ANGLE = 1.48353 //85 degree
 // Positions set
 var standing_positions = ["stand", "squat"]
 var seated_positions = ["seat", "leanback"]
-// Nerual Network 
+// Nerual Network
 var n_input = 3
 var n_hidden = 4
 var n_output = 2
@@ -20,20 +20,20 @@ class GeneticBody {
      * @param {*} ctx
      * @param {String} type: "standing" or "seated", is the value of select form. Indicates which position are allowed
      * @param {Frame} initialStateFrame: get initial Conditions from form
-     * 
+     *
      * @var {Array String} positionsSet: store the allowed position based on the swing type
      * @var {Frame array} DNA: store the sequence of frames
      * @var {Frame} currentFrame: store the last frame
-     * 
+     *
      * @var {NeuralNetwork} brain
      * @var {int} max_phi: store the record phi reached in absolute value
      * @var {String} nextPosition: indicates the next position that the neural network predicts
-     * 
+     *
      * @var {Boolean} reachMaxPhi: indicates if the body reaches (>=) MAX_PHI_ANGLE.
      *                             Consequently the body will have a score of SCORE_BONUS*2 - JUMPS.
-     *                             if set to TRUE the body will be removed in the next draw iteration. 
+     *                             if set to TRUE the body will be removed in the next draw iteration.
      * @var {Jump} jumps: array of jumps performed
-     * 
+     *
      */
     constructor(ctx, initialStateFrame, brain) {
         this.ctx = ctx
@@ -47,12 +47,12 @@ class GeneticBody {
         // State
         this.currentFrame = initialStateFrame
         this.showingFrameList = []
-        
+
 
         // handle creation or copy
         if(brain)
             this.brain = brain.copy()
-        else 
+        else
             this.brain = new NeuralNetwork(n_input, n_hidden, n_output)
 
 
@@ -101,9 +101,9 @@ class GeneticBody {
 
 
     /**
-     * When angular speed is 0 
+     * When angular speed is 0
      * @returns {Boolean} true -> is the reached angle is greater (>) than the previous record angle
-     *                    false -> otherwise 
+     *                    false -> otherwise
      */
     isImproving() {
         return this.currentFrame.w == 0 && (Math.abs(this.currentFrame.phi) > this.max_phi)
@@ -116,7 +116,7 @@ class GeneticBody {
      *          - Update record angle
      *          - Update the score with a FIXED BONUS + PROPORTIAL PHI BONUS.
      *      - if MAX PHI ANGLE is reached
-     *          - stopTraining 
+     *          - stopTraining
      */
     updatePhiScore() {
         if (this.isImproving()) {
@@ -138,7 +138,7 @@ class GeneticBody {
      * Number of Jumps: 245
      * --------------------------------------------
      * t:0.000->0.001 - phi:0.05->0.12 - w:"0.32"->"0.56" - standing->seated
-     * ...   
+     * ...
      */
     log() {
         var logMsg = ""
@@ -155,11 +155,11 @@ class GeneticBody {
 
 
     /**
-     * 
+     *
      * @param {Frame} frame: frame with the next conditions
      *      - handle jumps
      *      - update DNA and currentFrame
-     *      - update score (if new record angle is reached) 
+     *      - update score (if new record angle is reached)
      */
     update(frame) {
         // jumpHandler
