@@ -8,13 +8,16 @@ class Rope {
      */
     constructor(ctx, initialStateFrame){
         this.ctx = ctx
+        this.startX = this.ctx.canvas.width/2
+        this.startY = 0
+        this.endX = null
+        this.endY = null
 
         if(initialStateFrame) {
             initialStateFrame.scaleFrame()
             initialStateFrame.translateFrame()
             this.update(initialStateFrame)       
         }
-            
     }
 
     show(){

@@ -52,7 +52,7 @@ class Frame {
      * y -> |y| (invert the y axis to match canvas)
      */
     translateFrame() {
-        halfCanvas_offset = this.ctx.canvas.width/2
+        var halfCanvas_offset = this.ctx.canvas.width/2
 
         this.cm["x"] += halfCanvas_offset
         this.cm["y"] = Math.abs(this.cm["y"])

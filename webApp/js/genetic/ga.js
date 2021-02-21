@@ -16,7 +16,7 @@ function nextGeneration() {
 
     // repopulation 
     for (let i = 0; i < POPULATION; i++) {
-        if (i === 0)
+        if (i === 0) //!i
             geneticBodies[i] = pickBest(true)
         else
             geneticBodies[i] = pickBest(false)
@@ -30,6 +30,7 @@ function nextGeneration() {
 
 
     genCounter++
+    // draw()
 }
 
 /**
