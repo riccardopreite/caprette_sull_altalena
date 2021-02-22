@@ -139,26 +139,34 @@ function getNextFrame(currentFrame, nextPostion){
   const DELTA_T = 0.001
   var w_next
   var phi_next
+  var next_cm
+  var next_swingCM
+  var next_upperCM
+  var next_lowerCM
   
-
   if (currentFrame.swingType.includes("standing")){
-    
+    /**
+     * w_next 
+     * phi_next
+     */
    
 
 
 
   } else {
-
+    /**
+     * w_next 
+     * phi_next
+     */
 
 
 
 
   }
-  var t_next = currentFrame.t + DELTA_T
-
-  return nextFrame = new Frame(
+  
+  nextFrame = new Frame(
     currentFrame.ctx,
-    t_next,
+    currentFrame.t + DELTA_T,
     phi_next,
     w_next,
     nextPostion,
@@ -172,6 +180,9 @@ function getNextFrame(currentFrame, nextPostion){
     currentFrame.bodyMass,
     currentFrame.ropeLength
   )  
+  nextFrame.calculateCM()
+
+  return nextFrame
 }
 
 
