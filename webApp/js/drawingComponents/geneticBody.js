@@ -101,12 +101,16 @@ class GeneticBody {
 
 
     /**
-     * When angular speed is 0
-     * @returns {Boolean} true -> is the reached angle is greater (>) than the previous record angle
-     *                    false -> otherwise
+     *
+     * @returns {Boolean} true ->  if current w != 0
+     *                             if the current reached angle is greater (>) than the previous record angle
+     *                    false -> if the current reached angle is less or euqal (<=) to the previous record angle
      */
     isImproving() {
-        return this.currentFrame.w == 0 && (Math.abs(this.currentFrame.phi) > this.max_phi)
+        if (this.currentFrame.w == 0)
+            return Math.abs(this.currentFrame.phi) > this.max_phi
+        else 
+            return true
     }
 
 
