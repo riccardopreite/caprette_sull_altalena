@@ -79,6 +79,8 @@ class GeneticBody {
      *  - [0,1]: indicates the current postion in the positionsSet
      * output:
      *  - [0,1]: indicates the next postion in the positionsSet
+     * 
+     * @returns {String} nextPostion: the predicted next postion
      */
     think() {
         let input = []
@@ -92,6 +94,8 @@ class GeneticBody {
             this.nextPosition = this.positionsSet[0]
         else
             this.nextPosition = this.positionsSet[1]
+
+        return this.nextPosition
     }
 
 

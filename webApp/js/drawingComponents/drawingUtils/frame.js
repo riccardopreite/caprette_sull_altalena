@@ -128,6 +128,60 @@ class Frame {
 }
 
 /**
+ * 
+ * @param {Framme} currentFrame: frame with current conditions 
+ * @param {String} nextPostion: Indicates the postion for the next frame
+ *                              "squat" or "stand"
+ *                              "seat" or "leanback"
+ * @param {Frame} nextFrame: the frame with updated conditions based on nextPosition 
+ */
+function getNextFrame(currentFrame, nextPostion){
+  const DELTA_T = 0.001
+  var w_next
+  var phi_next
+  
+
+  if (currentFrame.swingType.includes("standing")){
+    
+   
+
+
+
+  } else {
+
+
+
+
+
+  }
+  var t_next = currentFrame.t + DELTA_T
+
+  return nextFrame = new Frame(
+    currentFrame.ctx,
+    t_next,
+    phi_next,
+    w_next,
+    nextPostion,
+    next_cm,
+    next_swingCM,
+    next_upperCM,
+    next_lowerCM,
+    currentFrame.swingType,
+    currentFrame.gravity,
+    currentFrame.bodyHeight,
+    currentFrame.bodyMass,
+    currentFrame.ropeLength
+  )  
+}
+
+
+
+
+
+
+
+
+/**
  *
  * @param {dict} coordinatesList: original coordinates list
  * @returns {Frame[]} frameArray: array of frame with scaled and translated

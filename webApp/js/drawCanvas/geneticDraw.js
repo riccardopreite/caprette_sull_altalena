@@ -79,27 +79,17 @@ function geneticDraw() {
     }
 
 
+    // update
+    for (let i = 0; i < POPULATION; i++) {
+        // calculate next conditions based on next position choice
+        nextPosition = geneticBodies[i].think()
+        nextFrame = getNextFrame(geneticBodies[i].currentFrame, nextPosition)
 
-
-    //THINK PHASE
-    /**
-     * foreach body
-     *      body.think -----> my next position will be "standing"
-     *      nextMove.push(body.currentPostion(body.nextPosition))
-     */
-
-    // UPDATE PHASE
-    /**
-     * foreach obj
-     *      body[i].update(nextMove[i])
-     *      rope...
-     *      swing...
-     */
-
-
-
-
-
+        // update
+        geneticBodies[i].update(nextFrame)
+        ropes[i].update(nextFrame)
+        swings[i].update(nextFrame)
+    }
 }
 
 
