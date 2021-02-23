@@ -55,8 +55,8 @@ function formMode(id){
   $("#selectDiv"+id+" :input").prop( "disabled", false);
 
   //form & graph & genetic
-  showHideGraph("#formDiv"+id,"#graphDiv"+id)
-  if(!id)  showHideGraph("#formDiv"+id,"#geneticDiv")
+  showHideDiv("#formDiv"+id,"#graphDiv"+id)
+  if(!id)  showHideDiv("#formDiv"+id,"#geneticDiv")
 
   //isDraw
   if(id) isDrawSecond = false
@@ -73,8 +73,8 @@ function drawMode(id){
   $("#selectDiv"+id+" :input").prop( "disabled", true);
 
   //form & graph & genetic
-  showHideGraph("#graphDiv"+id,"#formDiv"+id)
-  if(!id)  showHideGraph("#graphDiv"+id,"#geneticDiv")
+  showHideDiv("#graphDiv"+id,"#formDiv"+id)
+  if(!id)  showHideDiv("#graphDiv"+id,"#geneticDiv")
 
 
   //isDraw
@@ -85,9 +85,9 @@ function drawMode(id){
         START GRAPH FUNCTION
 *******************************************************/
 
-function showHideGraph(toShow,toHide){
-  $(toShow).show()
-  $(toHide).hide()
+function showHideDiv(toShow,toHide){
+  $(toShow).removeClass("hide")
+  $(toHide).addClass("hide")
 }
 
 
@@ -176,8 +176,8 @@ function getFormValue(){
   $("#ropeLength1").val(ropeLength1)
   if(firstMethode.includes("genetic")){
     console.log("PORCODIO");
-    showHideGraph("#geneticDiv","#graphDiv0")
-    showHideGraph("#geneticDiv","#formDiv0")
+    showHideDiv("#geneticDiv","#graphDiv0")
+    showHideDiv("#geneticDiv","#formDiv0")
   }
   return new Frame(
     ctx0,
