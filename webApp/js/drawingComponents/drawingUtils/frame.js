@@ -139,32 +139,62 @@ function getNextFrame(currentFrame, nextPostion){
   const DELTA_T = 0.001
   var w_next
   var phi_next
-  var next_cm
-  var next_swingCM
-  var next_upperCM
-  var next_lowerCM
+  var next_cm = next_swingCM = next_upperCM = next_lowerCM = {}
 
   if (currentFrame.swingType.includes("standing")){
-    /**
-     * w_next
-     * phi_next
-     */
+    var lstand = this.currentFrame.ropeLength - this.currentFrame.bodyHeight/2
+    var lsquat = lstand + 0.4
+    
+    var lprev
+    var lnext
+
+    if(currentFrame.bodyPosition == "stand")
+      lprev = lstand
+    else 
+      lprev = lsquat
+    if(nextPostion == "stand")
+      lnext = lstand
+    else 
+      lnext = lsquat
 
 
-
+    w_next = Math.pow((lprev/lnext),2) * this.currentFrame.w -
+               this.currentFrame.gravity * (DELTA_T/2) * Math.sin(this.currentFrame.phi) *
+               ((lprev+lnext) / Math.pow(lprev,2))
+  
+    phi_next = this.currentFrame.phi -
+             (DELTA_T/2) * this.currentFrame.w * ((Math.pow(lprev,2) + Math.pow(lnext,2)) / Math.pow(lnext,2))
 
   } else {
-    /**
-     * w_next
-     * phi_next
-     */
+    var thetaSeat = 0
+    var thetaLeanback = Math.PI/2
+    
+    var a = this.currentFrame.bodyHeight/2
+    var thetaPrev
+    var thetaNext
+    
 
+    if(currentFrame.bodyPosition == "seat")
+      thetaPrev = thetaSeat
+    else 
+      thetaPrev = thetaLeanback
+    if(nextPostion == "seat")
+      thetaNext = thetaSeat
+    else 
+      thetaNext = thetaLeanback
 
+    w_next = this.currentFrame.w - 
+             this.currentFrame.gravity * DELTA_T * 
+             (this.currentFrame.ropeLength / (Math.pow(a,2) + Math.pow(this.currentFrame.ropeLength,2))) *
+             Math.sin(this.currentFrame.phi)
 
-
+    phi_next = this.currentFrame.phi +
+               this.currentFrame.w * DELTA_T -
+               (Math.pow((a,2) / (Math.pow(a,2) + Math.pow(this.currentFrame.ropeLength,2)))) *
+               (thetaNext - thetaPrev)
   }
 
-  nextFrame = new Frame(
+  return nextFrame = new Frame(
     currentFrame.ctx,
     currentFrame.t + DELTA_T,
     phi_next,
@@ -180,13 +210,7 @@ function getNextFrame(currentFrame, nextPostion){
     currentFrame.bodyMass,
     currentFrame.ropeLength
   )
-  nextFrame.calculateCM()
-
-  return nextFrame
 }
-
-
-
 
 
 
