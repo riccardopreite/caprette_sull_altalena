@@ -47,15 +47,15 @@ function setup() {
         ropes.push(new Rope(geneticCtx, initialStateFrame))
         swings.push(new Swing(geneticCtx, initialStateFrame))
     }
-}
 
-
-function geneticDraw() {
     // DOM handling
     addLogMsgDOM("========================================\n")
     addLogMsgDOM("GENERATION NUMBER: " + genCounter + "\n")
     addLogMsgDOM("========================================\n\n")
+}
 
+
+function geneticDraw() {
 
     // show the last frame
     for (let i = 0; i < POPULATION; i++) {

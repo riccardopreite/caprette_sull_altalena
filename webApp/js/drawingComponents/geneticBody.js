@@ -1,5 +1,5 @@
 // limits
-var MAX_PHI_ANGLE = 1.48353 //85 degree
+var MAX_PHI_ANGLE = 1.309 // 75 degree
 // Positions set
 var standing_positions = ["stand", "squat"]
 var seated_positions = ["seat", "leanback"]

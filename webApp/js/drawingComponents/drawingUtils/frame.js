@@ -1,4 +1,8 @@
 class Frame {
+  /**
+   * 
+   * if CMs are undefined, they are automatically calculated
+   */
   constructor(ctx, t, phi, w, bodyPosition, cm, swingCM, upperCM, lowerCM,
       swingType, gravity, bodyHeight, bodyMass, ropeLength) {
       this.ctx = ctx
@@ -127,13 +131,14 @@ class Frame {
     }
 }
 
+
 /**
  *
  * @param {Framme} currentFrame: frame with current conditions
  * @param {String} nextPostion: Indicates the postion for the next frame
  *                              "squat" or "stand"
  *                              "seat" or "leanback"
- * @param {Frame} nextFrame: the frame with updated conditions based on nextPosition
+ * @param {Frame} nextFrame: the frame with updated conditions based on nextPosition (CMs are automatically calculated)
  */
 function getNextFrame(currentFrame, nextPostion){
   const DELTA_T = 0.001
@@ -211,8 +216,6 @@ function getNextFrame(currentFrame, nextPostion){
     currentFrame.ropeLength
   )
 }
-
-
 
 
 

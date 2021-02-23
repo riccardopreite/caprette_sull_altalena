@@ -1,5 +1,3 @@
-
-
 /**
  * - Calculate fitness values for each body
  * - Repopulation
@@ -15,6 +13,8 @@ function nextGeneration() {
     calculateFitness()
 
     // repopulation 
+    addLogMsgDOM("Repopulation ...")
+    addLogMsgDOM("Mutation ...")
     for (let i = 0; i < POPULATION; i++) {
         geneticBodies[i] = pickBest(!i)
         ropes[i] = new Rope(geneticCtx, initialStateFrame)
@@ -28,6 +28,11 @@ function nextGeneration() {
 
     genCounter++
     // draw()
+
+    // DOM handling
+    addLogMsgDOM("========================================\n")
+    addLogMsgDOM("GENERATION NUMBER: " + genCounter + "\n")
+    addLogMsgDOM("========================================\n\n")
 }
 
 /**
