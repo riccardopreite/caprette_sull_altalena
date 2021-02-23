@@ -96,29 +96,29 @@ class Frame {
         case "standing":
         this.swingCM = calculateSwingCM(this.ropeLength,this.phi)
         this.upperCM = {}
-        this.cm = calculateStandingBodyCM(this.ropeLength,this.bodyHeight,this.phi)
+        this.cm = calculateStandingBodyCM(this.ropeLength,this.bodyHeight*0.5,this.phi,this.bodyPosition)
         this.lowerCM = {}
           break;
 
         case "seated":
         this.swingCM = calculateSwingCM(this.ropeLength,this.phi)
-        this.upperCM = calculateSeatedBodyUpperCM(this.ropeLength,this.phi,this.bodyHeight*0.5)
-        this.cm = calculateSeatedBodyCM(this.ropeLength,this.phi)
-        this.lowerCM = calculateSeatedBodyLowerCM(this.ropeLength,this.phi,this.bodyHeight*0.5)
+        this.upperCM = calculateSeatedBodyUpperCM(this.ropeLength,this.phi,this.bodyHeight*0.5,this.bodyPosition)
+        this.cm = calculateSeatedBodyCM(this.ropeLength,this.phi,this.bodyPosition)
+        this.lowerCM = calculateSeatedBodyLowerCM(this.ropeLength,this.phi,this.bodyHeight*0.5,this.bodyPosition)
           break;
 
         case "realistic":
         this.swingCM = calculateSwingCM(this.ropeLength,this.phi)
-        this.upperCM = calculateSeatedBodyUpperCM(this.ropeLength,this.phi,this.bodyHeight*0.6)
-        this.cm = calculateSeatedBodyCM(this.ropeLength,this.phi)
-        this.lowerCM = calculateSeatedBodyLowerCM(this.ropeLength,this.phi,this.bodyHeight*0.4)
+        this.upperCM = calculateSeatedBodyUpperCM(this.ropeLength,this.phi,this.bodyHeight*0.6,this.bodyPosition)
+        this.cm = calculateSeatedBodyCM(this.ropeLength,this.phi,this.bodyPosition)
+        this.lowerCM = calculateSeatedBodyLowerCM(this.ropeLength,this.phi,this.bodyHeight*0.4,this.bodyPosition)
 
           break;
         case "combined":
         this.swingCM = calculateSwingCM(this.ropeLength,this.phi)
-        this.upperCM = calculateSeatedBodyUpperCM(this.ropeLength,this.phi,this.bodyHeight*0.6)
-        this.cm = calculateSeatedBodyCM(this.ropeLength,this.phi)
-        this.lowerCM = calculateSeatedBodyLowerCM(this.ropeLength,this.phi,this.bodyHeight*0.4)
+        this.upperCM = calculateSeatedBodyUpperCM(this.ropeLength,this.phi,this.bodyHeight*0.6,this.bodyPosition)
+        this.cm = calculateSeatedBodyCM(this.ropeLength,this.phi),this.bodyPosition
+        this.lowerCM = calculateSeatedBodyLowerCM(this.ropeLength,this.phi,this.bodyHeight*0.4,this.bodyPosition)
 
           break;
         default:
@@ -128,12 +128,12 @@ class Frame {
 }
 
 /**
- * 
- * @param {Framme} currentFrame: frame with current conditions 
+ *
+ * @param {Framme} currentFrame: frame with current conditions
  * @param {String} nextPostion: Indicates the postion for the next frame
  *                              "squat" or "stand"
  *                              "seat" or "leanback"
- * @param {Frame} nextFrame: the frame with updated conditions based on nextPosition 
+ * @param {Frame} nextFrame: the frame with updated conditions based on nextPosition
  */
 function getNextFrame(currentFrame, nextPostion){
   const DELTA_T = 0.001
@@ -143,19 +143,19 @@ function getNextFrame(currentFrame, nextPostion){
   var next_swingCM
   var next_upperCM
   var next_lowerCM
-  
+
   if (currentFrame.swingType.includes("standing")){
     /**
-     * w_next 
+     * w_next
      * phi_next
      */
-   
+
 
 
 
   } else {
     /**
-     * w_next 
+     * w_next
      * phi_next
      */
 
@@ -163,7 +163,7 @@ function getNextFrame(currentFrame, nextPostion){
 
 
   }
-  
+
   nextFrame = new Frame(
     currentFrame.ctx,
     currentFrame.t + DELTA_T,
@@ -179,7 +179,7 @@ function getNextFrame(currentFrame, nextPostion){
     currentFrame.bodyHeight,
     currentFrame.bodyMass,
     currentFrame.ropeLength
-  )  
+  )
   nextFrame.calculateCM()
 
   return nextFrame
@@ -249,22 +249,25 @@ function calculateSwingCM(ropeLength,phi){
 *******************************************************/
 
 
-function calculateSeatedBodyUpperCM(ropeLength,phi,height){
-  let tmp = {}
+function calculateSeatedBodyUpperCM(ropeLength,phi,height,bodyPosition){
+  let tmp = {}, theta = 0;
+  if(bodyPosition == "leanback") theta = Math.PI/2;
   tmp["x"] = ropeLength*Math.sin(phi) - height*Math.sin(phi)
   tmp["y"] = -(ropeLength) + height*Math.cos(phi)
   return tmp;
 }
 
-function calculateSeatedBodyCM(ropeLength,phi){
-  let tmp = {}
+function calculateSeatedBodyCM(ropeLength,phi,bodyPosition){
+  let tmp = {}, theta = 0;
+  if(bodyPosition == "leanback") theta = Math.PI/2;
   tmp["x"] = ropeLength*Math.sin(phi)
   tmp["y"] = -(ropeLength*Math.cos(phi))
   return tmp;
 }
 
-function calculateSeatedBodyLowerCM(ropeLength,phi,height){
-  let tmp = {}
+function calculateSeatedBodyLowerCM(ropeLength,phi,height,bodyPosition){
+  let tmp = {}, theta = 0;
+  if(bodyPosition == "leanback") theta = Math.PI/2;
   tmp["x"] = ropeLength*Math.sin(phi) + height*Math.sin(phi)
   tmp["y"] = -(ropeLength*Math.cos(phi)) - height*Math.cos(phi)
   return tmp;
@@ -278,8 +281,9 @@ function calculateSeatedBodyLowerCM(ropeLength,phi,height){
         START STANDING CENTER MASS FUNCTION
 *******************************************************/
 
-function calculateStandingBodyCM(ropeLen,halfHeight,phi){
-  let currentBarycenter = ropeLen - halfHeight + 0.4
+function calculateStandingBodyCM(ropeLen,halfHeight,phi,bodyPosition){
+  let currentBarycenter = ropeLen - halfHeight
+  if(bodyPosition == "squat") currentBarycenter + 0.4
   let tmp = {}
   tmp["x"] = currentBarycenter*Math.sin(phi)
   tmp["y"] = -currentBarycenter*Math.cos(phi)
