@@ -117,7 +117,7 @@ class Frame {
         case "combined":
         this.swingCM = calculateSwingCM(this.ropeLength,this.phi)
         this.upperCM = calculateSeatedBodyUpperCM(this.ropeLength,this.phi,this.bodyHeight*0.6,this.bodyPosition)
-        this.cm = calculateSeatedBodyCM(this.ropeLength,this.phi),this.bodyPosition
+        this.cm = calculateSeatedBodyCM(this.ropeLength,this.phi,this.bodyPosition)
         this.lowerCM = calculateSeatedBodyLowerCM(this.ropeLength,this.phi,this.bodyHeight*0.4,this.bodyPosition)
 
           break;
