@@ -36,8 +36,7 @@ function setup() {
     currentRecordBody = undefined
     genCounter = 0
 
-    showHideDiv("#geneticDiv","#graphDiv0")
-    showHideDiv("#geneticDiv","#formDiv0")
+
     // get initial conditions
     initialStateFrame = getFormValue()
 
@@ -49,8 +48,10 @@ function setup() {
     }
 
     // DOM reset
+    showHideDiv("#geneticDiv","#graphDiv0")
+    showHideDiv("#geneticDiv","#formDiv0")
     updateRecordsDOM("-", Math.abs(initialStateFrame.phi), "-")
-    updatPopulationDOM(geneticBodies.length())
+    updatPopulationDOM(geneticBodies.length)
     emptyLogDOM()
     addLogMsgDOM("========================================")
     addLogMsgDOM("GENERATION NUMBER: " + genCounter)
@@ -61,12 +62,12 @@ function setup() {
 function geneticDraw() {
 
     // show the last frame
-    console.log("drawing");
     for (let i = 0; i < POPULATION; i++) {
         geneticBodies[i].show()
         ropes[i].show()
         swings[i].show()
     }
+
     // delete failing or successful bodies, store them in a backup array
     for (let i = 0; i < POPULATION; i++) {
         if (geneticBodies[i].isImproving() === false || geneticBodies[i].reachMaxPhi) {
@@ -77,7 +78,7 @@ function geneticDraw() {
     }
 
     // Current population update
-    updatPopulationDOM(geneticBodies.length())
+    updatPopulationDOM(geneticBodies.length)
 
     // check empty array
     if (geneticBodies.length === 0) {

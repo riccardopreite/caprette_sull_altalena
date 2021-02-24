@@ -60,7 +60,7 @@ function pickBest(log) {
             updateRecordsDOM(
                 best.score,
                 best.max_phi,
-                best.jumps.lenght()
+                best.jumps.lenght
             )
         }
         addLogMsgDOM(best.log())

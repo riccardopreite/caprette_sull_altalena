@@ -9,7 +9,7 @@ var n_hidden = 4
 var n_output = 2
 const MUTATION_RATE = 0.1
 // scoring
-var SCORE_BONUS = 500
+var SCORE_BONUS = 1500
 var JUMP_PENALIZATION = 1
 
 
@@ -106,12 +106,12 @@ class GeneticBody {
 
     /**
      *
-     * @returns {Boolean} true ->  if current w != 0
+     * @returns {Boolean} true ->  if current w != 0.00
      *                             if the current reached angle is greater (>) than the previous record angle
      *                    false -> if the current reached angle is less or euqal (<=) to the previous record angle
      */
     isImproving() {
-        if (this.currentFrame.w == 0)
+        if (this.currentFrame.w.toFixed(2) == 0.00)
             return Math.abs(this.currentFrame.phi) > this.max_phi
         else
             return true
