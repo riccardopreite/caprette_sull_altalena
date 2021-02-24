@@ -14,12 +14,17 @@ document.addEventListener("click", e => {
 function saveBrain(){
   var bestBrain = {}
   //add get the best
+
+  // best is stored in ga.js
+  // call best.getModel() to receive the list of Frames <======================================================================
+
   var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(bestBrain));
   var dlAnchorElem = document.getElementById('downloadAnchorElem');
   dlAnchorElem.setAttribute("href",     dataStr     );
   dlAnchorElem.setAttribute("download", "brain.json");
   dlAnchorElem.click();
 }
+
 function uploadBrain(){
   let input = document.getElementById("loadInput")
   var reader = new FileReader();
@@ -27,17 +32,20 @@ function uploadBrain(){
   reader.readAsText(input.files[0]);
 }
 
+function updateRecords(score, phi, jumps){
+  $("#maxScore").text(score)
+  $("#maxPhi").text(phi)
+  $("#jumpsCounter").text(jumps)
+}
+
 function addLogMsgDOM(string){
-  $("#geneticLog").append(string+"\n")
+  $("#geneticLog").append("<p>" + string + "<p/>")
 }
 
-function updateMaxPhi(newPhi){
-  $("#phiScore").text(newPhi)
+function emptyLog(){
+  $("#geneticLog").empty()
 }
 
-function updateJumper(newJumper){
-  $("#jumpCounter").text(newJumper)
-}
 
 /*******************************************************
         SWITCH DRAW FORM MODE FUNCTION

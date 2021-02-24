@@ -14,6 +14,10 @@ body {
     width: 90%;
 }
 
+::-webkit-scrollbar{
+    display: none;
+}
+
 
 
 /* Colors */
@@ -177,4 +181,17 @@ label {
 /* Cards Genetic =========================================================================== */
 .file-field .file-path-wrapper {
     padding-left: 15px;
+}
+
+.recordContainer {
+    font-size: 115%;
+    margin-top: 3%;
+    color: rgb(181, 181, 181);
+}
+
+#geneticLog {
+    overflow-x: hidden;
+    height: 290px;
+    color: rgb(181, 181, 181);
+    font-size: 85%;
 }

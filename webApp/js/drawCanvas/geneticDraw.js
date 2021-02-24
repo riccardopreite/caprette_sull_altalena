@@ -18,10 +18,9 @@ let geneticBodies = []
 let ropes = []
 let swings = []
 let savedGenticBodies = []
-// log vars
-var genCounter = 0
-var maxPhi_counter = 0
-var jumps_counter = 0
+// log vars - stores the best body so far
+var currentRecordBody = undefined
+
 
 
 
@@ -34,12 +33,11 @@ function setup() {
     ropes = []
     swings = []
     savedGenticBodies = []
+    currentRecordBody = undefined
     genCounter = 0
 
     // get initial conditions
     initialStateFrame = getFormValue()
-    maxPhi_counter = Math.abs(initialStateFrame.phi)
-    jumps_counter = 0
 
     // init
     for (let i = 0; i < POPULATION; i++) {
@@ -48,10 +46,12 @@ function setup() {
         swings.push(new Swing(geneticCtx, initialStateFrame))
     }
 
-    // DOM handling
-    addLogMsgDOM("========================================\n")
-    addLogMsgDOM("GENERATION NUMBER: " + genCounter + "\n")
-    addLogMsgDOM("========================================\n\n")
+    // DOM reset
+    updateRecords("-", Math.abs(initialStateFrame.phi), "-")
+    emptyLog()
+    addLogMsgDOM("========================================")
+    addLogMsgDOM("GENERATION NUMBER: " + genCounter)
+    addLogMsgDOM("========================================")
 }
 
 

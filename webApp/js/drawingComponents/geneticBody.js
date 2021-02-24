@@ -150,12 +150,12 @@ class GeneticBody {
      */
     log() {
         var logMsg = ""
-        logMsg += "Score: " + this.score + "\n"
-        logMsg += "Fitness: " + this.fitness*100 + "\n"
-        logMsg += "Number of jumps: " + this.jumps.length + "\n"
-        logMsg += "-------------------------------------------\n"
+        logMsg += "Score: " + this.score + "<br/>"
+        logMsg += "Fitness: " + this.fitness*100 + "<br/>"
+        logMsg += "Number of jumps: " + this.jumps.length + "<br/>"
+        logMsg += "-------------------------------------------" + "<br/>"
         this.jumps.forEach(jump => {
-            logMsg += jump.toString() + "\n"
+            logMsg += jump.toString() + "<br/><br/>"
         })
         return logMsg
     }

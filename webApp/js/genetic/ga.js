@@ -30,9 +30,9 @@ function nextGeneration() {
     // draw()
 
     // DOM handling
-    addLogMsgDOM("========================================\n")
-    addLogMsgDOM("GENERATION NUMBER: " + genCounter + "\n")
-    addLogMsgDOM("========================================\n\n")
+    addLogMsgDOM("========================================")
+    addLogMsgDOM("GENERATION NUMBER: " + genCounter)
+    addLogMsgDOM("========================================")
 }
 
 /**
@@ -54,13 +54,15 @@ function pickBest(log) {
     let best = savedGenticBodies[index]
 
     // log only the first time 
-    if (log) { //FIX <========================================
-        if (best.max_phi > maxPhi_counter)
-            maxPhi_counter = best.max_phi
-        jumps_counter = best.jumps.lenght
-        // SCORE <=====================================
-        updateMaxPhiDOM(maxPhi_counter)
-        updateNumberJumpsDOM(jumps_counter)
+    if (log) {
+        if (best.score > currentRecordBody.score || currentRecordBody === undefined) {
+            currentRecordBody = best
+            updateRecords(
+                best.score,
+                best.max_phi,
+                best.jumps.lenght()
+            )
+        }
         addLogMsgDOM(best.log())
     }
 
