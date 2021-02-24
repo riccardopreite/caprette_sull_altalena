@@ -1,9 +1,3 @@
-function onReaderLoad(event){
-  var brain = JSON.parse(event.target.result);
-  toDraw0 = toCanvasCoordinates(brain,ctx0,bodyHeight0,gravity0,mass0,ropeLength0,firstMethode);
-  drawMode(0)
-  //DO something with frame array
-}
 
 function isEmpty(obj) {
   return Object.keys(obj).length === 0;

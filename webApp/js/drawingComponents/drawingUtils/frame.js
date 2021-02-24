@@ -1,6 +1,6 @@
 class Frame {
   /**
-   * 
+   *
    * if CMs are undefined, they are automatically calculated
    */
   constructor(ctx, t, phi, w, bodyPosition, cm, swingCM, upperCM, lowerCM,
@@ -95,7 +95,7 @@ class Frame {
 
     calculateCM(){
       let basicSwingType = this.swingType
-      basicSwingType = basicSwingType.replace("Genetic","")
+      basicSwingType = basicSwingType.replace("genetic","")
       switch (basicSwingType) {
         case "standing":
         this.swingCM = calculateSwingCM(this.ropeLength,this.phi)
@@ -147,55 +147,55 @@ function getNextFrame(currentFrame, nextPostion){
   var next_cm = next_swingCM = next_upperCM = next_lowerCM = {}
 
   if (currentFrame.swingType.includes("standing")){
-    var lstand = this.currentFrame.ropeLength - this.currentFrame.bodyHeight/2
+    var lstand = currentFrame.ropeLength - currentFrame.bodyHeight/2
     var lsquat = lstand + 0.4
-    
+
     var lprev
     var lnext
 
     if(currentFrame.bodyPosition == "stand")
       lprev = lstand
-    else 
+    else
       lprev = lsquat
     if(nextPostion == "stand")
       lnext = lstand
-    else 
+    else
       lnext = lsquat
 
 
-    w_next = Math.pow((lprev/lnext),2) * this.currentFrame.w -
-               this.currentFrame.gravity * (DELTA_T/2) * Math.sin(this.currentFrame.phi) *
+    w_next = Math.pow((lprev/lnext),2) * currentFrame.w -
+               currentFrame.gravity * (DELTA_T/2) * Math.sin(currentFrame.phi) *
                ((lprev+lnext) / Math.pow(lprev,2))
-  
-    phi_next = this.currentFrame.phi -
-             (DELTA_T/2) * this.currentFrame.w * ((Math.pow(lprev,2) + Math.pow(lnext,2)) / Math.pow(lnext,2))
+
+    phi_next = currentFrame.phi -
+             (DELTA_T/2) * currentFrame.w * ((Math.pow(lprev,2) + Math.pow(lnext,2)) / Math.pow(lnext,2))
 
   } else {
     var thetaSeat = 0
     var thetaLeanback = Math.PI/2
-    
-    var a = this.currentFrame.bodyHeight/2
+
+    var a = currentFrame.bodyHeight/2
     var thetaPrev
     var thetaNext
-    
+
 
     if(currentFrame.bodyPosition == "seat")
       thetaPrev = thetaSeat
-    else 
+    else
       thetaPrev = thetaLeanback
     if(nextPostion == "seat")
       thetaNext = thetaSeat
-    else 
+    else
       thetaNext = thetaLeanback
 
-    w_next = this.currentFrame.w - 
-             this.currentFrame.gravity * DELTA_T * 
-             (this.currentFrame.ropeLength / (Math.pow(a,2) + Math.pow(this.currentFrame.ropeLength,2))) *
-             Math.sin(this.currentFrame.phi)
+    w_next = currentFrame.w -
+             currentFrame.gravity * DELTA_T *
+             (currentFrame.ropeLength / (Math.pow(a,2) + Math.pow(currentFrame.ropeLength,2))) *
+             Math.sin(currentFrame.phi)
 
-    phi_next = this.currentFrame.phi +
-               this.currentFrame.w * DELTA_T -
-               (Math.pow((a,2) / (Math.pow(a,2) + Math.pow(this.currentFrame.ropeLength,2)))) *
+    phi_next = currentFrame.phi +
+               currentFrame.w * DELTA_T -
+               (Math.pow((a,2) / (Math.pow(a,2) + Math.pow(currentFrame.ropeLength,2)))) *
                (thetaNext - thetaPrev)
   }
 

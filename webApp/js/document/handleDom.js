@@ -28,11 +28,14 @@ function saveBrain(){
 function uploadBrain(){
   let input = document.getElementById("loadInput")
   var reader = new FileReader();
-  reader.onload = onReaderLoad;
+  reader.onload = function(event){
+    bestSwingBrain = JSON.parse(event.target.result);
+  }
   reader.readAsText(input.files[0]);
 }
 
 function updateRecords(score, phi, jumps){
+  console.log(score);
   $("#maxScore").text(score)
   $("#maxPhi").text(phi)
   $("#jumpsCounter").text(jumps)
@@ -182,12 +185,14 @@ function getFormValue(){
   $("#height1").val(bodyHeight1)
   $("#ropeLength0").val(ropeLength0)
   $("#ropeLength1").val(ropeLength1)
-  if(firstMethode.includes("genetic")){
-    console.log("PORCODIO");
-    showHideDiv("#geneticDiv","#graphDiv0")
-    showHideDiv("#geneticDiv","#formDiv0")
-  }
-  return new Frame(
+  if(phi0 == 0 || phi1 == 0 || w0 == 0 || w1 == 0 ) $("#calculateSwing").addClass("disabled")
+  else $("#calculateSwing").removeClass("disabled")
+  // if(firstMethode.includes("genetic")){
+  //   console.log("PORCODIO");
+  //   showHideDiv("#geneticDiv","#graphDiv0")
+  //   showHideDiv("#geneticDiv","#formDiv0")
+  // }
+  let tmp = new Frame(
     ctx0,
     0,
     phi0,
@@ -203,6 +208,8 @@ function getFormValue(){
     mass0,
     ropeLength0
   )
+  console.log(tmp);
+  return tmp
 }
 
 /*******************************************************
@@ -273,9 +280,9 @@ function getFormValue(){
 
       function speedUpFirst(){
         $("#speedDownParent0").removeClass("disabled");
-        firstIntervalTimer -= 100;
-        if(firstIntervalTimer <= 100) {
-          firstIntervalTimer = 100;
+        firstIntervalTimer -= 10;
+        if(firstIntervalTimer <= 10) {
+          firstIntervalTimer = 10;
           $("#speedUpParent0").addClass("disabled");
         }
         clearInterval(firstInterval)
@@ -283,9 +290,9 @@ function getFormValue(){
         }
       function speedUpSecond(){
         $("#speedDownParent1").removeClass("disabled");
-        secondIntervalTimer -= 100;
-        if(secondIntervalTimer <= 100) {
-          secondIntervalTimer = 100;
+        secondIntervalTimer -= 10;
+        if(secondIntervalTimer <= 10) {
+          secondIntervalTimer = 10;
           $("#speedUpParent1").addClass("disabled");
         }
         clearInterval(secondInterval)
@@ -302,9 +309,9 @@ function getFormValue(){
       *******************************************************/
 
       function speedDownFirst(){
-        firstIntervalTimer += 100
-        if(firstIntervalTimer > 1000) {
-          firstIntervalTimer = 1000;
+        firstIntervalTimer += 10
+        if(firstIntervalTimer > 100) {
+          firstIntervalTimer = 100;
           $("#speedDownParent0").addClass("disabled");
         }
         $("#speedUpParent0").removeClass("disabled");
@@ -312,9 +319,9 @@ function getFormValue(){
         firstInterval = setInterval(drawFirst, firstIntervalTimer);
       }
       function speedDownSecond(){
-        secondIntervalTimer += 100
-        if(secondIntervalTimer > 1000) {
-          secondIntervalTimer = 1000;
+        secondIntervalTimer += 10
+        if(secondIntervalTimer > 100) {
+          secondIntervalTimer = 100;
           $("#speedDownParent1").addClass("disabled");
         }
         $("#speedUpParent1").removeClass("disabled");

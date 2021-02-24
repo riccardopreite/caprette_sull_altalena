@@ -5,12 +5,19 @@ function uploadData(){
 
   data1 = getDataForCaluclateSwing(0)
   data2 = getDataForCaluclateSwing(1)
-  // socket.emit('handleRequestFirst', {data1:data1});
-  // socket.emit('handleRequestSecond', {data2:data2});
-  if(data1.swingTypeFirst.includes("genetic") || data2.swingTypeFirst.includes("genetic")) socket.emit('handleGeneticRequest', {data1:data1,data2:data2});
-  else socket.emit('handleRequest', {data1:data1,data2:data2});
-  freeze = true
-  draw()
+  if(data1.swingTypeFirst.includes("genetic")) {
+      if(!isEmpty(bestSwingBrain))  console.log("NON VUOTO");      //add brain and remake boy coordinate?
+      else{
+        
+        trainLoop()
+
+      }
+  }
+  else{
+    socket.emit('handleRequest', {data1:data1,data2:data2});
+    freeze = true
+    draw()
+  }
 }
 
 function getDataForCaluclateSwing(id){

@@ -61,7 +61,7 @@ function prepareFrame(id){
   let tmpFrame;
   var start_t = 0
   var cm = swingCM = upperCM = lowerCM = {}
-  
+
   if(id){
     tmpFrame = new Frame(
       ctx1,

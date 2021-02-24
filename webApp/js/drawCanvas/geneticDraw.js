@@ -36,6 +36,8 @@ function setup() {
     currentRecordBody = undefined
     genCounter = 0
 
+    showHideDiv("#geneticDiv","#graphDiv0")
+    showHideDiv("#geneticDiv","#formDiv0")
     // get initial conditions
     initialStateFrame = getFormValue()
 
@@ -58,12 +60,12 @@ function setup() {
 function geneticDraw() {
 
     // show the last frame
+    console.log("drawing");
     for (let i = 0; i < POPULATION; i++) {
         geneticBodies[i].show()
         ropes[i].show()
         swings[i].show()
     }
-
     // delete failing or successful bodies, store them in a backup array
     for (let i = 0; i < POPULATION; i++) {
         if (geneticBodies[i].isImproving() === false || geneticBodies[i].reachMaxPhi) {

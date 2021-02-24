@@ -79,7 +79,7 @@ class GeneticBody {
      *  - [0,1]: indicates the current postion in the positionsSet
      * output:
      *  - [0,1]: indicates the next postion in the positionsSet
-     * 
+     *
      * @returns {String} nextPostion: the predicted next postion
      */
     think() {
@@ -113,7 +113,7 @@ class GeneticBody {
     isImproving() {
         if (this.currentFrame.w == 0)
             return Math.abs(this.currentFrame.phi) > this.max_phi
-        else 
+        else
             return true
     }
 
@@ -296,7 +296,7 @@ class GeneticBody {
         this.ctx.lineTo(feetX, feetY);
         this.ctx.stroke();
         // hands
-        if (this.showingFrame.bodyPosition == "leanback") {
+        if (showingFrame.bodyPosition == "leanback") {
             this.ctx.moveTo(handX, handY);
             this.ctx.lineTo(this.swingX, this.swingY - handsDistance);
             this.ctx.stroke();
