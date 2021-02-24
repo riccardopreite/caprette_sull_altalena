@@ -34,18 +34,21 @@ function uploadBrain(){
   reader.readAsText(input.files[0]);
 }
 
-function updateRecords(score, phi, jumps){
-  console.log(score);
+function updateRecordsDOM(score, phi, jumps){
   $("#maxScore").text(score)
   $("#maxPhi").text(phi)
   $("#jumpsCounter").text(jumps)
+}
+
+function updatPopulationDOM(pop){
+  $("#populationCounter").text(pop)
 }
 
 function addLogMsgDOM(string){
   $("#geneticLog").append("<p>" + string + "<p/>")
 }
 
-function emptyLog(){
+function emptyLogDOM(){
   $("#geneticLog").empty()
 }
 

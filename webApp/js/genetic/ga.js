@@ -57,7 +57,7 @@ function pickBest(log) {
     if (log) {
         if (best.score > currentRecordBody.score || currentRecordBody === undefined) {
             currentRecordBody = best
-            updateRecords(
+            updateRecordsDOM(
                 best.score,
                 best.max_phi,
                 best.jumps.lenght()

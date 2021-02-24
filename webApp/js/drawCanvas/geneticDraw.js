@@ -49,8 +49,9 @@ function setup() {
     }
 
     // DOM reset
-    updateRecords("-", Math.abs(initialStateFrame.phi), "-")
-    emptyLog()
+    updateRecordsDOM("-", Math.abs(initialStateFrame.phi), "-")
+    updatPopulationDOM(geneticBodies.length())
+    emptyLogDOM()
     addLogMsgDOM("========================================")
     addLogMsgDOM("GENERATION NUMBER: " + genCounter)
     addLogMsgDOM("========================================")
@@ -74,6 +75,9 @@ function geneticDraw() {
             swings.splice(i, 1)
         }
     }
+
+    // Current population update
+    updatPopulationDOM(geneticBodies.length())
 
     // check empty array
     if (geneticBodies.length === 0) {
