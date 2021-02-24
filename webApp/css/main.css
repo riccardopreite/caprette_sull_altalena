@@ -173,3 +173,8 @@ label {
 .graphActions {
     padding: 16px 54px !important;
 }
+
+/* Cards Genetic =========================================================================== */
+.file-field .file-path-wrapper {
+    padding-left: 15px;
+}
