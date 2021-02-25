@@ -9,6 +9,8 @@
  * - update genCounter
  */
 function nextGeneration() {
+    console.log("nextGen")
+
     // calculate fitness
     calculateFitness()
 
@@ -43,7 +45,7 @@ function nextGeneration() {
 function pickBest(log) {
     // pick the best
     var index = 0
-    var r = Math.random()
+    var r = Math.random(1)
     while (r > 0) {
         r = r - savedGenticBodies[index].fitness
         index++
@@ -76,7 +78,6 @@ function pickBest(log) {
 
 
     // creation and mutation
-    initialStateFrame = getFormValue()
     let newBody = new GeneticBody(geneticCtx, initialStateFrame, best.brain)
     newBody.mutate()
 

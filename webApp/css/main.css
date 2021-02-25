@@ -14,9 +14,9 @@ body {
     width: 90%;
 }
 
-::-webkit-scrollbar{
+/* ::-webkit-scrollbar{
     display: none;
-}
+} */
 
 
 
@@ -191,7 +191,7 @@ label {
 
 #geneticLog {
     overflow-x: hidden;
-    height: 290px;
+    height: 250px;
     color: rgb(181, 181, 181);
     font-size: 85%;
 }

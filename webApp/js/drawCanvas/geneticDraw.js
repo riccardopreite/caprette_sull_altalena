@@ -27,7 +27,7 @@ var PATIENCE = 5
 
 // =========================================================================================
 
-function setup() {
+function geneticSetup() {
     // reset
     stopTraining = false
     geneticBodies = []
@@ -121,7 +121,7 @@ function geneticDraw() {
 
 
 function trainLoop() {
-    setup()
+    geneticSetup()
     // while (setupCompleted && !stopTraining)
     //     setTimeout(geneticDraw,1000)
 }
