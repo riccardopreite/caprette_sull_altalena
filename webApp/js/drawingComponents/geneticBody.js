@@ -209,10 +209,11 @@ class GeneticBody {
         var handX, handY
 
 
+
         var showingFrame = this.currentFrame.clone()
-        showingFrame.scaleFrame()
-        showingFrame.translateFrame()
         showingFrame.bodyHeight *= 100
+        // showingFrame.scaleFrame()
+        // showingFrame.translateFrame()
         this.showingFrameList.push(showingFrame)
 
         switch (showingFrame.bodyPosition) {

@@ -1,10 +1,10 @@
 class Swing {
       /**
-     * 
-     * @param {Contex} ctx 
+     *
+     * @param {Contex} ctx
      * @param {Frame} initialStateFrame: (optional) indicates the init Frame
      *        it is automatically converted into canvas coordinates, ready to be displayed
-     *                                  
+     *
      */
     constructor(ctx, initialStateFrame) {
         this.ctx = ctx
@@ -15,9 +15,10 @@ class Swing {
 
         if(initialStateFrame) {
             this.currentFrame = initialStateFrame.clone()
+            // this.currentFrame.bodyHeight *= 100
             this.currentFrame.scaleFrame()
             this.currentFrame.translateFrame()
-            this.update(this.currentFrame)       
+            this.update(this.currentFrame)
         }
     }
 

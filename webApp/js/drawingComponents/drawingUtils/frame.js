@@ -102,7 +102,7 @@ class Frame {
         this.upperCM = {}
         this.cm = calculateStandingBodyCM(this.ropeLength,this.bodyHeight*0.5,this.phi,this.bodyPosition)
         this.lowerCM = {}
-        if(this.swingCM.x == Infinity) console.log(this);
+        if(this.swingCM.x === Infinity) console.log(this);
           break;
 
         case "seated":
@@ -145,7 +145,7 @@ function getNextFrame(currentFrame, nextPostion){
   const DELTA_T = 0.001
   var w_next
   var phi_next
-  var next_cm = next_swingCM = next_upperCM = next_lowerCM = {}
+  var next_cm = [], next_swingCM = [], next_upperCM = [], next_lowerCM = []
 
   if (currentFrame.swingType.includes("standing")){
     var lstand = currentFrame.ropeLength - currentFrame.bodyHeight/2
@@ -280,8 +280,8 @@ function calculateSwingCM(ropeLength,phi){
 function calculateSeatedBodyUpperCM(ropeLength,phi,height,bodyPosition){
   let tmp = {}, theta = 0;
   if(bodyPosition == "leanback") theta = Math.PI/2;
-  tmp["x"] = ropeLength*Math.sin(phi) - height*Math.sin(phi)
-  tmp["y"] = -(ropeLength) + height*Math.cos(phi)
+  tmp["x"] = ropeLength*Math.sin(phi) - height*Math.sin(phi + theta)
+  tmp["y"] = -(ropeLength) + height*Math.cos(phi + theta)
   return tmp;
 }
 
@@ -296,8 +296,8 @@ function calculateSeatedBodyCM(ropeLength,phi,bodyPosition){
 function calculateSeatedBodyLowerCM(ropeLength,phi,height,bodyPosition){
   let tmp = {}, theta = 0;
   if(bodyPosition == "leanback") theta = Math.PI/2;
-  tmp["x"] = ropeLength*Math.sin(phi) + height*Math.sin(phi)
-  tmp["y"] = -(ropeLength*Math.cos(phi)) - height*Math.cos(phi)
+  tmp["x"] = ropeLength*Math.sin(phi) + height*Math.sin(phi + theta)
+  tmp["y"] = -(ropeLength*Math.cos(phi)) - height*Math.cos(phi + theta)
   return tmp;
 }
 
