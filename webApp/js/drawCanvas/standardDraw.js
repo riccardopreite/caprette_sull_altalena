@@ -70,7 +70,7 @@ var ctxTime0 = timeGraphCanvas0.getContext('2d'),
         timeGraph1 = undefined,
         speedGraph1 = undefined;
 
-function draw(){
+function standardDraw(){
   if(firstInterval != undefined) clearInterval(firstInterval)
   if(secondInterval != undefined) clearInterval(secondInterval)
   frameCounterFirst = 0;

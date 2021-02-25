@@ -77,7 +77,7 @@ function pickBest(log) {
 
     // creation and mutation
     initialStateFrame = getFormValue()
-    let newBody = new GeneticBody(geneticCtx, genetictype, initialStateFrame, best.brain)
+    let newBody = new GeneticBody(geneticCtx, initialStateFrame, best.brain)
     newBody.mutate()
 
     return newBody
