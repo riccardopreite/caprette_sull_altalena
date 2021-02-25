@@ -9,7 +9,7 @@ var n_hidden = 4
 var n_output = 2
 const MUTATION_RATE = 0.1
 // scoring
-var SCORE_BONUS = 500
+var SCORE_BONUS = 400
 var JUMP_PENALIZATION = 1
 
 
@@ -112,7 +112,7 @@ class GeneticBody {
      *                    false -> if the current reached angle is less or euqal (<=) to the previous record angle
      */
     isImproving() {
-        if (Number(this.currentFrame.w).toFixed(2) == 0.00)
+        if (Number(this.currentFrame.w).toFixed(3) == 0.000)
             return Math.abs(this.currentFrame.phi) > this.max_phi
         else
             return true
@@ -128,13 +128,21 @@ class GeneticBody {
      *          - stopTraining
      */
     updatePhiScore() {
-        if (this.isImproving()) {
+      // if(this.isImproving()){
+        if ( Number(this.currentFrame.w).toFixed(2) == 0.00) {
+
+          if(Math.abs(this.currentFrame.phi) > this.max_phi){
+            console.log("true");
+
             // update max phi angle
             this.max_phi = Math.abs(this.currentFrame.phi)
+            console.log(this.max_phi);
             // update score: constant + score proportional to the record phi
             this.score += SCORE_BONUS + Math.round(SCORE_BONUS * (this.max_phi / MAX_PHI_ANGLE))
+          }
+          // else console.log("2 flase");
         }
-
+        // else console.log("1 false");
         if (this.max_phi >= MAX_PHI_ANGLE)
             this.reachMaxPhi = true
     }

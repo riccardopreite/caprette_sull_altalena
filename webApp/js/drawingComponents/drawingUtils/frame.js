@@ -164,12 +164,12 @@ function getNextFrame(currentFrame, nextPostion){
       lnext = lsquat
 
 
-    w_next = Math.pow((lprev/lnext),2) * currentFrame.w -
-               currentFrame.gravity * (DELTA_T/2) * Math.sin(currentFrame.phi) *
-               ((lprev+lnext) / Math.pow(lprev,2))
+    w_next = Number(Math.pow((lprev/lnext),2) * currentFrame.w) -
+               Number(currentFrame.gravity * (DELTA_T/2) * Math.sin(currentFrame.phi) *
+               ((lprev+lnext) / Math.pow(lprev,2)))
 
-    phi_next = currentFrame.phi -
-             (DELTA_T/2) * currentFrame.w * ((Math.pow(lprev,2) + Math.pow(lnext,2)) / Math.pow(lnext,2))
+    phi_next = Number(currentFrame.phi)+
+             Number((DELTA_T/2) * currentFrame.w * ((Math.pow(lprev,2) + Math.pow(lnext,2)) / Math.pow(lnext,2)))
 
   } else {
     var thetaSeat = 0

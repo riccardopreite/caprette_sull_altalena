@@ -14,7 +14,7 @@ function nextGeneration() {
     // calculate fitness
     calculateFitness()
 
-    // repopulation 
+    // repopulation
     for (let i = 0; i <= POPULATION-1; i++) {
         geneticBodies[i] = pickBest(!i)
         ropes[i] = new Rope(geneticCtx, initialStateFrame)
@@ -38,22 +38,31 @@ function nextGeneration() {
 /**
  * - From backup array choose the one element with highest fitness value
  * - Log its data (score - fitness - jumps)
- * - copy it in a new Genetic Body 
+ * - copy it in a new Genetic Body
  * - mutate new genetic body
  * @returns {GeneticBody} newBody: mutated genetic Body
  */
 function pickBest(log) {
     // pick the best
+    // var index = 0
+    // var r = Math.random(1)
+    // while (r > 0) {
+    //     r = r - savedGenticBodies[index].fitness
+    //     index++
+    // }
+    // index--
     var index = 0
-    var r = Math.random(1)
-    while (r > 0) {
-        r = r - savedGenticBodies[index].fitness
-        index++
+    var maxFitness = 0
+
+    for(let i=0; i<= savedGenticBodies.length-1; i++){
+        if(savedGenticBodies[i].fitness > maxFitness){
+            maxFitness = savedGenticBodies[i].fitness
+            index = i
+        }
     }
-    index--
     let best = savedGenticBodies[index]
 
-    // log only the first time 
+    // log only the first time
     if (log) {
         if (currentRecordBody === undefined || best.score > currentRecordBody.score) {
             currentRecordBody = best
@@ -71,7 +80,7 @@ function pickBest(log) {
             stopTraining = true
             console.log(currentRecordBody)
         }
-            
+
 
         addLogMsgDOM(best.log())
     }

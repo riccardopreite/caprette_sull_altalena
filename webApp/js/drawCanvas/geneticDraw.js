@@ -1,4 +1,4 @@
-const POPULATION = 50
+const POPULATION = 25
 var stopTraining = false
 var setupCompleted = false
 
@@ -48,7 +48,7 @@ function geneticSetup() {
     initialStateFrame = getFormValue()
 
     console.log(initialStateFrame)
-
+    //LOAD GOOD BRAIN FROM BRAIN.JSON
     // init
     // initialStateFrame.bodyHeight *= 100
     for (let i = 0; i <= POPULATION - 1; i++) {
@@ -128,6 +128,9 @@ function geneticDraw() {
 
 function trainLoop() {
     geneticSetup()
+    setTimeout(function(){
+      train()
+    },100)
     // while (setupCompleted && !stopTraining)
     //     setTimeout(geneticDraw,1000)
 }
@@ -151,7 +154,7 @@ function setTiming(ind){
     }
 
   geneticCtx.setTransform(1, 0, 0, 1, 0, 0)
-  ind++
+  ind = ind + 20
   setTimeout(function(){
     setTiming(ind)
   },1)
