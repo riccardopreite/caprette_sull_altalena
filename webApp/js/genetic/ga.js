@@ -13,21 +13,19 @@ function nextGeneration() {
     calculateFitness()
 
     // repopulation 
-    addLogMsgDOM("Repopulation ...")
-    addLogMsgDOM("Mutation ...")
-    for (let i = 0; i < POPULATION; i++) {
+    for (let i = 0; i <= POPULATION-1; i++) {
         geneticBodies[i] = pickBest(!i)
         ropes[i] = new Rope(geneticCtx, initialStateFrame)
         swings[i] = new Swing(geneticCtx, initialStateFrame)
     }
 
+    addLogMsgDOM("Repopulation ...")
+    addLogMsgDOM("Mutation ...")
+
     // empty backup array
     savedGenticBodies = []
-    //?????? nextMovesArray = [] <======================================
-
 
     genCounter++
-    // draw()
 
     // DOM handling
     addLogMsgDOM("========================================")
@@ -45,7 +43,7 @@ function nextGeneration() {
 function pickBest(log) {
     // pick the best
     var index = 0
-    var r = random(1)
+    var r = Math.random()
     while (r > 0) {
         r = r - savedGenticBodies[index].fitness
         index++
@@ -55,19 +53,30 @@ function pickBest(log) {
 
     // log only the first time 
     if (log) {
-        if (best.score > currentRecordBody.score || currentRecordBody === undefined) {
+        if (currentRecordBody === undefined || best.score > currentRecordBody.score) {
             currentRecordBody = best
             updateRecordsDOM(
                 best.score,
                 best.max_phi,
-                best.jumps.lenght
+                best.jumps.length
             )
         }
+
+        // stop training if score no longer improves
+        if (best.score === currentRecordBody.score)
+            PATIENCE--
+        if (PATIENCE == 0) {
+            stopTraining = true
+            console.log(currentRecordBody)
+        }
+            
+
         addLogMsgDOM(best.log())
     }
 
 
     // creation and mutation
+    initialStateFrame = getFormValue()
     let newBody = new GeneticBody(geneticCtx, genetictype, initialStateFrame, best.brain)
     newBody.mutate()
 

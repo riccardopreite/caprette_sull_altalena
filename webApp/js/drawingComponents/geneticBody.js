@@ -49,8 +49,9 @@ class GeneticBody {
         this.showingFrameList = []
 
 
+
         // handle creation or copy
-        if(brain)
+        if (brain)
             this.brain = brain.copy()
         else
             this.brain = new NeuralNetwork(n_input, n_hidden, n_output)
@@ -99,7 +100,7 @@ class GeneticBody {
     }
 
 
-    mutate(){
+    mutate() {
         this.brain.mutate(MUTATION_RATE)
     }
 
@@ -111,7 +112,7 @@ class GeneticBody {
      *                    false -> if the current reached angle is less or euqal (<=) to the previous record angle
      */
     isImproving() {
-        if (this.currentFrame.w.toFixed(2) == 0.00)
+        if (Number(this.currentFrame.w).toFixed(2) == 0.00)
             return Math.abs(this.currentFrame.phi) > this.max_phi
         else
             return true
@@ -151,7 +152,7 @@ class GeneticBody {
     log() {
         var logMsg = ""
         logMsg += "Score: " + this.score + "<br/>"
-        logMsg += "Fitness: " + this.fitness*100 + "<br/>"
+        logMsg += "Fitness: " + this.fitness * 100 + "<br/>"
         logMsg += "Number of jumps: " + this.jumps.length + "<br/>"
         logMsg += "-------------------------------------------" + "<br/>"
         this.jumps.forEach(jump => {
@@ -211,69 +212,69 @@ class GeneticBody {
         var showingFrame = this.currentFrame.clone()
         showingFrame.scaleFrame()
         showingFrame.translateFrame()
+        showingFrame.bodyHeight *= 100
         this.showingFrameList.push(showingFrame)
 
         switch (showingFrame.bodyPosition) {
             case "stand": {
-                headX = showingFrame.swingX
-                headY = showingFrame.swingY - showingFrame.bodyHeight
+                headX = showingFrame.swingCM["x"]
+                headY = showingFrame.swingCM["y"] - showingFrame.bodyHeight
 
-                halfX = showingFrame.swingX - halfDIstanceStand
+                halfX = showingFrame.swingCM["x"] - halfDIstanceStand
                 halfY = headY + showingFrame.bodyHeight / 2
 
-                kneeX = showingFrame.swingX + halfDIstanceStand
+                kneeX = showingFrame.swingCM["x"] + halfDIstanceStand
                 kneeY = halfY + showingFrame.bodyHeight / 4
 
-                feetX = showingFrame.swingX
-                feetY = showingFrame.swingY
+                feetX = showingFrame.swingCM["x"]
+                feetY = showingFrame.swingCM["y"]
                 break
             }
             case "squat": {
-                headX = showingFrame.swingX
-                headY = showingFrame.swingY - showingFrame.bodyHeight / 2 - showingFrame.bodyHeight / 4
+                headX = showingFrame.swingCM["x"]
+                headY = showingFrame.swingCM["y"] - showingFrame.bodyHeight / 2 - showingFrame.bodyHeight / 4
 
-                halfX = showingFrame.swingX - halfDIstanceSquat
+                halfX = showingFrame.swingCM["x"] - halfDIstanceSquat
                 halfY = headY + showingFrame.bodyHeight / 2 + showingFrame.bodyHeight / 16
 
-                kneeX = showingFrame.swingX + halfDIstanceSquat
-                kneeY = showingFrame.swingY - showingFrame.bodyHeight / 4 - showingFrame.bodyHeight / 16
+                kneeX = showingFrame.swingCM["x"] + halfDIstanceSquat
+                kneeY = showingFrame.swingCM["y"] - showingFrame.bodyHeight / 4 - showingFrame.bodyHeight / 16
 
-                feetX = showingFrame.swingX
-                feetY = showingFrame.swingY
+                feetX = showingFrame.swingCM["x"]
+                feetY = showingFrame.swingCM["y"]
                 break
             }
             case "seat": {
-                headX = showingFrame.swingX
-                headY = showingFrame.swingY - showingFrame.bodyHeight / 2
+                headX = showingFrame.swingCM["x"]
+                headY = showingFrame.swingCM["y"] - showingFrame.bodyHeight / 2
 
-                halfX = showingFrame.swingX
-                halfY = showingFrame.swingY
+                halfX = showingFrame.swingCM["x"]
+                halfY = showingFrame.swingCM["y"]
 
                 kneeX = halfX + showingFrame.bodyHeight / 4
                 kneeY = halfY
 
                 feetX = kneeX
-                feetY = showingFrame.swingY + showingFrame.bodyHeight / 4
+                feetY = showingFrame.swingCM["y"] + showingFrame.bodyHeight / 4
                 break
             }
             case "leanback": {
-                headX = showingFrame.swingX - showingFrame.bodyHeight / 2
-                headY = showingFrame.swingY
+                headX = showingFrame.swingCM["x"] - showingFrame.bodyHeight / 2
+                headY = showingFrame.swingCM["y"]
 
-                halfX = showingFrame.swingX
-                halfY = showingFrame.swingY
+                halfX = showingFrame.swingCM["x"]
+                halfY = showingFrame.swingCM["y"]
 
-                kneeX = showingFrame.swingX + showingFrame.bodyHeight / 4
+                kneeX = showingFrame.swingCM["x"] + showingFrame.bodyHeight / 4
                 kneeY = halfY
 
                 feetX = kneeX + showingFrame.bodyHeight / 4
                 feetY = kneeY
 
                 handX = (headX + halfX) / 2
-                handY = showingFrame.swingY
+                handY = showingFrame.swingCM["y"]
             }
         }
-
         // head
         this.ctx.beginPath();
         this.ctx.arc(headX, headY, headRadius, 0, 2 * Math.PI);

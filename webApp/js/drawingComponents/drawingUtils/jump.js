@@ -1,4 +1,4 @@
-const DECIMAL_PRECISION = 2
+const DECIMAL_PRECISION = 4
 
 class Jump {
     constructor(prevFrame, nextFrame){
@@ -14,9 +14,9 @@ class Jump {
     toString(){
         var log = []
         log.push(
-            "t:" + this.prevFrame.t + "->" + this.nextFrame.t,
-            "phi:" + this.prevFrame.phi.toFixed(DECIMAL_PRECISION) + "->" + this.nextFrame.phi.toFixed(DECIMAL_PRECISION),
-            "w:" + this.prevFrame.w.toFixed(DECIMAL_PRECISION) + "->" + this.nextFrame.w.toFixed(DECIMAL_PRECISION),
+            "t:" + Number(this.prevFrame.t).toFixed(DECIMAL_PRECISION) + "->" + Number(this.nextFrame.t).toFixed(DECIMAL_PRECISION),
+            "phi:" + Number(this.prevFrame.phi).toFixed(DECIMAL_PRECISION) + "->" + Number(this.nextFrame.phi).toFixed(DECIMAL_PRECISION),
+            "w:" + Number(this.prevFrame.w).toFixed(DECIMAL_PRECISION) + "->" + Number(this.nextFrame.w).toFixed(DECIMAL_PRECISION),
             this.prevFrame.bodyPosition + "->" + this.nextFrame.bodyPosition
         )
         log.join(" - ")

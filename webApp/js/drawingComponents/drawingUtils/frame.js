@@ -102,6 +102,7 @@ class Frame {
         this.upperCM = {}
         this.cm = calculateStandingBodyCM(this.ropeLength,this.bodyHeight*0.5,this.phi,this.bodyPosition)
         this.lowerCM = {}
+        if(this.swingCM.x == Infinity) console.log(this);
           break;
 
         case "seated":
