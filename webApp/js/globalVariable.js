@@ -92,8 +92,8 @@ var canvasList = [];
 
 var firstInterval = undefined,
     secondInterval = undefined;
-var firstIntervalTimer = 10,
-    secondIntervalTimer = 10;
+var firstIntervalTimer = 14,
+    secondIntervalTimer = 14;
 
 /*************************
         END SECTION

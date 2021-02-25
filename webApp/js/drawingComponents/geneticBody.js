@@ -10,7 +10,7 @@ var n_output = 2
 const MUTATION_RATE = 0.1
 // scoring
 var SCORE_BONUS = 400
-var JUMP_PENALIZATION = 1
+var JUMP_PENALIZATION = 0.5
 
 
 
@@ -132,11 +132,9 @@ class GeneticBody {
         if ( Number(this.currentFrame.w).toFixed(2) == 0.00) {
 
           if(Math.abs(this.currentFrame.phi) > this.max_phi){
-            console.log("true");
 
             // update max phi angle
             this.max_phi = Math.abs(this.currentFrame.phi)
-            console.log(this.max_phi);
             // update score: constant + score proportional to the record phi
             this.score += SCORE_BONUS + Math.round(SCORE_BONUS * (this.max_phi / MAX_PHI_ANGLE))
           }

@@ -283,9 +283,9 @@ function getFormValue(){
 
       function speedUpFirst(){
         $("#speedDownParent0").removeClass("disabled");
-        firstIntervalTimer -= 10;
-        if(firstIntervalTimer <= 10) {
-          firstIntervalTimer = 10;
+        firstIntervalTimer -= 7;
+        if(firstIntervalTimer <= 7) {
+          firstIntervalTimer = 7;
           $("#speedUpParent0").addClass("disabled");
         }
         clearInterval(firstInterval)
@@ -293,9 +293,9 @@ function getFormValue(){
         }
       function speedUpSecond(){
         $("#speedDownParent1").removeClass("disabled");
-        secondIntervalTimer -= 10;
-        if(secondIntervalTimer <= 10) {
-          secondIntervalTimer = 10;
+        secondIntervalTimer -= 7;
+        if(secondIntervalTimer <= 7) {
+          secondIntervalTimer = 7;
           $("#speedUpParent1").addClass("disabled");
         }
         clearInterval(secondInterval)
@@ -312,7 +312,7 @@ function getFormValue(){
       *******************************************************/
 
       function speedDownFirst(){
-        firstIntervalTimer += 10
+        firstIntervalTimer += 7
         if(firstIntervalTimer > 100) {
           firstIntervalTimer = 100;
           $("#speedDownParent0").addClass("disabled");
@@ -322,7 +322,7 @@ function getFormValue(){
         firstInterval = setInterval(drawFirst, firstIntervalTimer);
       }
       function speedDownSecond(){
-        secondIntervalTimer += 10
+        secondIntervalTimer += 7
         if(secondIntervalTimer > 100) {
           secondIntervalTimer = 100;
           $("#speedDownParent1").addClass("disabled");

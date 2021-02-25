@@ -27,7 +27,18 @@ while(i < POPULATION){
   trainedList[i] = []
   i++
 }
-
+function deserialize(data) {
+    if (typeof data == 'string') {
+        data = JSON.parse(data);
+    }
+    let nn = new NeuralNetwork(data.input_nodes, data.hidden_nodes, data.output_nodes);
+    nn.weights_ih = Matrix.deserialize(data.weights_ih);
+    nn.weights_ho = Matrix.deserialize(data.weights_ho);
+    nn.bias_h = Matrix.deserialize(data.bias_h);
+    nn.bias_o = Matrix.deserialize(data.bias_o);
+    nn.learning_rate = data.learning_rate;
+    return nn;
+}
 // =========================================================================================
 
 function geneticSetup() {
@@ -46,13 +57,21 @@ function geneticSetup() {
 
     // get initial conditions
     initialStateFrame = getFormValue()
+  //1.1 prima  var brainJson = {"input_nodes":3,"hidden_nodes":4,"output_nodes":2,"weights_ih":{"rows":4,"cols":3,"data":[[-0.22981948965992594,-0.8820122671811479,-0.5591393644738845],[0.0836367471076036,0.597382353654988,0.7854260525615695],[0.6072952922305639,0.4307615533955418,-0.3895069932294164],[0.2228878489712689,0.3959451616284748,0.8398632459919599]]},"weights_ho":{"rows":2,"cols":4,"data":[[0.8296672581794056,-0.8503557241759725,-0.9028467227821788,0.20946229019195428],[-0.4151773783557786,-0.41551533909086036,0.9919052214582815,-0.043461746486355146]]},"bias_h":{"rows":4,"cols":1,"data":[[0.18427564488595838],[-0.791383751398465],[0.9768220038875159],[-0.12174616025908236]]},"bias_o":{"rows":2,"cols":1,"data":[[0.31699756341267227],[-0.20455819632988037]]},"learning_rate":0.1,"activation_function":{}};
 
+  //1.3  // var  brainJson = {"input_nodes":3,"hidden_nodes":4,"output_nodes":2,"weights_ih":{"rows":4,"cols":3,"data":[[-0.22981948965992594,-0.8820122671811479,-0.5591393644738845],[0.0836367471076036,0.597382353654988,0.5464117898626344],[0.6072952922305639,0.4307615533955418,-0.3895069932294164],[0.2228878489712689,0.3959451616284748,0.8398632459919599]]},"weights_ho":{"rows":2,"cols":4,"data":[[0.8296672581794056,-0.8503557241759725,-0.9028467227821788,0.20946229019195428],[-0.4151773783557786,-0.41551533909086036,0.9919052214582815,-0.043461746486355146]]},"bias_h":{"rows":4,"cols":1,"data":[[0.18427564488595838],[-0.791383751398465],[0.9768220038875159],[-0.12277338788178227]]},"bias_o":{"rows":2,"cols":1,"data":[[0.31699756341267227],[-0.20455819632988037]]},"learning_rate":0.1,"activation_function":{}}
+//1.1 nuova
+    var brainJson = {"input_nodes":3,"hidden_nodes":4,"output_nodes":2,"weights_ih":{"rows":4,"cols":3,"data":[[-0.22981948965992594,-0.8820122671811479,-0.5591393644738845],[0.0836367471076036,0.597382353654988,0.7854260525615695],[0.6072952922305639,0.4307615533955418,-0.3895069932294164],[0.2228878489712689,0.3959451616284748,0.8398632459919599]]},"weights_ho":{"rows":2,"cols":4,"data":[[0.8296672581794056,-0.8503557241759725,-0.9028467227821788,0.35700567807224415],[-0.4151773783557786,-0.41551533909086036,0.9919052214582815,-0.043461746486355146]]},"bias_h":{"rows":4,"cols":1,"data":[[0.18427564488595838],[-0.791383751398465],[0.9768220038875159],[-0.12174616025908236]]},"bias_o":{"rows":2,"cols":1,"data":[[0.31699756341267227],[-0.20455819632988037]]},"learning_rate":0.1,"activation_function":{}}
+
+    var brain = deserialize(brainJson)
+    console.log(brain);
     console.log(initialStateFrame)
     //LOAD GOOD BRAIN FROM BRAIN.JSON
     // init
     // initialStateFrame.bodyHeight *= 100
     for (let i = 0; i <= POPULATION - 1; i++) {
-        geneticBodies[i] = new GeneticBody(geneticCtx, initialStateFrame)
+      geneticBodies[i] = new GeneticBody(geneticCtx, initialStateFrame,brain)
+      // geneticBodies[i] = new GeneticBody(geneticCtx, initialStateFrame)
         ropes[i] = new Rope(geneticCtx, initialStateFrame)
         swings[i] = new Swing(geneticCtx, initialStateFrame)
     }
@@ -123,23 +142,36 @@ function geneticDraw() {
 }
 
 
-
+function goBest(){
+  while(Math.abs(geneticBodies[0].currentFrame.phi) < 1.309){
+    nextPosition = geneticBodies[0].think()
+    nextFrame = getNextFrame(geneticBodies[0].currentFrame, nextPosition)
+    trainedList[0].push(nextFrame)
+    // update
+    geneticBodies[0].update(nextFrame)
+    let next = nextFrame.clone()
+    next.scaleFrame()
+    next.translateFrame()
+    ropes[0].update(next)
+    swings[0].update(next)
+  }
+  setTimingSingle(0)
+}
 
 
 function trainLoop() {
     geneticSetup()
-    setTimeout(function(){
-      train()
-    },100)
+    // setTimeout(function(){
+    //   train()
+    // },100)
     // while (setupCompleted && !stopTraining)
     //     setTimeout(geneticDraw,1000)
 }
 
 function train() {
     while (!stopTraining)
-        geneticDraw()
-
-     setTiming(0)
+      geneticDraw()
+        setTiming(0)
 }
 
 function setTiming(ind){
@@ -158,6 +190,24 @@ function setTiming(ind){
   setTimeout(function(){
     setTiming(ind)
   },1)
+}
+
+function setTimingSingle(ind){
+  geneticCtx.clearRect(0, 0, canvas0.width, canvas0.height)
+
+  // for(var i in trainedList){
+    if(ind < trainedList[0].length){
+      geneticCtx.save()
+      drawingGeneticTrained(trainedList[0][ind],0)
+      geneticCtx.restore()
+    }
+    // }
+
+  geneticCtx.setTransform(1, 0, 0, 1, 0, 0)
+  ind = ind + 1
+  setTimeout(function(){
+    setTimingSingle(ind)
+  },5)
 }
 
 function drawingGeneticTrained(toDraw,ind){

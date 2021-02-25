@@ -37,7 +37,7 @@ var ctxTime0 = timeGraphCanvas0.getContext('2d'),
   FRAME VARIABLE
   *************************/
   var frameCounterFirst = 0, frameCounterSecond = 0;
-  const FRAME_OFFSET = 20;
+  const FRAME_OFFSET = 7;
 
   /*************************
   DRAWING COMPONENTS OBJECTS
