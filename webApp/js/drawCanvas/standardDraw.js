@@ -82,7 +82,7 @@ function standardDraw(){
 function drawFirst(){
   if(!isDrawFirst) return;
   if(toDraw0 != undefined && toDraw1 != undefined){
-    if(frameCounterFirst > toDraw0.length){
+    if(frameCounterFirst >= toDraw0.length){
       // To restart draw
       $("#selectDiv0 :input").prop( "disabled", false);
       // frameCounterFirst = 0;
@@ -92,6 +92,9 @@ function drawFirst(){
     }
     else {
       var currentFrame = toDraw0[frameCounterFirst]
+      console.log(frameCounterFirst);
+      console.log(currentFrame);
+
       if(frameCounterFirst == 0) {
         //MANIPULATING DOM
         $("#selectDiv0 :input").prop( "disabled", true);
@@ -122,7 +125,7 @@ function drawFirst(){
 function drawSecond(){
   if(!isDrawSecond) return;
   if(toDraw0 != undefined && toDraw1 != undefined){
-    if(frameCounterSecond > toDraw1.length) {
+    if(frameCounterSecond >= toDraw1.length) {
         // To restart draw
         $("#selectDiv1 :input").prop( "disabled", false);
         // frameCounterSecond = 0;
