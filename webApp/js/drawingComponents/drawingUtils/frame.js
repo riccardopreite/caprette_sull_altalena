@@ -171,6 +171,9 @@ function getNextFrame(currentFrame, nextPostion){
     phi_next = Number(currentFrame.phi)+
              Number((DELTA_T/2) * currentFrame.w * ((Math.pow(lprev,2) + Math.pow(lnext,2)) / Math.pow(lnext,2)))
 
+    // phi_next = currentFrame.phi -
+    //          (DELTA_T/2) * currentFrame.w * ((Math.pow(lprev,2) + Math.pow(lnext,2)) / Math.pow(lnext,2))
+
   } else {
     var thetaSeat = 0
     var thetaLeanback = Math.PI/2

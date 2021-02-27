@@ -5,11 +5,11 @@ var standing_positions = ["stand", "squat"]
 var seated_positions = ["seat", "leanback"]
 // Nerual Network
 var n_input = 3
-var n_hidden = 4
+var n_hidden = 8
 var n_output = 2
 const MUTATION_RATE = 0.1
 // scoring
-var SCORE_BONUS = 400
+var SCORE_BONUS = 1500
 var JUMP_PENALIZATION = 1
 
 
@@ -112,9 +112,11 @@ class GeneticBody {
      *                    false -> if the current reached angle is less or euqal (<=) to the previous record angle
      */
     isImproving() {
-        if (Number(this.currentFrame.w).toFixed(3) == 0.000)
-            return Math.abs(this.currentFrame.phi) > this.max_phi
-        else
+        if (Number(this.currentFrame.w).toFixed(4) == 0.0000) {
+            var result = Number(Math.abs(this.currentFrame.phi)).toFixed(2) > Number(this.max_phi).toFixed(2)
+            console.log(Number(Math.abs(this.currentFrame.phi)).toFixed(2) + "  " + Number(this.max_phi).toFixed(2) + "   " + result)
+            return result
+        } else
             return true
     }
 
@@ -128,17 +130,17 @@ class GeneticBody {
      *          - stopTraining
      */
     updatePhiScore() {
-      // if(this.isImproving()){
-        if ( Number(this.currentFrame.w).toFixed(2) == 0.00) {
+        // if(this.isImproving()){
+        if (Number(this.currentFrame.w).toFixed(4) == 0.0000) {
 
-          if(Math.abs(this.currentFrame.phi) > this.max_phi){
+            if ( Number(Math.abs(this.currentFrame.phi)).toFixed(2) > Number(this.max_phi).toFixed(2)) {
 
-            // update max phi angle
-            this.max_phi = Math.abs(this.currentFrame.phi)
-            // update score: constant + score proportional to the record phi
-            this.score += SCORE_BONUS + Math.round(SCORE_BONUS * (this.max_phi / MAX_PHI_ANGLE))
-          }
-          // else console.log("2 flase");
+                // update max phi angle
+                this.max_phi = Math.abs(this.currentFrame.phi)
+                // update score: constant + score proportional to the record phi
+                this.score += SCORE_BONUS + Math.round(SCORE_BONUS * (this.max_phi / MAX_PHI_ANGLE))
+            }
+            // else console.log("2 flase");
         }
         // else console.log("1 false");
         if (this.max_phi >= MAX_PHI_ANGLE)

@@ -65,6 +65,7 @@ function pickBest(log) {
     // log only the first time
     if (log) {
         if (currentRecordBody === undefined || best.score > currentRecordBody.score) {
+            patience = PATIENCE_MAX
             currentRecordBody = best
             updateRecordsDOM(
                 best.score,
@@ -74,9 +75,9 @@ function pickBest(log) {
         }
 
         // stop training if score no longer improves
-        if (best.score === currentRecordBody.score)
-            PATIENCE--
-        if (PATIENCE == 0) {
+        if (best.score <= currentRecordBody.score)
+            patience--
+        if (patience == 0) {
             stopTraining = true
             console.log(currentRecordBody)
         }

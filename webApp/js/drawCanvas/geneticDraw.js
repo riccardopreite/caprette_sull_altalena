@@ -1,4 +1,4 @@
-const POPULATION = 10
+const POPULATION = 25
 var stopTraining = false
 var setupCompleted = false
 
@@ -21,9 +21,10 @@ let swings = []
 let savedGenticBodies = []
 // log vars - stores the best body so far
 var currentRecordBody = undefined
-var PATIENCE = 5
+const PATIENCE_MAX = 15
+var patience = PATIENCE_MAX
 var genNumber = 0;
-var trainedList = [],i=0, nextGen = true;
+var trainedList = [], i=0, nextGen = true;
 trainedList[0] = []
 
 while(i < POPULATION){
@@ -66,7 +67,7 @@ function geneticSetup() {
     savedGenticBodies = []
     currentRecordBody = undefined
     genCounter = 0
-    PATIENCE = 5
+    patience = PATIENCE_MAX
     setupCompleted = false
 
 
@@ -114,6 +115,7 @@ function geneticDraw() {
     // swings[0].show()
     // geneticBodies[0].show()
     // geneticCtx.setTransform(1, 0, 0, 1, 0, 0)
+    
     // delete failing or successful bodies, store them in a backup array
     for (let i = 0; i <= geneticBodies.length - 1; i++) {
         if (geneticBodies[i].isImproving() === false || geneticBodies[i].reachMaxPhi) {
