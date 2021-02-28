@@ -67,6 +67,7 @@ function pickBest(log) {
         if (currentRecordBody === undefined || best.score > currentRecordBody.score) {
             patience = PATIENCE_MAX
             currentRecordBody = best
+            currentRecordBodyArray.push(best)
             updateRecordsDOM(
                 best.score,
                 best.max_phi,

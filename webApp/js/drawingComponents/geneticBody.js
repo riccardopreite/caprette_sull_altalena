@@ -1,5 +1,5 @@
 // limits
-var MAX_PHI_ANGLE = 1.309 // 75 degree
+var MAX_PHI_ANGLE = 0.7//1.309 // 75 degree
 // Positions set
 var standing_positions = ["stand", "squat"]
 var seated_positions = ["seat", "leanback"]
@@ -112,9 +112,11 @@ class GeneticBody {
      *                    false -> if the current reached angle is less or euqal (<=) to the previous record angle
      */
     isImproving() {
+
         if (Number(this.currentFrame.w).toFixed(4) == 0.0000) {
             var result = Number(Math.abs(this.currentFrame.phi)).toFixed(2) > Number(this.max_phi).toFixed(2)
             console.log(Number(Math.abs(this.currentFrame.phi)).toFixed(2) + "  " + Number(this.max_phi).toFixed(2) + "   " + result)
+            if(result) this.max_phi = Math.abs(this.currentFrame.phi)
             return result
         } else
             return true
@@ -136,7 +138,7 @@ class GeneticBody {
             if ( Number(Math.abs(this.currentFrame.phi)).toFixed(2) > Number(this.max_phi).toFixed(2)) {
 
                 // update max phi angle
-                this.max_phi = Math.abs(this.currentFrame.phi)
+                // this.max_phi = Math.abs(this.currentFrame.phi)
                 // update score: constant + score proportional to the record phi
                 this.score += SCORE_BONUS + Math.round(SCORE_BONUS * (this.max_phi / MAX_PHI_ANGLE))
             }
