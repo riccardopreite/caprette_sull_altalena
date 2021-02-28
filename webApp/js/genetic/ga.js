@@ -9,6 +9,7 @@
  * - update genCounter
  */
 function nextGeneration() {
+    console.log("nextGen")
 
     // calculate fitness
     calculateFitness()
@@ -32,7 +33,6 @@ function nextGeneration() {
     addLogMsgDOM("========================================")
     addLogMsgDOM("GENERATION NUMBER: " + genCounter)
     addLogMsgDOM("========================================")
-    currentRecordBody = undefined
 }
 
 /**
@@ -65,11 +65,9 @@ function pickBest(log) {
     // log only the first time
     if (log) {
         if (currentRecordBody === undefined || best.score > currentRecordBody.score) {
-            // patience = PATIENCE_MAX
+            patience = PATIENCE_MAX
             currentRecordBody = best
             currentRecordBodyArray.push(best)
-            console.log("record");
-            console.log(currentRecordBodyArray);
             updateRecordsDOM(
                 best.score,
                 best.max_phi,
@@ -78,11 +76,8 @@ function pickBest(log) {
         }
 
         // stop training if score no longer improves
-        if (best.score <= currentRecordBody.score){
-          console.log("meno patience");
-          console.log(" best: " + best.score+" current: " + currentRecordBody.score + " patience: " + patience);
-          patience--
-        }
+        if (best.score <= currentRecordBody.score)
+            patience--
         if (patience == 0) {
             stopTraining = true
             console.log(currentRecordBody)
