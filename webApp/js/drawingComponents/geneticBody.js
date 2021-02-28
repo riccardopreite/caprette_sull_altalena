@@ -113,11 +113,11 @@ class GeneticBody {
      *              update score
      *              check for phi limit
      *      FALSE -> isImproving = false
-     *  FALSE -> isImproving = true  
-     * 
+     *  FALSE -> isImproving = true
+     *
      * @returns {Boolean} isImproving
      * TRUE -> new record phi record is made or w !== 0.00
-     * FALSE -> record is NOT made 
+     * FALSE -> record is NOT made
      */
     isImproving() {
         var isImproving
@@ -128,24 +128,25 @@ class GeneticBody {
             isImproving = Math.abs(this.currentFrame.phi).toFixed(2) > this.max_phi.toFixed(2)
 
             if(isImproving){
-                console.log("IsImproving record")
+                // console.log("IsImproving record")
 
                   // new phi record is made
                   this.max_phi = Math.abs(this.currentFrame.phi)
 
                   // score update proportional to record phi
                   this.score += SCORE_BONUS + Math.round(SCORE_BONUS * (this.max_phi / MAX_PHI_ANGLE))
-  
+
                   // eventually stop in the next iteration
                   if (this.max_phi >= MAX_PHI_ANGLE)
                       this.reachMaxPhi = true
-            } else console.log("IsImproving NOT record")
+            }
+             // else console.log("IsImproving NOT record")
         } else {
              // w !== 0.00
              isImproving = true
             //  console.log("IsImproving w")
         }
-           
+
 
 
 

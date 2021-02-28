@@ -1,4 +1,4 @@
-const POPULATION = 10
+const POPULATION = 50
 var stopTraining = false
 
 // grab proper ctx <===================
@@ -95,18 +95,20 @@ function geneticSetup() {
 
 
 function geneticDraw() {
-  if(stopTraining) {
-    clearInterval(geneticInterval)
-    console.log("FINE");
-    // drawRecordBody()
-    // setTiming(trainedList,0,0)
-  } else {
-
+  // if(stopTraining) {
+  //   clearInterval(geneticInterval)
+  //   console.log("FINE");
+  //   // drawRecordBody()
+  //   // setTiming(trainedList,0,0)
+  // } else {
+  while(!stopTraining){
     // delete failing or successful bodies, store them in a backup array
     for (let i = 0; i <= geneticBodies.length - 1; i++) {
         if (geneticBodies[i].isImproving() === false || geneticBodies[i].reachMaxPhi) {
             console.log("dead")
-            savedGenticBodies.push(geneticBodies.splice(i, 1)[0])
+            // savedGenticBodies.push(geneticBodies.splice(i, 1)[0])
+            savedGenticBodies.push(geneticBodies[i])
+            geneticBodies.splice(i, 1)
             ropes.splice(i, 1)
             swings.splice(i, 1)
         }
@@ -118,7 +120,10 @@ function geneticDraw() {
     // check empty array
     if (geneticBodies.length === 0) {
         nextGeneration()
-        return
+        stopTraining = true
+        drawRecordBody()
+        // return
+        genNumber++;
     }
 
 
@@ -127,7 +132,7 @@ function geneticDraw() {
         // calculate next conditions based on next position choice
         nextPosition = geneticBodies[i].think()
         nextFrame = getNextFrame(geneticBodies[i].currentFrame, nextPosition)
-       
+
         // update
         geneticBodies[i].update(nextFrame)
         let next = nextFrame.clone()
@@ -142,11 +147,9 @@ function geneticDraw() {
 
 function drawRecordBody(){
   console.log("draw record");
-  console.log(currentRecordBodyArray);
-  currentRecordBodyArray.forEach((body) => {
-    let showingList = goBest(body.brain)
+  let showingList = goBest(currentRecordBodyArray[currentRecordBodyArray.length-1].brain)
+    console.log(showingList);
     drawBest(showingList,0)
-  });
 }
 
 function drawBest(showingList,ind){
@@ -157,35 +160,50 @@ function drawBest(showingList,ind){
   if(ind < showingList.length){
     let frame = showingList[ind]
 
+    geneticCtx.clearRect(0, 0, canvas0.width, canvas0.height)
     tmpBody.update(frame)
-
-    let next = frame.clone()
-    next.scaleFrame()
-    next.translateFrame()
-
-    tmpRope.update(next)
-    tmpSwing.update(next)
+    tmpRope.update(frame)
+    tmpSwing.update(frame)
 
     //show frame
     tmpRope.show()
     tmpSwing.show()
     tmpBody.show()
-    ind++
+    geneticCtx.setTransform(1, 0, 0, 1, 0, 0)
+    ind = ind + 10
     setTimeout(function(){
       drawBest(showingList,ind)
-    },5)
+    },1)
+  }
+  else{
+    console.log("patience");
+    console.log(patience);
+    if(patience) stopTraining = false;
+    geneticDraw()
   }
 
 }
 
 function goBest(brain){
   var tmpBody = new GeneticBody(geneticCtx, initialStateFrame,brain)
-  let trainedFrame = []
-  while(Math.abs(tmpBody.currentFrame.phi) < 1.309){
+  var tmpRope = new Rope(geneticCtx, initialStateFrame)
+  var tmpSwing = new Swing(geneticCtx, initialStateFrame)
+  let trainedFrame = [], timer = 0;
+  while(timer < 30){
     nextPosition = tmpBody.think()
     nextFrame = getNextFrame(tmpBody.currentFrame, nextPosition)
+    tmpBody.update(nextFrame)
+
+    let next = nextFrame.clone()
+    next.scaleFrame()
+    next.translateFrame()
+
+    tmpRope.update(next)
+    tmpSwing.update(next)
+
     trainedFrame.push(nextFrame)
     // update
+    timer+= 0.001
   }
   return trainedFrame;
 }
@@ -265,6 +283,3 @@ function drawingGeneticTrained(boy,rope,swing,toDraw,ind){
   swings[ind].show()
   geneticBodies[ind].show()
 }
-
-
-
