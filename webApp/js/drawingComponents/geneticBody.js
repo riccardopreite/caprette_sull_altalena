@@ -1,16 +1,16 @@
 // limits
-var MAX_PHI_ANGLE = 0.7//1.309 // 75 degree
+var MAX_PHI_ANGLE = 1.309 // 75 degree
 // Positions set
 var standing_positions = ["stand", "squat"]
 var seated_positions = ["seat", "leanback"]
 // Nerual Network
 var n_input = 3
-var n_hidden = 8
+var n_hidden = 4
 var n_output = 2
 const MUTATION_RATE = 0.1
 // scoring
-var SCORE_BONUS = 1500
-var JUMP_PENALIZATION = 1
+var SCORE_BONUS = 1000
+var JUMP_PENALIZATION = 0.5
 
 
 
@@ -114,8 +114,8 @@ class GeneticBody {
     isImproving() {
 
         if (Number(this.currentFrame.w).toFixed(4) == 0.0000) {
-            var result = Number(Math.abs(this.currentFrame.phi)).toFixed(2) > Number(this.max_phi).toFixed(2)
-            console.log(Number(Math.abs(this.currentFrame.phi)).toFixed(2) + "  " + Number(this.max_phi).toFixed(2) + "   " + result)
+            var result = Number(Math.abs(this.currentFrame.phi)).toFixed(3) > Number(this.max_phi).toFixed(3)
+            console.log(Number(Math.abs(this.currentFrame.phi)).toFixed(3) + "  " + Number(this.max_phi).toFixed(3) + "   " + result)
             if(result) this.max_phi = Math.abs(this.currentFrame.phi)
             return result
         } else
@@ -135,7 +135,7 @@ class GeneticBody {
         // if(this.isImproving()){
         if (Number(this.currentFrame.w).toFixed(4) == 0.0000) {
 
-            if ( Number(Math.abs(this.currentFrame.phi)).toFixed(2) > Number(this.max_phi).toFixed(2)) {
+            if ( Number(Math.abs(this.currentFrame.phi)).toFixed(3) > Number(this.max_phi).toFixed(3)) {
 
                 // update max phi angle
                 // this.max_phi = Math.abs(this.currentFrame.phi)
