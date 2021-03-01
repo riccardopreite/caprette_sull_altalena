@@ -11,6 +11,7 @@
 function nextGeneration() {
     console.log("nextGen")
 
+
     // calculate fitness
     calculateFitness()
 
@@ -28,6 +29,7 @@ function nextGeneration() {
     savedGenticBodies = []
 
     genCounter++
+    MaxPhiCounter = MAX_PHI_COUNTER
 
     // DOM handling
     addLogMsgDOM("========================================")
@@ -73,11 +75,9 @@ function pickBest(log) {
                 best.max_phi,
                 best.jumps.length
             )
-        }
-
-        // stop training if score no longer improves
-        if (best.score <= currentRecordBody.score)
+        } else 
             patience--
+                   
         if (patience == 0) {
             stopTraining = true
             console.log(currentRecordBody)

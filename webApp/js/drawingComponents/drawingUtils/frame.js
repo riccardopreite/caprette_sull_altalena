@@ -176,7 +176,7 @@ function getNextFrame(currentFrame, nextPostion){
 
   } else {
     var thetaSeat = 0
-    var thetaLeanback = Math.PI/2
+    var thetaLeanback = 1.57
 
     var a = currentFrame.bodyHeight/2
     var thetaPrev
