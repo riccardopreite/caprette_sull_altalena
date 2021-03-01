@@ -189,7 +189,7 @@ function goBest(brain){
   var tmpRope = new Rope(geneticCtx, initialStateFrame)
   var tmpSwing = new Swing(geneticCtx, initialStateFrame)
   let trainedFrame = [], timer = 0;
-  while(timer < 30){
+  while(timer < 30 && tmpBody.currentFrame.phi < 1.309){
     nextPosition = tmpBody.think()
     nextFrame = getNextFrame(tmpBody.currentFrame, nextPosition)
     tmpBody.update(nextFrame)

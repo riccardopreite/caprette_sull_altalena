@@ -39,10 +39,15 @@ class GeneticBody {
         this.ctx = ctx
 
         // select proper postions set
-        if (initialStateFrame.swingType.includes("standing"))
-            this.positionsSet = standing_positions
-        else
-            this.positionsSet = seated_positions
+        if (initialStateFrame.swingType.includes("standing")){
+          this.positionsSet = standing_positions
+          this.fixed = 1
+        }
+
+        else{
+          this.positionsSet = seated_positions
+          this.fixed = 1
+        }
 
         // State
         this.currentFrame = initialStateFrame
@@ -125,7 +130,7 @@ class GeneticBody {
         // check the record condition
         if (Number(this.currentFrame.w).toFixed(3) == 0.000) {
             // check for a new record
-            isImproving = Math.abs(this.currentFrame.phi).toFixed(2) > this.max_phi.toFixed(2)
+            isImproving = Math.abs(this.currentFrame.phi).toFixed(this.fixed) > this.max_phi.toFixed(this.fixed)
 
             if(isImproving){
                 // console.log("IsImproving record")
