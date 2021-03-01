@@ -189,7 +189,7 @@ function goBest(brain){
   var tmpRope = new Rope(geneticCtx, initialStateFrame)
   var tmpSwing = new Swing(geneticCtx, initialStateFrame)
   let trainedFrame = [], timer = 0;
-  while(timer < 30 && tmpBody.currentFrame.phi < 1.309){
+  while(timer < 30 && Math.abs(tmpBody.currentFrame.phi) < 1.309){
     nextPosition = tmpBody.think()
     nextFrame = getNextFrame(tmpBody.currentFrame, nextPosition)
     tmpBody.update(nextFrame)
@@ -219,9 +219,11 @@ function trainLoop() {
 }
 
 function train() {
-  geneticInterval = setInterval(geneticDraw,1)
-    // while (!stopTraining)
-    //   geneticDraw()
+  //for if then else function
+  // geneticInterval = setInterval(geneticDraw,1)
+
+  //for while function
+  geneticDraw()
 }
 
 function setTiming(generationList,gen,ind){
