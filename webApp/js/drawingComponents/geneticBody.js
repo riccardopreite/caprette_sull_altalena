@@ -10,7 +10,7 @@ var n_output = 2
 const MUTATION_RATE = 0.2
 // scoring
 var SCORE_BONUS = 1000
-var JUMP_PENALIZATION = 1
+var JUMP_PENALIZATION = 0.5
 
 
 

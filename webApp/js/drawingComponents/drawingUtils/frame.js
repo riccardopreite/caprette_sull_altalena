@@ -192,15 +192,15 @@ function getNextFrame(currentFrame, nextPostion){
     else
       thetaNext = thetaLeanback
 
-    w_next = currentFrame.w -
-             currentFrame.gravity * DELTA_T *
+    w_next = Number(currentFrame.w) -
+             Number(currentFrame.gravity * DELTA_T *
              (currentFrame.ropeLength / (Math.pow(a,2) + Math.pow(currentFrame.ropeLength,2))) *
-             Math.sin(currentFrame.phi)
+             Math.sin(currentFrame.phi))
 
-    phi_next = currentFrame.phi +
-               currentFrame.w * DELTA_T -
-               (Math.pow((a,2) / (Math.pow(a,2) + Math.pow(currentFrame.ropeLength,2)))) *
-               (thetaNext - thetaPrev)
+    phi_next = Number(currentFrame.phi) +
+               Number(currentFrame.w * DELTA_T -
+               (Math.pow(a,2)/( Math.pow(a,2) + Math.pow(currentFrame.ropeLength,2) )) *
+               (thetaNext - thetaPrev))
   }
 
   return nextFrame = new Frame(
