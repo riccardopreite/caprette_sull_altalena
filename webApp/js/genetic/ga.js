@@ -46,14 +46,15 @@ function nextGeneration() {
  */
 function pickBest(log) {
     // pick the best
-    // var index = 0
+    var index = 0
+
     // var r = Math.random(1)
     // while (r > 0) {
     //     r = r - savedGenticBodies[index].fitness
     //     index++
     // }
     // index--
-    var index = 0
+
     var maxFitness = 0
 
     for(let i=0; i<= savedGenticBodies.length-1; i++){

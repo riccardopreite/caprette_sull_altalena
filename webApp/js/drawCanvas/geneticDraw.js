@@ -1,4 +1,4 @@
-const POPULATION = 100
+const POPULATION = 250
 var stopTraining = false
 
 // grab proper ctx <===================
@@ -7,8 +7,6 @@ let initialStateFrame = null
 let genetictype = null
 
 let geneticBodies = []
-let ropes = []
-let swings = []
 let savedGenticBodies = []
 // log vars - stores the best body so far
 var currentRecordBody = undefined
@@ -17,7 +15,7 @@ var currentRecordBodyArray = []
 const PATIENCE_MAX = 5
 var patience = PATIENCE_MAX
 
-const MAX_PHI_COUNTER = 3
+const MAX_PHI_COUNTER = POPULATION / 20
 var MaxPhiCounter = MAX_PHI_COUNTER
 
 var genNumber = 0;
@@ -79,6 +77,7 @@ var brainJson = {
   "activation_function": {}
 }
 var brainTrained = deserialize(brainJson)
+
 function deserialize(data) {
   if (typeof data == 'string') {
     data = JSON.parse(data);
@@ -117,8 +116,6 @@ function geneticSetup() {
   for (let i = 0; i <= POPULATION - 1; i++) {
     // geneticBodies[i] = new GeneticBody(geneticCtx, initialStateFrame,brain)
     geneticBodies[i] = new GeneticBody(geneticCtx, initialStateFrame)
-    ropes[i] = new Rope(geneticCtx, initialStateFrame)
-    swings[i] = new Swing(geneticCtx, initialStateFrame)
   }
 
   // DOM reset
@@ -148,7 +145,8 @@ function geneticDraw() {
 
     // delete failing or successful bodies, store them in a backup array
     for (let i = 0; i <= geneticBodies.length - 1; i++) {
-      geneticBodies[i].isImprovingW()
+      if (initialStateFrame.swingType.includes("standing"))
+        geneticBodies[i].isImprovingW()
 
       if (geneticBodies[i].reachMaxPhi || geneticBodies[i].isImprovingPhi() === false) {
         console.log("deadPhi")
@@ -156,13 +154,11 @@ function geneticDraw() {
         // savedGenticBodies.push(geneticBodies.splice(i, 1)[0])
         savedGenticBodies.push(geneticBodies[i])
         geneticBodies.splice(i, 1)
-        ropes.splice(i, 1)
-        swings.splice(i, 1)
       }
     }
 
 
-   
+
     // Current population update
     updatPopulationDOM(geneticBodies.length)
 
@@ -184,21 +180,14 @@ function geneticDraw() {
 
       // update
       geneticBodies[i].update(nextFrame)
-      let next = nextFrame.clone()
-      next.scaleFrame()
-      next.translateFrame()
-      ropes[i].update(next)
-      swings[i].update(next)
     }
 
-    if (geneticBodies.length <= 3 && iterationCounter >= 10000*10) {
+    if (iterationCounter >= 10000 * 10) {
       console.log("time to kill generation");
       iterationCounter = 0
       for (let i = 0; i <= geneticBodies.length - 1; i++) {
         savedGenticBodies.push(geneticBodies[i])
         geneticBodies.splice(i, 1)
-        ropes.splice(i, 1)
-        swings.splice(i, 1)
       }
 
       nextGeneration()
