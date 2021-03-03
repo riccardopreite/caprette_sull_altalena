@@ -10,7 +10,7 @@ var n_output = 2
 const MUTATION_RATE = 0.3
 // scoring
 var SCORE_BONUS_PHI = 1500
-var SCORE_BONUS_W = 800 //1500 ====================================================
+var SCORE_BONUS_W = 2000 //1500 ====================================================
 //var JUMP_PENALIZATION = 1
 // var ALIVE_PENALIZATION = 10
 
@@ -185,7 +185,7 @@ class GeneticBody {
     //         // check for a new record
     //         //console.log("phi==0.01")
     //         //var a = (this.max_w + this.max_w * 40 / 100).toFixed(2)
-            
+
 
     //         if (isImproving) {
     //             console.log("IsImprovingW record: " + Number(this.currentFrame.w/this.max_phi).toFixed(2) + ">" + Number(this.max_w/this.max_phi).toFixed(2) + "--->" + a)

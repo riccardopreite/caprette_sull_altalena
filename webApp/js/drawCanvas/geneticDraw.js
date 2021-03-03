@@ -12,6 +12,9 @@ let savedGenticBodies = []
 var currentRecordBody = undefined
 var currentRecordBodyArray = []
 
+var showingList = [],showingIndex = 0,graphOffset = 0;
+const FRAME_GRAPH_OFFEST = 200;
+
 const PATIENCE_MAX = 5
 var patience = PATIENCE_MAX
 
@@ -23,10 +26,9 @@ var nextGen = true;
 var geneticInterval = undefined;
 
 
-var generationInterval = undefined
-var generationTimeout = 12000
-const STEPS = 10
-
+var GENERATION_TIMEOUT = 1
+const STEPS = 15
+var draw = false;
 
 
 
@@ -119,9 +121,11 @@ function geneticSetup() {
   }
 
   // DOM reset
-  showHideDiv("#geneticDiv", "#graphDiv0")
-  showHideDiv("#geneticDiv", "#formDiv0")
-  updateRecordsDOM("-", Math.abs(initialStateFrame.phi), "-")
+  // showHideDiv("#graphDiv0","#geneticDiv")
+  showHideDiv("#graphDiv0", "#formDiv0")
+  showHideDiv("#scoreContainer", "#formInputFiledContainer")
+  showHideDiv("#geneticControlButton", "#swingControlButton")
+  updateRecordsDOM("-", Math.abs(initialStateFrame.phi), "-",patience)
   updatPopulationDOM(geneticBodies.length)
   emptyLogDOM()
   addLogMsgDOM("========================================")
@@ -182,7 +186,7 @@ function geneticDraw() {
       geneticBodies[i].update(nextFrame)
     }
 
-    if (iterationCounter >= 10000 * 10) {
+    if (iterationCounter >= 10000 * 100) {
       console.log("time to kill generation");
       iterationCounter = 0
       for (let i = 0; i <= geneticBodies.length - 1; i++) {
@@ -202,56 +206,77 @@ function geneticDraw() {
 
 function drawRecordBody() {
   console.log("draw record");
-  let showingList = goBest(currentRecordBodyArray[currentRecordBodyArray.length - 1].brain)
-  //console.log(showingList);
-  drawBest(showingList, 0)
+  showingList = goBest(currentRecordBodyArray[currentRecordBodyArray.length - 1].brain)
+  graphOffset = parseInt(showingList.length/FRAME_GRAPH_OFFEST)
+
+  showingIndex = 0
+  draw=true
+  timeGraph0.resetChart()
+  speedGraph0.resetChart()
+  timeGraph0 = new Graph(ctxTime0,"Time/Angle graph","phi(rad)","time(s)","radiant angle")
+  speedGraph0 = new Graph(ctxSpeed0,"Angular Speed/Angle graph","angular speed(rad/s)","phi(rad)","angular speed")
+  drawBest()
+  // generationInterval = setInterval(drawBest,1)
+  // generationInterval = setInterval(drawBest,1)
 }
 
-function drawBest(showingList, ind) {
-  let initFrame = showingList[0]
-  var tmpBody = new GeneticBody(geneticCtx, initFrame)
-  var tmpRope = new Rope(geneticCtx, initFrame)
-  var tmpSwing = new Swing(geneticCtx, initFrame)
-  if (ind < showingList.length) {
-    let frame = showingList[ind]
-
-    geneticCtx.clearRect(0, 0, canvas0.width, canvas0.height)
-    tmpBody.update(frame)
-    tmpRope.update(frame)
-    tmpSwing.update(frame)
-
-    //show frame
-    tmpRope.show()
-    tmpSwing.show()
-    tmpBody.show()
-    geneticCtx.setTransform(1, 0, 0, 1, 0, 0)
-    ind = ind + 1
-    setTimeout(function () {
-      drawBest(showingList, ind)
-    }, 1)
-  } else {
-    console.log("patience");
-    console.log(patience);
-    if (patience) stopTraining = false;
-
-
-    // generationInterval = setInterval(function () {
-    //   console.log("timeout scaduto");
-    //   for (let i = 0; i <= geneticBodies.length - 1; i++) {
-    //     savedGenticBodies.push(geneticBodies[i])
-    //     geneticBodies.splice(i, 1)
-    //     ropes.splice(i, 1)
-    //     swings.splice(i, 1)
-    //   }
-    // }, generationTimeout)
-
-
-
-
+function trainLoop() {
+  geneticSetup()
+  setTimeout(function(){
     geneticDraw()
-  }
-
+  },100)
 }
+
+function train() {
+  //for if then else function
+  // geneticInterval = setInterval(geneticDraw,1)
+
+  //for while function
+  geneticDraw()
+}
+
+
+
+function drawBest() {
+  if(draw){
+    let initFrame = showingList[0]
+    var tmpBody = new GeneticBody(geneticCtx, initFrame)
+    var tmpRope = new Rope(geneticCtx, initFrame)
+    var tmpSwing = new Swing(geneticCtx, initFrame)
+    if (showingIndex < showingList.length) {
+      let counter = 0
+      while(counter < 5){
+        if (showingIndex >= showingList.length) break;
+        let frame = showingList[showingIndex]
+        //ADD GRAPH
+        geneticCtx.clearRect(0, 0, canvas0.width, canvas0.height)
+        tmpBody.update(frame)
+        tmpRope.update(frame)
+        tmpSwing.update(frame)
+
+        //show frame
+        tmpRope.show()
+        tmpSwing.show()
+        tmpBody.show()
+        geneticCtx.setTransform(1, 0, 0, 1, 0, 0)
+        if( (!(showingIndex % graphOffset)) || (showingIndex == (showingList.length-1)) ){
+          timeGraph0.addScatterPoint(frame.t.toFixed(3), frame.phi.toFixed(3))
+          speedGraph0.addScatterPoint(frame.phi.toFixed(3), frame.w.toFixed(3))
+        }
+        showingIndex = showingIndex + 1
+        counter++
+      }
+
+      setTimeout(drawBest,GENERATION_TIMEOUT)
+    } else {
+      console.log("patience");
+      console.log(patience);
+      if (patience) stopTraining = false;
+      geneticDraw()
+    }
+  }
+}
+
 
 function goBest(brain) {
   var tmpBody = new GeneticBody(geneticCtx, initialStateFrame, brain)
@@ -276,91 +301,4 @@ function goBest(brain) {
     timer += 0.001
   }
   return trainedFrame;
-}
-
-
-function trainLoop() {
-  geneticSetup()
-  // setTimeout(function(){
-  //   train()
-  // },100)
-  // while (setupCompleted && !stopTraining)
-  //     setTimeout(geneticDraw,1000)
-}
-
-function train() {
-  //for if then else function
-  // geneticInterval = setInterval(geneticDraw,1)
-
-  //for while function
-
-  // generationInterval = setInterval(function () {
-  //   console.log("timeout scaduto");
-  //   for (let i = 0; i <= geneticBodies.length - 1; i++) {
-  //     savedGenticBodies.push(geneticBodies[i])
-  //     geneticBodies.splice(i, 1)
-  //     ropes.splice(i, 1)
-  //     swings.splice(i, 1)
-  //   }
-  // }, generationTimeout)
-
-  geneticDraw()
-}
-
-function setTiming(generationList, gen, ind) {
-  geneticCtx.clearRect(0, 0, canvas0.width, canvas0.height)
-  let count = 1;
-  for (var boy in generationList[gen]) {
-    if (ind < generationList[gen][boy].length) {
-      geneticCtx.save()
-      drawingGeneticTrained(generationList[gen][boy][ind], boy)
-      geneticCtx.restore()
-    } else {
-      for (var boy in generationList[gen]) {
-        if (ind < generationList[gen][boy].length) {
-          count++
-        }
-      }
-    }
-  }
-
-  geneticCtx.setTransform(1, 0, 0, 1, 0, 0)
-  ind = ind + 10
-  setTimeout(function () {
-    if (count == generationList[gen].length) {
-      gen++
-      ind = 0
-    }
-    setTiming(generationList, gen, ind)
-  }, 5)
-}
-
-function setTimingSingle(gen, ind) {
-  geneticCtx.clearRect(0, 0, canvas0.width, canvas0.height)
-
-  // for(var i in trainedList){
-  if (ind < trainedList[0][gen].length) {
-    geneticCtx.save()
-    drawingGeneticTrained(trainedList[0][gen][ind], 0)
-    geneticCtx.restore()
-  } else {
-    ind = 0
-    gen++
-  }
-  // }
-
-  geneticCtx.setTransform(1, 0, 0, 1, 0, 0)
-  ind = ind + 1
-  setTimeout(function () {
-    setTimingSingle(gen, ind)
-  }, 5)
-}
-
-function drawingGeneticTrained(boy, rope, swing, toDraw, ind) {
-  geneticBodies[ind].update(toDraw)
-  ropes[ind].update(toDraw)
-  swings[ind].update(toDraw)
-  ropes[ind].show()
-  swings[ind].show()
-  geneticBodies[ind].show()
 }

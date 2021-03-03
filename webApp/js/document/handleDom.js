@@ -34,10 +34,11 @@ function uploadBrain(){
   reader.readAsText(input.files[0]);
 }
 
-function updateRecordsDOM(score, phi, jumps){
+function updateRecordsDOM(score, phi, jumps,patience){
   $("#maxScore").text(score)
   $("#maxPhi").text(phi)
   $("#jumpsCounter").text(jumps)
+  $("#patienceCounter").text(patience)
 }
 
 function updatPopulationDOM(pop){
@@ -70,7 +71,10 @@ function formMode(id){
 
   //form & graph & genetic
   showHideDiv("#formDiv"+id,"#graphDiv"+id)
-  if(!id)  showHideDiv("#formDiv"+id,"#geneticDiv")
+  showHideDiv("#formInputFiledContainer","#scoreContainer")
+  showHideDiv("#swingControlButton","#geneticControlButton")
+
+  // if(!id)  showHideDiv("#formDiv"+id,"#geneticDiv")
 
   //isDraw
   if(id) isDrawSecond = false
@@ -88,7 +92,7 @@ function drawMode(id){
 
   //form & graph & genetic
   showHideDiv("#graphDiv"+id,"#formDiv"+id)
-  if(!id)  showHideDiv("#graphDiv"+id,"#geneticDiv")
+  // if(!id)  showHideDiv("#graphDiv"+id,"#geneticDiv")
 
 
   //isDraw
@@ -276,6 +280,33 @@ function getFormValue(){
               END PLAY FUNCTION
       *******************************************************/
 
+      function skipGen(){
+        showingList = [];
+        // clearInterval(generationInterval)
+        draw = false
+        console.log("patience");
+        console.log(patience);
+        if (patience) stopTraining = false;
+        geneticDraw()
+      }
+
+      function speedUpGenetic(){
+        $("#speedDownParentGenetic").removeClass("disabled");
+        GENERATION_TIMEOUT -= 7;
+        if(GENERATION_TIMEOUT <= 1) {
+          GENERATION_TIMEOUT = 1;
+          $("#speedUpParentGenetic").addClass("disabled");
+        }
+      }
+
+      function speedDownGenetic(){
+        GENERATION_TIMEOUT += 7
+        if(GENERATION_TIMEOUT > 100) {
+          GENERATION_TIMEOUT = 100;
+          $("#speedDownParentGenetic").addClass("disabled");
+        }
+        $("#speedUpParentGenetic").removeClass("disabled");
+      }
 
       /*******************************************************
               START SPEEDUP FUNCTION
@@ -290,7 +321,7 @@ function getFormValue(){
         }
         clearInterval(firstInterval)
         firstInterval = setInterval(drawFirst, firstIntervalTimer);
-        }
+      }
       function speedUpSecond(){
         $("#speedDownParent1").removeClass("disabled");
         secondIntervalTimer -= 7;

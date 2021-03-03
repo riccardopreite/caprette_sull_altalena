@@ -74,11 +74,15 @@ function pickBest(log) {
             updateRecordsDOM(
                 best.score,
                 best.max_phi,
-                best.jumps.length
+                best.jumps.length,
+                patience
             )
-        } else 
-            patience--
-                   
+        } else{
+          patience--
+          $("#patienceCounter").text(patience)
+
+        }
+
         if (patience == 0) {
             stopTraining = true
             console.log(currentRecordBody)

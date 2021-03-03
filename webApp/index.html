@@ -64,15 +64,18 @@
         <div class="card medium cardCanvas marginTop shadow">
           <div class="card-image" id="parentCanvas0">
             <canvas id="canvas0" width="200" height="100"></canvas>
-            <a id="speedUpParent0" class="btn-floating btn-small halfway-fab waves-effect waves-light teal btn-speedUp"
-              onclick="speedUpFirst()"><i id="speedUp0" class="material-icons">fast_forward</i></a>
-            <a id="playButton0" class="btn-floating btn-small halfway-fab waves-effect waves-light teal btn-play"
-              onclick="onPausePlayDrawButton(0)"><i id="playButtonIcon0" class="material-icons">pause</i></a>
-            <a id="speedDownParent0"
-              class="btn-floating btn-small halfway-fab waves-effect waves-light teal btn-speedDown"
-              onclick="speedDownFirst()"><i id="speedDown0" class="material-icons">fast_rewind</i></a>
+            <div id="swingControlButton">
+              <a id="speedUpParent0" class="btn-floating btn-small halfway-fab waves-effect waves-light teal btn-speedUp"
+                onclick="speedUpFirst()"><i id="speedUp0" class="material-icons">fast_forward</i></a>
+              <a id="playButton0" class="btn-floating btn-small halfway-fab waves-effect waves-light teal btn-play"
+                onclick="onPausePlayDrawButton(0)"><i id="playButtonIcon0" class="material-icons">pause</i></a>
+              <a id="speedDownParent0"
+                class="btn-floating btn-small halfway-fab waves-effect waves-light teal btn-speedDown"
+                onclick="speedDownFirst()"><i id="speedDown0" class="material-icons">fast_rewind</i></a>
+            </div>
           </div>
-          <div class="card-content">
+
+          <div class="card-content" id="formInputFiledContainer">
             <div class="input-field col s12" id="selectDiv0" style="width:50%; float:left;">
               <select class="formInput" name="swingType0" id="swingType0">
                 <option value="standing" selected="selected">Standing</option>
@@ -100,11 +103,32 @@
               </p>
             </div>
           </div>
+
+          <div class="card-content" id="scoreContainer">
+            <div class="row" style="float: right;margin-right: 20em; margin-bottom:0px;">
+              <div class="col s12 recordContainer" style="margin-top: 0;float: left;">
+                <p class="recordLog">Max score: <span class="recordLog" id="maxScore">-</span></p>
+                <p class="recordLog">Max phi: <span class="recordLog" id="maxPhi">0.5</span></p>
+                <p class="recordLog">Number of jumps: <span class="recordLog" id="jumpsCounter">-</span></p>
+                <p class="recordLog">Patience: <span class="recordLog" id="patienceCounter">-</span></p>
+              </div>
+              <div id="geneticControlButton" class="">
+                <a id="speedUpParentGenetic" class="disabled btn-floating btn-small halfway-fab waves-effect waves-light teal btn-speedUp"
+                  onclick="speedUpGenetic()"><i id="speedUpGenetic" class="material-icons">fast_forward</i></a>
+                <a id="skipGenParent" class="btn-floating btn-small halfway-fab waves-effect waves-light teal btn-play"
+                onclick="skipGen()" ><i id="skipGen" class="material-icons">skip_next</i></a>
+                <a id="speedDownParentGenetic"
+                  class="btn-floating btn-small halfway-fab waves-effect waves-light teal btn-speedDown"
+                  onclick="speedDownGenetic()"><i id="speedDownGenetic" class="material-icons">fast_rewind</i></a>
+              </div>
+            </div>
+          </div>
+
         </div>
       </div>
 
       <!-- genetic container ----------------------------------------------------------------------------------------------------------->
-      <div class="col l6 m12 s12 hide" id="geneticDiv">
+      <!-- <div class="col l6 m12 s12 hide" id="geneticDiv">
         <div class="card medium cardCanvas marginTop shadow">
           <div class="card-content container">
 
@@ -133,7 +157,7 @@
 
           </div>
         </div>
-      </div>
+      </div> -->
 
 
       <!-- graph container ----------------------------------------------------------------------------------------------------------->

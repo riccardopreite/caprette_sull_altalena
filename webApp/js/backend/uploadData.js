@@ -8,12 +8,13 @@ function uploadData(){
   if(data1.swingTypeFirst.includes("genetic")) {
       if(!isEmpty(bestSwingBrain))  console.log("NON VUOTO");      //add brain and remake boy coordinate?
       else{
-        
+        socket.disconnect()
         trainLoop()
 
       }
   }
   else{
+    socket.connect()
     socket.emit('handleRequest', {data1:data1,data2:data2});
     freeze = true
     standardDraw()
