@@ -18,7 +18,7 @@ const FRAME_GRAPH_OFFEST = 200;
 const PATIENCE_MAX = 5
 var patience = PATIENCE_MAX
 
-const MAX_PHI_COUNTER = POPULATION / 20
+const MAX_PHI_COUNTER = POPULATION / 50
 var MaxPhiCounter = MAX_PHI_COUNTER
 
 var genNumber = 0;
@@ -150,7 +150,7 @@ function geneticDraw() {
     // delete failing or successful bodies, store them in a backup array
     for (let i = 0; i <= geneticBodies.length - 1; i++) {
       if (initialStateFrame.swingType.includes("standing"))
-        geneticBodies[i].isImprovingW()
+        //geneticBodies[i].isImprovingW()
 
       if (geneticBodies[i].reachMaxPhi || geneticBodies[i].isImprovingPhi() === false) {
         console.log("deadPhi")
