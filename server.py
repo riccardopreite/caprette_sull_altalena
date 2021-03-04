@@ -58,9 +58,11 @@ def test_message(message):
 @socket.on('handleGeneticRequest', namespace='/test')
 def handleRequest(message):
     initBodyObj()
-    form1 = message["data1"]
-    form2 = message["data2"]
-    #DOING GENETIC BOY STUFF
+    form1 = message["data"]
+    print("CIAOULHADSIFFFFFFFFFFFFFFFFFFFFFFFFFF")
+
+    runGeneticType(form1)
+
 
 @socket.on('handleRequest', namespace='/test')
 def handleRequest(message):
@@ -83,6 +85,62 @@ def handleRequest(message):
     initBodyObj()
     form2 = message["data2"]
     runFirstType(form2)
+
+
+def runGeneticType(form):
+    gravity = float(form["gravity"])
+    heightBody = float(form["height"])
+    massBody = float(form["weigth"])/10
+    ropeLength = float(form["ropeLength"])
+    initialSwingDegree = float(form["phi"])
+    initialAngluarSpeed = float(form["w"])
+    swingTypeFirst = form["swingTypeFirst"]
+    isSecond = form["isSecond"]
+    massUpper = massBody/2
+    massLower = massBody/2
+    bodyHeightUpper = heightBody*0.6
+    bodyHeightLower = heightBody*0.4
+    bodyObj[isSecond]["enviroment"] = Environment.Environment(gravity,dissipativeForce,
+     initialSwingDegree, initialAngluarSpeed, maxOscillationDegree,
+     massBody, heightBody, massSwing, ropeLength
+    )
+
+    bodyObj[isSecond]["standingSwing"] = StandingSwing.StandingSwing(bodyObj[isSecond]["enviroment"])
+    bodyObj[isSecond]["seatedSwing"] = SeatedSwing.SeatedSwing(bodyObj[isSecond]["enviroment"])
+
+    bodyObj[isSecond]["realisticSwing"] = RealisticSwing.RealisticSwing(bodyObj[isSecond]["enviroment"], massSwing,
+     massUpper, massLower,
+     bodyHeightUpper, bodyHeightLower,
+     theta, theta0
+    )
+
+    if(isSecond):
+        standingString = "standingSecond"
+        seatedString = "seatedSecond"
+        realisticString = "realisticSecond"
+        combinedString = "combinedSecond"
+    else:
+        standingString = "standing"
+        seatedString = "seated"
+        realisticString = "realistic"
+        combinedString = "combined"
+
+    if(swingTypeFirst == "standing"):
+        bodyObj[isSecond]["standingSwing"].calculateSwingMotion("symplectic", no_simulationSteps)
+        emit("secondCalculated", bodyObj[isSecond]["standingSwing"].frame_list);
+    elif(swingTypeFirst == "seated"):
+        bodyObj[isSecond]["seatedSwing"].calculateSwingMotion("symplectic", no_simulationSteps)
+        emit("secondCalculated", bodyObj[isSecond]["seatedSwing"].frame_list);
+    elif(swingTypeFirst == "realistic"):
+        bodyObj[isSecond]["realisticSwing"].theta0 = 0.1
+        bodyObj[isSecond]["realisticSwing"].theta = 1.5
+        bodyObj[isSecond]["realisticSwing"].calculateSwingMotion("realistic", no_simulationSteps)
+        emit("secondCalculated", bodyObj[isSecond]["realisticSwing"].frame_listRealistic);
+    elif(swingTypeFirst == "combined"):
+        bodyObj[isSecond]["realisticSwing"].theta0 = 0.1
+        bodyObj[isSecond]["realisticSwing"].theta = 1.5
+        bodyObj[isSecond]["realisticSwing"].calculateSwingMotion("combined", no_simulationSteps)
+        emit("secondCalculated", bodyObj[isSecond]["realisticSwing"].frame_listCombined);
 
 def runFirstType(form):
     print("FORM")

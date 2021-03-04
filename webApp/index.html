@@ -65,7 +65,7 @@
           <div class="card-image" id="parentCanvas0">
             <canvas id="canvas0" width="200" height="100"></canvas>
             <div id="swingControlButton">
-              <a id="speedUpParent0" class="btn-floating btn-small halfway-fab waves-effect waves-light teal btn-speedUp"
+              <a id="speedUpParent0" class="disabled btn-floating btn-small halfway-fab waves-effect waves-light teal btn-speedUp"
                 onclick="speedUpFirst()"><i id="speedUp0" class="material-icons">fast_forward</i></a>
               <a id="playButton0" class="btn-floating btn-small halfway-fab waves-effect waves-light teal btn-play"
                 onclick="onPausePlayDrawButton(0)"><i id="playButtonIcon0" class="material-icons">pause</i></a>
@@ -107,12 +107,15 @@
           <div class="card-content" id="scoreContainer">
             <div class="row" style="float: right;margin-right: 20em; margin-bottom:0px;">
               <div class="col s12 recordContainer" style="margin-top: 0;float: left;">
+                <a id="saveGenetic" style="right: 180px;"class="disabled btn-floating btn-small halfway-fab waves-effect waves-light teal btn-speedDown"
+                onclick="saveBrain()"><i id="saveIconGenetic" class="material-icons">save</i></a>
                 <p class="recordLog">Max score: <span class="recordLog" id="maxScore">-</span></p>
                 <p class="recordLog">Max phi: <span class="recordLog" id="maxPhi">0.5</span></p>
                 <p class="recordLog">Number of jumps: <span class="recordLog" id="jumpsCounter">-</span></p>
                 <p class="recordLog">Patience: <span class="recordLog" id="patienceCounter">-</span></p>
               </div>
               <div id="geneticControlButton" class="">
+
                 <a id="speedUpParentGenetic" class="disabled btn-floating btn-small halfway-fab waves-effect waves-light teal btn-speedUp"
                   onclick="speedUpGenetic()"><i id="speedUpGenetic" class="material-icons">fast_forward</i></a>
                 <a id="skipGenParent" class="btn-floating btn-small halfway-fab waves-effect waves-light teal btn-play"
@@ -271,7 +274,7 @@
         <div class="card medium cardCanvas marginBottom shadow">
           <div class="card-image" id="parentCanvas1">
             <canvas id="canvas1" width="200" height="100"></canvas>
-            <a id="speedUpParent1" class="btn-floating btn-small halfway-fab waves-effect waves-light teal btn-speedUp"
+            <a id="speedUpParent1" class="disabled btn-floating btn-small halfway-fab waves-effect waves-light teal btn-speedUp"
               onclick="speedUpSecond()"><i id="speedUp1" class="material-icons">fast_forward</i></a>
             <a id="playButton1" class="btn-floating btn-small halfway-fab waves-effect waves-light teal btn-play"
               onclick="onPausePlayDrawButton(1)"><i id="playButtonIcon1" class="material-icons">pause</i></a>

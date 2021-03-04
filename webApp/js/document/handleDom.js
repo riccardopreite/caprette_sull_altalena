@@ -12,16 +12,25 @@ document.addEventListener("click", e => {
 *******************************************************/
 
 function saveBrain(){
-  var bestBrain = {}
   //add get the best
 
   // best is stored in ga.js
   // call best.getModel() to receive the list of Frames <======================================================================
-
-  var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(bestBrain));
+  if(currentRecordBody === undefined) {
+    alert("Best boy doesn't exist")
+    return
+  }
+  //to save brain
+  var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(currentRecordBody.brain));
+  var namefile = "brain.json"
+  // var dataStr = "data:text/text;charset=utf-8,\nTime(s)\tPhi(rad)\tAngular velocity (rad/s)"
+  // var namefile = firstMethode.replace("genetic","")+".txt"
+  // for(var i in toDraw0){
+  //   dataStr = dataStr + "\n" + Number(toDraw0[i].t).toFixed(8) + "\t" + Number(toDraw0[i].phi).toFixed(8) + "\t" + Number(toDraw0[i].w).toFixed(8)
+  // }
   var dlAnchorElem = document.getElementById('downloadAnchorElem');
-  dlAnchorElem.setAttribute("href",     dataStr     );
-  dlAnchorElem.setAttribute("download", "brain.json");
+  dlAnchorElem.setAttribute("href",dataStr);
+  dlAnchorElem.setAttribute("download", namefile);
   dlAnchorElem.click();
 }
 
@@ -30,6 +39,7 @@ function uploadBrain(){
   var reader = new FileReader();
   reader.onload = function(event){
     bestSwingBrain = JSON.parse(event.target.result);
+    brainTrained = deserialize(bestSwingBrain)
   }
   reader.readAsText(input.files[0]);
 }
@@ -285,7 +295,10 @@ function getFormValue(){
         // clearInterval(generationInterval)
         draw = false
         console.log("patience");
-        console.log(patience);
+        if (patience) stopTraining = false;
+        else{
+          $("#saveGenetic").removeClass("disabled");
+        }
         if (patience) stopTraining = false;
         geneticDraw()
       }

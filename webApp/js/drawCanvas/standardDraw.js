@@ -37,7 +37,7 @@ var ctxTime0 = timeGraphCanvas0.getContext('2d'),
   FRAME VARIABLE
   *************************/
   var frameCounterFirst = 0, frameCounterSecond = 0;
-  const FRAME_OFFSET = 7;
+  const FRAME_OFFSET = 1;
 
   /*************************
   DRAWING COMPONENTS OBJECTS
@@ -92,9 +92,7 @@ function drawFirst(){
     }
     else {
       var currentFrame = toDraw0[frameCounterFirst]
-      console.log(frameCounterFirst);
-      console.log(currentFrame);
-
+      let graphOffset0 = parseInt(toDraw0.length/FRAME_GRAPH_OFFEST)
       if(frameCounterFirst == 0) {
         //MANIPULATING DOM
         $("#selectDiv0 :input").prop( "disabled", true);
@@ -114,9 +112,10 @@ function drawFirst(){
         obj.show()
       })
       ctx0.setTransform(1,0,0,1,0,0)
-      timeGraph0.addScatterPoint(currentFrame.t.toFixed(3), currentFrame.phi.toFixed(3))
-      // speed try
-      speedGraph0.addScatterPoint(currentFrame.phi.toFixed(3), currentFrame.w.toFixed(3))
+      if( (!(frameCounterFirst % graphOffset0)) || (frameCounterFirst == (toDraw0.length-1)) ){
+        timeGraph0.addScatterPoint(currentFrame.t.toFixed(3), currentFrame.phi.toFixed(3))
+        speedGraph0.addScatterPoint(currentFrame.phi.toFixed(3), currentFrame.w.toFixed(3))
+      }
       frameCounterFirst += FRAME_OFFSET;
     }
   }
@@ -135,6 +134,7 @@ function drawSecond(){
     }
     else {
       var currentFrame = toDraw1[frameCounterSecond]
+      let graphOffset1 = parseInt(toDraw1.length/FRAME_GRAPH_OFFEST)
       if(frameCounterSecond == 0) {
         //MANIPULATING DOM
         $("#selectDiv1 :input").prop( "disabled", true);
@@ -155,10 +155,12 @@ function drawSecond(){
         obj.show()
       })
       ctx1.setTransform(1,0,0,1,0,0)
-      timeGraph1.addScatterPoint(currentFrame.t.toFixed(3), currentFrame.phi.toFixed(3))
+      if( (!(frameCounterSecond % graphOffset1)) || (frameCounterSecond == (toDraw1.length-1)) ){
+        timeGraph1.addScatterPoint(currentFrame.t.toFixed(3), currentFrame.phi.toFixed(3))
+        speedGraph1.addScatterPoint(currentFrame.phi.toFixed(3), currentFrame.w.toFixed(3))
+      }
       // speed try
       // speedGraph1.addScatterPoint(currentFrame.w.toFixed(3), currentFrame.phi.toFixed(3))
-      speedGraph1.addScatterPoint(currentFrame.phi.toFixed(3), currentFrame.w.toFixed(3))
       frameCounterSecond += FRAME_OFFSET;
     }
   }

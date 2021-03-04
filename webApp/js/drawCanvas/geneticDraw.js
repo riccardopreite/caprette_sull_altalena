@@ -78,7 +78,7 @@ var brainJson = {
   "learning_rate": 0.1,
   "activation_function": {}
 }
-var brainTrained = deserialize(brainJson)
+var brainTrained = null //deserialize(brainJson)
 
 function deserialize(data) {
   if (typeof data == 'string') {
@@ -112,14 +112,18 @@ function geneticSetup() {
   // get initial conditions
   initialStateFrame = getFormValue()
 
-  //LOAD GOOD BRAIN FROM BRAIN.JSON
   // init
-  // initialStateFrame.bodyHeight *= 100
+  if(brainTrained != null){
+    console.log("brain uploaded");
+  }
   for (let i = 0; i <= POPULATION - 1; i++) {
-    // geneticBodies[i] = new GeneticBody(geneticCtx, initialStateFrame,brain)
+    if(brainTrained != null){
+      geneticBodies[i] = new GeneticBody(geneticCtx, initialStateFrame,brainTrained)
+      geneticBodies[i].mutate()
+    }
+    else
     geneticBodies[i] = new GeneticBody(geneticCtx, initialStateFrame)
   }
-
   // DOM reset
   // showHideDiv("#graphDiv0","#geneticDiv")
   showHideDiv("#graphDiv0", "#formDiv0")
@@ -136,21 +140,14 @@ function geneticSetup() {
 
 
 function geneticDraw() {
-  // if(stopTraining) {
-  //   clearInterval(geneticInterval)
-  //   console.log("FINE");
-  //   // drawRecordBody()
-  //   // setTiming(trainedList,0,0)
-  // } else {
   var iterationCounter = 0;
   while (!stopTraining) {
-    // delete failing or successful bodies, store them in a backup array
     iterationCounter++;
 
     // delete failing or successful bodies, store them in a backup array
     for (let i = 0; i <= geneticBodies.length - 1; i++) {
-      if (initialStateFrame.swingType.includes("standing"))
-        //geneticBodies[i].isImprovingW()
+      // if (initialStateFrame.swingType.includes("standing"))
+      //   geneticBodies[i].isImprovingW()
 
       if (geneticBodies[i].reachMaxPhi || geneticBodies[i].isImprovingPhi() === false) {
         console.log("deadPhi")
@@ -186,7 +183,7 @@ function geneticDraw() {
       geneticBodies[i].update(nextFrame)
     }
 
-    if (iterationCounter >= 10000 * 100) {
+    if (iterationCounter >= 10000 * 10) {
       console.log("time to kill generation");
       iterationCounter = 0
       for (let i = 0; i <= geneticBodies.length - 1; i++) {
@@ -215,23 +212,21 @@ function drawRecordBody() {
   speedGraph0.resetChart()
   timeGraph0 = new Graph(ctxTime0,"Time/Angle graph","phi(rad)","time(s)","radiant angle")
   speedGraph0 = new Graph(ctxSpeed0,"Angular Speed/Angle graph","angular speed(rad/s)","phi(rad)","angular speed")
-  drawBest()
-  // generationInterval = setInterval(drawBest,1)
-  // generationInterval = setInterval(drawBest,1)
+  if (patience == 0) {
+      stopTraining = true
+      draw = false
+      compareSwingDraw()
+  }
+  else drawBest()
 }
 
 function trainLoop() {
   geneticSetup()
-  setTimeout(function(){
-    geneticDraw()
-  },100)
+  setTimeout(train,100)
 }
 
 function train() {
-  //for if then else function
-  // geneticInterval = setInterval(geneticDraw,1)
-
-  //for while function
+  $("#saveGenetic").addClass("disabled");
   geneticDraw()
 }
 
@@ -269,9 +264,10 @@ function drawBest() {
 
       setTimeout(drawBest,GENERATION_TIMEOUT)
     } else {
-      console.log("patience");
-      console.log(patience);
       if (patience) stopTraining = false;
+      else{
+        $("#saveGenetic").removeClass("disabled");
+      }
       geneticDraw()
     }
   }

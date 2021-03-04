@@ -11,6 +11,18 @@ socket.on('firstsCalculated', function(msg, cb) {
   // initGraphMeasure()
 });
 
+socket.on('secondCalculated', function(msg, cb) {
+  console.log('secondCalculated');
+  drawMode(0)
+  drawMode(1)
+  showHideDiv("#formInputFiledContainer","#scoreContainer")
+  showHideDiv("#swingControlButton","#geneticControlButton")
+  toDraw0 = showingList
+  toDraw1 = toCanvasCoordinates(msg,ctx1,bodyHeight1,gravity1,mass1,ropeLength1,firstMethode.replace("genetic",""))
+  freeze = false
+  // initGraphMeasure()
+});
+
 socket.on('standing', function(msg, cb) {
   console.log('standing');
   canvasList[0]["standing_frameList"] = toCanvasCoordinates(msg,ctx0,bodyHeight0,gravity0,mass0,ropeLength0,'standing')
