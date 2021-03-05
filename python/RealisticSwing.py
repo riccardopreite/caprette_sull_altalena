@@ -5,7 +5,10 @@ class RealisticSwing(Environment.Environment):
     I2 = N = totalMass =I1 = swingMass = bodyHeightUpper = bodyHeightLower = massUpper = massLower = degreeBodyRotation = 0.
     swingMotion = None
     def __init__(self, environment, swingMass, massUpper, massLower,bodyHeightUpper,bodyHeightLower, theta, theta0):
-        self.environment = environment
+
+        super().__init__(environment.gravity, environment.dissipativeForce, environment.swingDegree,
+        environment.angluarSpeed, environment.maxOscillationDegree, environment.massBody, environment.heightBody, environment.massSwing, environment.ropeLength)
+
         self.coordinates_upperBody = []
         self.coordinates_lowerBody = []
         self.coordinates_swing = []
@@ -23,7 +26,7 @@ class RealisticSwing(Environment.Environment):
         self.totalMass = self.swingMass + self.massUpper + self.massLower # massa totale
         self.N = self.massUpper * self.bodyHeightUpper - self.massLower * self.bodyHeightLower #Nome semplificato
 
-        self.I1 = self.totalMass * self.environment.ropeLength**2 # momento d'inerzia I1
+        self.I1 = self.totalMass * self.ropeLength**2 # momento d'inerzia I1
         self.I2 = self.massUpper * self.bodyHeightUpper**2 + self.massLower * self.bodyHeightLower**2 # mom d'inerzia I2
 
 
@@ -34,15 +37,15 @@ class RealisticSwing(Environment.Environment):
 
     def calculateSwingMotion(self,integrationMethode,steps):
         if integrationMethode == "realistic":
-            self.environment.utils.symplectic_realistic(self,steps)
+            self.utils.symplectic_realistic(self,steps)
         elif integrationMethode == "combined":
-            self.environment.utils.symplectic_combined(self,steps)
+            self.utils.symplectic_combined(self,steps)
 
     def calculate_I1(self):
-        self.I1 = self.totalMass * self.environment.ropeLength**2 # momento d'inerzia I1
+        self.I1 = self.totalMass * self.ropeLength**2 # momento d'inerzia I1
 
     def w_realistic(self, phi): # equazione del moto
-        numeratore = (-self.totalMass * self.environment.ropeLength * self.environment.gravity * math.sin(phi) + self.N * self.environment.gravity * math.sin(self.theta + phi))
-        denominatore = (self.I1 + self.I2 - 2 * self.environment.ropeLength * self.N * math.cos(self.theta))
+        numeratore = (-self.totalMass * self.ropeLength * self.gravity * math.sin(phi) + self.N * self.gravity * math.sin(self.theta + phi))
+        denominatore = (self.I1 + self.I2 - 2 * self.ropeLength * self.N * math.cos(self.theta))
         self.w_dot = numeratore / denominatore
         return self.w_dot

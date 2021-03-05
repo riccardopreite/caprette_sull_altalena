@@ -3,8 +3,10 @@ from . import Environment
 
 class SeatedSwing(Environment.Environment):
     def __init__(self, environment):
-        self.environment = environment
-        self.bodySegment = (environment.heightBody)/2
+        # self.environment = environment
+        super().__init__(environment.gravity, environment.dissipativeForce, environment.swingDegree,
+        environment.angluarSpeed, environment.maxOscillationDegree, environment.massBody, environment.heightBody, environment.massSwing, environment.ropeLength)
+        self.bodySegment = (self.heightBody)/2
 
         # degreeBodyRotation = theta
         self.degreeBodyRotation = math.pi/2
@@ -25,7 +27,7 @@ class SeatedSwing(Environment.Environment):
     @return (int) = the new angularAcceleration value
     '''
     def get_angularAcceleration(self, phi):
-        self.angularAcceleration = -((self.environment.gravity * self.environment.ropeLength) / (self.environment.ropeLength**2 + self.bodySegment**2)) * math.sin(phi)
+        self.angularAcceleration = -((self.gravity * self.ropeLength) / (self.ropeLength**2 + self.bodySegment**2)) * math.sin(phi)
         return self.angularAcceleration
 
 
@@ -37,4 +39,4 @@ class SeatedSwing(Environment.Environment):
     def calculateSwingMotion(self,integrationMethode,steps):
 
         if integrationMethode == "symplectic":
-            self.environment.utils.symplectic_seated(self,steps)
+            self.utils.symplectic_seated(self,steps)

@@ -3,10 +3,12 @@ from . import Environment
 
 class StandingSwing(Environment.Environment):
     def __init__(self, environment):
-        self.environment = environment
+        # self.environment = environment
+        super().__init__(environment.gravity, environment.dissipativeForce, environment.swingDegree,
+        environment.angluarSpeed, environment.maxOscillationDegree, environment.massBody, environment.heightBody, environment.massSwing, environment.ropeLength)
 
         # TODO baricenter should be indipendet from ropeLength <==========
-        (self.barycenterSquat, self.barycenterStanding) = self.getBarycenter(self.environment)
+        (self.barycenterSquat, self.barycenterStanding) = self.getBarycenter()
         # current body position
         self.currentBarycenter = self.barycenterSquat
 
@@ -19,14 +21,14 @@ class StandingSwing(Environment.Environment):
     @return = couple of baricenter squat and stand
     '''
     # TODO calculate barycenter based on height
-    def getBarycenter(self, enviroment):
+    def getBarycenter(self):
         difference_StandingSquat = 0.4
 
         #MODIFICA: DETERMINAZIONE DEL CENTRO DI MASSA DEL BAMBINO A PARTIRE DA ALTEZZA E LUNGHEZZA CORDA
         # CENTRO DI MASSA QUANDO BIMBO IN PIEDI = LUNGH. CORDA - ALTEZZA/2
         # QUANDO SI ACCOVACCIA OVVIAMENTE LA DISTANZA TRA CENTRO DI MASSA BAMBINO E FULCRO CORDA AUMENTA
         # DI UNA DIFFERENCE_STANDINQSQUAT
-        lstand = enviroment.ropeLength - enviroment.heightBody / 2
+        lstand = self.ropeLength - self.heightBody / 2
         lsquat = lstand + difference_StandingSquat
 
         return (lsquat, lstand)
@@ -40,7 +42,7 @@ class StandingSwing(Environment.Environment):
     '''
     # TODO change name <===============================
     def get_angularAcceleration(self,phi):
-        self.angularAcceleration = -(self.environment.gravity / self.currentBarycenter) * math.sin(phi)
+        self.angularAcceleration = -(self.gravity / self.currentBarycenter) * math.sin(phi)
         return self.angularAcceleration
 
 
@@ -52,4 +54,4 @@ class StandingSwing(Environment.Environment):
     def calculateSwingMotion(self,integrationMethod,steps):
 
         if integrationMethod == "symplectic":
-            self.environment.utils.symplectic_standing(self,steps)
+            self.utils.symplectic_standing(self,steps)

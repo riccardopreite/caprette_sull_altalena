@@ -42,11 +42,11 @@ class Utility:
 
         # variable setpup ==========================================================
         t = 0.0
-        phi = standingSwing.environment.initialSwingDegree
+        phi = standingSwing.initialSwingDegree
         print("OHHHHHHHHHHHHHHHHH")
         print(phi)
         prev_phi = prev_w = 0
-        w = standingSwing.environment.initialAngluarSpeed
+        w = standingSwing.initialAngluarSpeed
         lstand = standingSwing.barycenterStanding
         lsquat = standingSwing.barycenterSquat
         bodyPosition = self.SQUAT
@@ -58,8 +58,8 @@ class Utility:
         bodyCM = {"x":x,"y":y}
 
         #COORD SWING
-        x1 = standingSwing.environment.ropeLength*math.sin(phi)
-        y1 = -(standingSwing.environment.ropeLength*math.cos(phi))
+        x1 = standingSwing.ropeLength*math.sin(phi)
+        y1 = -(standingSwing.ropeLength*math.cos(phi))
         swingCM = {"x":x1,"y":y1}
 
         frame = {"t":t, "phi":phi, "w":w, "cm":bodyCM, "bodyPosition":bodyPosition, "swingCM":swingCM,"lowerCM":{},"upperCM":{}}
@@ -88,8 +88,8 @@ class Utility:
             bodyCM = {"x":x,"y":y}
 
             # MODIFICHE COORDINATE SWING
-            x1 = standingSwing.environment.ropeLength*math.sin(phi)
-            y1 = -(standingSwing.environment.ropeLength*math.cos(phi))
+            x1 = standingSwing.ropeLength*math.sin(phi)
+            y1 = -(standingSwing.ropeLength*math.cos(phi))
             swingCM = {"x":x1,"y":y1}
 
             foutStanding.write("\n" + str.format('{0:.8f}', t) + "\t" + str.format('{0:.8f}' , phi) + "\t" + str.format('{0:.8f}' , w))
@@ -123,12 +123,12 @@ class Utility:
 
         foutStanding.close()
         # final values
-        standingSwing.environment.angularSpeed = w
-        standingSwing.environment.swingDegree = phi
+        standingSwing.angularSpeed = w
+        standingSwing.swingDegree = phi
 
         print("Standing, time (s), phi (rad), w (rad/s): " +
-        str(steps) + " " + str(standingSwing.environment.swingDegree) + " " +
-        str(standingSwing.environment.angularSpeed))
+        str(steps) + " " + str(standingSwing.swingDegree) + " " +
+        str(standingSwing.angularSpeed))
 
 
      '''
@@ -149,11 +149,11 @@ class Utility:
         # variable setpup =======================================================
         # starting time
         t = 0.0
-        phi = seatedSwing.environment.initialSwingDegree
-        w = seatedSwing.environment.initialAngluarSpeed
+        phi = seatedSwing.initialSwingDegree
+        w = seatedSwing.initialAngluarSpeed
         prev_w = 0
         a = seatedSwing.bodySegment
-        l = seatedSwing.environment.ropeLength
+        l = seatedSwing.ropeLength
         bodyPosition = self.LEANBACK
 
 
@@ -164,17 +164,17 @@ class Utility:
 
         #MODIFICHE COORDINATE SEATED:
         #UPPER BODY
-        x1 = seatedSwing.environment.ropeLength*math.sin(phi) - seatedSwing.bodySegment*math.sin(phi + seatedSwing.degreeBodyRotation)
-        y1 = -(seatedSwing.environment.ropeLength*math.cos(phi)) + seatedSwing.bodySegment*math.cos(phi + seatedSwing.degreeBodyRotation)
+        x1 = seatedSwing.ropeLength*math.sin(phi) - seatedSwing.bodySegment*math.sin(phi + seatedSwing.degreeBodyRotation)
+        y1 = -(seatedSwing.ropeLength*math.cos(phi)) + seatedSwing.bodySegment*math.cos(phi + seatedSwing.degreeBodyRotation)
         upperCM = {"x":x1,"y":y1}
         #LOWER BODY
-        x2 = seatedSwing.environment.ropeLength*math.sin(phi) + seatedSwing.bodySegment*math.sin(phi + seatedSwing.degreeBodyRotation)
-        y2 = -(seatedSwing.environment.ropeLength*math.cos(phi)) - seatedSwing.bodySegment*math.cos(phi + seatedSwing.degreeBodyRotation)
+        x2 = seatedSwing.ropeLength*math.sin(phi) + seatedSwing.bodySegment*math.sin(phi + seatedSwing.degreeBodyRotation)
+        y2 = -(seatedSwing.ropeLength*math.cos(phi)) - seatedSwing.bodySegment*math.cos(phi + seatedSwing.degreeBodyRotation)
         lowerCM = {"x":x2,"y":y2}
 
         #SWING
-        x3 = seatedSwing.environment.ropeLength*math.sin(phi)
-        y3 = -(seatedSwing.environment.ropeLength*math.cos(phi))
+        x3 = seatedSwing.ropeLength*math.sin(phi)
+        y3 = -(seatedSwing.ropeLength*math.cos(phi))
         swingCM = {"x":x3,"y":y3}
         bodyCM = swingCM
 
@@ -208,18 +208,18 @@ class Utility:
 
             #CALCOLO COORD SEATED
             #UPPER BODY
-            x1 = seatedSwing.environment.ropeLength*math.sin(phi) - seatedSwing.bodySegment*math.sin(phi + seatedSwing.degreeBodyRotation)
-            y1 = -(seatedSwing.environment.ropeLength*math.cos(phi)) + seatedSwing.bodySegment*math.cos(phi + seatedSwing.degreeBodyRotation)
+            x1 = seatedSwing.ropeLength*math.sin(phi) - seatedSwing.bodySegment*math.sin(phi + seatedSwing.degreeBodyRotation)
+            y1 = -(seatedSwing.ropeLength*math.cos(phi)) + seatedSwing.bodySegment*math.cos(phi + seatedSwing.degreeBodyRotation)
             upperCM = {"x":x1,"y":y1}
             #LOWER BODY
-            x2 = seatedSwing.environment.ropeLength*math.sin(phi) + seatedSwing.bodySegment*math.sin(phi + seatedSwing.degreeBodyRotation)
-            y2 = -(seatedSwing.environment.ropeLength*math.cos(phi)) - seatedSwing.bodySegment*math.cos(phi + seatedSwing.degreeBodyRotation)
+            x2 = seatedSwing.ropeLength*math.sin(phi) + seatedSwing.bodySegment*math.sin(phi + seatedSwing.degreeBodyRotation)
+            y2 = -(seatedSwing.ropeLength*math.cos(phi)) - seatedSwing.bodySegment*math.cos(phi + seatedSwing.degreeBodyRotation)
             lowerCM = {"x":x2,"y":y2}
             #BODY CM
 
             #SWING
-            x3 = seatedSwing.environment.ropeLength*math.sin(phi)
-            y3 = -(seatedSwing.environment.ropeLength*math.cos(phi))
+            x3 = seatedSwing.ropeLength*math.sin(phi)
+            y3 = -(seatedSwing.ropeLength*math.cos(phi))
             swingCM = {"x":x3,"y":y3}
             bodyCM = swingCM
 
@@ -248,21 +248,21 @@ class Utility:
             stepCounter += 1
 
         # final values
-        seatedSwing.environment.angularSpeed = w
-        seatedSwing.environment.swingDegree = phi
+        seatedSwing.angularSpeed = w
+        seatedSwing.swingDegree = phi
 
         foutSeated.close()
 
         print("seduto, tempo (s), phi (rad), w (rad/s): " +
-        str(steps) + " " + str(seatedSwing.environment.swingDegree) + " " +
-        str(seatedSwing.environment.angularSpeed))
+        str(steps) + " " + str(seatedSwing.swingDegree) + " " +
+        str(seatedSwing.angularSpeed))
 
      def symplectic_realistic(self,realistic_children, steps):
          t = 0.0
-         phi = realistic_children.environment.initialSwingDegree
-         w = realistic_children.environment.initialAngluarSpeed
+         phi = realistic_children.initialSwingDegree
+         w = realistic_children.initialAngluarSpeed
          prev_w = 0
-         l = realistic_children.environment.ropeLength
+         l = realistic_children.ropeLength
          bodyPosition = self.LEANBACK
 
          N = realistic_children.N # QUANTITÀ CHIAMATA N PER SEMPLICITÀ
@@ -372,19 +372,19 @@ class Utility:
 
 
          fout3.close()
-         realistic_children.environment.phi = phi
-         realistic_children.environment.w = w
-         print("realistico, tempo (s), phi (rad), w (rad/s): " + str(steps) + " " + str(realistic_children.environment.phi) + " " + str(realistic_children.environment.w))
+         realistic_children.phi = phi
+         realistic_children.w = w
+         print("realistico, tempo (s), phi (rad), w (rad/s): " + str(steps) + " " + str(realistic_children.phi) + " " + str(realistic_children.w))
          #print(tf, seated_children.get_phi(), seated_children.get_w())
 
         #====================COMBINED===================================================
 
      def symplectic_combined(self,realistic_children, steps):
          t = 0.0
-         phi = realistic_children.environment.initialSwingDegree
+         phi = realistic_children.initialSwingDegree
          prev_phi = prev_w = 0
-         w = realistic_children.environment.initialAngluarSpeed
-         l = realistic_children.environment.ropeLength
+         w = realistic_children.initialAngluarSpeed
+         l = realistic_children.ropeLength
          bodyPosition = self.LEANBACK
 
          N = realistic_children.N # QUANTITÀ CHIAMATA N PER SEMPLICITÀ
@@ -525,9 +525,9 @@ class Utility:
 
 
          fout3.close()
-         realistic_children.environment.phi = phi
-         realistic_children.environment.w = w
-         print("combinato, tempo (s), phi (rad), w (rad/s): " + str(steps) + " " + str(realistic_children.environment.phi) + " " + str(realistic_children.environment.w))
+         realistic_children.phi = phi
+         realistic_children.w = w
+         print("combinato, tempo (s), phi (rad), w (rad/s): " + str(steps) + " " + str(realistic_children.phi) + " " + str(realistic_children.w))
          #print(tf, seated_children.get_phi(), seated_children.get_w())
 
      # ======================= RUNGEKUTTA 4 METHODS  =======================================
