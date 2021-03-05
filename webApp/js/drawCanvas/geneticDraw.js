@@ -152,7 +152,6 @@ function geneticDraw() {
       if (geneticBodies[i].reachMaxPhi || geneticBodies[i].isImprovingPhi() === false) {
         console.log("deadPhi")
         iterationCounter = 0
-        // savedGenticBodies.push(geneticBodies.splice(i, 1)[0])
         savedGenticBodies.push(geneticBodies[i])
         geneticBodies.splice(i, 1)
         i--;
@@ -184,12 +183,12 @@ function geneticDraw() {
       geneticBodies[i].update(nextFrame)
     }
 
-    if (iterationCounter >= 10000 * 10) {
+    if (iterationCounter >= 10000 * 100) {
       console.log("time to kill generation");
       iterationCounter = 0
       for (let i = 0; i <= geneticBodies.length - 1; i++) {
         savedGenticBodies.push(geneticBodies[i])
-        geneticBodies.splice(i, 1)
+        console.log(geneticBodies.splice(i, 1))
         i--;
       }
 

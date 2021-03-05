@@ -95,6 +95,10 @@ body {
     right: 120px;
 }
 
+.btn-floating.halfway-fab.btn-saveBrain {
+    right: 170px;
+}
+
 canvas {
     width: 100%;
     height: 100%;
@@ -184,8 +188,8 @@ label {
 }
 
 .recordContainer {
-    font-size: 115%;
-    margin-top: 3%;
+    font-size: 100%;
+    margin: -7px 0px 0px 30px !important;
     color: rgb(181, 181, 181);
 }
 
@@ -194,4 +198,27 @@ label {
     height: 250px;
     color: rgb(181, 181, 181);
     font-size: 85%;
+}
+
+/* Cards Genetic =========================================================================== */
+#btn-aboutUs {
+    background: #202544 !important;
+}
+
+div#aboutUs {
+    text-align: center;
+    color: rgb(181, 181, 181);
+    background-color: #323a69;
+    border-radius: 20px;
+    width: 40%;
+    font-size: 110%;
+}
+
+div#aboutUs a {
+    color: #33c5c5;
+    text-decoration: underline;
+}
+
+div#aboutUs i {
+    color: red;
 }

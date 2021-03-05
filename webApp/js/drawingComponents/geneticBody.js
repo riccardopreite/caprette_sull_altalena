@@ -10,9 +10,8 @@ var n_output = 2
 const MUTATION_RATE = 0.3
 // scoring
 var SCORE_BONUS_PHI = 1500
-var SCORE_BONUS_W = 2000 //1500 ====================================================
-//var JUMP_PENALIZATION = 1
-// var ALIVE_PENALIZATION = 10
+//var SCORE_BONUS_W = 3000 //1500 ====================================================
+
 
 const STANDING_FIXED_PHI = 1
 const STANDING_FIXED_W = 3
@@ -78,10 +77,9 @@ class GeneticBody {
         this.max_w = 0
         this.score = SCORE_BONUS_PHI
         this.fitness = 0
-        // this.time = 0
-        // this.scoreTime = 0
         this.reachMaxPhi = false
-        this.notImproveW = false
+        this.prevW = 0
+        this.nextW = 0
 
         // Log
         this.jumps = []
@@ -126,86 +124,52 @@ class GeneticBody {
 
 
 
-    isImprovingW() {
-        var isImproving
-        var toFixedPhi, toFixedW
+    // // isImprovingW() {
+    // //     var isImproving
+    // //     var toFixedPhi, toFixedW
 
-        if (this.currentFrame.swingType.includes("standing")) {
-            toFixedPhi = STANDING_FIXED_PHI
-            toFixedW = STANDING_FIXED_W
-        } else {
-            toFixedPhi = SEATED_FIXED_PHI
-            toFixedW = SEATED_FIXED_W
-        }
+    // //     if (this.currentFrame.swingType.includes("standing")) {
+    // //         toFixedPhi = STANDING_FIXED_PHI
+    // //         toFixedW = STANDING_FIXED_W
+    // //     } else {
+    // //         toFixedPhi = SEATED_FIXED_PHI
+    // //         toFixedW = SEATED_FIXED_W
+    // //     }
 
-        // check the record condition
-        if (Math.abs(Number(this.currentFrame.phi).toFixed(2)) == Math.abs(Number(0.01).toFixed(2))) {
+    // //     // check the record condition
+    // //     if (Math.abs(Number(this.currentFrame.phi).toFixed(2)) == Math.abs(Number(0.01).toFixed(2))) {
 
-            // check for a new record
-            //console.log("phi==0.01")
-            var a = (this.max_w + this.max_w * 38 / 100).toFixed(2)
-            isImproving = Number(this.currentFrame.w).toFixed(2) > a
+    // //         // check for a new record
+    // //         //console.log("phi==0.01")
+    // //         var a = (this.max_w + this.max_w * 38 / 100).toFixed(2)
+    // //         isImproving = Number(this.currentFrame.w).toFixed(2) > a
 
-            if (isImproving) {
-                //console.log("IsImprovingW record: " + Number(this.currentFrame.w).toFixed(2) + ">" + Number(this.max_w).toFixed(2) + "--->" + a)
+    // //         if (isImproving) {
+    // //             //console.log("IsImprovingW record: " + Number(this.currentFrame.w).toFixed(2) + ">" + Number(this.max_w).toFixed(2) + "--->" + a)
 
-                // new w record is made
-                this.max_w = this.currentFrame.w
+    // //             // new w record is made
+    // //             this.max_w = this.currentFrame.w
 
-                // score update proportional to record phi
-                this.score += SCORE_BONUS_W
+    // //             // score update proportional to record phi
+    // //             this.score += SCORE_BONUS_W
 
-            }
-        } else
-            // w !== 0.00
-            isImproving = true
-        //  console.log("IsImproving w")
+    // //         }
+    // //     } else
+    // //         // w !== 0.00
+    // //         isImproving = true
+    // //     //  console.log("IsImproving w")
 
-        return isImproving
-    }
+    // //     return isImproving
+    // // }
 
     // isImprovingW() {
-    //     var isImproving
-    //     var toFixedPhi, toFixedW
-
-    //     if (this.currentFrame.swingType.includes("standing")) {
-    //         toFixedPhi = STANDING_FIXED_PHI
-    //         toFixedW = STANDING_FIXED_W
-    //     } else {
-    //         toFixedPhi = SEATED_FIXED_PHI
-    //         toFixedW = SEATED_FIXED_W
-    //     }
-
-    //     // check the record condition
-    //     if (Math.abs(Number(this.currentFrame.phi).toFixed(2)) == Math.abs(Number(0.01).toFixed(2))) {
-
-
-
-    //         var a = ((this.max_w/this.max_phi) + (this.max_w/this.max_phi) * 70/100).toFixed(2)
-    //         isImproving = Number(this.currentFrame.w/this.max_phi).toFixed(2) > a
-
-    //         // check for a new record
-    //         //console.log("phi==0.01")
-    //         //var a = (this.max_w + this.max_w * 40 / 100).toFixed(2)
-
-
-    //         if (isImproving) {
-    //             console.log("IsImprovingW record: " + Number(this.currentFrame.w/this.max_phi).toFixed(2) + ">" + Number(this.max_w/this.max_phi).toFixed(2) + "--->" + a)
-
-    //             // new w record is made
-    //             this.max_w = this.currentFrame.w
-    //             this.max_acc = this.currentFrame.w/this.max_phi
-
-    //             // score update proportional to record phi
-    //             this.score += SCORE_BONUS_W
-
-    //         }
-    //     } else
-    //         // w !== 0.00
-    //         isImproving = true
-    //     //  console.log("IsImproving w")
-
-    //     return isImproving
+    //     this.nextW = Math.abs(this.currentFrame.w)
+    //     var diff_w = this.nextW - this.prevW
+    //     if(diff_w > 0)
+    //         this.score = diff_w.toFixed(1) * SCORE_BONUS_W 
+    //     // console.log(diff_w + "=========" +diff_w.toFixed(1) * SCORE_BONUS_W)
+        
+    //     this.prevW = this.nextW
     // }
 
 
@@ -261,6 +225,7 @@ class GeneticBody {
                     this.reachMaxPhi = true
                     this.score += MaxPhiCounter * SCORE_BONUS_PHI
                     MaxPhiCounter--
+
                 }
             }
             //else console.log("IsImproving Phi NOT record")
@@ -312,8 +277,6 @@ class GeneticBody {
 
         // new state
         this.currentFrame = frame
-
-        // this.score -= ALIVE_PENALIZATION
     }
 
     /*
@@ -412,10 +375,10 @@ class GeneticBody {
         this.ctx.beginPath();
         this.ctx.arc(headX, headY, headRadius, 0, 2 * Math.PI);
 
-        this.ctx.strokeStyle = 'rgba(255,255,255,0.6)';
+        this.ctx.strokeStyle = 'rgba(255,255,255,1)';
         this.ctx.lineWidth = 1;
         this.ctx.stroke();
-        this.ctx.fillStyle = 'rgba(255,255,255,0.3)';
+        this.ctx.fillStyle = 'rgba(255,255,255,0.6)';
         this.ctx.fill();
         // head-half
         this.ctx.moveTo(headX, headY);
@@ -432,7 +395,7 @@ class GeneticBody {
         // hands
         if (showingFrame.bodyPosition == "leanback") {
             this.ctx.moveTo(handX, handY);
-            this.ctx.lineTo(this.swingX, this.swingY - handsDistance);
+            this.ctx.lineTo(showingFrame.swingCM["x"], showingFrame.swingCM["y"] - handsDistance);
             this.ctx.stroke();
         }
     }

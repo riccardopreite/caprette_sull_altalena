@@ -65,13 +65,28 @@
           <div class="card-image" id="parentCanvas0">
             <canvas id="canvas0" width="200" height="100"></canvas>
             <div id="swingControlButton">
-              <a id="speedUpParent0" class="disabled btn-floating btn-small halfway-fab waves-effect waves-light teal btn-speedUp"
+              <a id="speedUpParent0"
+                class="disabled btn-floating btn-small halfway-fab waves-effect waves-light teal btn-speedUp"
                 onclick="speedUpFirst()"><i id="speedUp0" class="material-icons">fast_forward</i></a>
               <a id="playButton0" class="btn-floating btn-small halfway-fab waves-effect waves-light teal btn-play"
                 onclick="onPausePlayDrawButton(0)"><i id="playButtonIcon0" class="material-icons">pause</i></a>
               <a id="speedDownParent0"
                 class="btn-floating btn-small halfway-fab waves-effect waves-light teal btn-speedDown"
                 onclick="speedDownFirst()"><i id="speedDown0" class="material-icons">fast_rewind</i></a>
+            </div>
+
+            <div id="geneticControlButton" class="">
+              <a id="saveGenetic"
+                class="disabled btn-floating btn-small halfway-fab waves-effect waves-light teal btn-saveBrain"
+                onclick="saveBrain()"><i id="saveIconGenetic" class="material-icons">save</i></a>
+              <a id="speedUpParentGenetic"
+                class="disabled btn-floating btn-small halfway-fab waves-effect waves-light teal btn-speedUp"
+                onclick="speedUpGenetic()"><i id="speedUpGenetic" class="material-icons">fast_forward</i></a>
+              <a id="skipGenParent" class="btn-floating btn-small halfway-fab waves-effect waves-light teal btn-play"
+                onclick="skipGen()"><i id="skipGen" class="material-icons">skip_next</i></a>
+              <a id="speedDownParentGenetic"
+                class="btn-floating btn-small halfway-fab waves-effect waves-light teal btn-speedDown"
+                onclick="speedDownGenetic()"><i id="speedDownGenetic" class="material-icons">fast_rewind</i></a>
             </div>
           </div>
 
@@ -105,24 +120,12 @@
           </div>
 
           <div class="card-content" id="scoreContainer">
-            <div class="row" style="float: right;margin-right: 20em; margin-bottom:0px;">
-              <div class="col s12 recordContainer" style="margin-top: 0;float: left;">
-                <a id="saveGenetic" style="right: 180px;"class="disabled btn-floating btn-small halfway-fab waves-effect waves-light teal btn-speedDown"
-                onclick="saveBrain()"><i id="saveIconGenetic" class="material-icons">save</i></a>
+            <div class="row">
+              <div class="col s12 recordContainer">
                 <p class="recordLog">Max score: <span class="recordLog" id="maxScore">-</span></p>
                 <p class="recordLog">Max phi: <span class="recordLog" id="maxPhi">0.5</span></p>
                 <p class="recordLog">Number of jumps: <span class="recordLog" id="jumpsCounter">-</span></p>
                 <p class="recordLog">Patience: <span class="recordLog" id="patienceCounter">-</span></p>
-              </div>
-              <div id="geneticControlButton" class="">
-
-                <a id="speedUpParentGenetic" class="disabled btn-floating btn-small halfway-fab waves-effect waves-light teal btn-speedUp"
-                  onclick="speedUpGenetic()"><i id="speedUpGenetic" class="material-icons">fast_forward</i></a>
-                <a id="skipGenParent" class="btn-floating btn-small halfway-fab waves-effect waves-light teal btn-play"
-                onclick="skipGen()" ><i id="skipGen" class="material-icons">skip_next</i></a>
-                <a id="speedDownParentGenetic"
-                  class="btn-floating btn-small halfway-fab waves-effect waves-light teal btn-speedDown"
-                  onclick="speedDownGenetic()"><i id="speedDownGenetic" class="material-icons">fast_rewind</i></a>
               </div>
             </div>
           </div>
@@ -240,7 +243,7 @@
                       <input type="file" oninput="uploadBrain()" id="loadInput" />
                     </a>
                   </div>
-<a id="downloadAnchorElem" style="display:none"></a>
+                  <a id="downloadAnchorElem" style="display:none"></a>
                   <div class="col s11">
                     <div class="file-path-wrapper">
                       <input class="file-path validate" type="text" placeholder="Upload brain json" />
@@ -274,7 +277,8 @@
         <div class="card medium cardCanvas marginBottom shadow">
           <div class="card-image" id="parentCanvas1">
             <canvas id="canvas1" width="200" height="100"></canvas>
-            <a id="speedUpParent1" class="disabled btn-floating btn-small halfway-fab waves-effect waves-light teal btn-speedUp"
+            <a id="speedUpParent1"
+              class="disabled btn-floating btn-small halfway-fab waves-effect waves-light teal btn-speedUp"
               onclick="speedUpSecond()"><i id="speedUp1" class="material-icons">fast_forward</i></a>
             <a id="playButton1" class="btn-floating btn-small halfway-fab waves-effect waves-light teal btn-play"
               onclick="onPausePlayDrawButton(1)"><i id="playButtonIcon1" class="material-icons">pause</i></a>
@@ -388,8 +392,8 @@
                 onclick="drawMode(1)">Graph
                 <i class="material-icons right">timeline</i>
               </a>
-              <a class="btn center-align waves-effect waves-light" type="submit" name="action"
-                onclick="uploadData()" id="calculateSwing">Calculate Swing
+              <a class="btn center-align waves-effect waves-light" type="submit" name="action" onclick="uploadData()"
+                id="calculateSwing">Calculate Swing
                 <i class="material-icons right">send</i>
               </a>
             </div>
@@ -402,6 +406,26 @@
     </div>
 
 
+    <div class="fixed-action-btn">
+      <a class="btn-floating btn-medium modal-trigger" id="btn-aboutUs" href="#aboutUs">
+        <i class="large material-icons">share</i>
+      </a>
+    </div>
+
+    <!-- Modal Structure -->
+    <div id="aboutUs" class="modal">
+      <div class="modal-content">
+        <!-- <h4>Modal Header</h4> -->
+        <p>Unibo, Fisica dei Sistemi Complessi - 2020/2021</p>
+
+
+        <p>Made with Python, javascript and <i class="material-icons tiny">favorite</i> by <br>
+          <a href="https://github.com/fla1012" target="_blank">Flavio Baccarini</a>, 
+          <a href="https://github.com/pipesGC" target="_blank">Greis Cipi</a>,          
+          <a href="https://github.com/MatteoMele98" target="_blank">Matteo Mele</a> and 
+          <a href="https://github.com/riccardopreite" target="_blank">Riccardo Preite</a>
+      </div>
+    </div>
 
 
   </div>
