@@ -146,7 +146,7 @@ function getNextFrame(currentFrame, nextPostion,body){
   var w_next
   var phi_next
   var next_cm = [], next_swingCM = [], next_upperCM = [], next_lowerCM = []
-  // body.time = body.time + DELTA_T
+  body.time = body.time + DELTA_T
   if (currentFrame.swingType.includes("standing")){
     var lstand = currentFrame.ropeLength - currentFrame.bodyHeight/2
     var lsquat = lstand + 0.4

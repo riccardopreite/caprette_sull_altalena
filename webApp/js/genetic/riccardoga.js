@@ -11,7 +11,7 @@
 function nextGeneration() {
     console.log("nextGen")
 
-    // calculateScore()
+    calculateScore()
     // calculate fitness
     calculateFitness()
 
@@ -67,12 +67,12 @@ function pickBest(log) {
 
     // log only the first time
     if (log) {
-        if (currentRecordBody === undefined || best.score > currentRecordBody.score) {
+        if (currentRecordBody === undefined || best.scoreTime > currentRecordBody.scoreTime) {
             patience = PATIENCE_MAX
             currentRecordBody = best
             currentRecordBodyArray.push(best)
             updateRecordsDOM(
-                best.score,
+                best.scoreTime,
                 best.max_phi,
                 best.jumps.length,
                 patience

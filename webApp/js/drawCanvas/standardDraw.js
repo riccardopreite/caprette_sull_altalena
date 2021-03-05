@@ -104,6 +104,7 @@ function drawFirst(){
         speedGraph0.resetChart()
         timeGraph0 = new Graph(ctxTime0,"Time/Angle graph","phi(rad)","time(s)","radiant angle")
         speedGraph0 = new Graph(ctxSpeed0,"Angular Speed/Angle graph","angular speed(rad/s)","phi(rad)","angular speed")
+        socket.disconnect()
       }
 
       ctx0.clearRect(0,0,canvas0.width,canvas0.height)

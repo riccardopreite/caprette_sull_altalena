@@ -19,8 +19,8 @@ const STANDING_FIXED_W = 3
 const SEATED_FIXED_PHI = 1
 const SEATED_FIXED_W = 3
 
-const JUMP_PENALIZATION_STANDING = 5
-const JUMP_PENALIZATION_SEATED = 1
+const JUMP_PENALIZATION_STANDING = 3
+const JUMP_PENALIZATION_SEATED = 3
 var JUMP_PENALIZATION
 
 
@@ -78,8 +78,8 @@ class GeneticBody {
         this.max_w = 0
         this.score = SCORE_BONUS_PHI
         this.fitness = 0
-        // this.time = 0
-        // this.scoreTime = 0
+        this.time = 0
+        this.scoreTime = 0
         this.reachMaxPhi = false
         this.notImproveW = false
 

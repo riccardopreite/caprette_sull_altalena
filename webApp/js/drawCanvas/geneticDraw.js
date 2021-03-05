@@ -155,6 +155,7 @@ function geneticDraw() {
         // savedGenticBodies.push(geneticBodies.splice(i, 1)[0])
         savedGenticBodies.push(geneticBodies[i])
         geneticBodies.splice(i, 1)
+        i--;
       }
     }
 
@@ -177,7 +178,7 @@ function geneticDraw() {
     for (let i = 0; i <= geneticBodies.length - 1; i++) {
       // calculate next conditions based on next position choice
       nextPosition = geneticBodies[i].think()
-      nextFrame = getNextFrame(geneticBodies[i].currentFrame, nextPosition)
+      nextFrame = getNextFrame(geneticBodies[i].currentFrame, nextPosition,geneticBodies[i])
 
       // update
       geneticBodies[i].update(nextFrame)
@@ -189,6 +190,7 @@ function geneticDraw() {
       for (let i = 0; i <= geneticBodies.length - 1; i++) {
         savedGenticBodies.push(geneticBodies[i])
         geneticBodies.splice(i, 1)
+        i--;
       }
 
       nextGeneration()
@@ -282,7 +284,7 @@ function goBest(brain) {
     timer = 0;
   while (timer < STEPS && Math.abs(tmpBody.currentFrame.phi) < 1.309) {
     nextPosition = tmpBody.think()
-    nextFrame = getNextFrame(tmpBody.currentFrame, nextPosition)
+    nextFrame = getNextFrame(tmpBody.currentFrame, nextPosition,tmpBody)
     tmpBody.update(nextFrame)
 
     let next = nextFrame.clone()
