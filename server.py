@@ -217,6 +217,7 @@ def switchForm(form,isSecond,swingTypeFirst):
         combinedString = "combined"
 
     if(swingTypeFirst == "standing"):
+        print("calcolo")
         bodyObj[isSecond]["realisticSwing"].theta0 = 0.1
         bodyObj[isSecond]["realisticSwing"].theta = 1.5
         asyncio.run(calculateSwing(bodyObj[isSecond]["seatedSwing"],bodyObj[isSecond]["realisticSwing"],bodyObj[isSecond]["realisticSwing"],seatedString,realisticString,combinedString,"symplectic","realistic","combined",isSecond))
@@ -244,6 +245,9 @@ async def calculateSwing(second,third,fourth,secondString,thirdString,fourthStri
 
     resetTheta(fourth)
     callSwingMotion(fourth,fourthString,fourthStringMethode,no_simulationSteps)
+
+    if(isSecond):
+        emit("disconnect")
 
 @app.route('/')
 def index():
@@ -276,10 +280,9 @@ def disconnect_request():
 
 def callSwingMotion(object,objectString,objectStringMethode,no_simulationSteps):
     object.calculateSwingMotion(objectStringMethode, no_simulationSteps)
-
-    if objectString == 'realistic' or objectString == 'realisticSecond':
+    if "realistic" in objectString:
         emit(objectString, object.frame_listRealistic);
-    elif objectString == 'combined' or objectString == 'combinedSecond':
+    elif "combined" in objectString:
         emit(objectString, object.frame_listCombined);
     else:
         emit(objectString, object.frame_list);

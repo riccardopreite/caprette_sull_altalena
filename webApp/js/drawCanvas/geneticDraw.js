@@ -183,7 +183,7 @@ function geneticDraw() {
       geneticBodies[i].update(nextFrame)
     }
 
-    if (iterationCounter >= 10000 * 100) {
+    if (iterationCounter >= 10000 * 50) {
       console.log("time to kill generation");
       iterationCounter = 0
       for (let i = 0; i <= geneticBodies.length - 1; i++) {

@@ -202,7 +202,7 @@ function getFormValue(){
   $("#height1").val(bodyHeight1)
   $("#ropeLength0").val(ropeLength0)
   $("#ropeLength1").val(ropeLength1)
-  if(phi0 == 0 || phi1 == 0 || w0 == 0 || w1 == 0 ) $("#calculateSwing").addClass("disabled")
+  if((phi0 == 0 && w0 == 0) || (phi1 == 0 && w1 == 0 )) $("#calculateSwing").addClass("disabled")
   else $("#calculateSwing").removeClass("disabled")
   // if(firstMethode.includes("genetic")){
   //   console.log("PORCODIO");
@@ -225,7 +225,6 @@ function getFormValue(){
     mass0,
     ropeLength0
   )
-  console.log(tmp);
   return tmp
 }
 

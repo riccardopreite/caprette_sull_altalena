@@ -3,6 +3,10 @@ socket.on('connect', function() {
   socket.emit('my_event', {data: 'connected to the SocketServer...'});
 });
 
+socket.on('disconnect', function() {
+  socket.disconnect()
+});
+
 socket.on('firstsCalculated', function(msg, cb) {
   console.log('firstsCalculated');
   drawMode(0)

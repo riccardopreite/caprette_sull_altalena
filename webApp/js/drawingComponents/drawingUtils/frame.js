@@ -165,8 +165,9 @@ function getNextFrame(currentFrame, nextPostion,body){
 
 
     w_next = Number(Math.pow((lprev/lnext),2) * currentFrame.w) -
-               Number(currentFrame.gravity * (DELTA_T/2) * Math.sin(currentFrame.phi) *
-               ((lprev+lnext) / Math.pow(lprev,2)))
+               Number(currentFrame.gravity * (DELTA_T/2) * Math.sin(currentFrame.phi)
+                * ((lprev+lnext) / Math.pow(lprev,2))
+              )
 
     phi_next = Number(currentFrame.phi)+
              Number((DELTA_T/2) * currentFrame.w * ((Math.pow(lprev,2) + Math.pow(lnext,2)) / Math.pow(lnext,2)))
