@@ -163,6 +163,30 @@ function getNextFrame(currentFrame, nextPostion,body){
     else
       lnext = lsquat
 
+       /**
+     *      prev_phi = phi
+            prev_w = w
+            prev_angularAcceleration = standingSwing.get_angularAcceleration(phi)
+
+
+            t += self.deltaTime
+            phi = phi + w * self.deltaTime * 0.5
+            w +=  self.deltaTime * prev_angularAcceleration
+            phi += self.deltaTime * w * 0.5
+     * 
+     * 
+     *    ... getAngularAcce
+     *    phiNext = integrazione
+     *    wNext = integrazione
+     * 
+     * 
+     *    if salto
+     *        wNext = nuove cond currentFrame.w
+     *        phiNext = nuove cond
+     *        
+     * 
+     */
+
 
     w_next = Number(Math.pow((lprev/lnext),2) * currentFrame.w) -
                Number(currentFrame.gravity * (DELTA_T/2) * Math.sin(currentFrame.phi)
