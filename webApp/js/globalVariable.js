@@ -4,6 +4,8 @@
 var bestSwingBrain = {};
 
 
+var symplectic = false;
+
 /*************************
   SOCKET VARIABLE
 *************************/

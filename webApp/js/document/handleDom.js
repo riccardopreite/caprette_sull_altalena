@@ -204,11 +204,7 @@ function getFormValue(){
   $("#ropeLength1").val(ropeLength1)
   if((phi0 == 0 && w0 == 0) || (phi1 == 0 && w1 == 0 )) $("#calculateSwing").addClass("disabled")
   else $("#calculateSwing").removeClass("disabled")
-  // if(firstMethode.includes("genetic")){
-  //   console.log("PORCODIO");
-  //   showHideDiv("#geneticDiv","#graphDiv0")
-  //   showHideDiv("#geneticDiv","#formDiv0")
-  // }
+
   let tmp = new Frame(
     ctx0,
     0,
@@ -291,15 +287,14 @@ function getFormValue(){
 
       function skipGen(){
         showingList = [];
-        // clearInterval(generationInterval)
         draw = false
-        console.log("patience");
         if (patience) stopTraining = false;
         else{
           $("#saveGenetic").removeClass("disabled");
         }
         if (patience) stopTraining = false;
-        geneticDraw()
+        $("#trainLog").text("Training Generation number: " + genNumber)
+        setTimeout(train,300)
       }
 
       function speedUpGenetic(){
@@ -413,6 +408,9 @@ function changeUpper(id){
   }
 }
 
+function changeSymplectic(e){
+  symplectic = e.checked
+}
 /*******************************************************
         END LISTENER FOR DRAWING COMPONENT FUNCTION
 *******************************************************/

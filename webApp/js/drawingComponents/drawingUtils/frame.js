@@ -163,43 +163,29 @@ function getNextFrame(currentFrame, nextPostion,body){
     else
       lnext = lsquat
 
-       /**
-     *      prev_phi = phi
-            prev_w = w
-            prev_angularAcceleration = standingSwing.get_angularAcceleration(phi)
+      if(symplectic){
+        acceleration = -(Number(currentFrame.gravity) / lnext) * Math.sin(currentFrame.phi)
+
+        phi_next = Number(currentFrame.phi) + Number(currentFrame.w) * DELTA_T * 0.5
+        w_next = Number(currentFrame.w) + DELTA_T * Number(acceleration)
+        phi_next = phi_next + DELTA_T * w_next * 0.5
 
 
-            t += self.deltaTime
-            phi = phi + w * self.deltaTime * 0.5
-            w +=  self.deltaTime * prev_angularAcceleration
-            phi += self.deltaTime * w * 0.5
-     * 
-     * 
-     *    ... getAngularAcce
-     *    phiNext = integrazione
-     *    wNext = integrazione
-     * 
-     * 
-     *    if salto
-     *        wNext = nuove cond currentFrame.w
-     *        phiNext = nuove cond
-     *        
-     * 
-     */
+        if (currentFrame.bodyPosition == "squat" && nextPostion == "stand")
+          w_next = Number(Math.pow((lprev / lnext), 2) * currentFrame.w)
 
+      }
+      else{
+        w_next = Number(Math.pow((lprev/lnext),2) * currentFrame.w) -
+                   Number(currentFrame.gravity * (DELTA_T/2) * Math.sin(currentFrame.phi)
+                    * ((lprev+lnext) / Math.pow(lprev,2)))
 
-    w_next = Number(Math.pow((lprev/lnext),2) * currentFrame.w) -
-               Number(currentFrame.gravity * (DELTA_T/2) * Math.sin(currentFrame.phi)
-                * ((lprev+lnext) / Math.pow(lprev,2))
-              )
+        phi_next = Number(currentFrame.phi)+
+                 Number((DELTA_T/2) * currentFrame.w * ((Math.pow(lprev,2) + Math.pow(lnext,2)) / Math.pow(lnext,2)))
+      }
 
-    phi_next = Number(currentFrame.phi)+
-             Number((DELTA_T/2) * currentFrame.w * ((Math.pow(lprev,2) + Math.pow(lnext,2)) / Math.pow(lnext,2)))
-
-    // phi_next = currentFrame.phi -
-    //          (DELTA_T/2) * currentFrame.w * ((Math.pow(lprev,2) + Math.pow(lnext,2)) / Math.pow(lnext,2))
-
-  } else {
+  }
+  else {
     var thetaSeat = 0
     var thetaLeanback = 1.57
 

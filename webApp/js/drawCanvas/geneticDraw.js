@@ -21,7 +21,7 @@ var patience = PATIENCE_MAX
 const MAX_PHI_COUNTER = POPULATION / 50
 var MaxPhiCounter = MAX_PHI_COUNTER
 
-var genNumber = 0;
+var genNumber = 1;
 var nextGen = true;
 var geneticInterval = undefined;
 
@@ -204,6 +204,7 @@ function geneticDraw() {
 
 function drawRecordBody() {
   console.log("draw record");
+  $("#trainLog").text("Playing current Best for " + STEPS + " seconds")
   showingList = goBest(currentRecordBodyArray[currentRecordBodyArray.length - 1].brain)
   graphOffset = parseInt(showingList.length/FRAME_GRAPH_OFFEST)
 
@@ -216,6 +217,7 @@ function drawRecordBody() {
   if (patience == 0) {
       stopTraining = true
       draw = false
+      $("#trainLog").text("")
       compareSwingDraw()
   }
   else drawBest()
@@ -223,7 +225,8 @@ function drawRecordBody() {
 
 function trainLoop() {
   geneticSetup()
-  setTimeout(train,100)
+  $("#trainLog").text("Training Generation number: " + genNumber)
+  setTimeout(train,300)
 }
 
 function train() {
@@ -269,7 +272,8 @@ function drawBest() {
       else{
         $("#saveGenetic").removeClass("disabled");
       }
-      geneticDraw()
+      $("#trainLog").text("Training Generation number: " + genNumber)
+      setTimeout(train,300)
     }
   }
 }
