@@ -71,6 +71,7 @@ function pickBest(log) {
             patience = PATIENCE_MAX
             currentRecordBody = best
             currentRecordBodyArray.push(best)
+            if(best.max_phi > MAX_PHI_ANGLE) best.max_phi = MAX_PHI_ANGLE
             updateRecordsDOM(
                 best.score,
                 best.max_phi,
@@ -126,5 +127,4 @@ function calculateScore() {
   savedGenticBodies.sort(function(a,b){
     return b.scoreTime - a.scoreTime;
   });
-  console.log(savedGenticBodies);
 }

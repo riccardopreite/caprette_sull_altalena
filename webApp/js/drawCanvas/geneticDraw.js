@@ -151,6 +151,7 @@ function geneticDraw() {
 
       if (geneticBodies[i].reachMaxPhi || geneticBodies[i].isImprovingPhi() === false) {
         console.log("deadPhi")
+        // geneticBodies[i].score = geneticBodies[i].updateScore()
         iterationCounter = 0
         savedGenticBodies.push(geneticBodies[i])
         geneticBodies.splice(i, 1)
@@ -188,7 +189,7 @@ function geneticDraw() {
       iterationCounter = 0
       for (let i = 0; i <= geneticBodies.length - 1; i++) {
         savedGenticBodies.push(geneticBodies[i])
-        console.log(geneticBodies.splice(i, 1))
+        geneticBodies.splice(i, 1)
         i--;
       }
 

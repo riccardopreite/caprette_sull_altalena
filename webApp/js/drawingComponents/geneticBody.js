@@ -7,7 +7,7 @@ var seated_positions = ["seat", "leanback"]
 var n_input = 3
 var n_hidden = 8
 var n_output = 2
-const MUTATION_RATE = 0.3
+const MUTATION_RATE = 0.5
 // scoring
 var SCORE_BONUS_PHI = 1500
 //var SCORE_BONUS_W = 3000 //1500 ====================================================
@@ -18,11 +18,15 @@ const STANDING_FIXED_W = 3
 const SEATED_FIXED_PHI = 1
 const SEATED_FIXED_W = 3
 
+
+const MAX_PHI_WEIGHT = 500
+const BETTER_PHI_WEIGHT = 3000
+
 const JUMP_PENALIZATION_STANDING = 5
 const JUMP_PENALIZATION_SEATED = 1
 var JUMP_PENALIZATION
 
-
+const JUMP_TIMES = 1
 
 
 class GeneticBody {
@@ -80,6 +84,7 @@ class GeneticBody {
         this.reachMaxPhi = false
         this.prevW = 0
         this.nextW = 0
+        this.betterPhi = 0
 
         // Log
         this.jumps = []
@@ -137,7 +142,6 @@ class GeneticBody {
      * FALSE -> record is NOT made
      */
     isImprovingPhi() {
-        //console.log("isImrpving Phi")
         var isImproving
         var toFixedPhi, toFixedW
 
@@ -149,36 +153,32 @@ class GeneticBody {
             toFixedPhi = SEATED_FIXED_PHI
             toFixedW = SEATED_FIXED_W
         }
-
-        // check the record condition
-        // toFixed 3 <_++++++++++++=+++++++++======================================================================================
-        // if (Number(this.currentFrame.w).toFixed(toFixedW) == Number(0).toFixed(toFixedW)) {
         var reachTop = (this.currentFrame.w >= 0) && (this.prevW < 0)
         var reachBottom = (this.currentFrame.w <= 0) && (this.prevW > 0)
-
-        if (reachTop || reachBottom) {
-            //console.log("w==0")
+        var condition
+        if(symplectic){
+          condition = reachTop || reachBottom
+        }
+        else{
+          // toFixed 3 <_++++++++++++=+++++++++======================================================================================
+          condition = Number(this.currentFrame.w).toFixed(toFixedW) == Number(0).toFixed(toFixedW)
+        }
+        // check the record condition
+        if (condition) {
             // check for a new record
             // toFixed 1 <_++++++++++++=+++++++++=====================================================================================
             isImproving = Math.abs(this.currentFrame.phi).toFixed(toFixedPhi) > this.max_phi.toFixed(toFixedPhi)
 
             if (isImproving) {
-                //console.log("IsImproving PHi record")
-
-                // new phi record is made
-                // if (this.currentFrame.phi >= MAX_PHI_ANGLE) {
-                //   console.log("MAX PHI is iproved");
-                // }
                 this.max_phi = Math.abs(this.currentFrame.phi)
+                this.betterPhi++
 
                 // score update proportional to record phi
                 this.score += SCORE_BONUS_PHI // + Math.round(SCORE_BONUS_PHI * (this.max_phi / MAX_PHI_ANGLE))
             }
-            //else console.log("IsImproving Phi NOT record")
         } else {
             // w !== 0.00
             isImproving = true
-            //  console.log("IsImproving w")
         }
         return isImproving
     }
@@ -205,7 +205,23 @@ class GeneticBody {
         return logMsg
     }
 
+    updateScore(){
+      let maxPhi = 0,
+      t = this.currentFrame.t,
+      jLen = this.jumps.length,
+      betterPhi = this.betterPhi;
 
+      if(this.reachMaxPhi){
+        maxPhi = MaxPhiCounter
+        MaxPhiCounter--
+      }
+      var x1 = 0//Math.floor(maxPhi / t); // MAX PHI MULTIMPLIER
+      var x2 = Math.floor(( ( betterPhi / (jLen/JUMP_TIMES) ) / t) *betterPhi  ); // BETTER PHI MULTIMPLIER
+      var x3 = jLen; // JUMP MULTIMPLIER
+
+      var score = ( x1 * MAX_PHI_WEIGHT ) + ( x2 * BETTER_PHI_WEIGHT ) - ( x3 * JUMP_PENALIZATION )
+      return score
+    }
 
     /**
      *
@@ -228,11 +244,11 @@ class GeneticBody {
         // eventually stop in the next iteration
 
         if (this.currentFrame.phi >= MAX_PHI_ANGLE) {
-          this.max_phi = MAX_PHI_ANGLE
+          this.max_phi = this.currentFrame.phi
           this.reachMaxPhi = true
-          // if(!symplectic) this.score += MaxPhiCounter * (SCORE_BONUS_PHI/2)
+          this.betterPhi++
+          if(!symplectic) this.score += MaxPhiCounter * (SCORE_BONUS_PHI)
           MaxPhiCounter--
-
         }
     }
 

@@ -143,18 +143,27 @@ class Frame {
  */
 function getNextFrame(currentFrame, nextPostion,body){
   const DELTA_T = 0.001
+
+  //old value
+  var phi = Number(currentFrame.phi),
+  w = Number(currentFrame.w),
+  ropeLength = Number(currentFrame.ropeLength),
+  gravity = Number(currentFrame.gravity),
+  height = Number(currentFrame.bodyHeight),
+  currentPosition = currentFrame.bodyPosition;
+
   var w_next
   var phi_next
   var next_cm = [], next_swingCM = [], next_upperCM = [], next_lowerCM = []
   // body.time = body.time + DELTA_T
   if (currentFrame.swingType.includes("standing")){
-    var lstand = currentFrame.ropeLength - currentFrame.bodyHeight/2
+    var lstand = ropeLength - height/2
     var lsquat = lstand + 0.4
 
     var lprev
     var lnext
 
-    if(currentFrame.bodyPosition == "stand")
+    if(currentPosition == "stand")
       lprev = lstand
     else
       lprev = lsquat
@@ -164,24 +173,24 @@ function getNextFrame(currentFrame, nextPostion,body){
       lnext = lsquat
 
       if(symplectic){
-        acceleration = -(Number(currentFrame.gravity) / lnext) * Math.sin(currentFrame.phi)
+        acceleration = -(gravity / lnext) * Math.sin(phi)
 
-        phi_next = Number(currentFrame.phi) + Number(currentFrame.w) * DELTA_T * 0.5
-        w_next = Number(currentFrame.w) + DELTA_T * Number(acceleration)
-        phi_next = phi_next + DELTA_T * w_next * 0.5
+        phi_next = phi + w * DELTA_T * 0.5
+        w_next = w + (DELTA_T * acceleration)
+        phi_next = phi_next + (DELTA_T * w_next * 0.5)
 
 
-        if (currentFrame.bodyPosition == "squat" && nextPostion == "stand")
-          w_next = Number(Math.pow((lprev / lnext), 2) * currentFrame.w)
+        if (currentPosition == "squat" && nextPostion == "stand")
+          w_next = Math.pow((lprev / lnext), 2) * w
 
       }
       else{
-        w_next = Number(Math.pow((lprev/lnext),2) * currentFrame.w) -
-                   Number(currentFrame.gravity * (DELTA_T/2) * Math.sin(currentFrame.phi)
-                    * ((lprev+lnext) / Math.pow(lprev,2)))
+        w_next = (Math.pow((lprev/lnext),2) * w) -
+                   gravity * (DELTA_T/2) * Math.sin(phi)
+                    * ((lprev+lnext) / Math.pow(lprev,2))
 
-        phi_next = Number(currentFrame.phi)+
-                 Number((DELTA_T/2) * currentFrame.w * ((Math.pow(lprev,2) + Math.pow(lnext,2)) / Math.pow(lnext,2)))
+        phi_next = phi+
+                 ((DELTA_T/2) * w * ( (Math.pow(lprev,2) + Math.pow(lnext,2) ) / Math.pow(lnext,2) ) )
       }
 
   }
@@ -189,12 +198,12 @@ function getNextFrame(currentFrame, nextPostion,body){
     var thetaSeat = 0
     var thetaLeanback = 1.57
 
-    var a = currentFrame.bodyHeight/2
+    var a = height/2
     var thetaPrev
     var thetaNext
 
 
-    if(currentFrame.bodyPosition == "seat")
+    if(currentPosition == "seat")
       thetaPrev = thetaSeat
     else
       thetaPrev = thetaLeanback
@@ -203,15 +212,32 @@ function getNextFrame(currentFrame, nextPostion,body){
     else
       thetaNext = thetaLeanback
 
-    w_next = Number(currentFrame.w) -
-             Number(currentFrame.gravity * DELTA_T *
-             (currentFrame.ropeLength / (Math.pow(a,2) + Math.pow(currentFrame.ropeLength,2))) *
-             Math.sin(currentFrame.phi))
+    if(symplectic){
+      var delta_phi = ( Math.pow(a, 2) / ( Math.pow(a, 2) + Math.pow(ropeLength, 2) ) )  * thetaLeanback
 
-    phi_next = Number(currentFrame.phi) +
-               Number(currentFrame.w * DELTA_T -
-               (Math.pow(a,2)/( Math.pow(a,2) + Math.pow(currentFrame.ropeLength,2) )) *
-               (thetaNext - thetaPrev))
+      phi_next = phi + w * DELTA_T * 0.5
+      acceleration = -((gravity * ropeLength)) / (Math.pow(ropeLength, 2) + Math.pow(a, 2)) * Math.sin(phi)
+
+      w_next = w + DELTA_T * acceleration
+      phi_next = phi_next + DELTA_T * w_next * 0.5
+
+      if (currentPosition == "seat" && nextPostion == "leanback")
+        phi_next -= delta_phi
+      else if(currentPosition == "leanback" && nextPostion == "seat")
+        phi_next += delta_phi
+
+    }
+    else{
+      w_next = w -
+               (gravity * DELTA_T *
+               (ropeLength / ( Math.pow(a,2) + Math.pow(ropeLength,2 ) ) ) *
+               Math.sin(phi))
+
+      phi_next = phi +
+                 (w * DELTA_T -
+                 ( Math.pow(a,2)/( Math.pow(a,2) + Math.pow(ropeLength,2) ) ) *
+                 (thetaNext - thetaPrev) )
+    }
   }
 
   return nextFrame = new Frame(

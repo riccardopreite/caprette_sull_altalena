@@ -52,15 +52,12 @@ thread_lock = Lock()
 
 @socket.on('my_event', namespace='/test')
 def test_message(message):
-    print("OHHHH")
     emit('my_response', message)
 
 @socket.on('handleGeneticRequest', namespace='/test')
 def handleRequest(message):
     initBodyObj()
     form1 = message["data"]
-    print("CIAOULHADSIFFFFFFFFFFFFFFFFFFFFFFFFFF")
-
     runGeneticType(form1)
 
 
@@ -143,9 +140,7 @@ def runGeneticType(form):
         emit("secondCalculated", bodyObj[isSecond]["realisticSwing"].frame_listCombined);
 
 def runFirstType(form):
-    print("FORM")
-    print(form["isSecond"])
-    print(form)
+
     gravity = float(form["gravity"])
     heightBody = float(form["height"])
     massBody = float(form["weigth"])/10
@@ -217,7 +212,6 @@ def switchForm(form,isSecond,swingTypeFirst):
         combinedString = "combined"
 
     if(swingTypeFirst == "standing"):
-        print("calcolo")
         bodyObj[isSecond]["realisticSwing"].theta0 = 0.1
         bodyObj[isSecond]["realisticSwing"].theta = 1.5
         asyncio.run(calculateSwing(bodyObj[isSecond]["seatedSwing"],bodyObj[isSecond]["realisticSwing"],bodyObj[isSecond]["realisticSwing"],seatedString,realisticString,combinedString,"symplectic","realistic","combined",isSecond))
