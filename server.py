@@ -303,4 +303,4 @@ def resetTheta(obj):  # pragma: no cover
         obj.theta = 1.5
 
 if __name__ == '__main__':
-    socket.run(app,port=8000,host='0.0.0.0', debug=True,certfile='/home/smog/fullchain.pem', keyfile='/home/smog/privkey.pem')
+    socket.run(app,port=8000,host='0.0.0.0', debug=True)#,certfile='/home/smog/fullchain.pem', keyfile='/home/smog/privkey.pem')
