@@ -321,7 +321,7 @@ function calculateSeatedBodyUpperCM(ropeLength,phi,height,bodyPosition){
   let tmp = {}, theta = 0;
   if(bodyPosition == "leanback") theta = Math.PI/2;
   tmp["x"] = ropeLength*Math.sin(phi) - height*Math.sin(phi + theta)
-  tmp["y"] = -(ropeLength) + height*Math.cos(phi + theta)
+  tmp["y"] = -(ropeLength*Math.cos(phi)) + height*Math.cos(phi + theta)
   return tmp;
 }
 
@@ -330,6 +330,8 @@ function calculateSeatedBodyCM(ropeLength,phi,bodyPosition){
   if(bodyPosition == "leanback") theta = Math.PI/2;
   tmp["x"] = ropeLength*Math.sin(phi)
   tmp["y"] = -(ropeLength*Math.cos(phi))
+
+
   return tmp;
 }
 

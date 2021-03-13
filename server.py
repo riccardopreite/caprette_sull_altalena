@@ -11,6 +11,8 @@ from flask_socketio import SocketIO, emit, disconnect
 from threading import Lock
 from python import StandingSwing,Environment,SeatedSwing,RealisticSwing,Utility
 
+
+
 #Init Var (To move to a class?)
 dissipativeForce = 0.
 initialSwingDegree = -0.50
@@ -301,4 +303,4 @@ def resetTheta(obj):  # pragma: no cover
         obj.theta = 1.5
 
 if __name__ == '__main__':
-    socket.run(app,port=8000,host='0.0.0.0', debug=True)
+    socket.run(app,port=8000,host='0.0.0.0', debug=True,certfile='/home/smog/fullchain.pem', keyfile='/home/smog/privkey.pem')

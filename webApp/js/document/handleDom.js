@@ -12,10 +12,7 @@ document.addEventListener("click", e => {
 *******************************************************/
 
 function saveBrain(){
-  //add get the best
 
-  // best is stored in ga.js
-  // call best.getModel() to receive the list of Frames <======================================================================
   if(currentRecordBody === undefined) {
     alert("Best boy doesn't exist")
     return
@@ -109,36 +106,12 @@ function drawMode(id){
   if(id) isDrawSecond = true
   else isDrawFirst = true
 }
-/*******************************************************
-        START GRAPH FUNCTION
-*******************************************************/
+
 
 function showHideDiv(toShow,toHide){
   $(toShow).removeClass("hide")
   $(toHide).addClass("hide")
 }
-
-
-/***************************
-
-function showSpeedGraph(id){
-  var form = $("#formDiv"+id)
-      graph = $("#graphSpeedDiv"+id)
-  form.hide()
-  graph.show()
-}
-
-function hideSpeedGraph(id){
-  var form = $("#formDiv"+id)
-      graph = $("#graphSpeedDiv"+id)
-  form.show()
-  graph.hide()
-}
-
-****************************/
-/*******************************************************
-        END GRAPH FUNCTION
-*******************************************************/
 
 /*******************************************************
         START FORM FUNCTION

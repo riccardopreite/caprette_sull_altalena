@@ -243,8 +243,8 @@ class GeneticBody {
         this.currentFrame = frame
         // eventually stop in the next iteration
 
-        if (this.currentFrame.phi >= MAX_PHI_ANGLE) {
-          this.max_phi = this.currentFrame.phi
+        if (Math.abs(this.currentFrame.phi) >= MAX_PHI_ANGLE) {
+          this.max_phi = Math.abs(this.currentFrame.phi)
           this.reachMaxPhi = true
           this.betterPhi++
           if(!symplectic) this.score += MaxPhiCounter * (SCORE_BONUS_PHI)

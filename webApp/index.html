@@ -105,17 +105,18 @@
             </div>
             <div class="input-field col s12" style="width:50%; float:right;">
               <p>
-                <label>
+                <label class="hide">
                   <input type="checkbox" class="filled-in" id="upperCM0" onclick="changeUpper(0)" />
                   <span>Show upper center mass</span>
                 </label>
               </p>
               <p>
-                <label>
+                <label class="hide">
                   <input type="checkbox" class="filled-in" id="lowerCM0" onclick="changeLower(0)" />
                   <span>Show lower center mass</span>
                 </label>
               </p>
+
               <p>
                 <label>
                   <input type="checkbox" class="filled-in" id="geneticSymplectic" onclick="changeSymplectic(this)" />
@@ -127,51 +128,22 @@
 
           <div class="card-content" id="scoreContainer">
             <div class="row">
-              <div class="col s12 recordContainer">
+              <div class="col s12 recordContainer" style="float:right;width: 45%;margin-left: 0em !important;margin-right: 3em !important; margin-top:1em !important;">
+                <p class="recordLog" >Population: 250</p>
+                <p class="recordLog" id="trainLog"></p>
+              </div>
+              <div class="col s12 recordContainer" style="float:left;width: 45%;margin-right: 0.5em !important;">
                 <p class="recordLog">Max score: <span class="recordLog" id="maxScore">-</span></p>
                 <p class="recordLog">Max phi: <span class="recordLog" id="maxPhi">0.5</span></p>
                 <p class="recordLog">Number of jumps: <span class="recordLog" id="jumpsCounter">-</span></p>
                 <p class="recordLog">Patience: <span class="recordLog" id="patienceCounter">-</span></p>
-                <p class="recordLog" id="trainLog"></p>
+
               </div>
             </div>
           </div>
 
         </div>
       </div>
-
-      <!-- genetic container ----------------------------------------------------------------------------------------------------------->
-      <!-- <div class="col l6 m12 s12 hide" id="geneticDiv">
-        <div class="card medium cardCanvas marginTop shadow">
-          <div class="card-content container">
-
-            <div class="row">
-              <div class="col s12 recordContainer">
-                <p class="recordLog">Max score: <span class="recordLog" id="maxScore">-</span></p>
-                <p class="recordLog">Max phi: <span class="recordLog" id="maxPhi">-</span></p>
-                <p class="recordLog">Number of jumps: <span class="recordLog" id="jumpsCounter">-</span></p>
-                <p class="recordLog">Current population: <span class="recordLog" id="populationCounter">-</span></p>
-              </div>
-            </div>
-
-            <div class="row">
-              <div class="col s12" id="geneticLog">
-
-              </div>
-            </div>
-
-
-            <div class="card-action graphActions">
-              <a class="btn center-align waves-effect waves-light" type="submit" name="action"
-                onclick="formMode(0)">Form
-                <i class="material-icons right">mode_edit</i>
-              </a>
-            </div>
-
-          </div>
-        </div>
-      </div> -->
-
 
       <!-- graph container ----------------------------------------------------------------------------------------------------------->
       <div class="col l6 m12 s12 hide" id="graphDiv0">
@@ -307,13 +279,13 @@
             <div class="input-field col s12" style="width:50%; float:right;">
               <!-- upper + lower cm -->
               <p>
-                <label>
+                <label class="hide">
                   <input type="checkbox" class="filled-in" id="upperCM1" onclick="changeUpper(1)" />
                   <span>Show upper center mass</span>
                 </label>
               </p>
               <p>
-                <label>
+                <label class="hide">
                   <input type="checkbox" class="filled-in" id="lowerCM1" onclick="changeLower(1)" />
                   <span>Show lower center mass</span>
                 </label>
@@ -418,6 +390,11 @@
         <i class="large material-icons">share</i>
       </a>
     </div>
+    <!-- <div class="fixed-action-btn" style="margin-right:2em !important;">
+      <a class="btn-floating btn-medium modal-trigger"  href="/indexCrossover.html">
+        <i class="large material-icons">Crossover</i>
+      </a>
+    </div> -->
 
     <!-- Modal Structure -->
     <div id="aboutUs" class="modal">
@@ -433,6 +410,7 @@
           <a href="https://github.com/riccardopreite" target="_blank">Riccardo Preite</a>
       </div>
     </div>
+
 
 
   </div>

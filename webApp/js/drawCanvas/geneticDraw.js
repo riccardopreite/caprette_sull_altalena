@@ -80,20 +80,6 @@ var brainJson = {
 }
 var brainTrained = null //deserialize(brainJson)
 
-function deserialize(data) {
-  if (typeof data == 'string') {
-    data = JSON.parse(data);
-  }
-  let nn = new NeuralNetwork(data.input_nodes, data.hidden_nodes, data.output_nodes);
-  nn.weights_ih = Matrix.deserialize(data.weights_ih);
-  nn.weights_ho = Matrix.deserialize(data.weights_ho);
-  nn.bias_h = Matrix.deserialize(data.bias_h);
-  nn.bias_o = Matrix.deserialize(data.bias_o);
-  nn.learning_rate = data.learning_rate;
-  return nn;
-}
-// =========================================================================================
-
 
 function geneticSetup() {
   // reset
@@ -125,9 +111,10 @@ function geneticSetup() {
     geneticBodies[i] = new GeneticBody(geneticCtx, initialStateFrame)
   }
   // DOM reset
-  // showHideDiv("#graphDiv0","#geneticDiv")
+
   showHideDiv("#graphDiv0", "#formDiv0")
   showHideDiv("#scoreContainer", "#formInputFiledContainer")
+  showHideDiv("#popLog","#formInputFiledContainer")
   showHideDiv("#geneticControlButton", "#swingControlButton")
   updateRecordsDOM("-", Math.abs(initialStateFrame.phi), "-",patience)
   updatPopulationDOM(geneticBodies.length)

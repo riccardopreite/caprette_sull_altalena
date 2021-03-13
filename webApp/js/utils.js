@@ -3,14 +3,15 @@ function isEmpty(obj) {
   return Object.keys(obj).length === 0;
 }
 
-//CAN BE REMOVED BY DOING THIS IN "firstsCalculated" SOCKET IN WS.JS:
-/*************************
-toDraw0 = canvasList[0][firstMethode+"_frameList"]
-toDraw1 = canvasList[1][secondMethode+"_frameList"]
-*************************/
-function selectFirstMethods(resType ,res){
-  if(firstMethode == resType) toDraw0 = res
-}
-function selectSecondMethods(resType ,res){
-  if(secondMethode == resType) toDraw1 = res
+function deserialize(data) {
+  if (typeof data == 'string') {
+    data = JSON.parse(data);
+  }
+  let nn = new NeuralNetwork(data.input_nodes, data.hidden_nodes, data.output_nodes);
+  nn.weights_ih = Matrix.deserialize(data.weights_ih);
+  nn.weights_ho = Matrix.deserialize(data.weights_ho);
+  nn.bias_h = Matrix.deserialize(data.bias_h);
+  nn.bias_o = Matrix.deserialize(data.bias_o);
+  nn.learning_rate = data.learning_rate;
+  return nn;
 }
