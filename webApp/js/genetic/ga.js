@@ -27,18 +27,24 @@ function nextGeneration() {
     var parents = tournamentSelection(N_PARENTS)
     avgScoreArr.push(avgScore(parents))
 
-    // repopulate
-    addLogMsgDOM("Repopulation ...")
-    addLogMsgDOM("Mutation ...")
     // 1-clone ?????????????????? Copy <============
     parents.forEach(p => {
-        geneticBodies.push(new GeneticBody(geneticCtx, initialStateFrame, p.brain))
+      let brain = p.brain.copy()
+        geneticBodies.push(new GeneticBody(geneticCtx, initialStateFrame, brain))
     })
     // 2-crossOver + mutation
     var children = crossOver(parents)
-    children.forEach(c => {
-        geneticBodies.push(new GeneticBody(geneticCtx, initialStateFrame, c))
+
+    children.forEach(childBrain => {
+      // mutation
+      if (Math.random() < MUTATION_PROBABILITY)
+          childBrain.mutate(MUTATION_RATE)
+
+      geneticBodies.push(new GeneticBody(geneticCtx, initialStateFrame, childBrain))
+
     })
+
+
 
 
     // empty backup array
@@ -101,10 +107,10 @@ function updateRecordBody(best) {
     if (currentRecordBody === undefined || best.score > currentRecordBody.score) {
         patience = PATIENCE_MAX
         currentRecordBody = best
-        // currentRecordBodyArray.push(best)
+        currentRecordBodyArray.push(best)
         updateRecordsDOM(
             currentRecordBody.score,
-            currentRecordBody.max_phi,
+            currentRecordBody.prevPhi,
             currentRecordBody.jumps.length,
             patience
         )
@@ -141,7 +147,7 @@ function tournamentSelection(n_parents) {
 
         // pick TORNAMENT_SIZE elements (dinstic)
         while (tournament.length < (POPULATION * TOURNAMENT_SIZE)) {
-            tmpIndex = randomBetween(0, savedGenticBodies.length)
+            tmpIndex = randomBetween(0, savedGenticBodies.length-1)
             if (parentsIndex.includes(tmpIndex) === false) {
                 parentsIndex.push(tmpIndex)
                 tournament.push(savedGenticBodies[tmpIndex])
@@ -181,17 +187,9 @@ function crossOver(parents) {
         // get 2 children from crossOver
         offSprings = crossOver_couple(p1, p2)
 
-        // mutation
-        if (Math.random() < MUTATION_PROBABILITY)
-            offSprings[0].mutate(MUTATION_RATE)
-        if (Math.random() < MUTATION_PROBABILITY)
-            offSprings[1].mutate(MUTATION_RATE)
-
-
         children.push(offSprings[0])
         children.push(offSprings[1])
     }
-
     return children
 }
 
@@ -203,32 +201,48 @@ function crossOver(parents) {
  */
 function crossOver_couple(p1, p2) {
     // get weights from both nn
-    var w1 = undefined
-    var w2 = undefined
+    var w1 = [], w2 = []
+    w1 = w1.concat(p1.weights_ih.toArray(), p1.weights_ho.toArray())
+    w2 = w2.concat(p2.weights_ih.toArray(), p2.weights_ho.toArray())
+
+    var b1 = [], b2 = []
+    b1 = b1.concat(p1.bias_h.toArray(), p1.bias_o.toArray())
+    b2 = b2.concat(p2.bias_h.toArray(), p2.bias_o.toArray())
 
     // crossover weights - return sets of weights
-    var offSpring = midPoint2_crossOver(w1, w2)
+    // var offSpring = midPoint2_crossOver(w1, w2)
+
+    //
+    var offSpring = midPoint3_crossOver(w1, w2)
+
+
+    var biasOffSpring = midPoint3_crossOver(b1, b2)
+
+
 
     // split Matrix into ih, ho
-    var m, w_ih, w_ho
+    var mw, mb
     var nn
     var children = []
-    offSpring.forEach(weightSet => {
-        m = getWeightMatrix(weightSet, p1.input_nodes, p1.hidden_nodes, p1.output_nodes)
-        w_ih = m[0]
-        w_ho = m[1]
+    offSpring.forEach( (weightSet,index) => {
+      mw = toWeightMatrix(offSpring[index], p1.input_nodes, p1.hidden_nodes, p1.output_nodes)
+      mb = toBiasMatrix(biasOffSpring[index], p1.hidden_nodes, p1.output_nodes)
 
-        nn = new NeuralNetwork(p1.input_nodes, p1.hidden_nodes, p1.output_nodes)
-        nn.weights_ih = w_ih
-        nn.weights_ho = w_ho
+      nn = new NeuralNetwork(p1.input_nodes, p1.hidden_nodes, p1.output_nodes)
 
-        children.push(new GeneticBody(geneticCtx, initialStateFrame, nn))
+      nn.weights_ih = mw[0]
+      nn.weights_ho = mw[1]
+
+      nn.bias_h = mb[0]
+      nn.bias_o = mb[1]
+
+      children.push(nn)
     })
     return children
 }
 
 
-function midPoint2_crossOver(w1, w2){
+function midPoint3_crossOver(w1, w2){
     var c1 = []
     var c2 = []
     var w1Len = w1.length
@@ -260,6 +274,23 @@ function midPoint2_crossOver(w1, w2){
     return [c1,c2]
 }
 
+function midPoint2_crossOver(w1, w2){
+    var c1 = []
+    var c2 = []
+    var midpoint1 = randomBetween(0,w1.length-1)
+    var midpoint2 = randomBetween(0,w1.length-1)
+
+    for(i=0; i<w1.length; i++){
+        if(i < midpoint1) c1[i] = w1[i]
+        else  c1[i] = w2[i]
+    }
+    for(i=0; i<w1.length; i++){
+        if(i < midpoint2) c2[i] = w2[i]
+        else  c2[i] = w1[i]
+    }
+
+    return [c1,c2]
+}
 
 
 
@@ -268,4 +299,62 @@ function midPoint2_crossOver(w1, w2){
 
 function randomBetween(min, max) { // min and max included
     return Math.floor(Math.random() * (max - min + 1) + min);
+}
+
+function toWeightMatrix(arr,n_input,n_hidden,n_output){
+  let splitMatrix1, splitMatrix2, matrix1, matrix2
+
+  matrix1 = new Matrix(n_hidden, n_input);
+  matrix2 = new Matrix(n_output, n_hidden);
+
+  splitMatrix1 = n_hidden * n_input
+  splitMatrix2 = splitMatrix1 + n_output * n_hidden
+
+  //SPLIT ARR INTO TO 2 ORIGINAL INDEPENDENT WEIGHT VECTOR
+  let arr1 = arr.slice(0,splitMatrix1)
+  let arr2 = arr.slice(splitMatrix1,splitMatrix2)
+
+  for (let i = 0; i < n_hidden; i++) {
+    for (let j = 0; j < n_input; j++) {
+      matrix1.data[i][j] = arr1[i];
+    }
+  }
+
+  for (let i = 0; i < n_output; i++) {
+    for (let j = 0; j < n_hidden; j++) {
+      matrix2.data[i][j] = arr2[i];
+    }
+  }
+
+
+  return [matrix1,matrix2];
+}
+
+function toBiasMatrix(arr,n_hidden,n_output){
+  let splitMatrix1, splitMatrix2, matrix1, matrix2
+
+  matrix1 = new Matrix(n_hidden, 1);
+  matrix2 = new Matrix(n_output, 1);
+
+  splitMatrix1 = n_hidden * 1
+  splitMatrix2 = splitMatrix1 + n_output * 1
+
+  //SPLIT ARR INTO TO 2 ORIGINAL INDEPENDENT WEIGHT VECTOR
+  let arr1 = arr.slice(0,splitMatrix1)
+  let arr2 = arr.slice(splitMatrix1,splitMatrix2)
+
+  for (let i = 0; i < n_hidden; i++) {
+    for (let j = 0; j < 1; j++) {
+      matrix1.data[i][j] = arr1[i];
+    }
+  }
+
+  for (let i = 0; i < n_output; i++) {
+    for (let j = 0; j < 1; j++) {
+      matrix2.data[i][j] = arr2[i];
+    }
+  }
+
+
+  return [matrix1,matrix2];
 }

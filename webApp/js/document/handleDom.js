@@ -266,7 +266,7 @@ function getFormValue(){
           $("#saveGenetic").removeClass("disabled");
         }
         if (patience) stopTraining = false;
-        $("#trainLog").text("Training Generation number: " + genNumber)
+        $("#trainLog").text("Training Generation number: " + genCounter)
         setTimeout(train,300)
       }
 

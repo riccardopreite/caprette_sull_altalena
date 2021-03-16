@@ -180,7 +180,8 @@ function getNextFrame(currentFrame, nextPostion,body){
         phi_next = phi_next + (DELTA_T * w_next * 0.5)
 
 
-        if (currentPosition == "squat" && nextPostion == "stand")
+        // if (currentPosition == "squat" && nextPostion == "stand")
+        if (lprev != lnext)
           w_next = Math.pow((lprev / lnext), 2) * w
 
       }

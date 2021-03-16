@@ -3,6 +3,7 @@
 *************************/
 var bestSwingBrain = {};
 
+var genCounter = 0;
 
 var symplectic = false;
 

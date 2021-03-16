@@ -109,8 +109,8 @@ class GeneticBody {
      */
     think() {
         let input = []
-        input[0] = Number((this.currentFrame.phi/MAX_PHI_ANGLE).toFixed(3))
-        input[1] = Number(this.currentFrame.w).toFixed(3)
+        input[0] = Math.abs(Number(this.currentFrame.w).toFixed(3))
+        input[1] = Math.abs(Number((this.currentFrame.phi/MAX_PHI_ANGLE).toFixed(3)))
         input[2] = this.positionsSet.indexOf(this.currentFrame.bodyPosition)
 
         let output = this.brain.predict(input)

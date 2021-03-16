@@ -15,7 +15,7 @@ var currentRecordBodyArray = []
 var showingList = [],showingIndex = 0,graphOffset = 0;
 const FRAME_GRAPH_OFFEST = 200;
 
-const PATIENCE_MAX = 5
+const PATIENCE_MAX = 50
 var patience = PATIENCE_MAX
 
 const MAX_PHI_COUNTER = POPULATION / 50
@@ -149,7 +149,6 @@ function geneticDraw() {
       stopTraining = true
       drawRecordBody()
       // return
-      genNumber++;
     }
 
 
@@ -169,7 +168,6 @@ function geneticDraw() {
 
 function drawRecordBody() {
   // console.log("draw record");
-  $("#trainLog").text("Playing current Best for " + STEPS + " seconds")
   showingList = goBest(currentRecordBodyArray[currentRecordBodyArray.length - 1].brain)
   graphOffset = parseInt(showingList.length/FRAME_GRAPH_OFFEST)
 
@@ -179,6 +177,9 @@ function drawRecordBody() {
   speedGraph0.resetChart()
   timeGraph0 = new Graph(ctxTime0,"Time/Angle graph","phi(rad)","time(s)","radiant angle")
   speedGraph0 = new Graph(ctxSpeed0,"Angular Speed/Angle graph","angular speed(rad/s)","phi(rad)","angular speed")
+  if(patience != 50){
+    showingList = []
+  }
   if (patience == 0) {
       stopTraining = true
       draw = false
@@ -190,7 +191,7 @@ function drawRecordBody() {
 
 function trainLoop() {
   geneticSetup()
-  $("#trainLog").text("Training Generation number: " + genNumber)
+  $("#trainLog").text("Training Generation number: " + genCounter)
   setTimeout(train,300)
 }
 
@@ -202,7 +203,17 @@ function train() {
 
 
 function drawBest() {
-  if(draw){
+  if(showingList.length == 0){
+    if (patience) stopTraining = false;
+    else{
+      $("#saveGenetic").removeClass("disabled");
+    }
+
+    //add graph of score while training generation
+
+    setTimeout(train,1000)
+  }
+  else if(draw){
     let initFrame = showingList[0]
     var tmpBody = new GeneticBody(geneticCtx, initFrame)
     var tmpRope = new Rope(geneticCtx, initFrame)
@@ -237,6 +248,8 @@ function drawBest() {
       else{
         $("#saveGenetic").removeClass("disabled");
       }
+      //refresh generation in score log with actual generation and print only training....
+
       $("#trainLog").text("Training Generation number: " + genNumber)
       //add graph of score while training generation
 
