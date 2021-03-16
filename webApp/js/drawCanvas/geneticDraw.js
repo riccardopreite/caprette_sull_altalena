@@ -127,29 +127,21 @@ function geneticSetup() {
 
 
 function geneticDraw() {
-  var iterationCounter = 0;
   while (!stopTraining) {
-    iterationCounter++;
 
     // delete failing or successful bodies, store them in a backup array
     for (let i = 0; i <= geneticBodies.length - 1; i++) {
-      // if (initialStateFrame.swingType.includes("standing"))
-      //   geneticBodies[i].isImprovingW()
 
-      if (geneticBodies[i].reachMaxPhi || geneticBodies[i].isImprovingPhi() === false) {
-        console.log("deadPhi")
-        // geneticBodies[i].score = geneticBodies[i].updateScore()
-        iterationCounter = 0
+      // if (geneticBodies[i].reachMaxPhi || geneticBodies[i].isImprovingPhi() === false) {
+      // if(geneticBodies[i].reachMaxPhi) console.log("dead for MAX Phi reached")
+      // else console.log("dead for not improved Phi")
+      if (geneticBodies[i].improvedPhi()) {
+        console.log("Killing Generation");
         savedGenticBodies.push(geneticBodies[i])
         geneticBodies.splice(i, 1)
         i--;
       }
     }
-
-
-
-    // Current population update
-    updatPopulationDOM(geneticBodies.length)
 
     // check empty array
     if (geneticBodies.length === 0) {
@@ -171,27 +163,12 @@ function geneticDraw() {
       geneticBodies[i].update(nextFrame)
     }
 
-    if (iterationCounter >= 10000 * 50) {
-      console.log("time to kill generation");
-      iterationCounter = 0
-      for (let i = 0; i <= geneticBodies.length - 1; i++) {
-        savedGenticBodies.push(geneticBodies[i])
-        geneticBodies.splice(i, 1)
-        i--;
-      }
-
-      nextGeneration()
-      stopTraining = true
-      drawRecordBody()
-      // return
-      genNumber++;
-    }
   }
 
 }
 
 function drawRecordBody() {
-  console.log("draw record");
+  // console.log("draw record");
   $("#trainLog").text("Playing current Best for " + STEPS + " seconds")
   showingList = goBest(currentRecordBodyArray[currentRecordBodyArray.length - 1].brain)
   graphOffset = parseInt(showingList.length/FRAME_GRAPH_OFFEST)
@@ -261,6 +238,8 @@ function drawBest() {
         $("#saveGenetic").removeClass("disabled");
       }
       $("#trainLog").text("Training Generation number: " + genNumber)
+      //add graph of score while training generation
+
       setTimeout(train,300)
     }
   }

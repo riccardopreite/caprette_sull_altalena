@@ -104,10 +104,10 @@ class Body {
         this.ctx.arc(headX, headY, headRadius, 0, 2 * Math.PI);
 
         this.ctx.strokeStyle = 'rgba(255,255,255,1)';
-        this.ctx.lineWidth = 1;
+        this.ctx.lineWidth = 2;
         this.ctx.stroke();
         this.ctx.fillStyle = 'rgba(255,255,255,0.6)';
-        this.ctx.fill();        
+        this.ctx.fill();
         // head-half
         this.ctx.moveTo(headX, headY);
         this.ctx.lineTo(halfX, halfY);

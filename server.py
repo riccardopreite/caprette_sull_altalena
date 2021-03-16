@@ -6,7 +6,7 @@ import asyncio
 
 from random import randint
 from time import strftime
-from flask import Flask, render_template, flash, request, session, copy_current_request_context,Response,jsonify,make_response
+from flask import Flask, send_from_directory, render_template, flash, request, session, copy_current_request_context,Response,jsonify,make_response
 from flask_socketio import SocketIO, emit, disconnect
 from threading import Lock
 from python import StandingSwing,Environment,SeatedSwing,RealisticSwing,Utility
@@ -51,6 +51,10 @@ thread = None
 thread_lock = Lock()
 
 
+@app.route('/favicon.ico')
+def favicon():
+    return send_from_directory(os.path.join(app.root_path, 'webApp'),
+                               'swingset.png', mimetype='image/vnd.microsoft.icon')
 
 @socket.on('my_event', namespace='/test')
 def test_message(message):

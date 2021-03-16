@@ -1,3 +1,8 @@
+const N_PARENTS = 10
+const TOURNAMENT_SIZE = 0.3
+const MUTATION_PROBABILITY = 0.1
+var avgScoreArr = []
+
 /**
  * - Calculate fitness values for each body
  * - Repopulation
@@ -11,25 +16,34 @@
 function nextGeneration() {
     console.log("nextGen")
 
-    // calculateScore()
-    // calculate fitness
     calculateFitness()
 
-    // repopulation
-    for (let i = 0; i <= POPULATION-1; i++) {
-        geneticBodies[i] = pickBest(!i)
-        ropes[i] = new Rope(geneticCtx, initialStateFrame)
-        swings[i] = new Swing(geneticCtx, initialStateFrame)
-    }
+    // get element with the highest fitness value
+    var best = getMaxFitnessElement(savedGenticBodies)
+    // update recordBody, log, patience
+    updateRecordBody(best)
 
+    // selection, avg score
+    var parents = tournamentSelection(N_PARENTS)
+    avgScoreArr.push(avgScore(parents))
+
+    // repopulate
     addLogMsgDOM("Repopulation ...")
     addLogMsgDOM("Mutation ...")
+    // 1-clone ?????????????????? Copy <============
+    parents.forEach(p => {
+        geneticBodies.push(new GeneticBody(geneticCtx, initialStateFrame, p.brain))
+    })
+    // 2-crossOver + mutation
+    var children = crossOver(parents)
+    children.forEach(c => {
+        geneticBodies.push(new GeneticBody(geneticCtx, initialStateFrame, c))
+    })
+
 
     // empty backup array
     savedGenticBodies = []
-
     genCounter++
-    MaxPhiCounter = MAX_PHI_COUNTER
 
     // DOM handling
     addLogMsgDOM("========================================")
@@ -37,69 +51,7 @@ function nextGeneration() {
     addLogMsgDOM("========================================")
 }
 
-/**
- * - From backup array choose the one element with highest fitness value
- * - Log its data (score - fitness - jumps)
- * - copy it in a new Genetic Body
- * - mutate new genetic body
- * @returns {GeneticBody} newBody: mutated genetic Body
- */
-function pickBest(log) {
-    // pick the best
-    var index = 0
-
-    // var r = Math.random(1)
-    // while (r > 0) {
-    //     r = r - savedGenticBodies[index].fitness
-    //     index++
-    // }
-    // index--
-
-    var maxFitness = 0
-
-    for(let i=0; i<= savedGenticBodies.length-1; i++){
-        if(savedGenticBodies[i].fitness > maxFitness){
-            maxFitness = savedGenticBodies[i].fitness
-            index = i
-        }
-    }
-    let best = savedGenticBodies[index]
-
-    // log only the first time
-    if (log) {
-        if (currentRecordBody === undefined || best.score > currentRecordBody.score) {
-            patience = PATIENCE_MAX
-            currentRecordBody = best
-            currentRecordBodyArray.push(best)
-            if(best.max_phi > MAX_PHI_ANGLE) best.max_phi = MAX_PHI_ANGLE
-            updateRecordsDOM(
-                best.score,
-                best.max_phi,
-                best.jumps.length,
-                patience
-            )
-        } else{
-          patience--
-          $("#patienceCounter").text(patience)
-
-        }
-
-        if (patience == 0) {
-            stopTraining = true
-            console.log(currentRecordBody)
-        }
-
-
-        addLogMsgDOM(best.log())
-    }
-
-
-    // creation and mutation
-    let newBody = new GeneticBody(geneticCtx, initialStateFrame, best.brain)
-    newBody.mutate()
-
-    return newBody
-}
+/** Fitness ===================================================================================================================== */
 
 function calculateFitness() {
     let sum = 0
@@ -114,17 +66,206 @@ function calculateFitness() {
     })
 }
 
-function calculateScore() {
+/**
+ *
+ * @param {Array GeneticBodyes} pop
+ * @returns score average
+ */
+function avgScore(pop) {
+    var sum = 0
+    pop.forEach(p => {
+        sum += p.score
+    })
+    return sum / pop.length
+}
 
-  for(let i = 0; i<savedGenticBodies.length;i++){
-    if(savedGenticBodies[i].score <= 0 ){
-      savedGenticBodies.splice(i, 1)
-      i--;
+/**
+ *
+ * @param {Array GeneticBody} pop
+ * @returns {GeneticBody} the element with highest fitness value
+ */
+function getMaxFitnessElement(pop) {
+    return pop.reduce(function (prev, next) {
+        return (prev.fitness > next.fitness ? prev : next);
+    })
+}
+
+
+/**
+ *
+ * @param {GeneticBody} best: the element with the highest fitness for the current generation
+ * If its fitness is > than currentRecord => currentRecord is updated
+ * Otherwise patience is decreased, until reachs 0
+ */
+function updateRecordBody(best) {
+    if (currentRecordBody === undefined || best.score > currentRecordBody.score) {
+        patience = PATIENCE_MAX
+        currentRecordBody = best
+        // currentRecordBodyArray.push(best)
+        updateRecordsDOM(
+            currentRecordBody.score,
+            currentRecordBody.max_phi,
+            currentRecordBody.jumps.length,
+            patience
+        )
+    } else {
+        patience--
+        $("#patienceCounter").text(patience)
     }
-    else
-      savedGenticBodies[i].scoreTime = savedGenticBodies[i].score / savedGenticBodies[i].time;
-  }
-  savedGenticBodies.sort(function(a,b){
-    return b.scoreTime - a.scoreTime;
-  });
+
+    if (patience == 0) {
+        stopTraining = true
+        console.log(currentRecordBody)
+    }
+}
+
+
+
+/** Selection ===================================================================================================================== */
+/**
+ *
+ * @param {int} n_parents: determines how many parents must return from selection
+ * @returns {Array GeneticBody} parents: selected elements
+ */
+function tournamentSelection(n_parents) {
+    var parents = []
+    var parentsIndex = []
+    var tournament = []
+    var winner, tmpIndex
+
+    for (var i = 0; i < n_parents; i++) {
+        // reset
+        tournament = []
+        parentsIndex = []
+        winner = undefined
+
+        // pick TORNAMENT_SIZE elements (dinstic)
+        while (tournament.length < (POPULATION * TOURNAMENT_SIZE)) {
+            tmpIndex = randomBetween(0, savedGenticBodies.length)
+            if (parentsIndex.includes(tmpIndex) === false) {
+                parentsIndex.push(tmpIndex)
+                tournament.push(savedGenticBodies[tmpIndex])
+            }
+        }
+
+        // pick the highest fitness among tournament
+        winner = getMaxFitnessElement(tournament)
+        parents.push(winner)
+
+        savedGenticBodies.splice(savedGenticBodies.indexOf(winner), 1)
+    }
+    return parents
+}
+
+
+/** Crossover ===================================================================================================================== */
+
+/**
+ *
+ * @param {Array GeneticBody} parents
+ * @returns {Array geneticBodies}
+ */
+function crossOver(parents) {
+    var children = []
+    var p1, p2
+    var i, j
+
+    while (children.length < POPULATION - parents.length) {
+        // pick 2 dinstic parents
+        i = randomBetween(0, parents.length - 1)
+        j = randomBetween(0, parents.length - 1)
+        while (i == j) j = randomBetween(0, parents.length - 1)
+        p1 = parents[i].brain
+        p2 = parents[j].brain
+
+        // get 2 children from crossOver
+        offSprings = crossOver_couple(p1, p2)
+
+        // mutation
+        if (Math.random() < MUTATION_PROBABILITY)
+            offSprings[0].mutate(MUTATION_RATE)
+        if (Math.random() < MUTATION_PROBABILITY)
+            offSprings[1].mutate(MUTATION_RATE)
+
+
+        children.push(offSprings[0])
+        children.push(offSprings[1])
+    }
+
+    return children
+}
+
+/** CHECK <================================================================================================
+ *
+ * @param {NeuralNetwork} p1: parent1
+ * @param {NeuralNetwork} p2: parent2
+ * @returns {Array NeuralNetwork}
+ */
+function crossOver_couple(p1, p2) {
+    // get weights from both nn
+    var w1 = undefined
+    var w2 = undefined
+
+    // crossover weights - return sets of weights
+    var offSpring = midPoint2_crossOver(w1, w2)
+
+    // split Matrix into ih, ho
+    var m, w_ih, w_ho
+    var nn
+    var children = []
+    offSpring.forEach(weightSet => {
+        m = getWeightMatrix(weightSet, p1.input_nodes, p1.hidden_nodes, p1.output_nodes)
+        w_ih = m[0]
+        w_ho = m[1]
+
+        nn = new NeuralNetwork(p1.input_nodes, p1.hidden_nodes, p1.output_nodes)
+        nn.weights_ih = w_ih
+        nn.weights_ho = w_ho
+
+        children.push(new GeneticBody(geneticCtx, initialStateFrame, nn))
+    })
+    return children
+}
+
+
+function midPoint2_crossOver(w1, w2){
+    var c1 = []
+    var c2 = []
+    var w1Len = w1.length
+    var w2Len = w2.length
+
+    var c1Point1 = randomBetween(0,Math.floor(w1Len/2))
+    var c1Point2 = randomBetween(c1Point1+1,w1Len-1)
+
+    var c2Point1 = randomBetween(0,Math.floor(w2Len/2))
+    var c2Point2 = randomBetween(c2Point1+1,w2Len-1)
+
+    for(i=0; i<w1.length; i++){
+      /* FIRST CHILDREN CROSSED */
+        //first point
+        if(i <= c1Point1) c1[i] = w1[i]
+        //central point
+        else if( (i > c1Point1) &&  (i <= c1Point2)) c1[i] = w2[i]
+        //last point
+        else c1[i] = w1[i]
+
+      /* SECOND CHILDREN CROSSED */
+        if(i <= c2Point1) c2[i] = w2[i]
+        //central point
+        else if( (i > c2Point1) &&  (i <= c2Point2)) c2[i] = w1[i]
+        //last point
+        else c2[i] = w2[i]
+    }
+
+    return [c1,c2]
+}
+
+
+
+
+
+/** Utils ========================================================================================================================= */
+
+function randomBetween(min, max) { // min and max included
+    return Math.floor(Math.random() * (max - min + 1) + min);
 }

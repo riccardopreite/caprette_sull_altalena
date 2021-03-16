@@ -10,6 +10,7 @@
 
 
   <!-- CSS INCLUSION -->
+  <link rel="shortcut icon" href="favicon.ico" />
   <!-- chart -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.css"
     integrity="sha512-C7hOmCgGzihKXzyPU/z4nv97W0d9bv4ALuuEbSf6hm93myico9qa0hv4dODThvCsqQUmKmLcJmlpRmCaApr83g=="
@@ -128,8 +129,11 @@
 
           <div class="card-content" id="scoreContainer">
             <div class="row">
-              <div class="col s12 recordContainer" style="float:left;width: 45%;margin-right: 0.5em !important;">
+              <div class="col s12 recordContainer" style="float:right;width: 45%;margin-left: 0em !important;margin-right: 3em !important; margin-top:1em !important;">
                 <p class="recordLog" >Population: 250</p>
+                <p class="recordLog" id="trainLog"></p>
+              </div>
+              <div class="col s12 recordContainer" style="float:left;width: 40%;margin-right: 0.5em !important;">
                 <p class="recordLog">Max score: <span class="recordLog" id="maxScore">-</span></p>
                 <p class="recordLog">Max phi: <span class="recordLog" id="maxPhi">0.5</span></p>
                 <p class="recordLog">Number of jumps: <span class="recordLog" id="jumpsCounter">-</span></p>
@@ -200,7 +204,7 @@
               <!-- phi + w -->
               <div class="row">
                 <div class="input-field col s6">
-                  <input class="formInput" id="phi0" type="number" value="-0.5" step="0.01">
+                  <input class="formInput" id="phi0" type="number" value="-0.5" step="0.01" min="-1.308" max="0">
                   <label for="phi0">Initial angle (rad) </label>
                 </div>
                 <div class="input-field col s6">
@@ -352,7 +356,7 @@
               <!-- phi + w -->
               <div class="row">
                 <div class="input-field col s6">
-                  <input class="formInput" id="phi1" type="number" value="-0.5" step="0.01">
+                  <input class="formInput" id="phi1" type="number" value="-0.5" step="0.01" max="1.308">
                   <label for="phi1">Initial angle (rad)</label>
                 </div>
                 <div class="input-field col s6">
