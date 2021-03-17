@@ -5,7 +5,7 @@ var standing_positions = ["stand", "squat"]
 var seated_positions = ["seat", "leanback"]
 // Nerual Network
 var n_input = 3
-var n_hidden = 8
+var n_hidden = 16
 var n_output = 2
 const MUTATION_RATE = 0.3
 // scoring
@@ -22,7 +22,7 @@ const SEATED_FIXED_W = 3
 // const MAX_PHI_WEIGHT = 500
 // const BETTER_PHI_WEIGHT = 3000
 
-const JUMP_PENALIZATION_STANDING = 5
+const JUMP_PENALIZATION_STANDING = 0.5
 const JUMP_PENALIZATION_SEATED = 1
 var JUMP_PENALIZATION
 
