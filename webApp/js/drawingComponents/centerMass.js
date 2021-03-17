@@ -9,7 +9,7 @@ class CenterMass {
         this.ctx = ctx
         this.RADIUS = 2.1
 
-        this.MAX_NUMBER_POINTS = 120
+        this.MAX_NUMBER_POINTS = 250
         this.counter = 0
         this.cm_list = []
         this.upper_list = []

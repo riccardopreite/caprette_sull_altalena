@@ -7,7 +7,7 @@ var seated_positions = ["seat", "leanback"]
 var n_input = 3
 var n_hidden = 8
 var n_output = 2
-const MUTATION_RATE = 0.5
+const MUTATION_RATE = 0.3
 // scoring
 var SCORE_BONUS_PHI = 1500
 //var SCORE_BONUS_W = 3000 //1500 ====================================================
@@ -109,12 +109,11 @@ class GeneticBody {
      */
     think() {
         let input = []
-        input[0] = Math.abs(Number(this.currentFrame.w).toFixed(3))
-        input[1] = Math.abs(Number((this.currentFrame.phi/MAX_PHI_ANGLE).toFixed(3)))
+        input[0] = Number((this.currentFrame.w*1).toFixed(4))
+        input[1] = Number((this.currentFrame.phi/MAX_PHI_ANGLE).toFixed(4))
         input[2] = this.positionsSet.indexOf(this.currentFrame.bodyPosition)
 
         let output = this.brain.predict(input)
-
         if (output[0] > output[1])
             this.nextPosition = this.positionsSet[0]
         else
@@ -149,7 +148,7 @@ class GeneticBody {
        // check the record condition
        if (reachBottom) {
            // check for a new record
-           var multiplier = this.prevPhi / initialStateFrame.phi
+           var multiplier = this.prevPhi.toFixed(4) / initialStateFrame.phi
 
            this.score += multiplier * SCORE_BONUS_PHI
            this.score -= this.jumps.length * JUMP_PENALIZATION
