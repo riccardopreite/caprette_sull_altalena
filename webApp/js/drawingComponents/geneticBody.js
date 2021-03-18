@@ -7,7 +7,7 @@ var seated_positions = ["seat", "leanback"]
 var n_input = 3
 var n_hidden = 16
 var n_output = 2
-const MUTATION_RATE = 0.3
+const MUTATION_RATE = 0.5
 // scoring
 var SCORE_BONUS_PHI = 1500
 //var SCORE_BONUS_W = 3000 //1500 ====================================================
@@ -108,9 +108,12 @@ class GeneticBody {
      * @returns {String} nextPostion: the predicted next postion
      */
     think() {
-        let input = []
-        input[0] = Number((this.currentFrame.w*1).toFixed(4))
-        input[1] = Number((this.currentFrame.phi/MAX_PHI_ANGLE).toFixed(4))
+        let input = [],
+        normalizedAngle = Number( (this.currentFrame.phi/MAX_PHI_ANGLE) ),
+        w = Number((this.currentFrame.w*1).toFixed(4))
+
+        input[0] = Math.abs(w)
+        input[1] = normalizedAngle
         input[2] = this.positionsSet.indexOf(this.currentFrame.bodyPosition)
 
         let output = this.brain.predict(input)
@@ -151,6 +154,9 @@ class GeneticBody {
            var multiplier = this.prevPhi.toFixed(4) / initialStateFrame.phi
 
            this.score += multiplier * SCORE_BONUS_PHI
+           // if(genCounter < 20) this.score += this.jumps.length * JUMP_PENALIZATION
+           // else this.score -= this.jumps.length * JUMP_PENALIZATION
+
            this.score -= this.jumps.length * JUMP_PENALIZATION
            return true;
 
@@ -194,7 +200,6 @@ class GeneticBody {
          // jumpHandler
          if (this.currentFrame.bodyPosition !== frame.bodyPosition) {
              this.jumps.push(new Jump(this.currentFrame, frame))
-             this.score -= JUMP_PENALIZATION
          }
 
          this.prevW = this.currentFrame.w

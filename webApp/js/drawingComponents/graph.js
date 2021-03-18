@@ -28,7 +28,7 @@ class Graph {
         //       mode: 'xy',
         //     }
         //   }
-        // },        
+        // },
         options: {
           title: {
             display: true,
@@ -104,15 +104,68 @@ class Graph {
    * @returns {int} data: y axys Vector
    * coordiantes
    */
-  plotGraph(labels,data){
-    resetChart()
-    this.chart = new Chart(ctx, {
+  plotGraph(label,data){
+    // this.resetChart()
+    this.chart = new Chart(this.ctx, {
       type: 'line',
       data: {
-        labels: labels,
-        datasets: [{data: data}]
+        // labels: label,
+        // datasets: [{data: data}]
+      },
+      options: {
+        title: {
+          display: true,
+          text: "Score Avg graph",
+          fontColor: fontColor,
+          fontSize: 13
+        },
+        legend: {
+            display: false,
+        },
+        scales: {
+            yAxes: [{
+              scaleLabel: {
+                display: true,
+                labelString: "Generation",
+                fontColor: fontColor
+              },
+              ticks: {
+                  fontColor: fontColor,
+                  fontSize: 10,
+                  stepSize: 1,
+                  beginAtZero: true
+              },
+              min: 0,
+              max: 200
+            }],
+            xAxes: [{
+              type: 'linear',
+              position: 'bottom',
+              scaleLabel: {
+                display: true,
+                labelString: "Score AVG",
+                fontColor: fontColor
+
+              },
+              ticks: {
+                  fontColor: fontColor,
+                  fontSize: 10,
+                  stepSize: 1000,
+                  beginAtZero: true
+              },
+              min: 1500
+          }]
+        }
       }
     });
+    for(let i = 0; i < avgScoreArr.length;i++){
+      this.chart.data.labels.push(avgScoreArr[i]);
+      this.chart.data.datasets.forEach((dataset) => {
+        dataset.data.push(i);
+      });
+
+    }
+    this.chart.update();
   }
 
   /**

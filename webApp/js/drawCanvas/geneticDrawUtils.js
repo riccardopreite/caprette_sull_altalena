@@ -1,5 +1,4 @@
 function drawRecordBody() {
-  console.log("draw record");
   showingList = goBest(tmpRecord.brain)
   graphOffset = parseInt(showingList.length/FRAME_GRAPH_OFFEST)
 
@@ -7,6 +6,9 @@ function drawRecordBody() {
   draw=true
   timeGraph0.resetChart()
   speedGraph0.resetChart()
+  showHideDiv("#timeDad","#graphScore0")
+  showHideDiv("#speedDad","#graphScore0")
+
   timeGraph0 = new Graph(ctxTime0,"Time/Angle graph","phi(rad)","time(s)","radiant angle")
   speedGraph0 = new Graph(ctxSpeed0,"Angular Speed/Angle graph","angular speed(rad/s)","phi(rad)","angular speed")
 
@@ -47,15 +49,16 @@ function goBest(brain) {
 
 
 function drawBest() {
-  if(patience != PATIENCE_MAX){
-    $("#trainLog").text("Training Generation number: " + genCounter)
-    if (patience) stopTraining = false;
-    else{
-      $("#saveGenetic").removeClass("disabled");
-    }
-    setTimeout(train,1000)
-  }
-  else if(draw){
+  // if(patience != PATIENCE_MAX){
+  //   $("#trainLog").text("Training Generation number: " + genCounter)
+  //   if (patience) stopTraining = false;
+  //   else{
+  //     $("#saveGenetic").removeClass("disabled");
+  //   }
+  //   setTimeout(train,1000)
+  // }
+  // else
+   if(draw){
     $("#trainLog").text("Drawing new best for " + STEPS + " steps")
     let initFrame = showingList[0]
     var tmpBody = new GeneticBody(geneticCtx, initFrame)
@@ -95,8 +98,26 @@ function drawBest() {
 
       $("#trainLog").text("Training Generation number: " + genCounter)
       //add graph of score while training generation
+      drawScoreGraph()
 
-      setTimeout(train,300)
+      setTimeout(train,3000)
     }
   }
+}
+
+function drawScoreGraph(){
+  showHideDiv("#graphScore0","#timeDad")
+  showHideDiv("#graphScore0","#speedDad")
+  let ctxScore = document.getElementById("graphScore").getContext('2d')
+  console.log(ctxScore);
+  let graph = new Graph(ctxScore,"Score Avg graph","Generation","Score AVG","score avg")
+  for (let i = 0; i < avgScoreArr.length;i++){
+    console.log(avgScoreArr[i]);
+    graph.addPoint(i,avgScoreArr[i])
+  }
+  // let label = [...Array(avgScoreArr).keys()]
+  // console.log(label);
+  // console.log(avgScoreArr);
+  // graph.plotGraph(label,avgScoreArr)
+
 }

@@ -29,9 +29,11 @@ function nextGeneration() {
   avgScoreArr.push(avgScore(parents))
 
   // 1-clone
-  parents.forEach(p => {
+  parents.forEach( (p,index) => {
     let brain = p.brain.copy()
-    geneticBodies.push(new GeneticBody(geneticCtx, initialStateFrame, brain))
+    let half = Math.floor(parents.length/2)
+    // if(index < 2)
+      geneticBodies.push(new GeneticBody(geneticCtx, initialStateFrame, brain))
   })
   // 2-crossOver + mutation
   var children = crossOver(parents)
@@ -209,63 +211,29 @@ function crossOver_couple(p1, p2,childrenList) {
   b2 = b2.concat(p2.bias_h.toArray(), p2.bias_o.toArray())
 
   // crossover weights - return sets of weights
-  var weightOffSpring, biasOffSpring,tmpMidpoint2weightOffSpring,tmpMidpoint2biasOffSpring,tmpMidpoint3weightOffSpring,tmpMidpoint3biasOffSpring
+  var weightOffSpring, biasOffSpring
   const ALPHA = 0.7
   weightOffSpring = wholeAritchmetic_crossOver(w1, w2, ALPHA)
   biasOffSpring = wholeAritchmetic_crossOver(b1, b2, ALPHA)
-  tmpMidpoint2weightOffSpring = midPoint2_crossOver(w1, w2)
-  tmpMidpoint2biasOffSpring = midPoint3_crossOver(b1, b2)
-  tmpMidpoint3weightOffSpring = midPoint3_crossOver(w1, w2)
-  tmpMidpoint3biasOffSpring = midPoint3_crossOver(b1, b2)
-
-
-
-
-
 
   // split Matrix into ih, ho
-  var mw, mb,mw2,mb2,mw3,mb3
-  var nn,nn2,nn3
-  var children = [],midpoint2 = [],midpoint3 = []
+  var mw, mb
+  var nn
+  var children = []
   weightOffSpring.forEach((weightSet, index) => {
     mw = toWeightMatrix(weightOffSpring[index], p1.input_nodes, p1.hidden_nodes, p1.output_nodes)
     mb = toBiasMatrix(biasOffSpring[index], p1.hidden_nodes, p1.output_nodes)
-
-    mw2 = toWeightMatrix(tmpMidpoint2weightOffSpring[index], p1.input_nodes, p1.hidden_nodes, p1.output_nodes)
-    mb2 = toBiasMatrix(tmpMidpoint2biasOffSpring[index], p1.hidden_nodes, p1.output_nodes)
-    mw3 = toWeightMatrix(tmpMidpoint3weightOffSpring[index], p1.input_nodes, p1.hidden_nodes, p1.output_nodes)
-    mb3 = toBiasMatrix(tmpMidpoint3biasOffSpring[index], p1.hidden_nodes, p1.output_nodes)
-
-    nn = new NeuralNetwork(p1.input_nodes, p1.hidden_nodes, p1.output_nodes)
+  nn = new NeuralNetwork(p1.input_nodes, p1.hidden_nodes, p1.output_nodes)
     nn.weights_ih = mw[0]
     nn.weights_ho = mw[1]
     nn.bias_h = mb[0]
     nn.bias_o = mb[1]
 
-    nn2 = new NeuralNetwork(p1.input_nodes, p1.hidden_nodes, p1.output_nodes)
-    nn2.weights_ih = mw2[0]
-    nn2.weights_ho = mw2[1]
-    nn2.bias_h = mb2[0]
-    nn2.bias_o = mb2[1]
-
-    nn3 = new NeuralNetwork(p1.input_nodes, p1.hidden_nodes, p1.output_nodes)
-    nn3.weights_ih = mw3[0]
-    nn3.weights_ho = mw3[1]
-    nn3.bias_h = mb3[0]
-    nn3.bias_o = mb3[1]
-
-    midpoint2.push(nn2)
-    midpoint3.push(nn3)
     children.push(nn)
-
   })
 
-  if(childrenList.length == 0){
-
-    saveFile(p1,p2,midpoint2[0],midpoint2[1],"midpoint2")
-    saveFile(p1,p2,midpoint3[0],midpoint3[1],"midpoint3")
+  if(childrenList.length == 0)
     saveFile(p1,p2,children[0],children[1],"wholeAritchmetic")
-  }
 
   return children
 }
@@ -282,11 +250,15 @@ function midPoint3_crossOver(w1, w2) {
   var c2Point1 = randomBetween(0, Math.floor(w2Len / 2))
   var c2Point2 = randomBetween(c2Point1 + 1, w2Len - 1)
 
+
   for (i = 0; i < w1.length; i++) {
     if (i <= c1Point1) c1[i] = w1[i]
     else if ((i > c1Point1) && (i <= c1Point2)) c1[i] = w2[i]
     else c1[i] = w1[i]
 
+  }
+
+  for (i = 0; i < w1.length; i++) {
     if (i <= c2Point1) c2[i] = w2[i]
     else if ((i > c2Point1) && (i <= c2Point2)) c2[i] = w1[i]
     else c2[i] = w2[i]
@@ -298,18 +270,19 @@ function midPoint3_crossOver(w1, w2) {
 function midPoint2_crossOver(w1, w2) {
   var c1 = []
   var c2 = []
-  var midpoint1 = randomBetween(0, w1.length - 1)
-  var midpoint2 = randomBetween(0, w1.length - 1)
+  let end = w1.length - 1, start = end/3
+  var midpoint1 = randomBetween(start, end)
+  var midpoint2 = randomBetween(start, end)
 
   for (i = 0; i < w1.length; i++) {
     if (i < midpoint1) c1[i] = w1[i]
     else c1[i] = w2[i]
   }
+
   for (i = 0; i < w1.length; i++) {
     if (i < midpoint2) c2[i] = w2[i]
     else c2[i] = w1[i]
   }
-
   return [c1, c2]
 }
 
@@ -347,17 +320,35 @@ function toWeightMatrix(arr, n_input, n_hidden, n_output) {
   let arr1 = arr.slice(0, splitMatrix1)
   let arr2 = arr.slice(splitMatrix1, splitMatrix2)
 
+  var index = 0
   for (let i = 0; i < n_hidden; i++) {
-    for (let j = 0; j < n_input; j++) {
-      matrix1.data[i][j] = arr1[i];
+       for (let j = 0; j < n_input; j++) {
+      matrix1.data[i][j] = arr1[index];
+      index++
     }
   }
 
+  index = 0
   for (let i = 0; i < n_output; i++) {
-    for (let j = 0; j < n_hidden; j++) {
-      matrix2.data[i][j] = arr2[i];
+       for (let j = 0; j < n_hidden; j++) {
+      matrix2.data[i][j] = arr2[index];
+      index++
     }
   }
+
+  // let row = -1
+  // for(let i = 0; i < arr1.length-1; i++){
+  //   let col = i % n_input
+  //   if(!col) row++
+  //   matrix1.data[row][col] = arr1[i]
+  // }
+  //
+  // row = -1
+  // for(let i = 0; i < arr2.length-1; i++){
+  //   let col = i % n_hidden
+  //   if(!col) row++
+  //   matrix2.data[row][col] = arr2[i]
+  // }
 
   return [matrix1, matrix2];
 }
@@ -375,15 +366,20 @@ function toBiasMatrix(arr, n_hidden, n_output) {
   let arr1 = arr.slice(0, splitMatrix1)
   let arr2 = arr.slice(splitMatrix1, splitMatrix2)
 
+
+  var index = 0
   for (let i = 0; i < n_hidden; i++) {
-    for (let j = 0; j < 1; j++) {
-      matrix1.data[i][j] = arr1[i];
+       for (let j = 0; j < 1; j++) {
+      matrix1.data[i][j] = arr1[index];
+      index++
     }
   }
 
+  index = 0
   for (let i = 0; i < n_output; i++) {
-    for (let j = 0; j < 1; j++) {
-      matrix2.data[i][j] = arr2[i];
+       for (let j = 0; j < 1; j++) {
+      matrix2.data[i][j] = arr2[index];
+      index++
     }
   }
 
@@ -428,3 +424,84 @@ function saveFile(p1,p2,child1,child2,type){
   dlAnchorElem.setAttribute("download", namefile);
   // dlAnchorElem.click();
 }
+
+
+
+
+
+
+
+//ALL CROSSOVER COUPLE
+// function ALLcrossOver_couple(p1, p2,childrenList) {
+//   // get weights from both nn
+//   var w1 = [],
+//     w2 = []
+//   w1 = w1.concat(p1.weights_ih.toArray(), p1.weights_ho.toArray())
+//   w2 = w2.concat(p2.weights_ih.toArray(), p2.weights_ho.toArray())
+//
+//   var b1 = [],
+//     b2 = []
+//   b1 = b1.concat(p1.bias_h.toArray(), p1.bias_o.toArray())
+//   b2 = b2.concat(p2.bias_h.toArray(), p2.bias_o.toArray())
+//
+//   // crossover weights - return sets of weights
+//   var weightOffSpring, biasOffSpring,tmpMidpoint2weightOffSpring,tmpMidpoint2biasOffSpring,tmpMidpoint3weightOffSpring,tmpMidpoint3biasOffSpring
+//   const ALPHA = 0.7
+//   weightOffSpring = wholeAritchmetic_crossOver(w1, w2, ALPHA)
+//   biasOffSpring = wholeAritchmetic_crossOver(b1, b2, ALPHA)
+//   // tmpMidpoint2weightOffSpring = midPoint2_crossOver(w1, w2)
+//   // tmpMidpoint2biasOffSpring = midPoint2_crossOver(b1, b2)
+//   // tmpMidpoint3weightOffSpring = midPoint3_crossOver(w1, w2)
+//   // tmpMidpoint3biasOffSpring = midPoint3_crossOver(b1, b2)
+//
+//
+//
+//
+//
+//
+//   // split Matrix into ih, ho
+//   var mw, mb,mw2,mb2,mw3,mb3
+//   var nn,nn2,nn3
+//   var children = [],midpoint2 = [],midpoint3 = []
+//   weightOffSpring.forEach((weightSet, index) => {
+//     mw = toWeightMatrix(weightOffSpring[index], p1.input_nodes, p1.hidden_nodes, p1.output_nodes)
+//     mb = toBiasMatrix(biasOffSpring[index], p1.hidden_nodes, p1.output_nodes)
+//
+//     // mw2 = toWeightMatrix(tmpMidpoint2weightOffSpring[index], p1.input_nodes, p1.hidden_nodes, p1.output_nodes)
+//     // mb2 = toBiasMatrix(tmpMidpoint2biasOffSpring[index], p1.hidden_nodes, p1.output_nodes)
+//     // mw3 = toWeightMatrix(tmpMidpoint3weightOffSpring[index], p1.input_nodes, p1.hidden_nodes, p1.output_nodes)
+//     // mb3 = toBiasMatrix(tmpMidpoint3biasOffSpring[index], p1.hidden_nodes, p1.output_nodes)
+//
+//     nn = new NeuralNetwork(p1.input_nodes, p1.hidden_nodes, p1.output_nodes)
+//     nn.weights_ih = mw[0]
+//     nn.weights_ho = mw[1]
+//     nn.bias_h = mb[0]
+//     nn.bias_o = mb[1]
+//
+//     // nn2 = new NeuralNetwork(p1.input_nodes, p1.hidden_nodes, p1.output_nodes)
+//     // nn2.weights_ih = mw2[0]
+//     // nn2.weights_ho = mw2[1]
+//     // nn2.bias_h = mb2[0]
+//     // nn2.bias_o = mb2[1]
+//     //
+//     // nn3 = new NeuralNetwork(p1.input_nodes, p1.hidden_nodes, p1.output_nodes)
+//     // nn3.weights_ih = mw3[0]
+//     // nn3.weights_ho = mw3[1]
+//     // nn3.bias_h = mb3[0]
+//     // nn3.bias_o = mb3[1]
+//     //
+//     // midpoint2.push(nn2)
+//     // midpoint3.push(nn3)
+//     children.push(nn)
+//
+//   })
+//
+//   if(childrenList.length == 0){
+//
+//     saveFile(p1,p2,midpoint2[0],midpoint2[1],"midpoint2")
+//     saveFile(p1,p2,midpoint3[0],midpoint3[1],"midpoint3")
+//     saveFile(p1,p2,children[0],children[1],"wholeAritchmetic")
+//   }
+//
+//   return children
+// }

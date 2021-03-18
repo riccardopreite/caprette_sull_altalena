@@ -128,6 +128,7 @@ function geneticDraw() {
 function trainLoop() {
   geneticSetup()
   $("#trainLog").text("Training Generation number: " + genCounter)
+  drawScoreGraph()
   setTimeout(train,300)
 }
 

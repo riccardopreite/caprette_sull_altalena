@@ -130,7 +130,7 @@
           <div class="card-content" id="scoreContainer">
             <div class="row">
               <div class="col s12 recordContainer" style="float:right;width: 45%;margin-left: 0em !important;margin-right: 3em !important; margin-top:1em !important;">
-                <p class="recordLog" >Population: 250</p>
+                <p class="recordLog" >Population: 500</p>
                 <p class="recordLog" id="trainLog"></p>
               </div>
               <div class="col s12 recordContainer" style="float:left;width: 40%;margin-right: 0.5em !important;">
@@ -150,14 +150,20 @@
       <div class="col l6 m12 s12 hide" id="graphDiv0">
         <div class="card medium cardCanvas marginTop shadow">
           <div class="card-content container graphContainer">
-            <div class="row graph">
+            <div class="row graph" id="timeDad">
               <div class="col s12 graphCanvas" id="graphTimeDiv0">
                 <canvas id="graphTime0" width="200" height="100"></canvas>
               </div>
             </div>
-            <div class="row graph">
+            <div class="row graph" id="speedDad">
               <div class="col s12 graphCanvas" id="graphSpeedDiv0">
                 <canvas id="graphSpeed0" width="200" height="100"></canvas>
+              </div>
+            </div>
+
+            <div class="row graph hide" id="graphScore0">
+              <div class="col s12 graphCanvas" >
+                <canvas id="graphScore" width="200" height="100"></canvas>
               </div>
             </div>
 
@@ -208,7 +214,7 @@
                   <label for="phi0">Initial angle (rad) </label>
                 </div>
                 <div class="input-field col s6">
-                  <input class="formInput" id="w0" type="number" value="0.1" step="0.01">
+                  <input class="formInput" id="w0" type="number" value="0.0" step="0.01">
                   <label for="w0">Initial speed (rad/s)</label>
                 </div>
               </div>
@@ -360,7 +366,7 @@
                   <label for="phi1">Initial angle (rad)</label>
                 </div>
                 <div class="input-field col s6">
-                  <input class="formInput" id="w1" type="number" value="0.1" step="0.01">
+                  <input class="formInput" id="w1" type="number" value="0.0" step="0.01">
                   <label for="w1">Initial speed (rad/s)</label>
                 </div>
               </div>

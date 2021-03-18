@@ -267,7 +267,8 @@ function getFormValue(){
         }
         if (patience) stopTraining = false;
         $("#trainLog").text("Training Generation number: " + genCounter)
-        setTimeout(train,300)
+        drawScoreGraph()
+        setTimeout(train,3000)
       }
 
       function speedUpGenetic(){
