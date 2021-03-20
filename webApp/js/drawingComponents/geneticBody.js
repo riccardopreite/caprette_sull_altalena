@@ -113,7 +113,7 @@ class GeneticBody {
         w = Number((this.currentFrame.w*1).toFixed(4))
 
         input[0] = Math.abs(w)
-        input[1] = normalizedAngle
+        input[1] = Math.abs(normalizedAngle)
         input[2] = this.positionsSet.indexOf(this.currentFrame.bodyPosition)
 
         let output = this.brain.predict(input)

@@ -98,6 +98,9 @@ function drawMode(id){
   $("#selectDiv"+id+" :input").prop( "disabled", true);
 
   //form & graph & genetic
+  showHideDiv("#timeDad","#graphScore0")
+  showHideDiv("#speedDad","#graphScore0")
+  showHideDiv("#graphDiv"+id,"#formDiv"+id)
   showHideDiv("#graphDiv"+id,"#formDiv"+id)
   // if(!id)  showHideDiv("#graphDiv"+id,"#geneticDiv")
 
@@ -267,7 +270,6 @@ function getFormValue(){
         }
         if (patience) stopTraining = false;
         $("#trainLog").text("Training Generation number: " + genCounter)
-        drawScoreGraph()
         setTimeout(train,3000)
       }
 

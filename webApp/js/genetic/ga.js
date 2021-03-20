@@ -28,6 +28,8 @@ function nextGeneration() {
   // var parents = probabilisticSelection(N_PARENTS)
   avgScoreArr.push(avgScore(parents))
 
+  checkAvg()
+
   // 1-clone
   parents.forEach( (p,index) => {
     let brain = p.brain.copy()
@@ -46,9 +48,6 @@ function nextGeneration() {
     geneticBodies.push(new GeneticBody(geneticCtx, initialStateFrame, childBrain))
 
   })
-
-
-
 
   // empty backup array
   savedGenticBodies = []
@@ -185,7 +184,7 @@ function crossOver(parents) {
     p2 = parents[j].brain
 
     // get 2 children from crossOver
-    offSprings = crossOver_couple(p1, p2,children)
+    offSprings = crossOver_couple(p1, p2)
 
     children.push(offSprings[0])
     children.push(offSprings[1])
@@ -198,7 +197,7 @@ function crossOver(parents) {
  * @param {NeuralNetwork} p2: parent2
  * @returns {Array NeuralNetwork}
  */
-function crossOver_couple(p1, p2,childrenList) {
+function crossOver_couple(p1, p2) {
   // get weights from both nn
   var w1 = [],
     w2 = []
@@ -232,8 +231,8 @@ function crossOver_couple(p1, p2,childrenList) {
     children.push(nn)
   })
 
-  if(childrenList.length == 0)
-    saveFile(p1,p2,children[0],children[1],"wholeAritchmetic")
+  // if(childrenList.length == 0)
+  //   saveFile(p1,p2,children[0],children[1],"wholeAritchmetic")
 
   return children
 }
@@ -302,6 +301,21 @@ function wholeAritchmetic_crossOver(w1, w2, alpha) {
 
 
 /** Utils ========================================================================================================================= */
+function checkAvg(){
+  let count = 0,current = 0;
+  for(i = 0; i < avgScoreArr.length; i++){
+    if(avgScoreArr[i] != current) {
+      current = avgScoreArr[i];
+      count = 0;
+    }
+    else count++;
+    if(count == 10){
+      patience = 0
+      stopTraining = true
+    }
+  }
+}
+
 
 function randomBetween(min, max) { // min and max included
   return Math.floor(Math.random() * (max - min + 1) + min);

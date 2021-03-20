@@ -82,10 +82,73 @@ class Graph {
    * coordiantes
    */
    addPoint(label,data){
-
-     this.chart.data.labels.push(label);
+     if(!label){
+       this.chart = new Chart(this.ctx, {
+         type: 'line',
+         data: {
+           labels: [],
+           datasets: [{
+             label:"Score average",
+             pointBackgroundColor: lineColor,
+             pointRadius: 1,
+             borderColor: lineColor,
+             borderWidth: 0.4
+            }]
+         },
+         options: {
+           title: {
+             display: true,
+             text: "Score Avg graph",
+             fontColor: fontColor,
+             fontSize: 13
+           },
+           legend: {
+               display: false,
+           },
+           scales: {
+               x: {
+                 grid: {
+                    offset: true
+                 }
+               },
+               yAxes: [{
+                 scaleLabel: {
+                   display: true,
+                   labelString: "Score AVG",
+                   fontColor: fontColor
+                 },
+                 ticks: {
+                     fontColor: fontColor,
+                     fontSize: 10,
+                     stepSize: 500,
+                     beginAtZero: true,
+                     min: 1500
+                 }
+               }],
+               xAxes: [{
+                 type: 'linear',
+                 position: 'bottom',
+                 scaleLabel: {
+                   display: true,
+                   labelString: "Generation",
+                   fontColor: fontColor
+                 },
+                 ticks: {
+                     fontColor: fontColor,
+                     fontSize: 10,
+                     stepSize: 1,
+                     beginAtZero: true,
+                     min: 0,
+                     max: 10
+                 }
+             }]
+           }
+         }
+       });
+     }
      this.chart.data.datasets.forEach((dataset) => {
-         dataset.data.push(data);
+       let tmp = {"x":label,"y":data}
+       dataset.data.push(tmp);
      });
      this.chart.update();
    }
@@ -105,12 +168,13 @@ class Graph {
    * coordiantes
    */
   plotGraph(label,data){
-    // this.resetChart()
     this.chart = new Chart(this.ctx, {
-      type: 'line',
+      type: 'bar',
       data: {
-        // labels: label,
-        // datasets: [{data: data}]
+        labels: label,
+        datasets: [{
+          data: data
+         }]
       },
       options: {
         title: {
@@ -123,48 +187,49 @@ class Graph {
             display: false,
         },
         scales: {
+            x: {
+              grid: {
+                 offset: true
+              }
+            },
             yAxes: [{
               scaleLabel: {
                 display: true,
-                labelString: "Generation",
+                labelString: "Score AVG",
                 fontColor: fontColor
               },
               ticks: {
                   fontColor: fontColor,
                   fontSize: 10,
-                  stepSize: 1,
-                  beginAtZero: true
-              },
-              min: 0,
-              max: 200
+                  stepSize: 500,
+                  beginAtZero: true,
+                  min: 1500
+              }
+
             }],
             xAxes: [{
               type: 'linear',
               position: 'bottom',
               scaleLabel: {
                 display: true,
-                labelString: "Score AVG",
+                labelString: "Generation",
                 fontColor: fontColor
 
               },
               ticks: {
                   fontColor: fontColor,
                   fontSize: 10,
-                  stepSize: 1000,
-                  beginAtZero: true
-              },
-              min: 1500
+                  stepSize: 1,
+                  beginAtZero: true,
+                  min: 0,
+                  max: 10
+              }
+
+
           }]
         }
       }
     });
-    for(let i = 0; i < avgScoreArr.length;i++){
-      this.chart.data.labels.push(avgScoreArr[i]);
-      this.chart.data.datasets.forEach((dataset) => {
-        dataset.data.push(i);
-      });
-
-    }
     this.chart.update();
   }
 

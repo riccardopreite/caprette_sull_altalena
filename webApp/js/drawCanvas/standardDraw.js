@@ -4,6 +4,8 @@
 
 var canvas0 = document.getElementById('canvas0');
 var canvas1 = document.getElementById('canvas1');
+var canvasScore = document.getElementById('graphScore');
+var ctxScore = canvasScore.getContext('2d');
 var ctx0 = canvas0.getContext('2d');
 var ctx1 = canvas1.getContext('2d');
 
@@ -68,7 +70,8 @@ var ctxTime0 = timeGraphCanvas0.getContext('2d'),
     var timeGraph0 = undefined,
         speedGraph0 = undefined,
         timeGraph1 = undefined,
-        speedGraph1 = undefined;
+        speedGraph1 = undefined,
+        scoreGraph = undefined;
 
 function standardDraw(){
   if(firstInterval != undefined) clearInterval(firstInterval)

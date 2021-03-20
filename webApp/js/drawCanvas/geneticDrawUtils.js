@@ -6,12 +6,10 @@ function drawRecordBody() {
   draw=true
   timeGraph0.resetChart()
   speedGraph0.resetChart()
-  showHideDiv("#timeDad","#graphScore0")
-  showHideDiv("#speedDad","#graphScore0")
 
   timeGraph0 = new Graph(ctxTime0,"Time/Angle graph","phi(rad)","time(s)","radiant angle")
   speedGraph0 = new Graph(ctxSpeed0,"Angular Speed/Angle graph","angular speed(rad/s)","phi(rad)","angular speed")
-
+  drawScoreGraph()
   if (patience == 0) {
       stopTraining = true
       draw = false
@@ -87,18 +85,13 @@ function drawBest() {
         showingIndex = showingIndex + 1
         counter++
       }
-
       setTimeout(drawBest,GENERATION_TIMEOUT)
     } else {
       if (patience) stopTraining = false;
       else{
         $("#saveGenetic").removeClass("disabled");
       }
-      //refresh generation in score log with actual generation and print only training....
-
       $("#trainLog").text("Training Generation number: " + genCounter)
-      //add graph of score while training generation
-      drawScoreGraph()
 
       setTimeout(train,3000)
     }
@@ -108,16 +101,9 @@ function drawBest() {
 function drawScoreGraph(){
   showHideDiv("#graphScore0","#timeDad")
   showHideDiv("#graphScore0","#speedDad")
-  let ctxScore = document.getElementById("graphScore").getContext('2d')
-  console.log(ctxScore);
-  let graph = new Graph(ctxScore,"Score Avg graph","Generation","Score AVG","score avg")
-  for (let i = 0; i < avgScoreArr.length;i++){
-    console.log(avgScoreArr[i]);
-    graph.addPoint(i,avgScoreArr[i])
-  }
-  // let label = [...Array(avgScoreArr).keys()]
-  // console.log(label);
-  // console.log(avgScoreArr);
-  // graph.plotGraph(label,avgScoreArr)
+  scoreGraph = new Graph(ctxScore,"Score Avg graph","Score AVG","Generation","score avg")
 
+  for (let i = 0; i < avgScoreArr.length;i++)
+    scoreGraph.addPoint(i,avgScoreArr[i])
+    
 }

@@ -81,6 +81,8 @@ function geneticSetup() {
   // DOM reset
 
   showHideDiv("#graphDiv0", "#formDiv0")
+  showHideDiv("#graphDiv1", "#formDiv1")
+  drawScoreGraph()
   showHideDiv("#scoreContainer", "#formInputFiledContainer")
   showHideDiv("#popLog","#formInputFiledContainer")
   showHideDiv("#geneticControlButton", "#swingControlButton")
