@@ -86,7 +86,7 @@ function geneticSetup() {
   showHideDiv("#scoreContainer", "#formInputFiledContainer")
   showHideDiv("#popLog","#formInputFiledContainer")
   showHideDiv("#geneticControlButton", "#swingControlButton")
-  updateRecordsDOM("-", Math.abs(initialStateFrame.phi), "-",patience)
+  updateRecordsDOM(0, Math.abs(initialStateFrame.phi), 0, patience,0)
 }
 
 

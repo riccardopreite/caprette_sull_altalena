@@ -139,7 +139,7 @@ class Graph {
                      stepSize: 1,
                      beginAtZero: true,
                      min: 0,
-                     max: 10
+                     max: 150
                  }
              }]
            }
@@ -222,7 +222,7 @@ class Graph {
                   stepSize: 1,
                   beginAtZero: true,
                   min: 0,
-                  max: 10
+                  max: 150
               }
 
 

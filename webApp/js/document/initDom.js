@@ -107,6 +107,7 @@ function prepareDom(){
     function initDomSystem(){
       // $("#selectDiv0 :input").change(updateSwingTypeFirst)
       // $("#selectDiv1 :input").change(updateSwingTypeSecond)
+      $("#population").text( "Population: " + POPULATION);
       $("#selectDiv0 :input").prop( "disabled", false);
       $("#selectDiv1 :input").prop( "disabled", false);
       controlButtonSystem(0)

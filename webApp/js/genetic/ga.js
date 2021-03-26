@@ -103,7 +103,12 @@ function getMaxFitnessElement(pop) {
  */
 function updateRecordBody(best) {
   tmpRecord = best
-
+  updateActualBestDOM(
+    best.score,
+    best.prevPhi,
+    best.jumps.length,
+    best.fitness
+  )
   if (currentRecordBody === undefined || best.score > currentRecordBody.score) {
     patience = PATIENCE_MAX
     currentRecordBody = best
@@ -111,8 +116,10 @@ function updateRecordBody(best) {
       currentRecordBody.score,
       currentRecordBody.prevPhi,
       currentRecordBody.jumps.length,
-      patience
+      patience,
+      currentRecordBody.fitness
     )
+
   } else {
     patience--
     $("#patienceCounter").text(patience)

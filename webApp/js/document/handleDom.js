@@ -41,11 +41,19 @@ function uploadBrain(){
   reader.readAsText(input.files[0]);
 }
 
-function updateRecordsDOM(score, phi, jumps,patience){
-  $("#maxScore").text(score)
-  $("#maxPhi").text(phi)
+function updateRecordsDOM(score, phi, jumps,patience,fitness){
+  $("#maxFitness").text(fitness.toFixed(6))
+  $("#maxScore").text(score.toFixed(3))
+  $("#maxPhi").text(phi.toFixed(3))
   $("#jumpsCounter").text(jumps)
   $("#patienceCounter").text(patience)
+}
+
+function updateActualBestDOM(score, phi, jumps,fitness){
+  $("#actualMaxFitness").text(fitness.toFixed(6))
+  $("#actualMaxScore").text(score.toFixed(3))
+  $("#actualMaxPhi").text(phi.toFixed(3))
+  $("#actualJumpsCounter").text(jumps)
 }
 
 function updatPopulationDOM(pop){
